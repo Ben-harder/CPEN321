@@ -7,6 +7,8 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Button,
+  AsyncStorage,
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
@@ -50,6 +52,7 @@ export default class HomeScreen extends React.Component {
             <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
               <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
             </TouchableOpacity>
+            <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
           </View>
         </ScrollView>
 
@@ -95,6 +98,11 @@ export default class HomeScreen extends React.Component {
     WebBrowser.openBrowserAsync(
       'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
     );
+  };
+
+  _signOutAsync = async () => {
+    await AsyncStorage.clear();
+    this.props.navigation.navigate('Auth');
   };
 }
 
