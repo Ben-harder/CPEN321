@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "Emplorium Backend",
-  "main": "index.js",
+  "main": "server.js",
   "dependencies": {
     "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",
@@ -24,7 +24,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node_modules/babel-cli/bin/babel.js ./ --source-maps --out-dir dist",
     "start": "node_modules/nodemon/bin/nodemon.js -- node_modules/babel-cli/bin/babel-node.js server.js",
-    "populate": "node_modules/babel-cli/bin/babel-node.js populate.js"
+    "populate": "node_modules/babel-cli/bin/babel-node.js populate.js",
+    "devstart": "nodemon ./bin/www"
   },
   "author": "B_R_O_W_ser",
   "license": "ISC"
