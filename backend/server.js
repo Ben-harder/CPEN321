@@ -1,15 +1,19 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 
 // Initialize http server
 const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Handle / route
 app.get('/hello', (req, res) =>
   res.send('Hello World!')
 );
 
-app.get('/test', (req, res) => {
-  console.log('wain');
+app.post('/create-user', (req, res) => {
+  console.log(req.body);
 });
 
 // Launch the server on port 3001
