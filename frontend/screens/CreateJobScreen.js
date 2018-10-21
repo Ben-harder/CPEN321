@@ -184,7 +184,8 @@ export default class CreateJobScreen extends React.Component
         var wage = this.state.wage;
 
         if (address.toString() == "Address" || description.toString() == "Description"
-            || address.toString().length <= 0 || description.toString().length <= 0)
+            || address.toString().length <= 0 || description.toString().length <= 0 ||
+            wage.toString().length <= 0)
         {
             alert("Pleases ensure you've field out the fields.");
         }
