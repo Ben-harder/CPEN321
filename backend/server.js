@@ -7,14 +7,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Handle / route
-app.get('/hello', (req, res) =>
-  res.send('Hello World!')
-);
-
-app.post('/create-user', (req, res) => {
-  console.log(req.body);
-});
+const router = require('./api/router')(app);
 
 app.post('/job', (req, res) => {
   console.log(req.body);
