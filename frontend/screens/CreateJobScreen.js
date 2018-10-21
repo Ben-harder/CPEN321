@@ -13,6 +13,9 @@ import
     Picker,
 } from 'react-native';
 import { WebBrowser } from 'expo';
+import axios from 'axios';
+import api from "../constants/Url";
+
 
 import { MonoText } from '../components/StyledText';
 
@@ -22,13 +25,17 @@ export default class CreateJobScreen extends React.Component
         header: null,
     };
 
-    constructor(props) {
+    constructor(props)
+    {
         super(props);
         this.state = {
             address: "Address",
             description: "Description",
-            jobType: "Job Type",
-            wage: "Job Wage"};
+            jobType: "Mow lawn",
+            wage: "Job Wage"
+        };
+
+        this.attemptCreateJob = this.attemptCreateJob.bind(this);
     }
     render()
     {
@@ -38,41 +45,59 @@ export default class CreateJobScreen extends React.Component
                     <Text style={styles.titleText}>Create Job</Text>
 
                     <Text style={styles.infoText}>Please complete form below to create your job.</Text>
-                    
+
                     {/* Job creater needs to input: job type, address, description */}
 
-                    <TextInput
-                        style={styles.textInput} 
-                        onChangeText={(address) => this.setState({address})}
-                        value={this.state.address}/>
+                    <Text style={styles.formLabel}>
+                        Address:
+                    </Text>
 
                     <TextInput
                         style={styles.textInput}
-                        onChangeText={(description) => this.setState({description})}
-                        value={this.state.description}/>
+                        onChangeText={(address) => this.setState({ address })}
+                        placeholder={this.state.address} />
 
                     <Text style={styles.formLabel}>
-                    Job type:
+                        Job description:
+                    </Text>
+
+                    <TextInput
+                        style={styles.textInput}
+                        onChangeText={(description) => this.setState({ description })}
+                        placeholder={this.state.description} />
+                    
+                    <Text style={styles.formLabel}>
+                        Wage in CAD:
+                    </Text>
+
+                    <TextInput
+                        style={styles.textInput}
+                        keyboardType={"numeric"}
+                        onChangeText={(wage) => this.setState({ wage })}
+                        placeholder="Wage"/>
+
+                    <Text style={styles.formLabel}>
+                        Job type:
                     </Text>
                     <Picker
-                        selectedValue={this.state.language}
-                        style={{ height: 50, width: "80%"}}
+                        selectedValue={this.state.jobType}
+                        style={{ height: 50, width: "80%" }}
                         mode='dropdown'
-                        onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>
-                        <Picker.Item label="Mow lawn" value="Mow lawn"/>
-                        <Picker.Item label="Feed lizard" value="Feed lizard"/>
-                        <Picker.Item label="Do homework" value="Do homework"/>
-                        <Picker.Item label="Clean pool" value="Clean pool"/>
+                        onValueChange={(itemValue, itemIndex) => this.setState({ jobType: itemValue })}>
+                        <Picker.Item label="Mow lawn" value="Mow lawn" />
+                        <Picker.Item label="Feed lizard" value="Feed lizard" />
+                        <Picker.Item label="Do homework" value="Do homework" />
+                        <Picker.Item label="Clean pool" value="Clean pool" />
                     </Picker>
 
-                    <View style={[{ marginTop: 10, width: "70%" }]}>
+                    <View style={styles.button}>
                         <Button
                             title="Submit"
-                            onPress={this._handleSubmit}
+                            onPress={this.attemptCreateJob}
                         />
                     </View>
 
-                    <View style={[{ marginTop: 10, width: "70%" }]}>
+                    <View style={styles.button}>
                         <Button
                             title="Cancel"
                             onPress={() => { this.props.navigation.navigate("App") }}
@@ -84,8 +109,29 @@ export default class CreateJobScreen extends React.Component
         );
     }
 
-    _handleSubmit() {
-        alert("Submit");
+    attemptCreateJob()
+    {
+        var address = this.state.address;
+        var description = this.state.description;
+        var jobType = this.state.jobType;
+        var wage = this.state.wage;
+
+        if (address.toString() == "Address" || description.toString() == "Description"
+            || address.toString().length <= 0 || description.toString().length <= 0)
+        {
+            alert("Pleases ensure you've field out the fields.");
+        }
+        else
+        {
+            axios.post(`${api}/job`, {
+                address: address,
+                description: description,
+                jobType: jobType,
+                wage: wage,
+            });
+        }
+
+        // else alert("Pleases ensure you've field out the fields.");
     }
 }
 
@@ -116,5 +162,9 @@ const styles = StyleSheet.create({
     textInput: {
         height: 40,
         width: "90%",
-    }
+    },
+    button: {
+        marginTop: 20,
+        width: "70%",
+    },
 });
