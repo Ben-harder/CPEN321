@@ -11,11 +11,12 @@ import
     Button,
     TextInput,
     Picker,
+    Modal,
+    TouchableHighlight,
 } from 'react-native';
 import { WebBrowser } from 'expo';
 import axios from 'axios';
 import api from "../constants/Url";
-
 
 import { MonoText } from '../components/StyledText';
 
@@ -32,13 +33,21 @@ export default class CreateJobScreen extends React.Component
             address: "Address",
             description: "Description",
             jobType: "Mow lawn",
-            wage: "Job Wage"
+            wage: "Job Wage",
+            modalVisible: false,
         };
 
         this.attemptCreateJob = this.attemptCreateJob.bind(this);
     }
+
+    setModalVisible(visible)
+    {
+        this.setState({ modalVisible: visible });
+    }
+
     render()
     {
+
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -65,7 +74,7 @@ export default class CreateJobScreen extends React.Component
                         style={styles.textInput}
                         onChangeText={(description) => this.setState({ description })}
                         placeholder={this.state.description} />
-                    
+
                     <Text style={styles.formLabel}>
                         Wage in CAD:
                     </Text>
@@ -74,21 +83,79 @@ export default class CreateJobScreen extends React.Component
                         style={styles.textInput}
                         keyboardType={"numeric"}
                         onChangeText={(wage) => this.setState({ wage })}
-                        placeholder="Wage"/>
+                        placeholder="Wage" />
 
                     <Text style={styles.formLabel}>
                         Job type:
                     </Text>
-                    <Picker
-                        selectedValue={this.state.jobType}
-                        style={{ height: 50, width: "80%" }}
-                        mode='dropdown'
-                        onValueChange={(itemValue, itemIndex) => this.setState({ jobType: itemValue })}>
-                        <Picker.Item label="Mow lawn" value="Mow lawn" />
-                        <Picker.Item label="Feed lizard" value="Feed lizard" />
-                        <Picker.Item label="Do homework" value="Do homework" />
-                        <Picker.Item label="Clean pool" value="Clean pool" />
-                    </Picker>
+
+                    <TextInput
+                        style={styles.textInput}
+                        editable={false}
+                        value={this.state.jobType}/>
+
+                    <TouchableHighlight
+                        underlayColor={'rgba(0,0,0,0)'}
+                        onPress={() =>
+                        {
+                            this.setModalVisible(true);
+                        }}>
+                        <Text style={styles.modalOpenText}>Choose job type...</Text>
+                    </TouchableHighlight>
+
+                    <Modal
+                        style={styles.modal}
+                        animationType="fade"
+                        transparent={false}
+                        visible={this.state.modalVisible}
+                        onRequestClose={() =>
+                        {
+                            this.setModalVisible(false);
+                        }}>
+
+                        <View style={styles.listSelect} contentContainerStyle={styles.contentContainer}>
+                            <TouchableHighlight
+                            underlayColor={'rgba(0,0,0,0)'}
+                            onPress={() =>
+                            {
+                                this.setState({jobType: "Mow lawn"});
+                                this.setModalVisible(false);
+                            }}>
+                            <Text style={styles.listItem}>Mow lawn</Text>
+                            </TouchableHighlight>
+
+                            <TouchableHighlight
+                            underlayColor={'rgba(0,0,0,0)'}
+                            onPress={() =>
+                            {
+                                this.setState({jobType: "Feed lizard"});
+                                this.setModalVisible(false);
+                            }}>
+                            <Text style={styles.listItem}>Feed lizard</Text>
+                            </TouchableHighlight>
+                            
+                            <TouchableHighlight
+                            underlayColor={'rgba(0,0,0,0)'}
+                            onPress={() =>
+                            {
+                                this.setState({jobType: "Do homework"});
+                                this.setModalVisible(false);
+                            }}>
+                            <Text style={styles.listItem}>Do homework</Text>
+                            </TouchableHighlight>
+                            
+                            <TouchableHighlight
+                            underlayColor={'rgba(0,0,0,0)'}
+                            onPress={() =>
+                            {
+                                this.setState({jobType: "Clean pool"});
+                                this.setModalVisible(false);
+                            }}>
+                            <Text style={styles.listItem}>Clean pool</Text>
+                            </TouchableHighlight>
+
+                        </View>
+                    </Modal>
 
                     <View style={styles.button}>
                         <Button
@@ -166,5 +233,20 @@ const styles = StyleSheet.create({
     button: {
         marginTop: 20,
         width: "70%",
+    },
+    listItem: {
+        textAlign: "center",
+        fontSize:32,
+        textAlignVertical:"center",
+        paddingTop:20,
+    },
+    listSelect: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalOpenText: {
+        fontSize:18,
+        paddingTop: 10,
+        color: '#2e78b7',
     },
 });
