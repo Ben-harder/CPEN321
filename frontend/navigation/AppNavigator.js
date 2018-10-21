@@ -3,10 +3,12 @@ import { createSwitchNavigator , createStackNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
 import SignInScreen from '../screens/SignInScreen';
+import SignUpScreen from '../screens/SignUpScreen';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 
 const AppStack = createStackNavigator({ Main: MainTabNavigator });
-const AuthStack = createStackNavigator({ SignIn: SignInScreen });
+const SignInStack = createStackNavigator({ SignIn: SignInScreen });
+const SignUpStack = createStackNavigator({ SignUp: SignUpScreen });
 
 export default createSwitchNavigator(
   // You could add another route here for authentication.
@@ -14,7 +16,8 @@ export default createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
     App: AppStack,
-    Auth: AuthStack,
+    SignIn: SignInStack,
+    SignUp: SignUpStack,
   },
   
   {

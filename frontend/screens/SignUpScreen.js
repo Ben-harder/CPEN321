@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import PhoneInput from "react-native-phone-input";
 
-class SignInScreen extends React.Component {
+class SignUpScreen extends React.Component {
   constructor(props) {
     super(props);
 
@@ -65,9 +65,9 @@ class SignInScreen extends React.Component {
             initialCountry='ca'
           />
         {this.renderInfo()}
-        <Button title="Sign In" onPress={this._signInAsync} />
+        <Button title="Sign Up" onPress={this._signInAsync} />
         <Text>or</Text>
-        <Button title="Click here to Sign Up" onPress={() => this.props.navigation.navigate('SignUp')} />
+        <Button title="Click here to Sign In" onPress={() => this.props.navigation.navigate('SignIn')} />
       </View>
     );
   }
@@ -86,4 +86,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignInScreen;
+export default SignUpScreen;
