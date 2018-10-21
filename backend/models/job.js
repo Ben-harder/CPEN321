@@ -8,11 +8,7 @@ var Schema = mongoose.Schema;
  * required field, however the employee is not.
  */
 var Job = new Schema({
-    job_id: {
-        type: String,
-        required: true
-    },
-    title: {
+    job_title: {
         type: String,
         required: true
     },
@@ -22,6 +18,10 @@ var Job = new Schema({
     },
     wage: {
         type: Number,
+        required: true
+    },
+    address: {
+        type: String,
         required: true
     },
     employer: {

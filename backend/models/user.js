@@ -8,13 +8,15 @@ var Schema = mongoose.Schema;
  * if they desire.
  */
 var User = new Schema({
-    user_id: {
-        type: String,
-        required: true
-    },
     full_name: {
-        first: String,
-        last:String,
+        first: {
+            type: String,
+            required: true
+        },    
+        last: {
+            type: String,
+            required: true
+        },    
         required: true
     },
     phone_number: {

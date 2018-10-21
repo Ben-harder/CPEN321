@@ -7,10 +7,6 @@ var Schema = mongoose.Schema;
  * An image is associated with one user
  */
 var Image = new Schema({
-    image_id: {
-        type: String,
-        required: true
-    },
     image_src: {
         type: String,
         required: true
