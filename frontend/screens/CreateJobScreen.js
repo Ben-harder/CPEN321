@@ -44,7 +44,7 @@ export default class CreateJobScreen extends React.Component
                 <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
                     <Text style={styles.titleText}>Create Job</Text>
 
-                    <Text style={styles.infoText}>Please complete form below to create your job.</Text>
+                    <Text style={styles.infoText}>Please complete the form below to create your job.</Text>
 
                     {/* Job creater needs to input: job type, address, description */}
 
