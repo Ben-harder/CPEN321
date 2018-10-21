@@ -16,6 +16,10 @@ app.post('/create-user', (req, res) => {
   console.log(req.body);
 });
 
+app.post('/job', (req, res) => {
+  console.log(req.body);
+});
+
 // Launch the server on port 3001
 const server = app.listen(3001, () => {
   const { address, port } = server.address();
