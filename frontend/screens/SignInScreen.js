@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff',
+    padding: 40,
   },
   textLink: {
     paddingVertical: 15,
