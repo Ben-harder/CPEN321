@@ -8,17 +8,14 @@ var Schema = mongoose.Schema;
  * if they desire.
  */
 var User = new Schema({
-    full_name: {
-        first: {
-            type: String,
-            required: true
-        },    
-        last: {
-            type: String,
-            required: true
-        },    
+    first_name: {
+        type: String,
         required: true
-    },
+    },    
+    last_name: {
+        type: String,
+        required: true
+    },    
     phone_number: {
         type: String,
         required: true
@@ -32,7 +29,6 @@ var User = new Schema({
     },
     verification_token: {
         type: String,
-        required: true, 
         // 8 digits
         min : 10000000,
         max : 99999999
