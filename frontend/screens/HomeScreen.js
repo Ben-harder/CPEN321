@@ -10,6 +10,7 @@ import {
   Button,
   AsyncStorage,
 } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
@@ -18,7 +19,7 @@ export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
-
+  
   render() {
     return (
       <View style={styles.container}>
@@ -62,9 +63,21 @@ export default class HomeScreen extends React.Component {
           <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
             <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
           </View>
+
+          <View style={[{ marginTop: 10, width: "70%"}]}>
+            <Button 
+              title="Create a job" 
+              onPress={() => { this.props.navigation.navigate('CreateJob')} }
+              />
+          </View>
         </View>
       </View>
     );
+  }
+
+  _handleCreateJobPress() {
+    this.props.navigation.navigate('Links');
+    alert("wain");
   }
 
   _maybeRenderDevelopmentModeWarning() {

@@ -5,10 +5,12 @@ import MainTabNavigator from './MainTabNavigator';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
+import CreateJobScreen from '../screens/CreateJobScreen';
 
 const AppStack = createStackNavigator({ Main: MainTabNavigator });
 const SignInStack = createStackNavigator({ SignIn: SignInScreen });
 const SignUpStack = createStackNavigator({ SignUp: SignUpScreen });
+const CreateJobStack = createStackNavigator({CreateJob: CreateJobScreen});
 
 export default createSwitchNavigator(
   // You could add another route here for authentication.
@@ -18,6 +20,7 @@ export default createSwitchNavigator(
     App: AppStack,
     SignIn: SignInStack,
     SignUp: SignUpStack,
+    CreateJob: CreateJobStack,
   },
   
   {
