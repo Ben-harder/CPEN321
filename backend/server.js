@@ -6,7 +6,11 @@ const app = express();
 // Handle / route
 app.get('/hello', (req, res) =>
   res.send('Hello World!')
-)
+);
+
+app.get('/test', (req, res) => {
+  console.log('wain');
+});
 
 // Launch the server on port 3001
 const server = app.listen(3001, () => {

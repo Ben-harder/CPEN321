@@ -8,6 +8,8 @@ import {
   Text
 } from 'react-native';
 import PhoneInput from "react-native-phone-input";
+import api from "../constants/Url";
+import axios from 'axios';
 
 class SignUpScreen extends React.Component {
   constructor(props) {
@@ -21,6 +23,7 @@ class SignUpScreen extends React.Component {
 
     this.updateInfo = this.updateInfo.bind(this);
     this.renderInfo = this.renderInfo.bind(this);
+    this.attemptSignup = this.attemptSignup.bind(this);
   }
 
   updateInfo() {
@@ -53,6 +56,14 @@ class SignUpScreen extends React.Component {
     }
   }
 
+  attemptSignup() {
+    if (this.phone.isValidNumber()) {
+      console.log(this.phone.getValue());
+      console.log(api);
+      axios.get(`${api}/test`);
+    }
+  }
+
 
   render() {
     return (
@@ -64,10 +75,13 @@ class SignUpScreen extends React.Component {
             }}
             initialCountry='ca'
           />
-        {this.renderInfo()}
-        <Button title="Sign Up" onPress={this._signInAsync} />
+        <TouchableOpacity onPress={this.attemptSignup} style={styles.textLink}>
+          <Text style={styles.textLinkText}>Sign Up</Text>
+        </TouchableOpacity>
         <Text>or</Text>
-        <Button title="Click here to Sign In" onPress={() => this.props.navigation.navigate('SignIn')} />
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('SignIn')} style={styles.textLink}>
+          <Text style={styles.textLinkText}>Click Here to Sign In</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -83,6 +97,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#fff',
+  },
+  textLink: {
+    paddingVertical: 15,
+  },
+  textLinkText: {
+    fontSize: 18,
+    color: '#2e78b7',
   },
 });
 

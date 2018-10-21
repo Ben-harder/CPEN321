@@ -64,10 +64,13 @@ class SignInScreen extends React.Component {
             }}
             initialCountry='ca'
           />
-        {this.renderInfo()}
-        <Button title="Sign In" onPress={this._signInAsync} />
+        <TouchableOpacity onPress={this._signInAsync} style={styles.textLink}>
+          <Text style={styles.textLinkText}>Sign In</Text>
+        </TouchableOpacity>
         <Text>or</Text>
-        <Button title="Click here to Sign Up" onPress={() => this.props.navigation.navigate('SignUp')} />
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')} style={styles.textLink}>
+          <Text style={styles.textLinkText}>Click Here to Sign Up</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -83,6 +86,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#fff',
+  },
+  textLink: {
+    paddingVertical: 15,
+  },
+  textLinkText: {
+    fontSize: 18,
+    color: '#2e78b7',
   },
 });
 
