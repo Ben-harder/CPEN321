@@ -38,6 +38,8 @@ export default class HomeScreen extends React.Component {
           <View style={styles.getStartedContainer}>
             {this._maybeRenderDevelopmentModeWarning()}
 
+            <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
+
             <Text style={styles.getStartedText}>Get started by opening</Text>
 
             <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
@@ -53,7 +55,6 @@ export default class HomeScreen extends React.Component {
             <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
               <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
             </TouchableOpacity>
-            <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
           </View>
         </ScrollView>
 
