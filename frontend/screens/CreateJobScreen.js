@@ -141,6 +141,8 @@ export default class CreateJobScreen extends React.Component
                 jobType: jobType,
                 wage: wage,
             });
+            alert("You've successfully created the job post.");
+            this.props.navigation.navigate("App");
         }
 
         // else alert("Pleases ensure you've field out the fields.");
