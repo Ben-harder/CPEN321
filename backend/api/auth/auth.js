@@ -1,6 +1,6 @@
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-var populatedb = require('../../populatedb');
+var SignUp = require('../../controllers/signUp');
 
 module.exports = {
   createUser(req, res) {
@@ -21,7 +21,7 @@ module.exports = {
     }
 
     // if another error happens
-    var retval = populatedb.userCreate(req.firstName, req.lastName, req.body.phoneNumber, req.body.password);
+    var retval = SignUp.userCreate(req.firstName, req.lastName, req.body.phoneNumber, req.body.password);
     if(retval == null) {
       ret.errorMessage = 'An error happened in the databas';
       ret.isError = true;
