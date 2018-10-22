@@ -27,42 +27,38 @@ class SideMenu extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <View>
+          <View style={styles.navSectionStyle}>
             <Text style={styles.sectionHeadingStyle}>
-              Section 1
+              Welcome
             </Text>
-            <View style={styles.navSectionStyle}>
-              <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Page1')}>
-              Page1
-              </Text>
-            </View>
           </View>
-          <View>
-            <Text style={styles.sectionHeadingStyle}>
-              Section 2
+          <View style={styles.navSectionStyle}>
+            <Text style={styles.navItemStyle} onPress={() => {}}>
+              My Profile
             </Text>
-            <View style={styles.navSectionStyle}>
-              <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Page2')}>
-                Page2
-              </Text>
-              <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Page3')}>
-                Page3
-              </Text>
-            </View>            
           </View>
-          <View>
-            <Text style={styles.sectionHeadingStyle}>
-              Section 3
+          <View style={styles.navSectionStyle}>
+            <Text style={styles.navItemStyle} onPress={() => {}}>
+              My Job Postings
             </Text>
-            <View style={styles.navSectionStyle}>
-              <Text style={styles.navItemStyle} onPress={this.signOut}>
-              Sign Out
-              </Text>
-            </View>
+          </View>
+          <View style={styles.navSectionStyle}>
+            <Text style={styles.navItemStyle} onPress={() => {}}>
+              Taken Jobs
+            </Text>
+          </View>
+          <View style={styles.navSectionStyle}>
+            <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate('CreateJob')}}>
+              Create Job
+            </Text>
           </View>
         </ScrollView>
         <View style={styles.footerContainer}>
-          <Text>This is my fixed footer</Text>
+          <View>
+            <Text style={styles.navItemStyle} onPress={this.signOut}>
+              Sign Out
+            </Text>
+          </View>
         </View>
       </View>
     );
@@ -78,7 +74,8 @@ const styles = StyleSheet.create({
     padding: 10
   },
   navSectionStyle: {
-    backgroundColor: 'lightgrey'
+    borderBottomWidth: 1,
+    paddingVertical: 10
   },
   sectionHeadingStyle: {
     paddingVertical: 10,
@@ -86,7 +83,6 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     padding: 20,
-    backgroundColor: 'lightgrey'
   }
 });
 

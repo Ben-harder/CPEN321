@@ -16,7 +16,7 @@ var Job = require('../models/job');
  *  INVATIANTS:
  *      - All parameters are valid and precise.
  */
-exports.userCreate = function ( first_name, last_name, phone_number, hash_password) {
+exports.userCreate = function (first_name, last_name, phone_number, hash_password) {
     // create an instance of the user
     var user = new User();
     if (first_name != false) user.first_name = first_name;
@@ -32,7 +32,7 @@ exports.userCreate = function ( first_name, last_name, phone_number, hash_passwo
     user.is_employer = false;
     user.images = [];
     user.jobs = [];
-  
+    console.log(user);
     // save the user
     user.save(function (err) {
         if (err) {

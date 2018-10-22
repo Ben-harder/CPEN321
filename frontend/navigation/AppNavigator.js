@@ -13,7 +13,6 @@ import CreateJobScreen from '../screens/CreateJobScreen';
 import SideMenu from './SideMenu';
 import JobScreen from '../screens/JobScreen';
 
-
 const AppStack = createStackNavigator({ Main: MainTabNavigator }, 
   {
     navigationOptions: ({navigation}) => ({
@@ -46,7 +45,7 @@ const MainApp = createSwitchNavigator(
   },
 );
 
-export default createDrawerNavigator(
+const AppContainer = createDrawerNavigator(
   {
     screen: MainApp,
   }, 
@@ -55,3 +54,5 @@ export default createDrawerNavigator(
     drawerWidth: Dimensions.get('window').width - 120,
   }
 );
+
+export default AppContainer;

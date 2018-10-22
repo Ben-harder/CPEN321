@@ -54,7 +54,6 @@ export default class JobBoardScreen extends React.Component
         // console.log("trying to fetch jobs...");
         axios.get(`${api}/jobList`).then((response) => {
             // console.log(response.data);
-            console.log(this._isMounted);
             if (this._isMounted)
                 this.setState({jobList: response.data});
         }).catch((err) => {
@@ -96,14 +95,6 @@ export default class JobBoardScreen extends React.Component
                         )}
                     />
                 </ScrollView>
-                <View style={styles.tabBarInfoContainer}>
-                    <View style={[{ marginTop: 10, width: "70%" }]}>
-                        <Button
-                            title="Create a job"
-                            onPress={() => { this.props.navigation.navigate('CreateJob') }}
-                        />
-                    </View>
-                </View>
             </View>
         );
     };

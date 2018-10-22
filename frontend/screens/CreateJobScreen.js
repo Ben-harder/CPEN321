@@ -10,13 +10,14 @@ import
     View,
     Button,
     TextInput,
-    Picker,
     Modal,
     TouchableHighlight,
 } from 'react-native';
 import { WebBrowser } from 'expo';
 import axios from 'axios';
 import api from "../constants/Url";
+import Select from 'react-native-picker-select';
+import JobTypes from '../constants/JobTypes';
 
 import { MonoText } from '../components/StyledText';
 
@@ -30,14 +31,23 @@ export default class CreateJobScreen extends React.Component
     {
         super(props);
         this.state = {
-            address: "Address",
-            description: "Description",
-            jobType: "Mow lawn",
-            wage: "Job Wage",
+            address: "",
+            description: "",
+            jobType: "",
+            wage: "",
             modalVisible: false,
         };
 
         this.attemptCreateJob = this.attemptCreateJob.bind(this);
+    }
+
+    componentDidMount() {
+        // to do get new picker cause this one sucks
+        console.disableYellowBox = true;
+    }
+
+    componentWillUnmount() {
+        console.disableYellowBox = false;
     }
 
     setModalVisible(visible)
@@ -64,7 +74,7 @@ export default class CreateJobScreen extends React.Component
                     <TextInput
                         style={styles.textInput}
                         onChangeText={(address) => this.setState({ address })}
-                        placeholder={this.state.address} />
+                        placeholder="Address" />
 
                     <Text style={styles.formLabel}>
                         Job description:
@@ -73,7 +83,7 @@ export default class CreateJobScreen extends React.Component
                     <TextInput
                         style={styles.textInput}
                         onChangeText={(description) => this.setState({ description })}
-                        placeholder={this.state.description} />
+                        placeholder="Description" />
 
                     <Text style={styles.formLabel}>
                         Wage in CAD:
@@ -88,19 +98,11 @@ export default class CreateJobScreen extends React.Component
                     <Text style={styles.formLabel}>
                         Job type:
                     </Text>
-
-                    <Picker
-                        selectedValue={this.state.jobType}
-                        style={styles.picker}
-                        mode={'dropdown'}
-                        onValueChange={(itemValue) => this.setState({jobType: itemValue})}
-                        >
-                            <Picker.Item label="Mow lawn" value="Mow lawn"/>
-                            <Picker.Item label="Feed lizard" value="Feed lizard"/>
-                            <Picker.Item label="Do homework" value="Do homework"/>
-                            <Picker.Item label="Clean pool" value="Clean pool"/>
-                        </Picker>
-
+                    <Select
+                        onValueChange={value => this.setState({jobType: value})}
+                        items={JobTypes}
+                        placeholder={{label: "Select Job Type...", value: ""}}
+                    />
                     <View style={styles.button}>
                         <Button
                             title="Submit"
@@ -135,17 +137,19 @@ export default class CreateJobScreen extends React.Component
         }
         else
         {
-            axios.post(`${api}/job`, {
+            axios.post(`${api}/create-job`, {
                 address: address,
                 description: description,
                 jobType: jobType,
                 wage: wage,
+            }).then((res) => {
+
+            }).catch((err) => {
+                console.log(err);
             });
             alert("You've successfully created the job post.");
             this.props.navigation.navigate("App");
         }
-
-        // else alert("Pleases ensure you've field out the fields.");
     }
 }
 

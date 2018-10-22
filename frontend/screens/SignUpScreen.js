@@ -13,9 +13,6 @@ import api from "../constants/Url";
 import axios from 'axios';
 import phoneNumber from 'react-native-phone-input/lib/phoneNumber';
 
-// Actions
-import * as actions from '../actions/';
-
 class SignUpScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -64,10 +61,11 @@ class SignUpScreen extends React.Component {
         lastName: this.state.lastName
       }).then(async (res) => {
         await AsyncStorage.setItem('userToken', 'abc');
-        const mockData = {firstName: "William", lastName: "Choi", phoneNumber: "+17789889271"}
-        this.props.actions.userData(mockData);
+        // const mockData = {firstName: "William", lastName: "Choi", phoneNumber: "+17789889271"};
+        // this.props.actions.userData(mockData);
         this.props.navigation.navigate('App');
       }).catch((err) => {
+        console.log(err);
         alert(err.response.data.errorMessage);
       });
     } else {

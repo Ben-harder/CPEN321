@@ -1,7 +1,7 @@
 // Dependencies
 import * as types from './types';
 
-export const userData = () => ({
+export const userData = payload => ({
   type: types.USER_DATA,
 	payload,
 });
