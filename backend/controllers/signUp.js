@@ -1,5 +1,6 @@
 var User = require('../models/user');
 var Job = require('../models/job');
+var database = require('../populatedb');
 
 /**  
  * Create a new job. When a user created:
