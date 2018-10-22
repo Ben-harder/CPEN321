@@ -37,7 +37,7 @@ var images = [];
  *  INVATIANTS:
  *      - All parameters are valid and precise.
  */
-function userCreate( first_name, last_name, phone_number, hash_password) {
+exports.userCreate = function ( first_name, last_name, phone_number, hash_password) {
     // create an instance of the user
     var user = new User();
     if (first_name != false) user.first_name = first_name;
