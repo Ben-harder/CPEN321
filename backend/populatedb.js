@@ -37,7 +37,7 @@ var images = [];
  *  INVATIANTS:
  *      - All parameters are valid and precise.
  */
-function userCreate(first_name, last_name, phone_number, hash_password) {
+function userCreate( first_name, last_name, phone_number, hash_password) {
     // create an instance of the user
     var user = new User();
     if (first_name != false) user.first_name = first_name;
@@ -57,7 +57,7 @@ function userCreate(first_name, last_name, phone_number, hash_password) {
     // save the user
     user.save(function (err) {
         if (err) {
-            console.log("error in userCreate");
+            console.log("error in userCreate" + err.message);
             return null;
         }
         console.log('New User: ' + user);
@@ -81,31 +81,31 @@ function userCreate(first_name, last_name, phone_number, hash_password) {
  *      - Employer does exist in the database and employer.is_employer = true.
  *      - All parameters are valid and precise.
  */
-async function jobCreate(job_title, description, wage, address, employer) {
+function jobCreate(job_title, description, wage, address, employerID) {
     var job = new Job();
     if (job_title != false) job.job_title = job_title;
     if (description != false) job.description = description;
     if (wage != false) job.wage = wage;
     if (address != false) job.address = address;
-    if (employer != false) job.employer = employer;
+    if (employerID != false) job.employer = employerID;
 
     // auto set
     job.employee = undefined;
-    job.created_at = Date.now;
+    job.created_at = new Date();
     job.deleted_at = undefined;
     job.is_deleted = false;
     job.is_compeleted = false;
     job.is_active = false;
-    // console.log(job);
+    
     // save the job
     console.log("before");
-    try {
-        var here =  await job.save();
-        // console.log('in try,', here);
-    } catch (err) {
-        console.log('in err', err);
-        return {is_error: true , error: err.message};
-    }
+    return job.save();
+    // try {
+    //     await job.save();
+    //     return {is_error: false};
+    // } catch (err) {
+    //     return {is_error: true , errorMessage: err.message};
+    // }
 
 }
 
@@ -113,43 +113,62 @@ async function jobCreate(job_title, description, wage, address, employer) {
 /**
  * Init a dummy user
  */
-function initUser() {
-    userCreate("Osama", "Dawood", "6047243630", "YouLikeThat?");
+async function initUser() {
+    return await userCreate("Osama", "Dawood", "6047243630", "YouLikeThat?");
 }
 
 
 /**
  * Init a dummy job
+ * 
+ * On Success: return 
  */
-function initJob() {
-    User.findOne(async function (err, employer) {
-        if (err) {
-            
+async function initJob(next) {
+    await User.findOne(function(err, employer){
+        if(err) {
+            return err;
         }
-        var retval = await jobCreate("Meat Beat", "I like it like that", "wain", employer.ObjectId);
-        console.log('fuck before');
-        if (retval.is_error) {
-            
-        }
-        console.log("fuck after");
-        return;
-      });
-}
-
-function getOutOfHere() {
-    console.log("Bye Bye!");
-    mongoose.connection.close();
+        console.log(employer._id);
+        return jobCreate("Meat Beat", "I like it like that", 100, "wain", employer._id);
+    });
+    // var fuck = new ObjectID(employerID);
+    // console.log(employerID  );
+    // console.log(employerID);
+    // console.log(mongoose.Types.ObjectId(employerID));
+    // console.log(mongoose.Types.ObjectId("5bcc0c8b5a7d7755e83233b1"));
+    // return await jobCreate("Meat Beat", "I like it like that", 100, "wain", employerID);
+    // , (err, employer) =>{
+    //     if(err)
+    //         return next(err);
+    //     return 0; //jobCreate("Meat Beat", "I like it like that", 100, "wain", employerID);
+    // mongoose.Types.ObjectId("5bcc0c8b5a7d7755e83233b1")
+    // });
 }
 
 /**  
  * CAUTION: this function will init your database.
  * 
  * Note: this function is useful for development 
+ * 
+ * Usage: Make sure you wipe out your db first then use this fucntion to creater
+ *        dummy user and job by running node populatedb in the terminal.
  */
-function init() {
-    initJob();
-    // getOutOfHere();
+async function init() {
+    await initUser().then(() => {
+        console.log("Bye Bye!");
+        // mongoose.connection.close();     
+    }, () => {
+        console.log("FAILED INITIALIZING JOB: " + error.message);
+    });
+    initJob().then(() => {
+        console.log("Bye Bye!");
+        // mongoose.connection.close();     
+    }, (error) => {
+        console.log("FAILED INITIALIZING JOB: " + error.message );
+    });
 }
+
+HandleError
 
 init();
 

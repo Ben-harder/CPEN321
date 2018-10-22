@@ -25,8 +25,7 @@ var Job = new Schema({
         required: true
     },
     employer: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
+        type: Schema.Types,
         required: true
     },
     employee: {
