@@ -56,12 +56,15 @@ class SignUpScreen extends React.Component {
       axios.post(`${api}/create-user`, {
         phoneNumber: this.state.phoneNumber,
         password: this.state.password,
-        passwordConfirm: this.state.passwordConfirm
+        passwordConfirm: this.state.passwordConfirm,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName
       }).then(async (res) => {
         await AsyncStorage.setItem('userToken', 'abc');
         this.props.navigation.navigate('App');
       }).catch((err) => {
         console.log(err);
+        alert(err.data.errorMessage);
       });
     } else {
       alert("Please fill out the field");

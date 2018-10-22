@@ -10,23 +10,24 @@ module.exports = {
       || !req.firstName || !req.lastName) {
       ret.errorMessage = 'All fields have not been filled out';
       ret.isError = true;
-      return res.send(ret);
+      return res.send(400).json(ret);
     }
 
     // check to see if the passwords match
     if (reqBody.password !== reqBody.passwordConfirm) {
       ret.errorMessage = 'Passwords do not match';
       ret.isError = true;
-      return res.send(ret);
+      return res.send(400).json(ret);
     }
 
+    // if another error happens
     var retval = populatedb.userCreate(req.firstName, req.lastName, req.body.phoneNumber, req.body.password);
     if(retval == null) {
       ret.errorMessage = 'An error happened in the databas';
       ret.isError = true;
-      return res.send(ret);
+      return res.send(500).json(ret);
     }
     ret.isError = false;
-    return res.send(ret);
+    return res.send(200).json(ret);
   }
 };
