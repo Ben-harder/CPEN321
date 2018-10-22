@@ -9,16 +9,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const router = require('./api/router')(app);
 
-app.post('/job', (req, res) => {
-  console.log(req.body);
-});
-
-app.get('/jobList', (req, res) => {
-  res.send(
-    [{key: 'wain1'},
-    {key: 'wain2'}]
-  );
-});
 
 // Launch the server on port 3001
 const server = app.listen(3001, () => {
