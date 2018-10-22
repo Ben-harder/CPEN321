@@ -89,73 +89,17 @@ export default class CreateJobScreen extends React.Component
                         Job type:
                     </Text>
 
-                    <TextInput
-                        style={styles.textInput}
-                        editable={false}
-                        value={this.state.jobType}/>
-
-                    <TouchableHighlight
-                        underlayColor={'rgba(0,0,0,0)'}
-                        onPress={() =>
-                        {
-                            this.setModalVisible(true);
-                        }}>
-                        <Text style={styles.modalOpenText}>Choose job type...</Text>
-                    </TouchableHighlight>
-
-                    <Modal
-                        style={styles.modal}
-                        animationType="fade"
-                        transparent={false}
-                        visible={this.state.modalVisible}
-                        onRequestClose={() =>
-                        {
-                            this.setModalVisible(false);
-                        }}>
-
-                        <View style={styles.listSelect} contentContainerStyle={styles.contentContainer}>
-                            <TouchableHighlight
-                            underlayColor={'rgba(0,0,0,0)'}
-                            onPress={() =>
-                            {
-                                this.setState({jobType: "Mow lawn"});
-                                this.setModalVisible(false);
-                            }}>
-                            <Text style={styles.listItem}>Mow lawn</Text>
-                            </TouchableHighlight>
-
-                            <TouchableHighlight
-                            underlayColor={'rgba(0,0,0,0)'}
-                            onPress={() =>
-                            {
-                                this.setState({jobType: "Feed lizard"});
-                                this.setModalVisible(false);
-                            }}>
-                            <Text style={styles.listItem}>Feed lizard</Text>
-                            </TouchableHighlight>
-                            
-                            <TouchableHighlight
-                            underlayColor={'rgba(0,0,0,0)'}
-                            onPress={() =>
-                            {
-                                this.setState({jobType: "Do homework"});
-                                this.setModalVisible(false);
-                            }}>
-                            <Text style={styles.listItem}>Do homework</Text>
-                            </TouchableHighlight>
-                            
-                            <TouchableHighlight
-                            underlayColor={'rgba(0,0,0,0)'}
-                            onPress={() =>
-                            {
-                                this.setState({jobType: "Clean pool"});
-                                this.setModalVisible(false);
-                            }}>
-                            <Text style={styles.listItem}>Clean pool</Text>
-                            </TouchableHighlight>
-
-                        </View>
-                    </Modal>
+                    <Picker
+                        selectedValue={this.state.jobType}
+                        style={styles.picker}
+                        mode={'dropdown'}
+                        onValueChange={(itemValue) => this.setState({jobType: itemValue})}
+                        >
+                            <Picker.Item label="Mow lawn" value="Mow lawn"/>
+                            <Picker.Item label="Feed lizard" value="Feed lizard"/>
+                            <Picker.Item label="Do homework" value="Do homework"/>
+                            <Picker.Item label="Clean pool" value="Clean pool"/>
+                        </Picker>
 
                     <View style={styles.button}>
                         <Button
@@ -184,7 +128,8 @@ export default class CreateJobScreen extends React.Component
         var wage = this.state.wage;
 
         if (address.toString() == "Address" || description.toString() == "Description"
-            || address.toString().length <= 0 || description.toString().length <= 0)
+            || address.toString().length <= 0 || description.toString().length <= 0 ||
+            wage.toString().length <= 0)
         {
             alert("Pleases ensure you've field out the fields.");
         }
@@ -232,21 +177,10 @@ const styles = StyleSheet.create({
     },
     button: {
         marginTop: 20,
-        width: "70%",
+        width: "90%",
     },
-    listItem: {
-        textAlign: "center",
-        fontSize:32,
-        textAlignVertical:"center",
-        paddingTop:20,
-    },
-    listSelect: {
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    modalOpenText: {
-        fontSize:18,
-        paddingTop: 10,
-        color: '#2e78b7',
-    },
+    picker: {
+        height: 50,
+        width: "90%",
+    }
 });

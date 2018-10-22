@@ -6,7 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import CreateJobScreen from '../screens/CreateJobScreen';
+import JobBoardScreen from '../screens/JobBoardScreen';
 
 
 const HomeStack = createStackNavigator({
@@ -55,8 +55,27 @@ SettingsStack.navigationOptions = {
   ),
 };
 
+const JobBoardStack = createStackNavigator({
+  JobBoard: JobBoardScreen,
+});
+
+JobBoardStack.navigationOptions = {
+  tabBarLabel: 'Job Board',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-information-circle${focused ? '' : '-outline'}`
+          : 'md-information-circle'
+      }
+    />
+  ),
+};
+
+
 export default createBottomTabNavigator({
-  HomeStack,
+  JobBoardStack,
   LinksStack,
   SettingsStack,
 });
