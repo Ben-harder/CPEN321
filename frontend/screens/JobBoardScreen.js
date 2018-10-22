@@ -21,6 +21,8 @@ import { MonoText } from '../components/StyledText';
 
 export default class JobBoardScreen extends React.Component
 {
+    _isMounted = false;
+    
     static navigationOptions = {
         header: null,
     };
@@ -37,25 +39,25 @@ export default class JobBoardScreen extends React.Component
 
     componentDidMount()
     {
+        this._isMounted = true;
         this.tryFetchJobList();
         this.jobInterval = setInterval(this.tryFetchJobList, 10000);
     }
 
     componentWillUnmount()
     {
-        console.log("unmount"); // Not getting called.
-        this.clearInterval(this.jobInterval);
+        this._isMounted = false;
+        clearInterval(this.jobInterval);
     }
 
-    tryFetchJobList()
-    {
-        console.log("trying to fetch jobs...");
-        axios.get(`${api}/jobList`).then((response) =>
-        {
-            console.log(response.data);
-            this.setState({ jobList: response.data });
-        }).catch((err) =>
-        {
+    tryFetchJobList() {
+        // console.log("trying to fetch jobs...");
+        axios.get(`${api}/jobList`).then((response) => {
+            // console.log(response.data);
+            console.log(this._isMounted);
+            if (this._isMounted)
+                this.setState({jobList: response.data});
+        }).catch((err) => {
             console.log(err);
         });
     }

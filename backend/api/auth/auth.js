@@ -7,27 +7,24 @@ module.exports = {
     let ret = {};
     // if a field is missing return an error
     if (!req.body || !req.body.phoneNumber || !req.body.password || !req.body.passwordConfirm
-      || !req.firstName || !req.lastName) {
+      || !req.body.firstName || !req.body.lastName) {
       ret.errorMessage = 'All fields have not been filled out';
-      ret.isError = true;
-      return res.send(400).json(ret);
+      return res.status(400).send(ret);
     }
 
     // check to see if the passwords match
-    if (reqBody.password !== reqBody.passwordConfirm) {
+    if (req.body.password !== req.body.passwordConfirm) {
       ret.errorMessage = 'Passwords do not match';
-      ret.isError = true;
-      return res.send(400).json(ret);
+      return res.status(400).send(ret);
     }
 
     // if another error happens
-    var retval = SignUp.userCreate(req.firstName, req.lastName, req.body.phoneNumber, req.body.password);
+    var retval = SignUp.userCreate(req.body.firstName, req.body.lastName, req.body.phoneNumber, req.body.password);
     if(retval == null) {
-      ret.errorMessage = 'An error happened in the databas';
-      ret.isError = true;
-      return res.send(500).json(ret);
+      ret.errorMessage = 'An error happened in the database';
+      return res.status(500).send(ret);
     }
-    ret.isError = false;
-    return res.send(200).json(ret);
+
+    return res.status(200).send(ret);
   }
 };
