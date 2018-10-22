@@ -61,7 +61,15 @@ export default class JobBoardScreen extends React.Component {
                     <FlatList
                         style={styles.jobList}
                         data={this.state.jobList}
-                        renderItem={({item}) => <Text style={styles.jobItem}>{item.key}</Text>}
+                        renderItem={({item}) => (
+                            <TouchableOpacity style={styles.jobItem} onPress={() => alert("wain")}>
+                                <Text>Job type: {item.value[0].jobType}</Text>
+                                <Text>Posted by: {item.value[4].author}</Text>
+                                <Text>Address: {item.value[1].address}</Text>
+                                <Text>Wage: ${item.value[2].wage}</Text>
+                                <Text>Description: {item.value[3].description}</Text>
+                            </TouchableOpacity>
+                        )}
                     />
                 </ScrollView>
             </View>
@@ -83,10 +91,13 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     jobList: {
-        paddingLeft: 30,
+        width: "100%",
+        padding: 10,
+        flex: 1,
     },
     jobItem: {
-        fontSize: 18,
-        padding: 10,
+        marginTop: 10,
+        backgroundColor: "rgba(0,0,0,0.05)",
+        padding: 30,
     }
 });

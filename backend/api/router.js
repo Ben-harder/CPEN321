@@ -19,9 +19,51 @@ module.exports = function(app) {
   });
   
   app.get('/jobList', (req, res) => {
-    res.send(
-      [{key: 'wain1'},
-      {key: 'wain2'}]
-    );
+    var index = 0;
+    res.send([
+      {key: (index++).toString(), value: [
+        {jobType: 'Mow lawn'},
+        {address: '1234 wain st'},
+        {wage: 1},
+        {description: 'suck my wain'},
+        {author: 'will'},
+
+      ]},
+      {key: (index++).toString(), value: [
+        {jobType: 'Feed lizard'},
+        {address: '9876 fuu blvd'},
+        {wage: 100},
+        {description: 'fire randy'},
+        {author: 'osama'},
+      ]},
+      {key: (index++).toString(), value: [
+        {jobType: 'Clean pool'},
+        {address: 'mcloed, UBC'},
+        {wage: 100},
+        {description: 'bring starbucks'},
+        {author: 'ben'},
+      ]},
+      {key: (index++).toString(), value: [
+        {jobType: 'Feed lizard'},
+        {address: '9876 fuu blvd'},
+        {wage: 100},
+        {description: 'fire randy'},
+        {author: 'osama'},
+      ]},
+      {key: (index++).toString(), value: [
+        {jobType: 'Feed lizard'},
+        {address: '9876 fuu blvd'},
+        {wage: 100},
+        {description: 'fire randy'},
+        {author: 'osama'},
+      ]},
+      {key: (index++).toString(), value: [
+        {jobType: 'Feed lizard'},
+        {address: '9876 fuu blvd'},
+        {wage: 100},
+        {description: 'fire randy'},
+        {author: 'osama'},
+      ]},
+    ]);
   });
 }
