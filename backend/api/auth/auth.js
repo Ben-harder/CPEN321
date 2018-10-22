@@ -1,6 +1,8 @@
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-var SignUp = require('../../controllers/signUp');
+var User = require('../../models/user');
+var Job = require('../../models/job');
+var database = require('../../populatedb');
 
 module.exports = {
   createUser(req, res) {
@@ -18,13 +20,29 @@ module.exports = {
       return res.status(400).send(ret);
     }
 
-    // if another error happens
-    var retval = SignUp.userCreate(req.body.firstName, req.body.lastName, req.body.phoneNumber, req.body.password);
-    if(retval == null) {
-      ret.errorMessage = 'An error happened in the database';
-      return res.status(500).send(ret);
-    }
+    // create a new user
+    var user = new User();
+    user.first_name = req.body.firstName;
+    user.last_name = req.body.lastName;
+    user.phone_number = req.body.phoneNumber;
+    user.hash_password = req.body.password;
+    user.verification_token = undefined;
+    user.working_job_id = undefined;
+    user.is_working = false;
+    user.is_verified = false;
+    user.is_employer = false;
+    user.images = [];
+    user.jobs = [];
 
-    return res.status(200).send(ret);
+    // save the user
+    user.save(function (err) {
+        console.log("reached");
+        if (err) {
+          ret.errorMessage = err.message;
+          return res.status(500).send(ret);
+        }
+        console.log('New User: ' + user);
+        return res.status(200).send(user);
+    });
   }
 };

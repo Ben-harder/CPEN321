@@ -5,7 +5,6 @@ const initialState = { data: {} };
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
 	case types.USER_DATA:
-		console.log('in reducer');
 		const newState = Object.assign({}, state);
 		newState.data = Object.assign({}, state.data, action.payload);
 		// aliases should be phansed out ASAP

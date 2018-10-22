@@ -44,6 +44,7 @@ export default class CreateJobScreen extends React.Component
     componentDidMount() {
         // to do get new picker cause this one sucks
         console.disableYellowBox = true;
+        console.log(this.props);
     }
 
     componentWillUnmount() {
@@ -57,7 +58,6 @@ export default class CreateJobScreen extends React.Component
 
     render()
     {
-
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
