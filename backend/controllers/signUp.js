@@ -35,6 +35,7 @@ exports.userCreate = function (first_name, last_name, phone_number, hash_passwor
     console.log(user);
     // save the user
     user.save(function (err) {
+        console.log("reached");
         if (err) {
             console.log("error in userCreate" + err.message);
             return null;

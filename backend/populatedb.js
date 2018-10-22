@@ -16,11 +16,7 @@ mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
-var users = [];
-var jobs = [];
-var images = [];
-
+db.on('close', () => console.log("database closed"));
 
 /**  
  * Create a new job. When a user created:
@@ -170,7 +166,7 @@ async function init() {
     initUser().then(() => {
         setTimeout(function(){ initJob().then(() => {
             console.log("bye bye");
-            mongoose.connection.close();
+            // mongoose.connection.close();
         }).catch((err) => {
             console.log(err);
         }); }, 1000)
