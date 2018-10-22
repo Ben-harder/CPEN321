@@ -37,7 +37,7 @@ var images = [];
  *  INVATIANTS:
  *      - All parameters are valid and precise.
  */
-exports.userCreate = function ( first_name, last_name, phone_number, hash_password) {
+function userCreate ( first_name, last_name, phone_number, hash_password) {
     // create an instance of the user
     var user = new User();
     if (first_name != false) user.first_name = first_name;
@@ -57,10 +57,10 @@ exports.userCreate = function ( first_name, last_name, phone_number, hash_passwo
     // save the user
     user.save(function (err) {
         if (err) {
-            console.log("error in userCreate" + err.message);
+            // console.log("error in userCreate" + err.message);
             return null;
         }
-        console.log('New User: ' + user);
+        // console.log('New User: ' + user);
         return true;
     });
 }
@@ -126,8 +126,10 @@ async function initUser() {
 async function initJob(next) {
     await User.findOne(function(err, employer){
         if(err) {
+            console.log("fuck");
             return err;
         }
+        console.log("fuck");
         console.log(employer._id);
         return jobCreate("Meat Beat", "I like it like that", 100, "wain", employer._id);
     });
@@ -154,21 +156,30 @@ async function initJob(next) {
  *        dummy user and job by running node populatedb in the terminal.
  */
 async function init() {
-    await initUser().then(() => {
-        console.log("Bye Bye!");
-        // mongoose.connection.close();     
-    }, () => {
-        console.log("FAILED INITIALIZING JOB: " + error.message);
-    });
-    initJob().then(() => {
-        console.log("Bye Bye!");
-        // mongoose.connection.close();     
-    }, (error) => {
-        console.log("FAILED INITIALIZING JOB: " + error.message );
+    // initUser().then(() => {
+    //     initJob().then(() => {
+    //         console.log("Bye Bye!");
+    //         // mongoose.connection.close();     
+    //     }, (error) => {
+    //         console.log("FAILED INITIALIZING JOB: " + error.message );
+    //     });   
+    // }, (error) => {
+    //     console.log("FAILED INITIALIZING JOB: " + error.message);
+    // });
+
+    initUser().then(() => {
+        setTimeout(function(){ initJob().then(() => {
+            console.log("bye bye");
+            mongoose.connection.close();
+        }).catch((err) => {
+            console.log(err);
+        }); }, 1000)
+        
+    }).catch((err) => {
+        console.log(err);
     });
 }
 
-// HandleError
 
-// init();
+init();
 
