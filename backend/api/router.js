@@ -24,6 +24,7 @@ module.exports = function (app)
 
   app.post('/applyForJob', (req, res) => {
     res.sendStatus(200);
+    console.log("User applied for a job, add job details here.");
   })
 
   app.get('/jobList', (req, res) =>
