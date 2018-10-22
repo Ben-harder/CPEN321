@@ -20,12 +20,15 @@ class SignUpScreen extends React.Component {
     this.state = {
       viewState: 1,
       phoneNumber: "",
-      password: ""
+      password: "",
+      firstName: "",
+      lastName: ""
     };
 
     this.attemptSignup = this.attemptSignup.bind(this);
     this.checkUserExists = this.checkUserExists.bind(this);
     this.inputPassword = this.inputPassword.bind(this);
+    this.inputName = this.inputName.bind(this);
   }
   
   checkUserExists() {
@@ -68,10 +71,20 @@ class SignUpScreen extends React.Component {
   inputPassword() {
     if (this.state.password) {
       this.setState({
-        viewState: 3
+        viewState: 4
       });
     } else {
       alert("Please fill out the field");
+    }
+  }
+
+  inputName() {
+    if (this.state.firstName && this.state.lastName) {
+      this.setState({
+        viewState: 3
+      });
+    } else {
+      alert("Please fill out all the fields");
     }
   }
 
@@ -96,7 +109,28 @@ class SignUpScreen extends React.Component {
             <Text style={styles.textLinkText}>Click Here to Sign In</Text>
           </TouchableOpacity>
         </View>}
-        {this.state.viewState === 2 && 
+        {this.state.viewState === 2 &&
+        <View style={styles.innerContainer}>
+          <Text>First Name:</Text>
+          <TextInput
+            style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 200, padding: 10}}
+            onChangeText={(text) => this.setState({firstName: text})}
+            value={this.state.firstName}
+          />
+          <Text>Last Name:</Text>
+          <TextInput
+            style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 200, padding: 10}}
+            onChangeText={(text) => this.setState({lastName: text})}
+            value={this.state.lastName}
+          />
+          <TouchableOpacity onPress={this.inputName} style={styles.textLink}>
+            <Text style={styles.textLinkText}>Continue</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.setState({viewState: 1})} style={styles.textLink}>
+            <Text style={styles.textLinkText}>Back</Text>
+          </TouchableOpacity>
+        </View>}
+        {this.state.viewState === 3 && 
         <View style={styles.innerContainer}>
           <Text>Enter a password:</Text>
           <TextInput
@@ -111,7 +145,7 @@ class SignUpScreen extends React.Component {
             <Text style={styles.textLinkText}>Back</Text>
           </TouchableOpacity>
         </View>}
-        {this.state.viewState === 3 && 
+        {this.state.viewState === 4 &&
         <View style={styles.innerContainer}>
           <Text>Confirm your password:</Text>
           <TextInput

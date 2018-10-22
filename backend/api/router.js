@@ -6,10 +6,7 @@ module.exports = function(app) {
     res.send('Hello World!')
   );
 
-  app.post('/create-user', (req, res) => {
-    auth.createUser(req.body);
-    return res.sendStatus(200);
-  });
+  app.post('/create-user', auth.createUser);
 
   app.get('/user-exists', (req, res) => {
     return res.status(200).json({ phoneNumber: req.query.phoneNumber });

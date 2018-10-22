@@ -1,16 +1,27 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {NavigationActions} from 'react-navigation';
-import {ScrollView, Text, View, StyleSheet} from 'react-native';
+import {ScrollView, Text, View, StyleSheet, AsyncStorage} from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
 class SideMenu extends Component {
+  constructor(props) {
+    super(props);
+
+    this.signOut = this.signOut.bind(this);
+  }
+
   navigateToScreen = (route) => () => {
     const navigateAction = NavigationActions.navigate({
       routeName: route
     });
     this.props.navigation.dispatch(navigateAction);
   }
+
+  async signOut() {
+    await AsyncStorage.clear();
+    this.props.navigation.navigate('SignIn');
+  };
 
   render () {
     return (
@@ -44,8 +55,8 @@ class SideMenu extends Component {
               Section 3
             </Text>
             <View style={styles.navSectionStyle}>
-              <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Page4')}>
-              Page4
+              <Text style={styles.navItemStyle} onPress={this.signOut}>
+              Sign Out
               </Text>
             </View>
           </View>
