@@ -9,10 +9,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const router = require('./api/router')(app);
 
-app.post('/job', (req, res) => {
-  console.log(req.body);
-});
-
 // Launch the server on port 3001
 const server = app.listen(3001, () => {
   const { address, port } = server.address();

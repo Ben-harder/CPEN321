@@ -27,7 +27,7 @@ class SignUpScreen extends React.Component {
     this.checkUserExists = this.checkUserExists.bind(this);
     this.inputPassword = this.inputPassword.bind(this);
   }
-
+  
   checkUserExists() {
     if (this.phone.isValidNumber()) {
       axios.get(`${api}/user-exists`, {
@@ -44,7 +44,7 @@ class SignUpScreen extends React.Component {
         console.log(err);
       });
     } else {
-      console.log("invalid phone number");
+      alert("Invalid phone number");
     }
   }
 
@@ -60,6 +60,8 @@ class SignUpScreen extends React.Component {
       }).catch((err) => {
         console.log(err);
       });
+    } else {
+      alert("Please fill out the field");
     }
   }
 
@@ -68,6 +70,8 @@ class SignUpScreen extends React.Component {
       this.setState({
         viewState: 3
       });
+    } else {
+      alert("Please fill out the field");
     }
   }
 
@@ -125,10 +129,6 @@ class SignUpScreen extends React.Component {
       </View>
     );
   }
-
-  _signInAsync = async () => {
-    console.log("reached");
-  };
 }
 
 const styles = StyleSheet.create({
