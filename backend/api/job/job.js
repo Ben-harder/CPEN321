@@ -3,7 +3,19 @@ var database = require('../../populatedb');
 
 module.exports = {
   getAllJobs(req, res) {
-    
+    let ret = {};
+    var userList = [];
+    var i = 0;  
+    Job.find({}, function(err, users) {
+      if (err){
+        return res.status(500).send(ret);
+      }
+      users.forEach(function(user) {
+        userList[i] = user;
+        i++;
+      });
+      return res.status(200).send(userList); 
+    });
   },
   createJob(req, res) {
     var job = new Job();
