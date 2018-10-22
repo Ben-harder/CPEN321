@@ -72,6 +72,13 @@ export default class JobScreen extends React.Component
                             onPress={() => { this.applyForJob(jobDetails) }}
                         />
                     </View>
+
+                    <View style={[{ marginTop: 10, width: "70%" }]}>
+                        <Button
+                            title="Cancel"
+                            onPress={() => { this.props.navigation.navigate('App') }}
+                        />
+                    </View>
                 </ScrollView>
             </View>
         );
