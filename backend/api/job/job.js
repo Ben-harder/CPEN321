@@ -50,7 +50,7 @@ module.exports = {
         console.log('New Job: ' + job);
         return res.status(200).send(job);
     });
-  },
+  }
   
   // getEmployerJobs(req, res) {
   //   let ret = {};
