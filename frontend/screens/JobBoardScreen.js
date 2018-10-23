@@ -52,7 +52,7 @@ export default class JobBoardScreen extends React.Component
 
     tryFetchJobList() {
         // console.log("trying to fetch jobs...");
-        axios.get(`${api}/jobList`).then((response) => {
+        axios.get(`${api}/get-all-jobs`).then((response) => {
             // console.log(response.data);
             if (this._isMounted)
                 this.setState({jobList: response.data});
@@ -84,15 +84,16 @@ export default class JobBoardScreen extends React.Component
                         style={styles.jobList}
                         data={this.state.jobList}
                         renderItem={({ item }) => (
-                            <TouchableOpacity style={styles.jobItem} onPress={() => this.goToJobDetails(item.value)}>
-                                <Text>Job type: {item.value.jobType}</Text>
-                                <Text>Posted by: {item.value.author}</Text>
-                                <Text>Address: {item.value.address}</Text>
-                                <Text>Wage: ${item.value.wage}</Text>
-                                <Text>Description: {item.value.description}</Text>
-                                <Text>JobID: {item.value.jobID}</Text>
+                            <TouchableOpacity style={styles.jobItem} onPress={() => this.goToJobDetails(item)}>
+                                <Text>Job type: {item.job_title}</Text>
+                                <Text>Posted by: {item.author}</Text>
+                                <Text>Address: {item.address}</Text>
+                                <Text>Wage: ${item.wage}</Text>
+                                <Text>Description: {item.description}</Text>
+                                <Text>JobID: {item._id}</Text>
                             </TouchableOpacity>
                         )}
+                        keyExtractor={(item, index) => index.toString()}
                     />
                 </ScrollView>
             </View>

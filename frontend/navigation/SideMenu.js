@@ -1,8 +1,13 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {NavigationActions} from 'react-navigation';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import {ScrollView, Text, View, StyleSheet, AsyncStorage} from 'react-native';
 import { StackNavigator } from 'react-navigation';
+
+// actions
+import * as actions from '../actions/';
 
 class SideMenu extends Component {
   constructor(props) {
@@ -19,6 +24,7 @@ class SideMenu extends Component {
   }
 
   async signOut() {
+    this.props.actions.clearUser();
     await AsyncStorage.clear();
     this.props.navigation.navigate('SignIn');
   };
@@ -29,7 +35,7 @@ class SideMenu extends Component {
         <ScrollView>
           <View style={styles.navSectionStyle}>
             <Text style={styles.sectionHeadingStyle}>
-              Welcome
+              Welcome {this.props.user.data.firstName}
             </Text>
           </View>
           <View style={styles.navSectionStyle}>
@@ -90,4 +96,15 @@ SideMenu.propTypes = {
   navigation: PropTypes.object
 };
 
-export default SideMenu;
+function mapStateToProps(state) {
+	const props = {
+		user: state.user,
+	};
+	return props;
+}
+
+function mapDispatchToProps(dispatch) {
+	return { actions: bindActionCreators(actions, dispatch) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideMenu);

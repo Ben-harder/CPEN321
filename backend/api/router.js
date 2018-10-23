@@ -15,10 +15,7 @@ module.exports = function (app)
     return res.status(200).json({ phoneNumber: req.query.phoneNumber });
   });
 
-  app.post('/job', (req, res) =>
-  {
-    console.log(req.body);
-  });
+  app.post('/create-job', job.createJob);
 
   app.post('/applyForJob', (req, res) => {
     res.sendStatus(200);

@@ -15,13 +15,14 @@ import
 } from 'react-native';
 import { WebBrowser } from 'expo';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import api from "../constants/Url";
 import Select from 'react-native-picker-select';
 import JobTypes from '../constants/JobTypes';
 
 import { MonoText } from '../components/StyledText';
 
-export default class CreateJobScreen extends React.Component
+class CreateJobScreen extends React.Component
 {
     static navigationOptions = {
         header: null,
@@ -44,7 +45,6 @@ export default class CreateJobScreen extends React.Component
     componentDidMount() {
         // to do get new picker cause this one sucks
         console.disableYellowBox = true;
-        console.log(this.props);
     }
 
     componentWillUnmount() {
@@ -124,10 +124,7 @@ export default class CreateJobScreen extends React.Component
 
     attemptCreateJob()
     {
-        var address = this.state.address;
-        var description = this.state.description;
-        var jobType = this.state.jobType;
-        var wage = this.state.wage;
+        const { address, description, jobType, wage } = this.state;
 
         if (address.toString() == "Address" || description.toString() == "Description"
             || address.toString().length <= 0 || description.toString().length <= 0 ||
@@ -142,16 +139,25 @@ export default class CreateJobScreen extends React.Component
                 description: description,
                 jobType: jobType,
                 wage: wage,
+                employerID: this.props.user.data.ID,
             }).then((res) => {
-
+                alert("You've successfully created the job post.");
+                this.props.navigation.navigate("App");
             }).catch((err) => {
                 console.log(err);
             });
-            alert("You've successfully created the job post.");
-            this.props.navigation.navigate("App");
         }
     }
 }
+
+function mapStateToProps(state) {
+	const props = {
+		user: state.user,
+	};
+	return props;
+}
+
+export default connect(mapStateToProps)(CreateJobScreen);
 
 const styles = StyleSheet.create({
     container: {

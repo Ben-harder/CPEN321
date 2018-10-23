@@ -43,7 +43,6 @@ class SignUpScreen extends React.Component {
           phoneNumber: this.phone.getValue()
         }
       }).then((res) => {
-        console.log(res.data.phoneNumber);
         this.setState({
           phoneNumber: res.data.phoneNumber,
           viewState: 2
@@ -66,8 +65,7 @@ class SignUpScreen extends React.Component {
         lastName: this.state.lastName
       }).then(async (res) => {
         await AsyncStorage.setItem('userToken', 'abc');
-        const mockData = {firstName: "William", lastName: "Choi", phoneNumber: "+17789889271"};
-        this.props.actions.userData(mockData);
+        this.props.actions.userData(res.data);
         this.props.navigation.navigate('App');
       }).catch((err) => {
         console.log(err);

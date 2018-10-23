@@ -22,8 +22,8 @@ module.exports = {
     let ret = {};
     var job = new Job();
     // if a field is missing return an error
-    if (!req.body || !req.body.job_title || !req.body.description || !req.body.wage
-      || !req.body.address || !req.body.employer) {
+    if (!req.body || !req.body.jobType || !req.body.description || !req.body.wage
+      || !req.body.address || !req.body.employerID) {
       ret.errorMessage = 'All fields have not been filled out';
       return res.status(400).send(ret);
     }
@@ -32,7 +32,7 @@ module.exports = {
     job.description = req.body.description;
     job.wage = req.body.wage;
     job.address = req.body.address;
-    job.employer = employerID;
+    job.employer = req.body.employerID;
 
     job.employee = undefined;
     job.created_at = new Date();
@@ -43,12 +43,11 @@ module.exports = {
 
     // save the job
     job.save(function (err) {
-        console.log("reached");
         if (err) {
           ret.errorMessage = err.message;
           return res.status(500).send(ret);
         }
-        console.log('New User: ' + job);
+        console.log('New Job: ' + job);
         return res.status(200).send(job);
     });
   },
