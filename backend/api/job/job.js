@@ -50,27 +50,23 @@ module.exports = {
         console.log('New Job: ' + job);
         return res.status(200).send(job);
     });
-  }
+  },
   
-  // getEmployerJobs(req, res) {
-  //   let ret = {};
-  //   var jobList = [];
-  //   var i = 0;  
-  //   Job.find({employer : res.body.employer}, function(err, jobs) {
-  //     if (err){
-  //       return res.status(500).send(jobList);
-  //     }
-  //     jobs.forEach(function(job) {
-  //       Project.findById(id).populate('pages').exec(function(err, project) {
-  //         res.json(project);
-  //       });
-  //       job.employer_name = ;
-  //       jobList[i] = job;
-  //       i++;
-  //     });
-  //     return res.status(200).send(jobList); 
-  //   });
-  // }
+  /**
+   * Get an employer's job list and respond with the list with the employer's 
+   * job.
+   */
+  getEmployerJobs(req, res) {
+    Job.find({employer : res.body.employer}).populate('employer').exec(function(err, jobs) {
+      if (err){
+        console.log("Error when finding and populating the job list");
+        return res.status(500).send(jobs);
+      }
+      console.log("Success when finding and populating the job list");
+      console.log(jobs);
+      return res.status(200).send(jobs); 
+    });
+  }
 
 
 }
