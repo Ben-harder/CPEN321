@@ -1,5 +1,5 @@
 var Job = require('../../models/job');
-var database = require('../../populatedb');
+var database = require('../../initdb');
 
 module.exports = {
   getAllJobs(req, res) {

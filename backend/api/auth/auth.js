@@ -2,7 +2,7 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 var User = require('../../models/user');
 var Job = require('../../models/job');
-var database = require('../../populatedb');
+var database = require('../../initdb');
 
 module.exports = {
   createUser(req, res) {

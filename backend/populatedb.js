@@ -1,20 +1,13 @@
 #! /usr/bin/env node
+var database = require('/initdb');
 
 console.log("This script populates database that connected to port: mongodb://localhost:27017/");
 
 // require models
-var async = require('async');
 var Job = require('./models/job');
 var User = require('./models/user');
 var Image = require('./models/image');
 
-// set up the connection
-var ObjectId = require('mongodb').ObjectID;
-var mongoose = require('mongoose');
-var mongoDB = "mongodb://127.0.0.1/cpen_321";
-mongoose.connect(mongoDB);
-mongoose.Promise = global.Promise;
-var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.on('close', () => console.log("database closed"));
 
