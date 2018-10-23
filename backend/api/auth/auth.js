@@ -33,6 +33,8 @@ module.exports = {
     user.is_employer = false;
     user.images = [];
     user.jobs = [];
+    
+    /* NEED TO USE VALIDATOR*/
 
     // save the user
     user.save(function (err) {
@@ -44,5 +46,32 @@ module.exports = {
         console.log('New User: ' + user);
         return res.status(200).send(user);
     });
+  },
+
+  //
+  userSignIn(res, req) {
+    User.findOne({phone_number : req.body.phone_number}, function(err, user) {
+      if (err){
+        return res.status(400).send(uesr);
+      }
+      console.log(req.body.password);
+      // validata password 
+      user.comparePassword(req.body.password, function(err, isMatch) {
+        // internal error
+        if (err) {
+          console.log("Error in compare password");
+          return res.status(500).send(user);
+        }
+        // bad request(
+        if(!isMatch) {
+          console.log("PW does not match");
+          return res.status(400).send(user);
+        }
+        console.log("PW matches");
+        // success
+        return res.status(200).send(user);
+      });
+    });
   }
+
 };
