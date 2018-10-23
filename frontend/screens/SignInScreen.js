@@ -5,51 +5,46 @@ import {
   Button,
   AsyncStorage,
   TouchableOpacity,
-  Text
+  Text,
+  TextInput
 } from 'react-native';
 import PhoneInput from "react-native-phone-input";
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import api from "../constants/Url";
+import axios from 'axios';
+import phoneNumber from 'react-native-phone-input/lib/phoneNumber';
+
+// actions
+import * as actions from '../actions/';
 
 class SignInScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      valid: "",
-      type: "",
-      value: ""
+      phoneNumber: "",
+      password: "",
     };
 
-    this.updateInfo = this.updateInfo.bind(this);
-    this.renderInfo = this.renderInfo.bind(this);
+    this.attemptSignIn = this.attemptSignIn.bind(this);
   }
 
-  updateInfo() {
-    this.setState({
-      valid: this.phone.isValidNumber(),
-      type: this.phone.getNumberType(),
-      value: this.phone.getValue()
-    });
-  }
-
-  renderInfo() {
-    if (this.state.value) {
-      return (
-        <View style={styles.info}>
-          <Text>
-            Is Valid:{" "}
-            <Text style={{ fontWeight: "bold" }}>
-              {this.state.valid.toString()}
-            </Text>
-          </Text>
-          <Text>
-            Type: <Text style={{ fontWeight: "bold" }}>{this.state.type}</Text>
-          </Text>
-          <Text>
-            Value:{" "}
-            <Text style={{ fontWeight: "bold" }}>{this.state.value}</Text>
-          </Text>
-        </View>
-      );
+  attemptSignIn() {
+    if (this.state.phoneNumber && this.state.password) {
+      axios.post(`${api}/sign-in`, {
+        phoneNumber: this.state.phoneNumber,
+        password: this.state.password
+      }).then(async (res) => {
+        await AsyncStorage.setItem('userToken', 'abc');
+        this.props.actions.userData(res.data);
+        this.props.navigation.navigate('App');
+      }).catch((err) => {
+        console.log(err);
+        alert(err.response.data.errorMessage);
+      });
+    } else {
+      alert("Please fill all the fields");
     }
   }
 
@@ -57,28 +52,31 @@ class SignInScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Enter your phone number:</Text>
-        <PhoneInput
-            ref={ref => {
-              this.phone = ref;
-            }}
-            initialCountry='ca'
+        <View style={styles.innerContainer}>
+          <Text>Enter your phone number:</Text>
+          <PhoneInput
+              ref={ref => {
+                this.phone = ref;
+              }}
+              initialCountry='ca'
+            />
+          <Text>Enter your password:</Text>
+          <TextInput
+            style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 200, padding: 10}}
+            onChangeText={(text) => this.setState({password: text})}
+            value={this.state.password}
           />
-        <TouchableOpacity onPress={this._signInAsync} style={styles.textLink}>
-          <Text style={styles.textLinkText}>Sign In</Text>
-        </TouchableOpacity>
-        <Text>or</Text>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')} style={styles.textLink}>
-          <Text style={styles.textLinkText}>Click Here to Sign Up</Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={this.attemptSignIn} style={styles.textLink}>
+            <Text style={styles.textLinkText}>Sign In</Text>
+          </TouchableOpacity>
+          <Text>or</Text>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')} style={styles.textLink}>
+            <Text style={styles.textLinkText}>Click Here to Sign Up</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
-
-  _signInAsync = async () => {
-    await AsyncStorage.setItem('userToken', 'abc');
-    this.props.navigation.navigate('App');
-  };
 }
 
 const styles = StyleSheet.create({
@@ -96,6 +94,22 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#2e78b7',
   },
+  innerContainer: {
+    width: "100%",
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 });
 
-export default SignInScreen;
+function mapStateToProps(state) {
+	const props = {
+		user: state.user,
+	};
+	return props;
+}
+
+function mapDispatchToProps(dispatch) {
+	return { actions: bindActionCreators(actions, dispatch) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignInScreen);

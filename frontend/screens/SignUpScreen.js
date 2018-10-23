@@ -26,6 +26,7 @@ class SignUpScreen extends React.Component {
       viewState: 1,
       phoneNumber: "",
       password: "",
+      passwordConfirm: "",
       firstName: "",
       lastName: ""
     };
