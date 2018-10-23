@@ -29,7 +29,7 @@ var Job = new Schema({
         required: true
     },
     employee: {
-        type: Schema.Types.ObjectId,
+        type: Schema.Types,
         ref: 'User',
     },
     created_at: {

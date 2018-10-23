@@ -25,11 +25,11 @@
     "nodemon": "^1.18.4"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node_modules/babel-cli/bin/babel.js ./ --source-maps --out-dir dist",
-    "start": "node_modules/nodemon/bin/nodemon.js -- node_modules/babel-cli/bin/babel-node.js server.js",
-    "populate": "node_modules/babel-cli/bin/babel-node.js populate.js",
-    "devstart": "nodemon ./bin/www"
+    "test": "node echo \"Error: no test specified\" && exit 1",
+    "build": "node node_modules/babel-cli/bin/babel.js ./ --source-maps --out-dir dist",
+    "start": "node node_modules/nodemon/bin/nodemon.js -- node_modules/babel-cli/bin/babel-node.js server.js",
+    "populate": "node node_modules/babel-cli/bin/babel-node.js populate.js",
+    "devstart": "node nodemon ./bin/www"
   },
   "author": "B_R_O_W_ser",
   "license": "ISC"
