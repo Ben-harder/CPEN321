@@ -1,5 +1,5 @@
 var Job = require('../../models/job');
-var database = require('../../initdb');
+var database = require('../../populatedb');
 
 module.exports = {
   getAllJobs(req, res) {
@@ -52,25 +52,25 @@ module.exports = {
     });
   },
   
-  getEmployerJobs(req, res) {
-    let ret = {};
-    var jobList = [];
-    var i = 0;  
-    Job.find({employer : res.body.employer}, function(err, jobs) {
-      if (err){
-        return res.status(500).send(jobList);
-      }
-      jobs.forEach(function(job) {
-        Project.findById(id).populate('pages').exec(function(err, project) {
-          res.json(project);
-        });
-        job.employer_name = ;
-        jobList[i] = job;
-        i++;
-      });
-      return res.status(200).send(jobList); 
-    });
-  }
+  // getEmployerJobs(req, res) {
+  //   let ret = {};
+  //   var jobList = [];
+  //   var i = 0;  
+  //   Job.find({employer : res.body.employer}, function(err, jobs) {
+  //     if (err){
+  //       return res.status(500).send(jobList);
+  //     }
+  //     jobs.forEach(function(job) {
+  //       Project.findById(id).populate('pages').exec(function(err, project) {
+  //         res.json(project);
+  //       });
+  //       job.employer_name = ;
+  //       jobList[i] = job;
+  //       i++;
+  //     });
+  //     return res.status(200).send(jobList); 
+  //   });
+  // }
 
 
 }
