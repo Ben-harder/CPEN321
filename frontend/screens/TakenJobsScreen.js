@@ -16,10 +16,13 @@ import { StackNavigator } from 'react-navigation';
 import { WebBrowser } from 'expo';
 import axios from 'axios';
 import api from "../constants/Url";
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as actions from '../actions/';
 
 import { MonoText } from '../components/StyledText';
 
-export default class TakenJobsScreen extends React.Component
+class TakenJobsScreen extends React.Component
 {
     _isMounted = false;
 
@@ -151,3 +154,16 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
     },
 });
+
+function mapStateToProps(state) {
+	const props = {
+		user: state.user,
+	};
+	return props;
+}
+
+function mapDispatchToProps(dispatch) {
+	return { actions: bindActionCreators(actions, dispatch) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TakenJobsScreen);
