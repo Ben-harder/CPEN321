@@ -53,7 +53,11 @@ export default class TakenJobsScreen extends React.Component
     tryFetchJobList()
     {
         // console.log("trying to fetch jobs...");
-        axios.get(`${api}/get-all-jobs`).then((response) =>
+        axios.get(`${api}/get-taken-jobs`, {
+            params: {
+                user: this.props.user.data.ID,
+            }
+        }).then((response) =>
         {
             // console.log(response.data);
             if (this._isMounted)
