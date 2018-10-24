@@ -32,10 +32,11 @@ class SignInScreen extends React.Component {
   attemptSignIn() {
     const phoneNumber = this.phone.getValue();
     if (phoneNumber && this.state.password) {
-      console.log(`${api}/auth/sign-in`);
       axios.get(`${api}/auth/sign-in`, {
-        phoneNumber: phoneNumber,
-        password: this.state.password
+        params: {
+          phoneNumber: phoneNumber,
+          password: this.state.password
+        }
       }).then(async (res) => {
         await AsyncStorage.setItem('userToken', 'abc');
         this.props.actions.userData(res.data);

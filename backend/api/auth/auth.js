@@ -49,34 +49,26 @@ module.exports = {
   },
 
   //
-  userSignIn(res, req) {
-    User.findOne({phone_number : req.body.phone_number}, function(err, user) {
+  userSignIn(req, res) {
+    User.findOne({phone_number : req.query.phoneNumber}, function(err, user) {
       let ret = {};
-      if (err){
+      if (err) {
+        ret.errorMessage = "Error with the database!";
+        return res.status(500).send(ret);
+      }
+
+      if (!user) {
         ret.errorMessage = "Phone Number does not exist!";
         return res.status(400).send(ret);
       }
-      console.log(req.body.password);
+
       // validate password 
-      user.comparePassword(req.body.password, function(err, isMatch) {
-        let ret = {};
-        // internal error
-        if (err) {
-          ret.errorMessage = "Error in comparing files";
-          console.log("Error in compare password");
-          return res.status(500).send(ret);
-        }
-        // bad request(
-        if(!isMatch) {
-          ret.errorMessage = "PW does not match";
-          console.log("PW does not match");
-          return res.status(400).send(ret);
-        }
-        res.errorMessage = "PW matches";
-        console.log("PW matches");
-        // success
-        return res.status(200).send(ret);
-      });
+      if (user.hash_password !== req.query.password) {
+        ret.errorMessage = "Login info is invalid!";
+        return res.status(400).send(ret);
+      } else {
+        return res.status(200).send(user);
+      }
     });
   }
 
