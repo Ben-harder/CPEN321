@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-var database = require('/initdb');
+var database = require('./initdb');
 
 console.log("This script populates database that connected to port: mongodb://localhost:27017/");
 

@@ -4,16 +4,13 @@ var job = require('./job/job');
 
 module.exports = function (app)
 {
-  app.get('/hello', (req, res) =>
-    res.send('Hello World!')
-  );
-
-  app.post('/create-user', auth.createUser);
-
-  app.get('/user-exists', (req, res) =>
+  // auth routes
+  app.post('/auth/create-user', auth.createUser);
+  app.get('/auth/user-exists', (req, res) =>
   {
     return res.status(200).json({ phoneNumber: req.query.phoneNumber });
   });
+  app.get('/auth/sign-in', auth.userSignIn);
 
   app.post('/create-job', job.createJob);
 

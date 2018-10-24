@@ -55,7 +55,7 @@ module.exports = {
         return res.status(400).send(uesr);
       }
       console.log(req.body.password);
-      // validata password 
+      // validate password 
       user.comparePassword(req.body.password, function(err, isMatch) {
         // internal error
         if (err) {

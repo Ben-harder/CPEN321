@@ -39,7 +39,7 @@ class SignUpScreen extends React.Component {
   
   checkUserExists() {
     if (this.phone.isValidNumber()) {
-      axios.get(`${api}/user-exists`, {
+      axios.get(`${api}/auth/user-exists`, {
         params: {
           phoneNumber: this.phone.getValue()
         }
@@ -58,7 +58,7 @@ class SignUpScreen extends React.Component {
 
   attemptSignup() {
     if (this.state.passwordConfirm) {
-      axios.post(`${api}/create-user`, {
+      axios.post(`${api}/auth/create-user`, {
         phoneNumber: this.state.phoneNumber,
         password: this.state.password,
         passwordConfirm: this.state.passwordConfirm,
