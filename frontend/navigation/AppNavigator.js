@@ -34,8 +34,6 @@ const TakenJobsStack = createStackNavigator({TakenJobs: TakenJobsScreen});
 const EmployerJobsStack = createStackNavigator({EmployerJobs: EmployerJobsScreen});
 
 const MainApp = createSwitchNavigator(
-  // You could add another route here for authentication.
-  // Read more at https://reactnavigation.org/docs/en/auth-flow.html
   {
     AuthLoading: AuthLoadingScreen,
     App: AppStack,

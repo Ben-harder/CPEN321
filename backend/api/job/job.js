@@ -40,13 +40,13 @@ module.exports = {
    * Get a list of all jobs
    */
   getAllJobs(req, res) {
-    Job.find({}).populate().exec(function(err, users) {
+    Job.find({}).populate('employer').exec(function(err, jobs) {
       let ret = {};
       if (err){
         ret.errorMessage = ("Internal error in the database!");
         return res.status(500).send(ret);
       }
-      return res.status(200).send(users); 
+      return res.status(200).send(jobs); 
     });
   },
   
