@@ -16,10 +16,13 @@ import { StackNavigator } from 'react-navigation';
 import { WebBrowser } from 'expo';
 import axios from 'axios';
 import api from "../constants/Url";
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as actions from '../actions/';
 
 import { MonoText } from '../components/StyledText';
 
-export default class TakenJobsScreen extends React.Component
+class TakenJobsScreen extends React.Component
 {
     _isMounted = false;
 
@@ -53,7 +56,11 @@ export default class TakenJobsScreen extends React.Component
     tryFetchJobList()
     {
         // console.log("trying to fetch jobs...");
-        axios.get(`${api}/get-all-jobs`).then((response) =>
+        axios.get(`${api}/get-taken-jobs`, {
+            params: {
+                user: this.props.user.data.ID,
+            }
+        }).then((response) =>
         {
             // console.log(response.data);
             if (this._isMounted)
@@ -147,3 +154,16 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
     },
 });
+
+function mapStateToProps(state) {
+	const props = {
+		user: state.user,
+	};
+	return props;
+}
+
+function mapDispatchToProps(dispatch) {
+	return { actions: bindActionCreators(actions, dispatch) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TakenJobsScreen);

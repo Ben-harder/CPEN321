@@ -51,7 +51,12 @@ var Job = new Schema({
     is_active: {
         type: Boolean,
         required: true
-    }
+    },
+    // array of applicants 
+    applicants: [{
+            type: Schema.ObjectId,
+            ref: 'Job'}
+    ]
 });
 
 // Virtual for job's URL

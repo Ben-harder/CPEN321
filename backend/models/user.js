@@ -49,13 +49,8 @@ var User = new Schema({
     },
     // array of imgs
     images: [{
-            type: Schema.Types.ObjectId,
+            type: Schema.ObjectId,
             ref: 'Image'}
-    ],
-    // array of jobs
-    jobs: [{
-            type: Schema.Types.ObjectId,
-            ref: 'Job'}
     ]
 });
 
