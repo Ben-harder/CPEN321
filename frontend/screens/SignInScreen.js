@@ -23,7 +23,6 @@ class SignInScreen extends React.Component {
     super(props);
 
     this.state = {
-      phoneNumber: "",
       password: "",
     };
 
@@ -31,9 +30,11 @@ class SignInScreen extends React.Component {
   }
 
   attemptSignIn() {
-    if (this.state.phoneNumber && this.state.password) {
-      axios.post(`${api}/sign-in`, {
-        phoneNumber: this.state.phoneNumber,
+    const phoneNumber = this.phone.getValue();
+    if (phoneNumber && this.state.password) {
+      console.log(`${api}/auth/sign-in`);
+      axios.get(`${api}/auth/sign-in`, {
+        phoneNumber: phoneNumber,
         password: this.state.password
       }).then(async (res) => {
         await AsyncStorage.setItem('userToken', 'abc');
