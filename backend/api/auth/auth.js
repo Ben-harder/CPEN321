@@ -51,25 +51,31 @@ module.exports = {
   //
   userSignIn(res, req) {
     User.findOne({phone_number : req.body.phone_number}, function(err, user) {
+      let ret = {};
       if (err){
-        return res.status(400).send(uesr);
+        ret.errorMessage = "Phone Number does not exist!";
+        return res.status(400).send(ret);
       }
       console.log(req.body.password);
       // validata password 
       user.comparePassword(req.body.password, function(err, isMatch) {
+        let ret = {};
         // internal error
         if (err) {
+          ret.errorMessage = "Error in comparing files";
           console.log("Error in compare password");
-          return res.status(500).send(user);
+          return res.status(500).send(ret);
         }
         // bad request(
         if(!isMatch) {
+          ret.errorMessage = "PW does not match";
           console.log("PW does not match");
-          return res.status(400).send(user);
+          return res.status(400).send(ret);
         }
+        res.errorMessage = "PW matches";
         console.log("PW matches");
         // success
-        return res.status(200).send(user);
+        return res.status(200).send(ret);
       });
     });
   }
