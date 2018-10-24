@@ -14,59 +14,75 @@ import
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { WebBrowser } from 'expo';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import api from "../constants/Url";
 
 import { MonoText } from '../components/StyledText';
 
-export default class JobScreen extends React.Component
+class JobScreen extends React.Component
 {
     static navigationOptions = {
         header: null,
     };
 
-    applyForJob(jobDetails)
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            jobType: "",
+            author: "",
+            description: "",
+            wage: 0,
+            address: "",
+            jobID: ""
+        }
+    }
+
+    componentDidMount() {
+        const { navigation } = this.props;
+
+        this.setState({
+            jobType: navigation.getParam('jobType', 'NO JOB TYPE'),
+            author: navigation.getParam('author', 'NO AUTHOR'),
+            description: navigation.getParam('description', 'NO DESCRIPTION'),
+            wage: navigation.getParam('wage', 'NO WAGE'),
+            address: navigation.getParam('address', 'NO ADDRESS'),
+            jobID: navigation.getParam('jobID', 'NO JOBID')
+        });
+    }
+
+    applyForJob()
     {
-        axios.post(`${api}/applyForJob`, ).then(() => {
+        axios.post(`${api}/job/apply`, {
+            userID: this.props.user.data.ID,
+            jobID: this.state.jobID
+        }).then((res) => {
             alert("You applied to the job successfuly.");
             this.props.navigation.navigate('JobBoard');
-        })
-        // alert("You applied for job: " + jobDetails.jobID);
+        }).catch((err) => {
+            console.log(err);
+            alert(err.response.data.errorMessage);
+        });
     }
 
     render()
     {
-        const { navigation } = this.props;
-        const jobType = navigation.getParam('jobType', 'NO JOB TYPE');
-        const author = navigation.getParam('author', 'NO AUTHOR');
-        const description = navigation.getParam('description', 'NO DESCRIPTION');
-        const wage = navigation.getParam('wage', 'NO WAGE');
-        const address = navigation.getParam('address', 'NO ADDRESS');
-
-        const jobDetails = {
-            jobType: jobType,
-            author: author,
-            description: description,
-            wage: wage.toString(),
-            address: address,
-        };
-
-
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
                     <Text style={styles.headerText}>Take Job</Text>
 
-                    <Text>Job type: {jobDetails.jobType} </Text>
-                    <Text>Posted by: {jobDetails.author} </Text>
-                    <Text>Description: {jobDetails.description} </Text>
-                    <Text>Wage: ${jobDetails.wage} </Text>
-                    <Text>Address: {jobDetails.address} </Text>
+                    <Text>Job type: {this.state.jobType} </Text>
+                    <Text>Posted by: {this.state.author} </Text>
+                    <Text>Description: {this.state.description} </Text>
+                    <Text>Wage: ${this.state.wage} </Text>
+                    <Text>Address: {this.state.address} </Text>
 
                     <View style={[{ marginTop: 10, width: "70%" }]}>
                         <Button
                             title="Apply for this job"
-                            onPress={() => { this.applyForJob(jobDetails) }}
+                            onPress={() => { this.applyForJob() }}
                         />
                     </View>
 
@@ -82,6 +98,15 @@ export default class JobScreen extends React.Component
     };
 
 }
+
+function mapStateToProps(state) {
+	const props = {
+		user: state.user,
+	};
+	return props;
+}
+
+export default connect(mapStateToProps)(JobScreen);
 
 const styles = StyleSheet.create({
     container: {

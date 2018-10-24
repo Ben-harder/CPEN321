@@ -29,7 +29,7 @@ const AppStack = createStackNavigator({ Main: MainTabNavigator },
 const SignInStack = createStackNavigator({ SignIn: SignInScreen });
 const SignUpStack = createStackNavigator({ SignUp: SignUpScreen });
 const CreateJobStack = createStackNavigator({CreateJob: CreateJobScreen});
-const JobStack = createStackNavigator({Job: JobScreen}); 
+const JobStack = createStackNavigator({Job: JobScreen});
 const TakenJobsStack = createStackNavigator({TakenJobs: TakenJobsScreen});
 const EmployerJobsStack = createStackNavigator({EmployerJobs: EmployerJobsScreen});
 

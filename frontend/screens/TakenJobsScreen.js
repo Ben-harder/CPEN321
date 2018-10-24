@@ -16,9 +16,7 @@ import { StackNavigator } from 'react-navigation';
 import { WebBrowser } from 'expo';
 import axios from 'axios';
 import api from "../constants/Url";
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from '../actions/';
 
 import { MonoText } from '../components/StyledText';
 
@@ -56,9 +54,9 @@ class TakenJobsScreen extends React.Component
     tryFetchJobList()
     {
         // console.log("trying to fetch jobs...");
-        axios.get(`${api}/get-taken-jobs`, {
+        axios.get(`${api}/job/get-taken-jobs`, {
             params: {
-                user: this.props.user.data.ID,
+                employeeID: this.props.user.data.ID,
             }
         }).then((response) =>
         {
@@ -105,6 +103,12 @@ class TakenJobsScreen extends React.Component
                         keyExtractor={(item, index) => index.toString()}
                     />
                 </ScrollView>
+                <View style={styles.button}>
+                        <Button
+                            title="Cancel"
+                            onPress={() => { this.props.navigation.navigate("App") }}
+                        />
+                    </View>
             </View>
         );
     };
@@ -162,8 +166,4 @@ function mapStateToProps(state) {
 	return props;
 }
 
-function mapDispatchToProps(dispatch) {
-	return { actions: bindActionCreators(actions, dispatch) };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TakenJobsScreen);
+export default connect(mapStateToProps)(TakenJobsScreen);

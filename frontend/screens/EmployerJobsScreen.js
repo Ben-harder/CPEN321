@@ -18,8 +18,6 @@ import axios from 'axios';
 import api from "../constants/Url";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actions from '../actions/';
-
 
 class EmployerJobsScreen extends React.Component
 {
@@ -104,6 +102,12 @@ class EmployerJobsScreen extends React.Component
                         keyExtractor={(item, index) => index.toString()}
                     />
                 </ScrollView>
+                <View style={styles.button}>
+                        <Button
+                            title="Cancel"
+                            onPress={() => { this.props.navigation.navigate("App") }}
+                        />
+                    </View>
             </View>
         );
     };
@@ -161,8 +165,4 @@ function mapStateToProps(state) {
 	return props;
 }
 
-function mapDispatchToProps(dispatch) {
-	return { actions: bindActionCreators(actions, dispatch) };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(EmployerJobsScreen);
+export default connect(mapStateToProps)(EmployerJobsScreen);

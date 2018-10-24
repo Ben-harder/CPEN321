@@ -7,6 +7,7 @@ var database = require('../../initdb');
 module.exports = {
   createUser(req, res) {
     let ret = {};
+    console.log(req.body);
     // if a field is missing return an error
     if (!req.body || !req.body.phoneNumber || !req.body.password || !req.body.passwordConfirm
       || !req.body.firstName || !req.body.lastName) {
@@ -83,7 +84,7 @@ module.exports = {
         return res.status(200).send(user);
       }
 
-      ret.errorMessage = "This phone number alredy has an account !";
+      ret.errorMessage = "This phone number already has an account!";
       return res.status(400).send(ret);
     });  
   }

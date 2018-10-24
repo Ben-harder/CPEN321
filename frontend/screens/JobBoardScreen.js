@@ -53,7 +53,7 @@ export default class JobBoardScreen extends React.Component
     tryFetchJobList() {
         // console.log("trying to fetch jobs...");
         axios.get(`${api}/get-all-jobs`).then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             if (this._isMounted)
                 this.setState({jobList: response.data});
         }).catch((err) => {
@@ -69,6 +69,7 @@ export default class JobBoardScreen extends React.Component
             author: `${job.employer.first_name} ${job.employer.last_name}`,
             wage: job.wage,
             description: job.description,
+            jobID: job._id
         });
     }
 

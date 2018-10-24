@@ -79,7 +79,7 @@ module.exports = {
         ret.errorMessage = "Internal error in database";
         return res.status(500).send(ret);
       }
-      ret.errorMessage = "Applied successfully"
+      ret.successMessage = "Applied successfully"
       return res.status(200).send(ret);
     });
   },
@@ -92,8 +92,9 @@ module.exports = {
    */
   getAppliedForJobs(req, res) {
     // declare the queries 
-    var findQuery = {applicants: {$elemMatch: {_id: req.employeeID}}};
-    var populateQuery = {path :'employer', select:'first_name last_name'};
+    console.log('employeeID', req.query.employeeID);
+    const findQuery = {applicants: {$elemMatch: {$eq: req.query.employeeID}}};
+    const populateQuery = {path :'employer', select:'first_name last_name'};
     // process the query
     Job.find(findQuery)
     .populate(populateQuery)

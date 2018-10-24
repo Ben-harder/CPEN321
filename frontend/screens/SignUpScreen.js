@@ -45,7 +45,7 @@ class SignUpScreen extends React.Component {
         }
       }).then((res) => {
         this.setState({
-          phoneNumber: res.data.phoneNumber,
+          phoneNumber: this.phone.isValidNumber(),
           viewState: 2
         });
       }).catch((err) => {
@@ -151,7 +151,7 @@ class SignUpScreen extends React.Component {
           <TouchableOpacity onPress={this.inputPassword} style={styles.textLink}>
             <Text style={styles.textLinkText}>Continue</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.setState({viewState: 1})} style={styles.textLink}>
+          <TouchableOpacity onPress={() => this.setState({viewState: 2})} style={styles.textLink}>
             <Text style={styles.textLinkText}>Back</Text>
           </TouchableOpacity>
         </View>}
@@ -166,7 +166,7 @@ class SignUpScreen extends React.Component {
           <TouchableOpacity onPress={this.attemptSignup} style={styles.textLink}>
             <Text style={styles.textLinkText}>Create Account</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.setState({viewState: 2})} style={styles.textLink}>
+          <TouchableOpacity onPress={() => this.setState({viewState: 3})} style={styles.textLink}>
             <Text style={styles.textLinkText}>Back</Text>
           </TouchableOpacity>
         </View>}
