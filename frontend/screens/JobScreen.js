@@ -42,7 +42,6 @@ export default class JobScreen extends React.Component
         const description = navigation.getParam('description', 'NO DESCRIPTION');
         const wage = navigation.getParam('wage', 'NO WAGE');
         const address = navigation.getParam('address', 'NO ADDRESS');
-        const jobID = navigation.getParam('jobID', 'NO JOBID');
 
         const jobDetails = {
             jobType: jobType,
@@ -50,7 +49,6 @@ export default class JobScreen extends React.Component
             description: description,
             wage: wage.toString(),
             address: address,
-            jobID:jobID
         };
 
 
@@ -64,7 +62,6 @@ export default class JobScreen extends React.Component
                     <Text>Description: {jobDetails.description} </Text>
                     <Text>Wage: ${jobDetails.wage} </Text>
                     <Text>Address: {jobDetails.address} </Text>
-                    <Text>Job ID: {jobDetails.jobID} </Text>
 
                     <View style={[{ marginTop: 10, width: "70%" }]}>
                         <Button
