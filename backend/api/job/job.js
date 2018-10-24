@@ -84,12 +84,20 @@ module.exports = {
     });
   },
 
-    /**
+ /*BAD IMPLEMENTAION: O(n^2). SHOULD INSTEAD ADD AN APPLICATION LIST IN THE USER SCHEMA*/
+
+  /**
    * Get an employee's job list and respond with the list of jobs to that
    * were taken by that emplyee
    */
-  getTakenJobs(req, res) {
-    Job.find({employee : req.body.employeeID}).populate('employer').exec(function(err, jobs) {
+  getAppliedForJobs(req, res) {
+    // declare the queries 
+    var findQuery = {applicants: {$elemMatch: {_id: req.employeeID}}};
+    var populateQuery = {path :'employer', select:'first_name last_name'};
+    // process the query
+    Job.find(findQuery)
+    .populate(populateQuery)
+    .exec(function(err, jobs) {
       if (err){
         console.log("Error when finding and populating the job list");
         console.log(err.message);

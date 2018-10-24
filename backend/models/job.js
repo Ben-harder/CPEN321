@@ -55,7 +55,7 @@ var Job = new Schema({
     // array of applicants 
     applicants: [{
             type: Schema.ObjectId,
-            ref: 'Job'}
+            ref: 'User'}
     ]
 });
 
