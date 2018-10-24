@@ -67,6 +67,22 @@ module.exports = {
     });
   },
 
+  /**
+   * User will be added in the job's list of applicants
+   */
+  applyForJob(req, res) {
+    Job.findByIdAndUpdate(req.body.jobID,  {$push: {applicants: req.body.userID}},
+    {upsert:true}, function(err, doc){
+      let ret = {};
+      if (err) {
+        ret.errorMessage = "Internal error in database";
+        return res.status(500).send(ret);
+      }
+      ret.errorMessage = "Applied successfully"
+      return res.status(200).send(ret);
+    });
+  },
+
     /**
    * Get an employee's job list and respond with the list of jobs to that
    * were taken by that emplyee
