@@ -55,7 +55,8 @@ module.exports = {
    * job.
    */
   getEmployerJobs(req, res) {
-    Job.find({employer : req.query.employer}).populate({ path :'employer'}).exec(function(err, jobs) {
+    Job.find({employer : req.query.employer}).populate({ path :'employer', select:'first_name last_name'})
+    .exec(function(err, jobs) {
       if (err){
         console.log("Error when finding and populating the job list");
         console.log(err.message);
