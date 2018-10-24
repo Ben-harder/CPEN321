@@ -32,7 +32,6 @@ module.exports = {
     user.is_verified = false;
     user.is_employer = false;
     user.images = [];
-    user.jobs = [];
     
     /* NEED TO USE VALIDATOR*/
 
@@ -70,6 +69,23 @@ module.exports = {
         return res.status(200).send(user);
       }
     });
+  },
+
+  doesUserExist(req, res) {
+    User.findOne({phone_number : req.query.phoneNumber}, function(err, user) {
+      let ret = {};
+      if (err) {
+        ret.errorMessage = "Error with the database!";
+        return res.status(500).send(ret);
+      }
+
+      if (!user) {
+        return res.status(200).send(user);
+      }
+
+      ret.errorMessage = "This phone number alredy has an account !";
+      return res.status(400).send(ret);
+    });  
   }
 
 };

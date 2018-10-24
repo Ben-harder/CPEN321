@@ -50,6 +50,7 @@ class SignUpScreen extends React.Component {
         });
       }).catch((err) => {
         console.log(err);
+        alert(err.response.data.errorMessage);
       });
     } else {
       alert("Invalid phone number");

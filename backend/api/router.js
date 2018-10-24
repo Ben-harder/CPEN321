@@ -6,10 +6,7 @@ module.exports = function (app)
 {
   // auth routes
   app.post('/auth/create-user', auth.createUser);
-  app.get('/auth/user-exists', (req, res) =>
-  {
-    return res.status(200).json({ phoneNumber: req.query.phoneNumber });
-  });
+  app.get('/auth/user-exists', auth.doesUserExist);
   app.get('/auth/sign-in', auth.userSignIn);
 
   app.post('/create-job', job.createJob);

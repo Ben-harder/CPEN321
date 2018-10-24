@@ -10,22 +10,22 @@ var Schema = mongoose.Schema;
 var User = new Schema({
     first_name: {
         type: String,
-        required: true
+        required: [true,'First Name is required']
     },    
     last_name: {
         type: String,
-        required: true
+        required: [true, 'Last Name is required'],
     },    
     phone_number: {
         type: String,
-        required: true
+        required: [true, 'Phone Number is required'],
     },
     hash_password: {
         type: String,
-        required: true,
+        required: [true, 'Password is required'],
         // 6-16 digits
-        min : 100000,
-        max : 9999999999999999
+        min : [100000, 'Password is too short'],
+        max : [9999999999999999, 'Password is too long']
     },
     verification_token: {
         type: String,
