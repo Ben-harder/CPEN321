@@ -59,7 +59,7 @@ class JobScreen extends React.Component
             jobID: this.state.jobID
         }).then((res) => {
             alert("You applied to the job successfuly.");
-            this.props.navigation.navigate('JobBoard');
+            this.props.navigation.navigate('Main');
         }).catch((err) => {
             console.log(err);
             alert(err.response.data.errorMessage);
@@ -89,7 +89,7 @@ class JobScreen extends React.Component
                     <View style={[{ marginTop: 10, width: "70%" }]}>
                         <Button
                             title="Cancel"
-                            onPress={() => { this.props.navigation.navigate('App') }}
+                            onPress={() => { this.props.navigation.navigate('Main') }}
                         />
                     </View>
                 </ScrollView>

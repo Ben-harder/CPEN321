@@ -22,10 +22,6 @@ import { MonoText } from '../components/StyledText';
 export default class JobBoardScreen extends React.Component
 {
     _isMounted = false;
-    
-    static navigationOptions = {
-        header: null,
-    };
 
     constructor(props)
     {

@@ -39,6 +39,11 @@ class SideMenu extends Component {
             </Text>
           </View>
           <View style={styles.navSectionStyle}>
+            <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate('Main')}}>
+              Browse
+            </Text>
+          </View>
+          <View style={styles.navSectionStyle}>
             <Text style={styles.navItemStyle} onPress={() => {}}>
               My Profile
             </Text>

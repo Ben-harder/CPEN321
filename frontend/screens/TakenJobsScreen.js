@@ -24,10 +24,6 @@ class TakenJobsScreen extends React.Component
 {
     _isMounted = false;
 
-    static navigationOptions = {
-        header: null,
-    };
-
     constructor(props)
     {
         super(props);
@@ -103,12 +99,6 @@ class TakenJobsScreen extends React.Component
                         keyExtractor={(item, index) => index.toString()}
                     />
                 </ScrollView>
-                <View style={styles.button}>
-                        <Button
-                            title="Cancel"
-                            onPress={() => { this.props.navigation.navigate("App") }}
-                        />
-                    </View>
             </View>
         );
     };
