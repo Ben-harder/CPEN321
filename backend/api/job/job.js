@@ -46,7 +46,7 @@ module.exports = {
         ret.errorMessage = ("Internal error in the database!");
         return res.status(500).send(ret);
       }
-      return res.status(200).send(userList); 
+      return res.status(200).send(users); 
     });
   },
   
