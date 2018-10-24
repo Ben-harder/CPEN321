@@ -57,14 +57,14 @@ module.exports = {
    * job.
    */
   getEmployerJobs(req, res) {
-    Job.find({employer : res.query.employerID}).populate('employer').exec(function(err, jobs) {
+    Job.find({employer : req.query.employer}).populate('employer').exec(function(err, jobs) {
       if (err){
         console.log("Error when finding and populating the job list");
         console.log(err.message);
         return res.status(500).send(jobs);
       }
-      console.log("Success when finding and populating the job list");
-      console.log(jobs);
+      // console.log("Success when finding and populating the job list");
+      // console.log(jobs);
       return res.status(200).send(jobs); 
     });
   }

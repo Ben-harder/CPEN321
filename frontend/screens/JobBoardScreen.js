@@ -86,7 +86,7 @@ export default class JobBoardScreen extends React.Component
                         renderItem={({ item }) => (
                             <TouchableOpacity style={styles.jobItem} onPress={() => this.goToJobDetails(item)}>
                                 <Text>Job type: {item.job_title}</Text>
-                                <Text>Posted by: {item.author}</Text>
+                                <Text>Posted by: {item.employer.first_name} {item.employer.last_name}</Text>
                                 <Text>Address: {item.address}</Text>
                                 <Text>Wage: ${item.wage}</Text>
                                 <Text>Description: {item.description}</Text>
