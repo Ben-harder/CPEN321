@@ -2,22 +2,6 @@ var Job = require('../../models/job');
 var database = require('../../initdb');
 
 module.exports = {
-  getAllJobs(req, res) {
-    let ret = {};
-    var userList = [];
-    var i = 0;  
-    Job.find({}, function(err, users) {
-      if (err){
-        return res.status(500).send(ret);
-      }
-      users.forEach(function(user) {
-        userList[i] = user;
-        i++;
-      });
-      return res.status(200).send(userList); 
-    });
-  },
-  
   createJob(req, res) {
     let ret = {};
     var job = new Job();
@@ -49,6 +33,20 @@ module.exports = {
         }
         console.log('New Job: ' + job);
         return res.status(200).send(job);
+    });
+  },
+
+  /**
+   * Get a list of all jobs
+   */
+  getAllJobs(req, res) {
+    Job.find({}).populate().exec(function(err, users) {
+      let ret = {};
+      if (err){
+        ret.errorMessage = ("Internal error in the database!");
+        return res.status(500).send(ret);
+      }
+      return res.status(200).send(userList); 
     });
   },
   
