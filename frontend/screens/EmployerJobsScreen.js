@@ -16,13 +16,15 @@ import { StackNavigator } from 'react-navigation';
 import { WebBrowser } from 'expo';
 import axios from 'axios';
 import api from "../constants/Url";
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as actions from '../actions/';
 
-import { MonoText } from '../components/StyledText';
 
-export default class JobBoardScreen extends React.Component
+class EmployerJobsScreen extends React.Component
 {
     _isMounted = false;
-    
+
     static navigationOptions = {
         header: null,
     };
@@ -50,13 +52,20 @@ export default class JobBoardScreen extends React.Component
         clearInterval(this.jobInterval);
     }
 
-    tryFetchJobList() {
+    tryFetchJobList()
+    {
         // console.log("trying to fetch jobs...");
-        axios.get(`${api}/get-all-jobs`).then((response) => {
+        axios.get(`${api}/get-employer-jobs`, {
+            params: {
+                employer: this.props.user.data.ID,
+            }
+        }).then((response) =>
+        {
             // console.log(response.data);
             if (this._isMounted)
-                this.setState({jobList: response.data});
-        }).catch((err) => {
+                this.setState({ jobList: response.data });
+        }).catch((err) =>
+        {
             console.log(err);
         });
     }
@@ -78,19 +87,19 @@ export default class JobBoardScreen extends React.Component
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-                    <Text style={styles.headerText}>Job Board</Text>
+                    <Text style={styles.headerText}>Your Posted Jobs</Text>
 
                     <FlatList
                         style={styles.jobList}
                         data={this.state.jobList}
                         renderItem={({ item }) => (
-                            <TouchableOpacity style={styles.jobItem} onPress={() => this.goToJobDetails(item)}>
+                            <View style={styles.jobItem}>
                                 <Text>Job type: {item.job_title}</Text>
                                 <Text>Posted by: {item.author}</Text>
                                 <Text>Address: {item.address}</Text>
                                 <Text>Wage: ${item.wage}</Text>
                                 <Text>Description: {item.description}</Text>
-                            </TouchableOpacity>
+                            </View>
                         )}
                         keyExtractor={(item, index) => index.toString()}
                     />
@@ -129,18 +138,31 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         ...Platform.select({
-          ios: {
-            shadowColor: 'black',
-            shadowOffset: { height: -3 },
-            shadowOpacity: 0.1,
-            shadowRadius: 3,
-          },
-          android: {
-            elevation: 20,
-          },
+            ios: {
+                shadowColor: 'black',
+                shadowOffset: { height: -3 },
+                shadowOpacity: 0.1,
+                shadowRadius: 3,
+            },
+            android: {
+                elevation: 20,
+            },
         }),
         alignItems: 'center',
         backgroundColor: '#fbfbfb',
         paddingVertical: 20,
-      },
+    },
 });
+
+function mapStateToProps(state) {
+	const props = {
+		user: state.user,
+	};
+	return props;
+}
+
+function mapDispatchToProps(dispatch) {
+	return { actions: bindActionCreators(actions, dispatch) };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EmployerJobsScreen);
