@@ -95,7 +95,7 @@ class EmployerJobsScreen extends React.Component
                         renderItem={({ item }) => (
                             <View style={styles.jobItem}>
                                 <Text>Job type: {item.job_title}</Text>
-                                <Text>Posted by: {item.author}</Text>
+                                <Text>Posted by: {item.employer.first_name} {item.employer.last_name}</Text>
                                 <Text>Address: {item.address}</Text>
                                 <Text>Wage: ${item.wage}</Text>
                                 <Text>Description: {item.description}</Text>
