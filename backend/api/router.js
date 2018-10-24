@@ -23,5 +23,5 @@ module.exports = function (app)
 
   app.get('/get-employer-jobs', job.getEmployerJobs);
 
-  app.get('/get-taken-jobs', job.getTakenJobs);
+  // app.get('/job/get-taken-jobs', job.getTakenJobs);
 }
