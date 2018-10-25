@@ -47,7 +47,7 @@ class SignUpScreen extends React.Component {
         }
       }).then((res) => {
         this.setState({
-          phoneNumber: this.phone.isValidNumber(),
+          phoneNumber: this.phone.getValue(),
           viewState: 2
         });
       }).catch((err) => {
