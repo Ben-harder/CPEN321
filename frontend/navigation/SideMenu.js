@@ -111,8 +111,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: Colors.sNorm,
     backgroundColor: Colors.sNorm,
-    fontSize: Font.normSize,
-    fontWeight: Font.thick,
     overflow: 'hidden',
   },
 });
