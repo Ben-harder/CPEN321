@@ -69,6 +69,33 @@ module.exports = {
   },
 
   /**
+   * Chack if it's valid for the user to apply to the specified job.
+   * 
+   * Send back a responce with a boolean success value.
+   */
+  isAbleToApply(req, res) {
+    Job.findById(req.body.jobID).populate('employer', '_id').exec(function(err, Job){
+      let ret = {};
+      // internal error
+      if (err) {
+        ret.errorMessage = "Internal error in database";
+        return res.status(500).send(ret);
+      }
+      // is the emplyer
+      if (Job.employer._id == req.body.applicantID)  {
+        ret.errorMessage = "You can't apply to your own job";
+        ret.success = false;
+        return res.status(500).send(ret);
+      }
+      // is not the emplyer
+      else {
+        ret.success = true;
+        return res.status(500).send(ret);
+      }
+    });
+  },
+  
+  /**
    * User will be added in the job's list of applicants
    */
   applyForJob(req, res) {
