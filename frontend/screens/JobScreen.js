@@ -56,16 +56,27 @@ class JobScreen extends React.Component
 
     applyForJob()
     {
-        axios.post(`${api}/job/apply`, {
-            userID: this.props.user.data.ID,
-            jobID: this.state.jobID
+        axios.get(`${api}/job/can-apply`, {
+            params: {
+                jobID: this.state.jobID,
+                userID: this.props.user.data.ID
+            }
         }).then((res) => {
-            alert("You applied to the job successfuly.");
-            this.props.navigation.navigate('Main');
+            axios.post(`${api}/job/apply`, {
+                userID: this.props.user.data.ID,
+                jobID: this.state.jobID
+            }).then((res) => {
+                alert("You applied to the job successfuly.");
+                this.props.navigation.navigate('Main');
+            }).catch((err) => {
+                console.log(err);
+                alert(err.response.data.errorMessage);
+            });
         }).catch((err) => {
             console.log(err);
             alert(err.response.data.errorMessage);
         });
+        
     }
 
     render()

@@ -74,23 +74,24 @@ module.exports = {
    * Send back a responce with a boolean success value.
    */
   isAbleToApply(req, res) {
-    Job.findById(req.body.jobID).populate('employer', '_id').exec(function(err, Job){
+    Job.findById(req.query.jobID).populate('employer', '_id').exec(function(err, Job){
       let ret = {};
+      console.log('reqbody', req.query);
       // internal error
       if (err) {
         ret.errorMessage = "Internal error in database";
         return res.status(500).send(ret);
       }
       // is the emplyer
-      if (Job.employer._id == req.body.applicantID)  {
+      if (Job.employer._id == req.query.userID)  {
         ret.errorMessage = "You can't apply to your own job";
         ret.success = false;
-        return res.status(500).send(ret);
+        return res.status(400).send(ret);
       }
       // is not the emplyer
       else {
         ret.success = true;
-        return res.status(500).send(ret);
+        return res.status(200).send(ret);
       }
     });
   },

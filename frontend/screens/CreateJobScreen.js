@@ -60,7 +60,7 @@ class CreateJobScreen extends React.Component
     {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessbile={false}>
-                <View style={styles.container}>
+                <ScrollView style={styles.container}>
                     <View style={styles.contentContainer}>
                         <Text style={styles.titleText}>Create Job</Text>
 
@@ -115,7 +115,7 @@ class CreateJobScreen extends React.Component
                             />
                         </View>
                     </View>
-                </View>
+                </ScrollView>
             </TouchableWithoutFeedback>
         );
     }

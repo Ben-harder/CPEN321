@@ -11,6 +11,7 @@ module.exports = function (app)
 
   app.post('/create-job', job.createJob);
 
+  app.get('/job/can-apply', job.isAbleToApply);
   app.post('/job/apply', job.applyForJob);
 
   app.get('/get-all-jobs', job.getAllJobs);

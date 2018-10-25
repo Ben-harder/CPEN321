@@ -42,6 +42,7 @@ class SignUpScreen extends React.Component {
   }
   
   checkUserExists() {
+    console.log(api);
     if (this.phone.isValidNumber()) {
       axios.get(`${api}/auth/user-exists`, {
         params: {
