@@ -27,7 +27,13 @@ const AppStack = createStackNavigator({ Main: JobBoardScreen, Job: JobScreen },
     })
   }
 );
-const AuthStack = createStackNavigator({ SignIn: SignInScreen, SignUp: SignUpScreen });
+const AuthStack = createStackNavigator({ SignIn: SignInScreen, SignUp: SignUpScreen },
+  {
+    navigationOptions: ({navigation}) => ({
+      header: null
+    })
+  }
+);
 const CreateJobStack = createStackNavigator({CreateJob: CreateJobScreen},
   {
     navigationOptions: ({navigation}) => ({

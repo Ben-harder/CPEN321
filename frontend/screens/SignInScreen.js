@@ -6,7 +6,9 @@ import {
   AsyncStorage,
   TouchableOpacity,
   Text,
-  TextInput
+  TextInput,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import PhoneInput from "react-native-phone-input";
 import { bindActionCreators } from 'redux';
@@ -55,30 +57,32 @@ class SignInScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.innerContainer}>
-          <Text style={[styles.regText, {paddingBottom: 40}]}>Enter your phone number to sign in:</Text>
-          <PhoneInput style={{paddingBottom: 40}}
-              ref={ref => {
-                this.phone = ref;
-              }}
-              initialCountry='ca'
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={styles.container}>
+          <View style={styles.innerContainer}>
+            <Text style={[styles.regText, {paddingBottom: 40}]}>Enter your phone number to sign in:</Text>
+            <PhoneInput style={{paddingBottom: 40}}
+                ref={ref => {
+                  this.phone = ref;
+                }}
+                initialCountry='ca'
+              />
+            <Text style={[styles.regText, {padding: 10}]}>Enter your password:</Text>
+            <TextInput
+              style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 200, padding: 10}}
+              onChangeText={(text) => this.setState({password: text})}
+              value={this.state.password}
             />
-          <Text style={[styles.regText, {padding: 10}]}>Enter your password:</Text>
-          <TextInput
-            style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 200, padding: 10}}
-            onChangeText={(text) => this.setState({password: text})}
-            value={this.state.password}
-          />
-          <TouchableOpacity onPress={this.attemptSignIn} style={styles.textLink}>
-            <Text style={styles.textLinkText}>Sign In</Text>
-          </TouchableOpacity>
-          <Text style={styles.regText}>or</Text>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')} style={styles.textLink}>
-            <Text style={styles.textLinkText}>Click Here to Sign Up</Text>
-          </TouchableOpacity>
+            <TouchableOpacity onPress={this.attemptSignIn} style={styles.textLink}>
+              <Text style={styles.textLinkText}>Sign In</Text>
+            </TouchableOpacity>
+            <Text style={styles.regText}>or</Text>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')} style={styles.textLink}>
+              <Text style={styles.textLinkText}>Click Here to Sign Up</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     );
   }
 }

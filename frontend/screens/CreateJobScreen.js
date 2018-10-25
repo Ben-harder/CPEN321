@@ -12,6 +12,8 @@ import
     TextInput,
     Modal,
     TouchableHighlight,
+    TouchableWithoutFeedback,
+    Keyboard,
 } from 'react-native';
 import { WebBrowser } from 'expo';
 import axios from 'axios';
@@ -57,59 +59,64 @@ class CreateJobScreen extends React.Component
     render()
     {
         return (
-            <View style={styles.container}>
-                <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-                    <Text style={styles.titleText}>Create Job</Text>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessbile={false}>
+                <View style={styles.container}>
+                    <View style={styles.contentContainer}>
+                        <Text style={styles.titleText}>Create Job</Text>
 
-                    <Text style={styles.infoText}>Please complete the form below to create your job.</Text>
+                        <Text style={styles.infoText}>Please complete the form below to create your job.</Text>
 
-                    {/* Job creater needs to input: job type, address, description */}
+                        {/* Job creater needs to input: job type, address, description */}
 
-                    <Text style={styles.formLabel}>
-                        Address:
-                    </Text>
+                        <Text style={styles.formLabel}>
+                            Address:
+                        </Text>
 
-                    <TextInput
-                        style={styles.textInput}
-                        onChangeText={(address) => this.setState({ address })}
-                        placeholder="Enter Address Here" />
+                        <TextInput
+                            style={styles.textInput}
+                            onChangeText={(address) => this.setState({ address })}
+                            placeholder="Enter Address Here" />
 
-                    <Text style={styles.formLabel}>
-                        Job description:
-                    </Text>
+                        <Text style={styles.formLabel}>
+                            Job description:
+                        </Text>
 
-                    <TextInput
-                        style={styles.textInputJobDescription}
-                        onChangeText={(description) => this.setState({ description })}
-                        placeholder="Enter Description Here" />
+                        <TextInput
+                            style={styles.textInputJobDescription}
+                            multiline = {true}
+                            numberOfLines = {4}
+                            onChangeText={(description) => this.setState({ description })}
+                            placeholder="Enter Description Here" />
 
-                    <Text style={styles.formLabel}>
-                        Wage in CAD:
-                    </Text>
+                        <Text style={styles.formLabel}>
+                            Wage in CAD:
+                        </Text>
 
-                    <TextInput
-                        style={styles.textInput}
-                        keyboardType={"numeric"}
-                        onChangeText={(wage) => this.setState({ wage })}
-                        placeholder="Enter Wage here" />
+                        <TextInput
+                            style={styles.textInput}
+                            keyboardType={"numeric"}
+                            onChangeText={(wage) => this.setState({ wage })}
+                            placeholder="Enter Wage here" />
 
-                    <Text style={styles.formLabel}>
-                        Job type:
-                    </Text>
-                    <Select
-                        style={styles.textInput}
-                        onValueChange={value => this.setState({jobType: value})}
-                        items={JobTypes}
-                        placeholder={{label:"     Select Job Here", value: ""}}
-                    />
-                    <View style={styles.button}>
-                        <Button
-                            title="Submit"
-                            onPress={this.attemptCreateJob}
+                        <Text style={styles.formLabel}>
+                            Job type:
+                        </Text>
+                        <Select
+                            onValueChange={value => this.setState({jobType: value})}
+                            items={JobTypes}
+                            placeholder={{label:"     Select Job Here", value: ""}}
                         />
+                        <View style={styles.buttonWrapper}>
+                            <Button
+                                title="Submit"
+                                onPress={this.attemptCreateJob}
+                                style={styles.button}
+                                color={Colors.buttonText}
+                            />
+                        </View>
                     </View>
-                </ScrollView>
-            </View>
+                </View>
+            </TouchableWithoutFeedback>
         );
     }
 
@@ -174,13 +181,13 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     contentContainer: {
-        paddingTop: 50,
         alignItems: "center",
     },
     textInputJobDescription: {
         height: 100,
         borderWidth: 2,
         borderRadius: 10,
+        padding: 10,
         borderColor: Colors.sNorm,
         backgroundColor: Colors.tile,
         overflow: 'hidden',
@@ -190,6 +197,7 @@ const styles = StyleSheet.create({
         height: 40,
         borderWidth: 2,
         borderRadius: 10,
+        padding: 10,
         borderColor: Colors.sNorm,
         backgroundColor: Colors.tile,
         overflow: 'hidden',
@@ -197,16 +205,16 @@ const styles = StyleSheet.create({
     },
     button: {
         fontSize: Font.butSize,
-        color: Colors.buttonText,
         fontWeight: Font.thick,
+    },
+    buttonWrapper: {
         padding: 10,
         borderRadius: 10,
         borderColor: Colors.sNorm,
         backgroundColor: Colors.sNorm,
-        fontSize: Font.normSize,
-        fontWeight: Font.thick,
         overflow: 'hidden',
-      },
+        marginBottom: 10,
+    },
     picker: {
         height: 50,
         width: "90%",

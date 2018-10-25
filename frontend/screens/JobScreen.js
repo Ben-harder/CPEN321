@@ -72,24 +72,26 @@ class JobScreen extends React.Component
     {
         return (
             <View style={styles.container}>
-            <Text style={[styles.headerText, {paddingTop: 60}]}>Take This Job?</Text>
-                <ScrollView style={styles.container} contentContainerStyle={[styles.contentContainer, styles.jobItem]}>
+            <Text style={[styles.headerText]}>Take This Job?</Text>
+                <View style={[styles.contentContainer, styles.jobItem]}>
                     <Text style={styles.regText}>Job type: {this.state.jobType} </Text>
                     <Text style={styles.regText}>Posted by: {this.state.author} </Text>
-                    <Text style={styles.regText}>Description: {this.state.description} </Text>
                     <Text style={styles.regText}>Wage: ${this.state.wage} </Text>
                     <Text style={styles.regText}>Address: {this.state.address} </Text>
-                </ScrollView>
-                <View style={[styles.button, {alignSelf: "center", marginTop: 10, width: "70%" }]}>
+                    <Text style={styles.regText}>Description: {this.state.description} </Text>
+                </View>
+                <View style={[styles.buttonWrapper, {alignSelf: "center", marginTop: 10, width: "70%" }]}>
                     <Button
                         title="Apply for this job"
                         onPress={() => { this.applyForJob() }}
+                        color={Colors.buttonText}
                     />
                 </View>
-                <View style={[styles.button, {alignSelf: "center", marginTop: 10, marginBottom: 400, width: "70%" }]}>
+                <View style={[styles.buttonWrapper, {alignSelf: "center", marginTop: 10, marginBottom: 400, width: "70%" }]}>
                     <Button
                         title="Cancel"
                         onPress={() => { this.props.navigation.navigate('Main') }}
+                        color={Colors.buttonText}
                     />
                 </View>
             </View>
@@ -117,7 +119,7 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         paddingTop: 20,
-        alignItems: 'center',
+        marginBottom: 20,
     },
     headerText: {
         fontSize: Font.titleSize,
@@ -142,16 +144,11 @@ const styles = StyleSheet.create({
         fontSize: Font.normSize,
         fontWeight: Font.thin,
       },
-    button: {
-        //fontSize: Font.butSize,
-        // color: Colors.buttonText,
-        //fontWeight: Font.thick,
+    buttonWrapper: {
         padding: 10,
         borderRadius: 10,
         borderColor: Colors.sNorm,
         backgroundColor: Colors.sNorm,
-        //fontSize: Font.normSize,
-        //fontWeight: Font.thick,
         overflow: 'hidden',
     },
 });
