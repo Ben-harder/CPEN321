@@ -17,6 +17,8 @@ import { WebBrowser } from 'expo';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import api from "../constants/Url";
+import Colors from '../constants/Colors';
+import Font from '../constants/Font';
 
 import { MonoText } from '../components/StyledText';
 
@@ -70,29 +72,26 @@ class JobScreen extends React.Component
     {
         return (
             <View style={styles.container}>
-                <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-                    <Text style={styles.headerText}>Take Job</Text>
-
-                    <Text>Job type: {this.state.jobType} </Text>
-                    <Text>Posted by: {this.state.author} </Text>
-                    <Text>Description: {this.state.description} </Text>
-                    <Text>Wage: ${this.state.wage} </Text>
-                    <Text>Address: {this.state.address} </Text>
-
-                    <View style={[{ marginTop: 10, width: "70%" }]}>
-                        <Button
-                            title="Apply for this job"
-                            onPress={() => { this.applyForJob() }}
-                        />
-                    </View>
-
-                    <View style={[{ marginTop: 10, width: "70%" }]}>
-                        <Button
-                            title="Cancel"
-                            onPress={() => { this.props.navigation.navigate('Main') }}
-                        />
-                    </View>
+            <Text style={[styles.headerText, {paddingTop: 60}]}>Take This Job?</Text>
+                <ScrollView style={styles.container} contentContainerStyle={[styles.contentContainer, styles.jobItem]}>
+                    <Text style={styles.regText}>Job type: {this.state.jobType} </Text>
+                    <Text style={styles.regText}>Posted by: {this.state.author} </Text>
+                    <Text style={styles.regText}>Description: {this.state.description} </Text>
+                    <Text style={styles.regText}>Wage: ${this.state.wage} </Text>
+                    <Text style={styles.regText}>Address: {this.state.address} </Text>
                 </ScrollView>
+                <View style={[styles.button, {alignSelf: "center", marginTop: 10, width: "70%" }]}>
+                    <Button
+                        title="Apply for this job"
+                        onPress={() => { this.applyForJob() }}
+                    />
+                </View>
+                <View style={[styles.button, {alignSelf: "center", marginTop: 10, marginBottom: 400, width: "70%" }]}>
+                    <Button
+                        title="Cancel"
+                        onPress={() => { this.props.navigation.navigate('Main') }}
+                    />
+                </View>
             </View>
         );
     };
@@ -111,15 +110,19 @@ export default connect(mapStateToProps)(JobScreen);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingTop: 20,
         backgroundColor: '#fff',
+        paddingHorizontal: 5,
+
     },
     contentContainer: {
-        paddingTop: 30,
+        paddingTop: 20,
         alignItems: 'center',
     },
     headerText: {
-        fontSize: 24,
+        fontSize: Font.titleSize,
         textAlign: 'center',
+        padding: 20,
     },
     jobList: {
         width: "100%",
@@ -127,8 +130,28 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     jobItem: {
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: Colors.sNorm,
         marginTop: 10,
-        backgroundColor: "rgba(0,0,0,0.05)",
+        backgroundColor: Colors.tile,
         padding: 30,
+        overflow: 'hidden',
+    },
+    regText: {
+        fontSize: Font.normSize,
+        fontWeight: Font.thin,
+      },
+    button: {
+        //fontSize: Font.butSize,
+        // color: Colors.buttonText,
+        //fontWeight: Font.thick,
+        padding: 10,
+        borderRadius: 10,
+        borderColor: Colors.sNorm,
+        backgroundColor: Colors.sNorm,
+        //fontSize: Font.normSize,
+        //fontWeight: Font.thick,
+        overflow: 'hidden',
     },
 });

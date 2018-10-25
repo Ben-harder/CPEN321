@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {ScrollView, Text, View, StyleSheet, AsyncStorage} from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import Colors from '../constants/Colors';
+import Font from '../constants/Font';
 
 // actions
 import * as actions from '../actions/';
@@ -35,7 +37,7 @@ class SideMenu extends Component {
         <ScrollView>
           <View style={styles.navSectionStyle}>
             <Text style={styles.sectionHeadingStyle}>
-              Welcome {this.props.user.data.firstName}
+              Welcome, {this.props.user.data.firstName}
             </Text>
           </View>
           <View style={styles.navSectionStyle}>
@@ -66,7 +68,7 @@ class SideMenu extends Component {
         </ScrollView>
         <View style={styles.footerContainer}>
           <View>
-            <Text style={styles.navItemStyle} onPress={this.signOut}>
+            <Text style={[styles.navItemStyle, styles.button]} onPress={this.signOut}>
               Sign Out
             </Text>
           </View>
@@ -82,19 +84,35 @@ const styles = StyleSheet.create({
     flex: 1
   },
   navItemStyle: {
-    padding: 10
+    padding: 10,
+    textAlign: 'center',
+    fontSize: Font.normSize,
   },
   navSectionStyle: {
-    borderBottomWidth: 1,
+    borderBottomWidth: 2,
+    borderBottomColor: Colors.sNorm,
     paddingVertical: 10
   },
   sectionHeadingStyle: {
+    paddingTop: 20,
+    textAlign: 'center',
     paddingVertical: 10,
-    paddingHorizontal: 5
+    paddingHorizontal: 5,
+    fontSize: Font.normSize,
   },
   footerContainer: {
     padding: 20,
-  }
+  },
+  button: {
+    fontSize: Font.butSize,
+    color: Colors.buttonText,
+    fontWeight: Font.thick,
+    padding: 10,
+    borderRadius: 10,
+    borderColor: Colors.sNorm,
+    backgroundColor: Colors.sNorm,
+    overflow: 'hidden',
+  },
 });
 
 SideMenu.propTypes = {
