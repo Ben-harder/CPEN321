@@ -4,4 +4,5 @@ export default {
   butSize: 18,
   thin: '300',
   normSize: 20,
+  titleSize: 30,
 };

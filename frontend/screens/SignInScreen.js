@@ -14,6 +14,8 @@ import { connect } from 'react-redux';
 import api from "../constants/Url";
 import axios from 'axios';
 import phoneNumber from 'react-native-phone-input/lib/phoneNumber';
+import Colors from '../constants/Colors';
+import Font from '../constants/Font';
 
 // actions
 import * as actions from '../actions/';
@@ -55,14 +57,14 @@ class SignInScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.innerContainer}>
-          <Text>Enter your phone number:</Text>
-          <PhoneInput
+          <Text style={[styles.regText, {paddingBottom: 40}]}>Enter your phone number to sign in:</Text>
+          <PhoneInput style={{paddingBottom: 40}}
               ref={ref => {
                 this.phone = ref;
               }}
               initialCountry='ca'
             />
-          <Text>Enter your password:</Text>
+          <Text style={[styles.regText, {padding: 10}]}>Enter your password:</Text>
           <TextInput
             style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 200, padding: 10}}
             onChangeText={(text) => this.setState({password: text})}
@@ -71,7 +73,7 @@ class SignInScreen extends React.Component {
           <TouchableOpacity onPress={this.attemptSignIn} style={styles.textLink}>
             <Text style={styles.textLinkText}>Sign In</Text>
           </TouchableOpacity>
-          <Text>or</Text>
+          <Text style={styles.regText}>or</Text>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')} style={styles.textLink}>
             <Text style={styles.textLinkText}>Click Here to Sign Up</Text>
           </TouchableOpacity>
@@ -93,14 +95,24 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   textLinkText: {
-    fontSize: 18,
-    color: '#2e78b7',
+    fontSize: Font.butSize,
+    color: Colors.buttonText,
+    fontWeight: Font.thick,
+    padding: 10,
+    borderRadius: 10,
+    borderColor: Colors.sNorm,
+    backgroundColor: Colors.sNorm,
+    overflow: 'hidden',
   },
   innerContainer: {
     width: "100%",
     alignItems: 'center',
     justifyContent: 'center',
-  }
+  },
+  regText: {
+    fontSize: Font.normSize,
+    fontWeight: Font.thick,
+  },
 });
 
 function mapStateToProps(state) {

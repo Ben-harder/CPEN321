@@ -106,8 +106,8 @@ class SignUpScreen extends React.Component {
       <View style={styles.container}>
         {this.state.viewState === 1 && 
         <View style={[styles.innerContainer]}>
-          <Text style={styles.regText} >Enter your phone number:</Text>
-          <PhoneInput
+          <Text style={[styles.regText, {paddingBottom: 40}]}>Enter your phone number to sign up:</Text>
+          <PhoneInput style={{paddingBottom: 40}}
               ref={ref => {
                 this.phone = ref;
               }}

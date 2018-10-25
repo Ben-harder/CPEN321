@@ -19,8 +19,12 @@ export default {
   pNorm: '#37474f',
   pLight: '#62727b',
   pDark: '#102027',
+  pBackground: '#dddddd',
+
   sNorm: '#00796b',
   sLight: '#48a999',
   sDark: '#004c40',
+
+  tile: '#e8e8e8',
   buttonText: '#ffffff',
 };

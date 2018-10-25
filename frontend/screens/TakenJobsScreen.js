@@ -17,6 +17,8 @@ import { WebBrowser } from 'expo';
 import axios from 'axios';
 import api from "../constants/Url";
 import { connect } from 'react-redux';
+import Colors from '../constants/Colors';
+import Font from '../constants/Font';
 
 import { MonoText } from '../components/StyledText';
 
@@ -89,11 +91,11 @@ class TakenJobsScreen extends React.Component
                         data={this.state.jobList}
                         renderItem={({ item }) => (
                             <View style={styles.jobItem}>
-                                <Text>Job type: {item.job_title}</Text>
-                                <Text>Posted by: {item.author}</Text>
-                                <Text>Address: {item.address}</Text>
-                                <Text>Wage: ${item.wage}</Text>
-                                <Text>Description: {item.description}</Text>
+                                <Text style={styles.regText}>Job type: {item.job_title}</Text>
+                                <Text style={styles.regText}>Posted by: {item.author}</Text>
+                                <Text style={styles.regText}>Address: {item.address}</Text>
+                                <Text style={styles.regText}>Wage: ${item.wage}</Text>
+                                <Text style={styles.regText}>Description: {item.description}</Text>
                             </View>
                         )}
                         keyExtractor={(item, index) => index.toString()}
@@ -114,7 +116,7 @@ const styles = StyleSheet.create({
         paddingTop: 30,
     },
     headerText: {
-        fontSize: 24,
+        fontSize: Font.titleSize,
         textAlign: 'center',
     },
     jobList: {
@@ -123,9 +125,17 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     jobItem: {
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: Colors.sNorm,
         marginTop: 10,
-        backgroundColor: "rgba(0,0,0,0.05)",
+        backgroundColor: Colors.tile,
         padding: 30,
+        overflow: 'hidden',
+    },
+    regText: {
+        fontSize: Font.normSize,
+        fontWeight: Font.thin,
     },
     tabBarInfoContainer: {
         position: 'absolute',

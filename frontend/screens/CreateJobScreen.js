@@ -19,6 +19,8 @@ import { connect } from 'react-redux';
 import api from "../constants/Url";
 import Select from 'react-native-picker-select';
 import JobTypes from '../constants/JobTypes';
+import Colors from '../constants/Colors';
+import Font from '../constants/Font';
 
 import { MonoText } from '../components/StyledText';
 
@@ -70,16 +72,16 @@ class CreateJobScreen extends React.Component
                     <TextInput
                         style={styles.textInput}
                         onChangeText={(address) => this.setState({ address })}
-                        placeholder="Address" />
+                        placeholder="Enter Address Here" />
 
                     <Text style={styles.formLabel}>
                         Job description:
                     </Text>
 
                     <TextInput
-                        style={styles.textInput}
+                        style={styles.textInputJobDescription}
                         onChangeText={(description) => this.setState({ description })}
-                        placeholder="Description" />
+                        placeholder="Enter Description Here" />
 
                     <Text style={styles.formLabel}>
                         Wage in CAD:
@@ -89,15 +91,16 @@ class CreateJobScreen extends React.Component
                         style={styles.textInput}
                         keyboardType={"numeric"}
                         onChangeText={(wage) => this.setState({ wage })}
-                        placeholder="Wage" />
+                        placeholder="Enter Wage here" />
 
                     <Text style={styles.formLabel}>
                         Job type:
                     </Text>
                     <Select
+                        style={styles.textInput}
                         onValueChange={value => this.setState({jobType: value})}
                         items={JobTypes}
-                        placeholder={{label: "Select Job Type...", value: ""}}
+                        placeholder={{label:"     Select Job Here", value: ""}}
                     />
                     <View style={styles.button}>
                         <Button
@@ -153,10 +156,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     titleText: {
-        fontSize: 20,
+        fontSize: Font.titleSize,
+        paddingBottom: 20,
     },
     formLabel: {
-        fontSize: 18,
+        paddingBottom: 10,
+        fontSize: Font.normSize,
         color: '#000000',
         marginTop: 10,
         textAlign: 'center',
@@ -164,21 +169,44 @@ const styles = StyleSheet.create({
     infoText: {
         marginTop: 10,
         fontSize: 18,
-        color: 'rgba(0,0,0,0.4)',
+        paddingBottom: 20,
+        color: Colors.pLight,
         textAlign: 'center',
     },
     contentContainer: {
         paddingTop: 50,
         alignItems: "center",
     },
+    textInputJobDescription: {
+        height: 100,
+        borderWidth: 2,
+        borderRadius: 10,
+        borderColor: Colors.sNorm,
+        backgroundColor: Colors.tile,
+        overflow: 'hidden',
+        width: "90%",
+    },
     textInput: {
         height: 40,
+        borderWidth: 2,
+        borderRadius: 10,
+        borderColor: Colors.sNorm,
+        backgroundColor: Colors.tile,
+        overflow: 'hidden',
         width: "90%",
     },
     button: {
-        marginTop: 20,
-        width: "90%",
-    },
+        fontSize: Font.butSize,
+        color: Colors.buttonText,
+        fontWeight: Font.thick,
+        padding: 10,
+        borderRadius: 10,
+        borderColor: Colors.sNorm,
+        backgroundColor: Colors.sNorm,
+        fontSize: Font.normSize,
+        fontWeight: Font.thick,
+        overflow: 'hidden',
+      },
     picker: {
         height: 50,
         width: "90%",
