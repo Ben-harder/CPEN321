@@ -14,6 +14,8 @@ import { connect } from 'react-redux';
 import api from "../constants/Url";
 import axios from 'axios';
 import phoneNumber from 'react-native-phone-input/lib/phoneNumber';
+import Colors from '../constants/Colors';
+import Font from '../constants/Font';
 
 // actions
 import * as actions from '../actions/';
@@ -103,8 +105,8 @@ class SignUpScreen extends React.Component {
     return (
       <View style={styles.container}>
         {this.state.viewState === 1 && 
-        <View style={styles.innerContainer}>
-          <Text>Enter your phone number:</Text>
+        <View style={[styles.innerContainer]}>
+          <Text style={styles.regText} >Enter your phone number:</Text>
           <PhoneInput
               ref={ref => {
                 this.phone = ref;
@@ -114,7 +116,7 @@ class SignUpScreen extends React.Component {
           <TouchableOpacity onPress={this.checkUserExists} style={styles.textLink}>
             <Text style={styles.textLinkText}>Sign Up</Text>
           </TouchableOpacity>
-          <Text>or</Text>
+          <Text style={styles.regText}>or</Text>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('SignIn')} style={styles.textLink}>
             <Text style={styles.textLinkText}>Click Here to Sign In</Text>
           </TouchableOpacity>
@@ -184,17 +186,30 @@ const styles = StyleSheet.create({
     padding: 40,
   },
   textLink: {
-    paddingVertical: 15,
+    paddingVertical: 10,
   },
   textLinkText: {
-    fontSize: 18,
-    color: '#2e78b7',
+    fontSize: Font.butSize,
+    color: Colors.buttonText,
+    fontWeight: Font.thick,
+    padding: 10,
+    borderRadius: 10,
+    borderColor: Colors.sNorm,
+    backgroundColor: Colors.sNorm,
+    overflow: 'hidden',
   },
   innerContainer: {
     width: "100%",
     alignItems: 'center',
     justifyContent: 'center',
-  }
+  },
+  regText: {
+    fontSize: Font.normSize,
+    fontWeight: Font.thick,
+  },
+  // background: {
+  //   backgroundColor: Colors.pLight,
+  // },
 });
 
 function mapStateToProps(state) {
