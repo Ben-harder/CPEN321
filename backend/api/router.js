@@ -11,14 +11,11 @@ module.exports = function (app)
 
   app.post('/create-job', job.createJob);
 
-  app.post('/applyForJob', (req, res) => {
-    res.sendStatus(200);
-    console.log("User applied for a job, add job details here.");
-  })
+  app.post('/job/apply', job.applyForJob);
 
   app.get('/get-all-jobs', job.getAllJobs);
 
   app.get('/get-employer-jobs', job.getEmployerJobs);
 
-  // app.get('/job/get-taken-jobs', job.getTakenJobs);
+  app.get('/job/get-taken-jobs', job.getAppliedForJobs);
 }

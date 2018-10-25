@@ -14,8 +14,9 @@ import SideMenu from './SideMenu';
 import JobScreen from '../screens/JobScreen';
 import TakenJobsScreen from '../screens/TakenJobsScreen';
 import EmployerJobsScreen from '../screens/EmployerJobsScreen';
+import JobBoardScreen from '../screens/JobBoardScreen';
 
-const AppStack = createStackNavigator({ Main: MainTabNavigator }, 
+const AppStack = createStackNavigator({ Main: JobBoardScreen, Job: JobScreen }, 
   {
     navigationOptions: ({navigation}) => ({
       headerLeft:(<TouchableOpacity onPress={() => navigation.openDrawer()}>
@@ -26,21 +27,47 @@ const AppStack = createStackNavigator({ Main: MainTabNavigator },
     })
   }
 );
-const SignInStack = createStackNavigator({ SignIn: SignInScreen });
-const SignUpStack = createStackNavigator({ SignUp: SignUpScreen });
-const CreateJobStack = createStackNavigator({CreateJob: CreateJobScreen});
-const JobStack = createStackNavigator({Job: JobScreen}); 
-const TakenJobsStack = createStackNavigator({TakenJobs: TakenJobsScreen});
-const EmployerJobsStack = createStackNavigator({EmployerJobs: EmployerJobsScreen});
+const AuthStack = createStackNavigator({ SignIn: SignInScreen, SignUp: SignUpScreen });
+const CreateJobStack = createStackNavigator({CreateJob: CreateJobScreen},
+  {
+    navigationOptions: ({navigation}) => ({
+      headerLeft:(<TouchableOpacity onPress={() => navigation.openDrawer()}>
+                    <IOSIcon name="ios-menu" size={30} />
+                  </TouchableOpacity>
+      ),
+      headerStyle: { marginRight: 10, marginLeft: 15, borderBottomWidth: 0 }
+    })
+  }
+);
+const TakenJobsStack = createStackNavigator({TakenJobs: TakenJobsScreen},
+  {
+    navigationOptions: ({navigation}) => ({
+      headerLeft:(<TouchableOpacity onPress={() => navigation.openDrawer()}>
+                    <IOSIcon name="ios-menu" size={30} />
+                  </TouchableOpacity>
+      ),
+      headerStyle: { marginRight: 10, marginLeft: 15, borderBottomWidth: 0 }
+    })
+  }
+);
+const EmployerJobsStack = createStackNavigator({EmployerJobs: EmployerJobsScreen},
+  {
+    navigationOptions: ({navigation}) => ({
+      headerLeft:(<TouchableOpacity onPress={() => navigation.openDrawer()}>
+                    <IOSIcon name="ios-menu" size={30} />
+                  </TouchableOpacity>
+      ),
+      headerStyle: { marginRight: 10, marginLeft: 15, borderBottomWidth: 0 }
+    })
+  }
+);
 
 const MainApp = createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
     App: AppStack,
-    SignIn: SignInStack,
-    SignUp: SignUpStack,
+    Auth: AuthStack,
     CreateJob: CreateJobStack,
-    Job: JobScreen,
     TakenJobs: TakenJobsStack,
     EmployerJobs: EmployerJobsStack,
   },

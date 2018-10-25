@@ -24,10 +24,6 @@ import { MonoText } from '../components/StyledText';
 
 class CreateJobScreen extends React.Component
 {
-    static navigationOptions = {
-        header: null,
-    };
-
     constructor(props)
     {
         super(props);
@@ -109,14 +105,6 @@ class CreateJobScreen extends React.Component
                             onPress={this.attemptCreateJob}
                         />
                     </View>
-
-                    <View style={styles.button}>
-                        <Button
-                            title="Cancel"
-                            onPress={() => { this.props.navigation.navigate("App") }}
-                        />
-                    </View>
-
                 </ScrollView>
             </View>
         );
