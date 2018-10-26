@@ -5,6 +5,7 @@ const { manifest } = Expo.Constants;
 //   ? `http://40.118.188.95:8080`
 //   : `http://${manifest.debuggerHost.split(`:`).shift().concat(`:3001`)}`;
 
-const api = `http://${manifest.debuggerHost.split(`:`).shift().concat(`:3001`)}`;
+// const api = `http://${manifest.debuggerHost.split(`:`).shift().concat(`:3001`)}`;
+const api = `http://40.118.188.95:8080`;
 
 export default api;

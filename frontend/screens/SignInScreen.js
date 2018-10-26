@@ -56,7 +56,6 @@ class SignInScreen extends React.Component {
 
 
   render() {
-    console.log(process.env.REACT_APP_SERVER);
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.container}>

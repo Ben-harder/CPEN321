@@ -42,7 +42,7 @@ module.exports = {
           ret.errorMessage = err.message;
           return res.status(500).send(ret);
         }
-        // console.log('New User: ' + user);
+        console.log('New User: ' + user);
         return res.status(200).send(user);
     });
   },
