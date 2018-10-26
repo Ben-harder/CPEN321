@@ -143,6 +143,7 @@ class CreateJobScreen extends React.Component
                 this.props.navigation.navigate("App");
             }).catch((err) => {
                 console.log(err);
+                alert(err.response.data.errorMessage);
             });
         }
     }
