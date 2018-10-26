@@ -70,25 +70,34 @@ const EmployerJobsStack = createStackNavigator({EmployerJobs: EmployerJobsScreen
 
 const MainApp = createSwitchNavigator(
   {
-    AuthLoading: AuthLoadingScreen,
     App: AppStack,
-    Auth: AuthStack,
     CreateJob: CreateJobStack,
     TakenJobs: TakenJobsStack,
     EmployerJobs: EmployerJobsStack,
   },
   {
-    initialRouteName: 'AuthLoading',
+    initialRouteName: 'App',
   },
 );
 
-const AppContainer = createDrawerNavigator(
+const Drawer = createDrawerNavigator(
   {
     screen: MainApp,
   }, 
   {
     contentComponent: SideMenu,
     drawerWidth: Dimensions.get('window').width - 120,
+  }
+);
+
+const AppContainer = createSwitchNavigator(
+  {
+    AuthLoading: AuthLoadingScreen,
+    Auth: AuthStack,
+    Drawer: Drawer,
+  },
+  {
+    initialRouteName: 'AuthLoading',
   }
 );
 
