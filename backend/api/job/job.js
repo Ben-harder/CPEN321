@@ -11,7 +11,19 @@ module.exports = {
       ret.errorMessage = 'All fields have not been filled out';
       return res.status(400).send(ret);
     }
-    
+
+    // 0 wage
+    if (req.body.wage == 0) {
+      ret.errorMessage = "Employees won't work for free!";
+      return res.status(400).send(ret);
+    }
+
+    // negative wage
+    if (req.body.wage < 0) {
+      ret.errorMessage = "Woah! employees won't work AND pay you money!";
+      return res.status(400).send(ret);
+    }
+        
     job.job_title = req.body.jobType;
     job.description = req.body.description;
     job.wage = req.body.wage;
