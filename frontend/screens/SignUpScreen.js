@@ -42,7 +42,6 @@ class SignUpScreen extends React.Component {
   }
   
   checkUserExists() {
-    console.log(api);
     if (this.phone.isValidNumber()) {
       axios.get(`${api}/auth/user-exists`, {
         params: {
@@ -153,6 +152,7 @@ class SignUpScreen extends React.Component {
               style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 200, padding: 10}}
               onChangeText={(text) => this.setState({password: text})}
               value={this.state.password}
+              secureTextEntry={true}
             />
             <TouchableOpacity onPress={this.inputPassword} style={styles.textLink}>
               <Text style={styles.textLinkText}>Continue</Text>
@@ -168,6 +168,7 @@ class SignUpScreen extends React.Component {
               style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 200, padding: 10}}
               onChangeText={(text) => this.setState({passwordConfirm: text})}
               value={this.state.passwordConfirm}
+              secureTextEntry={true}
             />
             <TouchableOpacity onPress={this.attemptSignup} style={styles.textLink}>
               <Text style={styles.textLinkText}>Create Account</Text>

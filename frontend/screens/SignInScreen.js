@@ -56,6 +56,7 @@ class SignInScreen extends React.Component {
 
 
   render() {
+    console.log(process.env.REACT_APP_SERVER);
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.container}>
@@ -72,6 +73,7 @@ class SignInScreen extends React.Component {
               style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 200, padding: 10}}
               onChangeText={(text) => this.setState({password: text})}
               value={this.state.password}
+              secureTextEntry={true}
             />
             <TouchableOpacity onPress={this.attemptSignIn} style={styles.textLink}>
               <Text style={styles.textLinkText}>Sign In</Text>

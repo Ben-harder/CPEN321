@@ -7,7 +7,7 @@ var database = require('../../initdb');
 module.exports = {
   createUser(req, res) {
     let ret = {};
-    console.log(req.body);
+
     // if a field is missing return an error
     if (!req.body || !req.body.phoneNumber || !req.body.password || !req.body.passwordConfirm
       || !req.body.firstName || !req.body.lastName) {
@@ -38,12 +38,11 @@ module.exports = {
 
     // save the user
     user.save(function (err) {
-        console.log("reached");
         if (err) {
           ret.errorMessage = err.message;
           return res.status(500).send(ret);
         }
-        console.log('New User: ' + user);
+        // console.log('New User: ' + user);
         return res.status(200).send(user);
     });
   },
