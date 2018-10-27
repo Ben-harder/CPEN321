@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 
 //Define a schema
 var Schema = mongoose.Schema;
@@ -27,11 +27,11 @@ var Job = new Schema({
     employer: {
         type: Schema.ObjectId,
         required: true,
-        ref: 'User'
+        ref: "User"
     },
     employee: {
         type: Schema.ObjectId,
-        ref: 'User',
+        ref: "User",
     },
     created_at: {
         type: Date,
@@ -55,16 +55,16 @@ var Job = new Schema({
     // array of applicants 
     applicants: [{
             type: Schema.ObjectId,
-            ref: 'User'}
+            ref: "User"}
     ]
 });
 
-// Virtual for job's URL
+// Virtual for job"s URL
 Job
-.virtual('url')
+.virtual("url")
 .get(function () {
-  return '/job' + this.job_id;
+  return "/job" + this.job_id;
 });
 
 // export function to create "Job" model class
-module.exports = mongoose.model('Job', Job);
+module.exports = mongoose.model("Job", Job);

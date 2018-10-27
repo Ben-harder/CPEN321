@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import
 {
     Image,
@@ -11,16 +11,60 @@ import
     Button,
     AsyncStorage,
     FlatList,
-} from 'react-native';
-import { StackNavigator } from 'react-navigation';
-import { WebBrowser } from 'expo';
-import { connect } from 'react-redux';
-import axios from 'axios';
+} from "react-native";
+import { StackNavigator } from "react-navigation";
+import { WebBrowser } from "expo";
+import { connect } from "react-redux";
+import axios from "axios";
 import api from "../constants/Url";
-import Colors from '../constants/Colors';
-import Font from '../constants/Font';
+import Colors from "../constants/Colors";
+import Font from "../constants/Font";
 
-import { MonoText } from '../components/StyledText';
+import { MonoText } from "../components/StyledText";
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: 20,
+        backgroundColor: "#fff",
+        paddingHorizontal: 5,
+
+    },
+    contentContainer: {
+        paddingTop: 20,
+        marginBottom: 20,
+    },
+    headerText: {
+        fontSize: Font.titleSize,
+        textAlign: "center",
+        padding: 20,
+    },
+    jobList: {
+        width: "100%",
+        padding: 10,
+        flex: 1,
+    },
+    jobItem: {
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: Colors.sNorm,
+        marginTop: 10,
+        backgroundColor: Colors.tile,
+        padding: 30,
+        overflow: "hidden",
+    },
+    regText: {
+        fontSize: Font.normSize,
+        fontWeight: Font.thin,
+      },
+    buttonWrapper: {
+        padding: 10,
+        borderRadius: 10,
+        borderColor: Colors.sNorm,
+        backgroundColor: Colors.sNorm,
+        overflow: "hidden",
+    },
+});
 
 class JobScreen extends React.Component
 {
@@ -45,12 +89,12 @@ class JobScreen extends React.Component
         const { navigation } = this.props;
 
         this.setState({
-            jobType: navigation.getParam('jobType', 'NO JOB TYPE'),
-            author: navigation.getParam('author', 'NO AUTHOR'),
-            description: navigation.getParam('description', 'NO DESCRIPTION'),
-            wage: navigation.getParam('wage', 'NO WAGE'),
-            address: navigation.getParam('address', 'NO ADDRESS'),
-            jobID: navigation.getParam('jobID', 'NO JOBID')
+            jobType: navigation.getParam("jobType", "NO JOB TYPE"),
+            author: navigation.getParam("author", "NO AUTHOR"),
+            description: navigation.getParam("description", "NO DESCRIPTION"),
+            wage: navigation.getParam("wage", "NO WAGE"),
+            address: navigation.getParam("address", "NO ADDRESS"),
+            jobID: navigation.getParam("jobID", "NO JOBID")
         });
     }
 
@@ -67,7 +111,7 @@ class JobScreen extends React.Component
                 jobID: this.state.jobID
             }).then((res) => {
                 alert("You applied to the job successfuly.");
-                this.props.navigation.navigate('Main');
+                this.props.navigation.navigate("Main");
             }).catch((err) => {
                 console.log(err);
                 alert(err.response.data.errorMessage);
@@ -101,13 +145,13 @@ class JobScreen extends React.Component
                 <View style={[styles.buttonWrapper, {alignSelf: "center", marginTop: 10, marginBottom: 400, width: "70%" }]}>
                     <Button
                         title="Cancel"
-                        onPress={() => { this.props.navigation.navigate('Main') }}
+                        onPress={() => { this.props.navigation.navigate("Main") }}
                         color={Colors.buttonText}
                     />
                 </View>
             </View>
         );
-    };
+    }
 
 }
 
@@ -119,47 +163,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(JobScreen);
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: 20,
-        backgroundColor: '#fff',
-        paddingHorizontal: 5,
-
-    },
-    contentContainer: {
-        paddingTop: 20,
-        marginBottom: 20,
-    },
-    headerText: {
-        fontSize: Font.titleSize,
-        textAlign: 'center',
-        padding: 20,
-    },
-    jobList: {
-        width: "100%",
-        padding: 10,
-        flex: 1,
-    },
-    jobItem: {
-        borderRadius: 10,
-        borderWidth: 2,
-        borderColor: Colors.sNorm,
-        marginTop: 10,
-        backgroundColor: Colors.tile,
-        padding: 30,
-        overflow: 'hidden',
-    },
-    regText: {
-        fontSize: Font.normSize,
-        fontWeight: Font.thin,
-      },
-    buttonWrapper: {
-        padding: 10,
-        borderRadius: 10,
-        borderColor: Colors.sNorm,
-        backgroundColor: Colors.sNorm,
-        overflow: 'hidden',
-    },
-});

@@ -1,6 +1,8 @@
 var Job = require('../../models/job');
 var database = require('../../initdb');
 
+var foo = undefined;
+
 module.exports = {
   createJob(req, res) {
     let ret = {};
@@ -30,9 +32,9 @@ module.exports = {
     job.address = req.body.address;
     job.employer = req.body.employerID;
 
-    job.employee = undefined;
+    job.employee = foo;
     job.created_at = new Date();
-    job.deleted_at = undefined;
+    job.deleted_at = foo;
     job.is_deleted = false;
     job.is_compeleted = false;
     job.is_active = false;
@@ -164,4 +166,4 @@ module.exports = {
   //var populateQuery = [{path:'books', select:'title pages'}, {path:'movie', select:'director'}];
 // { "instock": { $elemMatch: { qty: 5, warehouse: "A" } } }
 
-}
+};

@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 
 //Define a schema
 var Schema = mongoose.Schema;
@@ -10,22 +10,22 @@ var Schema = mongoose.Schema;
 var User = new Schema({
     first_name: {
         type: String,
-        required: [true,'First Name is required']
+        required: [true,"First Name is required"]
     },    
     last_name: {
         type: String,
-        required: [true, 'Last Name is required'],
+        required: [true, "Last Name is required"],
     },    
     phone_number: {
         type: String,
-        required: [true, 'Phone Number is required'],
+        required: [true, "Phone Number is required"],
     },
     hash_password: {
         type: String,
-        required: [true, 'Password is required'],
+        required: [true, "Password is required"],
         // 6-16 digits
-        min : [100000, 'Password is too short'],
-        max : [9999999999999999, 'Password is too long']
+        min : [100000, "Password is too short"],
+        max : [9999999999999999, "Password is too long"]
     },
     verification_token: {
         type: String,
@@ -50,23 +50,23 @@ var User = new Schema({
     // array of imgs
     images: [{
             type: Schema.ObjectId,
-            ref: 'Image'}
+            ref: "Image"}
     ]
 });
 
-// Virtual for user's URL
+// Virtual for user"s URL
 User
-.virtual('url')
+.virtual("url")
 .get(function () {
-  return '/user' + this.user_id;
+  return "/user" + this.user_id;
 });
 
-// Virtual for user's full name
+// Virtual for user"s full name
 User
-.virtual('name')
+.virtual("name")
 .get(function () {
-  return this.name.last + ', ' + this.name.first;
+  return this.name.last + ", " + this.name.first;
 });
 
 // export function to create "User" model class
-module.exports = mongoose.model('User', User);
+module.exports = mongoose.model("User", User);
