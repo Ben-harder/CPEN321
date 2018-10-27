@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import
 {
     Image,
@@ -11,15 +11,67 @@ import
     Button,
     AsyncStorage,
     FlatList,
-} from 'react-native';
-import { StackNavigator } from 'react-navigation';
-import { WebBrowser } from 'expo';
-import axios from 'axios';
+} from "react-native";
+import { StackNavigator } from "react-navigation";
+import { WebBrowser } from "expo";
+import axios from "axios";
 import api from "../constants/Url";
-import Colors from '../constants/Colors';
-import Font from '../constants/Font';
+import Colors from "../constants/Colors";
+import Font from "../constants/Font";
 
-import { MonoText } from '../components/StyledText';
+import { MonoText } from "../components/StyledText";
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "#fff",
+    },
+    contentContainer: {
+        paddingTop: 30,
+    },
+    headerText: {
+        fontSize: Font.titleSize,
+        textAlign: "center",
+    },
+    jobList: {
+        width: "100%",
+        padding: 10,
+        flex: 1,
+    },
+    jobItem: {
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: Colors.sNorm,
+        marginTop: 10,
+        backgroundColor: Colors.tile,
+        padding: 30,
+        overflow: "hidden",
+    },
+    regText: {
+        fontSize: Font.normSize,
+        fontWeight: Font.thin,
+      },
+    tabBarInfoContainer: {
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        ...Platform.select({
+          ios: {
+            shadowColor: "black",
+            shadowOffset: { height: -3 },
+            shadowOpacity: 0.1,
+            shadowRadius: 3,
+          },
+          android: {
+            elevation: 20,
+          },
+        }),
+        alignItems: "center",
+        backgroundColor: "#fbfbfb",
+        paddingVertical: 20,
+      },
+});
 
 export default class JobBoardScreen extends React.Component
 {
@@ -61,7 +113,7 @@ export default class JobBoardScreen extends React.Component
 
     goToJobDetails(job)
     {
-        this.props.navigation.navigate('Job', {
+        this.props.navigation.navigate("Job", {
             jobType: job.job_title,
             address: job.address,
             author: `${job.employer.first_name} ${job.employer.last_name}`,
@@ -95,58 +147,6 @@ export default class JobBoardScreen extends React.Component
                 </ScrollView>
             </View>
         );
-    };
+    }
 
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-    contentContainer: {
-        paddingTop: 30,
-    },
-    headerText: {
-        fontSize: Font.titleSize,
-        textAlign: 'center',
-    },
-    jobList: {
-        width: "100%",
-        padding: 10,
-        flex: 1,
-    },
-    jobItem: {
-        borderRadius: 10,
-        borderWidth: 2,
-        borderColor: Colors.sNorm,
-        marginTop: 10,
-        backgroundColor: Colors.tile,
-        padding: 30,
-        overflow: 'hidden',
-    },
-    regText: {
-        fontSize: Font.normSize,
-        fontWeight: Font.thin,
-      },
-    tabBarInfoContainer: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        ...Platform.select({
-          ios: {
-            shadowColor: 'black',
-            shadowOffset: { height: -3 },
-            shadowOpacity: 0.1,
-            shadowRadius: 3,
-          },
-          android: {
-            elevation: 20,
-          },
-        }),
-        alignItems: 'center',
-        backgroundColor: '#fbfbfb',
-        paddingVertical: 20,
-      },
-});

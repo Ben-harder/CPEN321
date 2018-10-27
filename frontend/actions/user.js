@@ -1,5 +1,5 @@
 // Dependencies
-import * as types from './types';
+import * as types from "./types";
 
 export const userData = payload => ({
   type: types.USER_DATA,

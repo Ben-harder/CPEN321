@@ -1,20 +1,22 @@
 #! /usr/bin/env node
-var database = require('./initdb');
+var database = require("./initdb");
+
+var foo = undefined;
 
 console.log("This script populates database that connected to port: mongodb://localhost:27017/");
 
 // require models
-var Job = require('./models/job');
-var User = require('./models/user');
-var Image = require('./models/image');
+var Job = require("./models/job");
+var User = require("./models/user");
+var Image = require("./models/image");
 
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-db.on('close', () => console.log("database closed"));
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
+db.on("close", () => console.log("database closed"));
 
 /**  
  * Create a new job. When a user created:
- *  - verification_token = undefined
- *  - working_job_id = undefined
+ *  - verification_token = foo
+ *  - working_job_id = foo
  *  - is_working = false
  *  - is_verified = false
  *  - is_employer = false
@@ -35,8 +37,8 @@ function userCreate ( first_name, last_name, phone_number, hash_password) {
     if (hash_password != false) user.hash_password = hash_password;
 
     // auto set
-    user.verification_token = undefined;
-    user.working_job_id = undefined;
+    user.verification_token = foo;
+    user.working_job_id = foo;
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;
@@ -49,7 +51,7 @@ function userCreate ( first_name, last_name, phone_number, hash_password) {
             // console.log("error in userCreate" + err.message);
             return null;
         }
-        // console.log('New User: ' + user);
+        // console.log("New User: " + user);
         return true;
     });
 }
@@ -58,8 +60,8 @@ function userCreate ( first_name, last_name, phone_number, hash_password) {
 /**  
  * Create a new job. When a job created:
  *  - created_at = current time
- *  - employee = undefined
- *  - deleted_at = undefined
+ *  - employee = foo
+ *  - deleted_at = foo
  *  - is_deleted = false
  *  - is_completed = false
  *  - is_active = false
@@ -79,9 +81,9 @@ function jobCreate(job_title, description, wage, address, employerID) {
     if (employerID != false) job.employer = employerID;
 
     // auto set
-    job.employee = undefined;
+    job.employee = foo;
     job.created_at = new Date();
-    job.deleted_at = undefined;
+    job.deleted_at = foo;
     job.is_deleted = false;
     job.is_compeleted = false;
     job.is_active = false;

@@ -1,20 +1,20 @@
 // Dependencies
-import React from 'react';
-import { TouchableOpacity, Dimensions } from 'react-native';
-import { createSwitchNavigator , createStackNavigator, createDrawerNavigator } from 'react-navigation';
+import React from "react";
+import { TouchableOpacity, Dimensions } from "react-native";
+import { createSwitchNavigator , createStackNavigator, createDrawerNavigator } from "react-navigation";
 import IOSIcon from "react-native-vector-icons/Ionicons";
 
 // Components
-import MainTabNavigator from './MainTabNavigator';
-import SignInScreen from '../screens/SignInScreen';
-import SignUpScreen from '../screens/SignUpScreen';
-import AuthLoadingScreen from '../screens/AuthLoadingScreen';
-import CreateJobScreen from '../screens/CreateJobScreen';
-import SideMenu from './SideMenu';
-import JobScreen from '../screens/JobScreen';
-import TakenJobsScreen from '../screens/TakenJobsScreen';
-import EmployerJobsScreen from '../screens/EmployerJobsScreen';
-import JobBoardScreen from '../screens/JobBoardScreen';
+import MainTabNavigator from "./MainTabNavigator";
+import SignInScreen from "../screens/SignInScreen";
+import SignUpScreen from "../screens/SignUpScreen";
+import AuthLoadingScreen from "../screens/AuthLoadingScreen";
+import CreateJobScreen from "../screens/CreateJobScreen";
+import SideMenu from "./SideMenu";
+import JobScreen from "../screens/JobScreen";
+import TakenJobsScreen from "../screens/TakenJobsScreen";
+import EmployerJobsScreen from "../screens/EmployerJobsScreen";
+import JobBoardScreen from "../screens/JobBoardScreen";
 
 const AppStack = createStackNavigator({ Main: JobBoardScreen, Job: JobScreen }, 
   {
@@ -70,7 +70,7 @@ const MainApp = createSwitchNavigator(
     EmployerJobs: EmployerJobsStack,
   },
   {
-    initialRouteName: 'App',
+    initialRouteName: "App",
   },
 );
 
@@ -80,7 +80,7 @@ const Drawer = createDrawerNavigator(
   }, 
   {
     contentComponent: SideMenu,
-    drawerWidth: Dimensions.get('window').width - 120,
+    drawerWidth: Dimensions.get("window").width - 120,
   }
 );
 
@@ -92,7 +92,7 @@ const AppContainer = createSwitchNavigator(
     Drawer: Drawer,
   },
   {
-    initialRouteName: 'AuthLoading',
+    initialRouteName: "AuthLoading",
   }
 );
 

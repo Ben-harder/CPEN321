@@ -1,15 +1,52 @@
-import PropTypes from 'prop-types';
-import React, {Component} from 'react';
-import {NavigationActions} from 'react-navigation';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import {ScrollView, Text, View, StyleSheet, AsyncStorage} from 'react-native';
-import { StackNavigator } from 'react-navigation';
-import Colors from '../constants/Colors';
-import Font from '../constants/Font';
+import PropTypes from "prop-types";
+import React, {Component} from "react";
+import {NavigationActions} from "react-navigation";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import {ScrollView, Text, View, StyleSheet, AsyncStorage} from "react-native";
+import { StackNavigator } from "react-navigation";
+import Colors from "../constants/Colors";
+import Font from "../constants/Font";
 
 // actions
-import * as actions from '../actions/';
+import * as actions from "../actions/";
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 20,
+    flex: 1
+  },
+  navItemStyle: {
+    padding: 10,
+    textAlign: "center",
+    fontSize: Font.normSize,
+  },
+  navSectionStyle: {
+    borderBottomWidth: 2,
+    borderBottomColor: Colors.sNorm,
+    paddingVertical: 10
+  },
+  sectionHeadingStyle: {
+    paddingTop: 20,
+    textAlign: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    fontSize: Font.normSize,
+  },
+  footerContainer: {
+    padding: 20,
+  },
+  button: {
+    fontSize: Font.butSize,
+    color: Colors.buttonText,
+    fontWeight: Font.thick,
+    padding: 10,
+    borderRadius: 10,
+    borderColor: Colors.sNorm,
+    backgroundColor: Colors.sNorm,
+    overflow: "hidden",
+  },
+});
 
 class SideMenu extends Component {
   constructor(props) {
@@ -28,8 +65,8 @@ class SideMenu extends Component {
   async signOut() {
     this.props.actions.clearUser();
     await AsyncStorage.clear();
-    this.props.navigation.navigate('SignIn');
-  };
+    this.props.navigation.navigate("SignIn");
+  }
 
   render () {
     return (
@@ -41,7 +78,7 @@ class SideMenu extends Component {
             </Text>
           </View>
           <View style={styles.navSectionStyle}>
-            <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate('Main')}}>
+            <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate("Main")}}>;
               Browse
             </Text>
           </View>
@@ -51,17 +88,17 @@ class SideMenu extends Component {
             </Text>
           </View>
           <View style={styles.navSectionStyle}>
-            <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate('EmployerJobs')}}>
+            <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate("EmployerJobs")}}>;
               My Job Postings
             </Text>
           </View>
           <View style={styles.navSectionStyle}>
-            <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate('TakenJobs')}}>
+            <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate("TakenJobs")}}>;
               Taken Jobs
             </Text>
           </View>
           <View style={styles.navSectionStyle}>
-            <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate('CreateJob')}}>
+            <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate("CreateJob")}}>;
               Create Job
             </Text>
           </View>
@@ -77,43 +114,6 @@ class SideMenu extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 20,
-    flex: 1
-  },
-  navItemStyle: {
-    padding: 10,
-    textAlign: 'center',
-    fontSize: Font.normSize,
-  },
-  navSectionStyle: {
-    borderBottomWidth: 2,
-    borderBottomColor: Colors.sNorm,
-    paddingVertical: 10
-  },
-  sectionHeadingStyle: {
-    paddingTop: 20,
-    textAlign: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 5,
-    fontSize: Font.normSize,
-  },
-  footerContainer: {
-    padding: 20,
-  },
-  button: {
-    fontSize: Font.butSize,
-    color: Colors.buttonText,
-    fontWeight: Font.thick,
-    padding: 10,
-    borderRadius: 10,
-    borderColor: Colors.sNorm,
-    backgroundColor: Colors.sNorm,
-    overflow: 'hidden',
-  },
-});
 
 SideMenu.propTypes = {
   navigation: PropTypes.object

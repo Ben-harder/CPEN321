@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 
 //Define a schema
 var Schema = mongoose.Schema;
@@ -14,4 +14,4 @@ var Application = new Schema({
     },
 });
 
-module.exports = mongoose.model('Application', Application);
+module.exports = mongoose.model("Application", Application);

@@ -1,22 +1,22 @@
-import { app } from '../server';
-var auth = require('./auth/auth');
-var job = require('./job/job');
+import { app } from "../server";
+var auth = require("./auth/auth");
+var job = require("./job/job");
 
 module.exports = function (app)
 {
   // auth routes
-  app.post('/auth/create-user', auth.createUser);
-  app.get('/auth/user-exists', auth.doesUserExist);
-  app.get('/auth/sign-in', auth.userSignIn);
+  app.post("/auth/create-user", auth.createUser);
+  app.get("/auth/user-exists", auth.doesUserExist);
+  app.get("/auth/sign-in", auth.userSignIn);
 
-  app.post('/create-job', job.createJob);
+  app.post("/create-job", job.createJob);
 
-  app.get('/job/can-apply', job.isAbleToApply);
-  app.post('/job/apply', job.applyForJob);
+  app.get("/job/can-apply", job.isAbleToApply);
+  app.post("/job/apply", job.applyForJob);
 
-  app.get('/get-all-jobs', job.getAllJobs);
+  app.get("/get-all-jobs", job.getAllJobs);
 
-  app.get('/get-employer-jobs', job.getEmployerJobs);
+  app.get("/get-employer-jobs", job.getEmployerJobs);
 
-  app.get('/job/get-taken-jobs', job.getAppliedForJobs);
-}
+  app.get("/job/get-taken-jobs", job.getAppliedForJobs);
+};

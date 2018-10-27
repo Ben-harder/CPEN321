@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   StyleSheet,
   View,
@@ -9,18 +9,50 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
-} from 'react-native';
+} from "react-native";
 import PhoneInput from "react-native-phone-input";
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import api from "../constants/Url";
-import axios from 'axios';
-import phoneNumber from 'react-native-phone-input/lib/phoneNumber';
-import Colors from '../constants/Colors';
-import Font from '../constants/Font';
+import axios from "axios";
+import phoneNumber from "react-native-phone-input/lib/phoneNumber";
+import Colors from "../constants/Colors";
+import Font from "../constants/Font";
 
 // actions
-import * as actions from '../actions/';
+import * as actions from "../actions/";
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fff",
+    padding: 40,
+  },
+  textLink: {
+    paddingVertical: 15,
+  },
+  textLinkText: {
+    fontSize: Font.butSize,
+    color: Colors.buttonText,
+    fontWeight: Font.thick,
+    padding: 10,
+    borderRadius: 10,
+    borderColor: Colors.sNorm,
+    backgroundColor: Colors.sNorm,
+    overflow: "hidden",
+  },
+  innerContainer: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  regText: {
+    fontSize: Font.normSize,
+    fontWeight: Font.thick,
+  },
+});
 
 class SignInScreen extends React.Component {
   constructor(props) {
@@ -42,9 +74,9 @@ class SignInScreen extends React.Component {
           password: this.state.password
         }
       }).then(async (res) => {
-        await AsyncStorage.setItem('userToken', 'abc');
+        await AsyncStorage.setItem("userToken", "abc");
         this.props.actions.userData(res.data);
-        this.props.navigation.navigate('App');
+        this.props.navigation.navigate("App");
       }).catch((err) => {
         console.log(err);
         alert(err.response.data.errorMessage);
@@ -65,11 +97,11 @@ class SignInScreen extends React.Component {
                 ref={ref => {
                   this.phone = ref;
                 }}
-                initialCountry='ca'
+                initialCountry="ca"
               />
             <Text style={[styles.regText, {padding: 10}]}>Enter your password:</Text>
             <TextInput
-              style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 200, padding: 10}}
+              style={{height: 40, borderColor: "gray", borderWidth: 1, width: 200, padding: 10}}
               onChangeText={(text) => this.setState({password: text})}
               value={this.state.password}
               secureTextEntry={true}
@@ -78,7 +110,7 @@ class SignInScreen extends React.Component {
               <Text style={styles.textLinkText}>Sign In</Text>
             </TouchableOpacity>
             <Text style={styles.regText}>or</Text>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')} style={styles.textLink}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("SignUp")} style={styles.textLink}>
               <Text style={styles.textLinkText}>Click Here to Sign Up</Text>
             </TouchableOpacity>
           </View>
@@ -87,38 +119,6 @@ class SignInScreen extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-    padding: 40,
-  },
-  textLink: {
-    paddingVertical: 15,
-  },
-  textLinkText: {
-    fontSize: Font.butSize,
-    color: Colors.buttonText,
-    fontWeight: Font.thick,
-    padding: 10,
-    borderRadius: 10,
-    borderColor: Colors.sNorm,
-    backgroundColor: Colors.sNorm,
-    overflow: 'hidden',
-  },
-  innerContainer: {
-    width: "100%",
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  regText: {
-    fontSize: Font.normSize,
-    fontWeight: Font.thick,
-  },
-});
 
 function mapStateToProps(state) {
 	const props = {

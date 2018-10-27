@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 
 //Define a schema
 var Schema = mongoose.Schema;
@@ -25,16 +25,16 @@ var Image = new Schema({
     // one user
     user: {
             type: Schema.Types.ObjectId,
-            ref: 'User'
+            ref: "User"
     }
 });
 
-// Virtual for image's URL
+// Virtual for image"s URL
 Image
-.virtual('url')
+.virtual("url")
 .get(function () {
-  return '/image' + this.image_id;
+  return "/image" + this.image_id;
 });
 
 // export function to create "Image" model class
-module.exports = mongoose.model('Image', Image);
+module.exports = mongoose.model("Image", Image);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   StyleSheet,
   View,
@@ -9,18 +9,53 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
-} from 'react-native';
+} from "react-native";
 import PhoneInput from "react-native-phone-input";
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import api from "../constants/Url";
-import axios from 'axios';
-import phoneNumber from 'react-native-phone-input/lib/phoneNumber';
-import Colors from '../constants/Colors';
-import Font from '../constants/Font';
+import axios from "axios";
+import phoneNumber from "react-native-phone-input/lib/phoneNumber";
+import Colors from "../constants/Colors";
+import Font from "../constants/Font";
 
 // actions
-import * as actions from '../actions/';
+import * as actions from "../actions/";
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fff",
+    padding: 40,
+  },
+  textLink: {
+    paddingVertical: 10,
+  },
+  textLinkText: {
+    fontSize: Font.butSize,
+    color: Colors.buttonText,
+    fontWeight: Font.thick,
+    padding: 10,
+    borderRadius: 10,
+    borderColor: Colors.sNorm,
+    backgroundColor: Colors.sNorm,
+    overflow: "hidden",
+  },
+  innerContainer: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  regText: {
+    fontSize: Font.normSize,
+    fontWeight: Font.thick,
+  },
+  // background: {
+  //   backgroundColor: Colors.pLight,
+  // },
+});
 
 class SignUpScreen extends React.Component {
   constructor(props) {
@@ -70,9 +105,9 @@ class SignUpScreen extends React.Component {
         firstName: this.state.firstName,
         lastName: this.state.lastName
       }).then(async (res) => {
-        await AsyncStorage.setItem('userToken', 'abc');
+        await AsyncStorage.setItem("userToken", "abc");
         this.props.actions.userData(res.data);
-        this.props.navigation.navigate('App');
+        this.props.navigation.navigate("App");
       }).catch((err) => {
         console.log(err);
         alert(err.response.data.errorMessage);
@@ -114,13 +149,13 @@ class SignUpScreen extends React.Component {
                 ref={ref => {
                   this.phone = ref;
                 }}
-                initialCountry='ca'
+                initialCountry="ca"
               />
             <TouchableOpacity onPress={this.checkUserExists} style={styles.textLink}>
               <Text style={styles.textLinkText}>Sign Up</Text>
             </TouchableOpacity>
             <Text style={styles.regText}>or</Text>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('SignIn')} style={styles.textLink}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("SignIn")} style={styles.textLink}>
               <Text style={styles.textLinkText}>Click Here to Sign In</Text>
             </TouchableOpacity>
           </View>}
@@ -128,13 +163,13 @@ class SignUpScreen extends React.Component {
           <View style={styles.innerContainer}>
             <Text>First Name:</Text>
             <TextInput
-              style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 200, padding: 10}}
+              style={{height: 40, borderColor: "gray", borderWidth: 1, width: 200, padding: 10}}
               onChangeText={(text) => this.setState({firstName: text})}
               value={this.state.firstName}
             />
             <Text>Last Name:</Text>
             <TextInput
-              style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 200, padding: 10}}
+              style={{height: 40, borderColor: "gray", borderWidth: 1, width: 200, padding: 10}}
               onChangeText={(text) => this.setState({lastName: text})}
               value={this.state.lastName}
             />
@@ -149,7 +184,7 @@ class SignUpScreen extends React.Component {
           <View style={styles.innerContainer}>
             <Text>Enter a password:</Text>
             <TextInput
-              style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 200, padding: 10}}
+              style={{height: 40, borderColor: "gray", borderWidth: 1, width: 200, padding: 10}}
               onChangeText={(text) => this.setState({password: text})}
               value={this.state.password}
               secureTextEntry={true}
@@ -165,7 +200,7 @@ class SignUpScreen extends React.Component {
           <View style={styles.innerContainer}>
             <Text>Confirm your password:</Text>
             <TextInput
-              style={{height: 40, borderColor: 'gray', borderWidth: 1, width: 200, padding: 10}}
+              style={{height: 40, borderColor: "gray", borderWidth: 1, width: 200, padding: 10}}
               onChangeText={(text) => this.setState({passwordConfirm: text})}
               value={this.state.passwordConfirm}
               secureTextEntry={true}
@@ -182,41 +217,6 @@ class SignUpScreen extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-    padding: 40,
-  },
-  textLink: {
-    paddingVertical: 10,
-  },
-  textLinkText: {
-    fontSize: Font.butSize,
-    color: Colors.buttonText,
-    fontWeight: Font.thick,
-    padding: 10,
-    borderRadius: 10,
-    borderColor: Colors.sNorm,
-    backgroundColor: Colors.sNorm,
-    overflow: 'hidden',
-  },
-  innerContainer: {
-    width: "100%",
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  regText: {
-    fontSize: Font.normSize,
-    fontWeight: Font.thick,
-  },
-  // background: {
-  //   backgroundColor: Colors.pLight,
-  // },
-});
 
 function mapStateToProps(state) {
 	const props = {
