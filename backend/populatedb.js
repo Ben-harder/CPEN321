@@ -1,8 +1,6 @@
 #! /usr/bin/env node
 var database = require("./initdb");
 
-var foo = undefined;
-
 console.log("This script populates database that connected to port: mongodb://localhost:27017/");
 
 // require models
@@ -15,8 +13,8 @@ db.on("close", () => console.log("database closed"));
 
 /**  
  * Create a new job. When a user created:
- *  - verification_token = foo
- *  - working_job_id = foo
+ *  - verification_token = undefined
+ *  - working_job_id = undefined
  *  - is_working = false
  *  - is_verified = false
  *  - is_employer = false
@@ -37,8 +35,8 @@ function userCreate ( first_name, last_name, phone_number, hash_password) {
     if (hash_password != false) user.hash_password = hash_password;
 
     // auto set
-    user.verification_token = foo;
-    user.working_job_id = foo;
+    user.verification_token = undefined;
+    user.working_job_id = undefined;
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;
@@ -60,8 +58,8 @@ function userCreate ( first_name, last_name, phone_number, hash_password) {
 /**  
  * Create a new job. When a job created:
  *  - created_at = current time
- *  - employee = foo
- *  - deleted_at = foo
+ *  - employee = undefined
+ *  - deleted_at = undefined
  *  - is_deleted = false
  *  - is_completed = false
  *  - is_active = false
@@ -81,9 +79,9 @@ function jobCreate(job_title, description, wage, address, employerID) {
     if (employerID != false) job.employer = employerID;
 
     // auto set
-    job.employee = foo;
+    job.employee = undefined;
     job.created_at = new Date();
-    job.deleted_at = foo;
+    job.deleted_at = undefined;
     job.is_deleted = false;
     job.is_compeleted = false;
     job.is_active = false;

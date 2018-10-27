@@ -1,8 +1,6 @@
 var Job = require('../../models/job');
 var database = require('../../initdb');
 
-var foo = undefined;
-
 module.exports = {
   createJob(req, res) {
     let ret = {};
@@ -32,9 +30,9 @@ module.exports = {
     job.address = req.body.address;
     job.employer = req.body.employerID;
 
-    job.employee = foo;
+    job.employee = undefined;
     job.created_at = new Date();
-    job.deleted_at = foo;
+    job.deleted_at = undefined;
     job.is_deleted = false;
     job.is_compeleted = false;
     job.is_active = false;

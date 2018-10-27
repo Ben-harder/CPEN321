@@ -4,8 +4,6 @@ var User = require("../../models/user");
 var Job = require("../../models/job");
 var database = require("../../initdb");
 
-var foo = undefined;
-
 module.exports = {
   createUser(req, res) {
     let ret = {};
@@ -29,8 +27,8 @@ module.exports = {
     user.last_name = req.body.lastName;
     user.phone_number = req.body.phoneNumber;
     user.hash_password = req.body.password;
-    user.verification_token = foo;
-    user.working_job_id = foo;
+    user.verification_token = undefined;
+    user.working_job_id = undefined;
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;

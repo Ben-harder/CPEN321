@@ -26,6 +26,70 @@ import Font from '../constants/Font';
 
 import { MonoText } from '../components/StyledText';
 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
+    titleText: {
+        fontSize: Font.titleSize,
+        paddingBottom: 20,
+    },
+    formLabel: {
+        paddingBottom: 10,
+        fontSize: Font.normSize,
+        color: '#000000',
+        marginTop: 10,
+        textAlign: 'center',
+    },
+    infoText: {
+        marginTop: 10,
+        fontSize: 18,
+        paddingBottom: 20,
+        color: Colors.pLight,
+        textAlign: 'center',
+    },
+    contentContainer: {
+        alignItems: "center",
+    },
+    textInputJobDescription: {
+        height: 100,
+        borderWidth: 2,
+        borderRadius: 10,
+        padding: 10,
+        borderColor: Colors.sNorm,
+        backgroundColor: Colors.tile,
+        overflow: 'hidden',
+        width: "90%",
+    },
+    textInput: {
+        height: 40,
+        borderWidth: 2,
+        borderRadius: 10,
+        padding: 10,
+        borderColor: Colors.sNorm,
+        backgroundColor: Colors.tile,
+        overflow: 'hidden',
+        width: "90%",
+    },
+    button: {
+        fontSize: Font.butSize,
+        fontWeight: Font.thick,
+    },
+    buttonWrapper: {
+        padding: 10,
+        borderRadius: 10,
+        borderColor: Colors.sNorm,
+        backgroundColor: Colors.sNorm,
+        overflow: 'hidden',
+        marginBottom: 10,
+    },
+    picker: {
+        height: 50,
+        width: "90%",
+    }
+});
+
 class CreateJobScreen extends React.Component
 {
     constructor(props)
@@ -157,67 +221,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(CreateJobScreen);
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-    titleText: {
-        fontSize: Font.titleSize,
-        paddingBottom: 20,
-    },
-    formLabel: {
-        paddingBottom: 10,
-        fontSize: Font.normSize,
-        color: '#000000',
-        marginTop: 10,
-        textAlign: 'center',
-    },
-    infoText: {
-        marginTop: 10,
-        fontSize: 18,
-        paddingBottom: 20,
-        color: Colors.pLight,
-        textAlign: 'center',
-    },
-    contentContainer: {
-        alignItems: "center",
-    },
-    textInputJobDescription: {
-        height: 100,
-        borderWidth: 2,
-        borderRadius: 10,
-        padding: 10,
-        borderColor: Colors.sNorm,
-        backgroundColor: Colors.tile,
-        overflow: 'hidden',
-        width: "90%",
-    },
-    textInput: {
-        height: 40,
-        borderWidth: 2,
-        borderRadius: 10,
-        padding: 10,
-        borderColor: Colors.sNorm,
-        backgroundColor: Colors.tile,
-        overflow: 'hidden',
-        width: "90%",
-    },
-    button: {
-        fontSize: Font.butSize,
-        fontWeight: Font.thick,
-    },
-    buttonWrapper: {
-        padding: 10,
-        borderRadius: 10,
-        borderColor: Colors.sNorm,
-        backgroundColor: Colors.sNorm,
-        overflow: 'hidden',
-        marginBottom: 10,
-    },
-    picker: {
-        height: 50,
-        width: "90%",
-    }
-});
