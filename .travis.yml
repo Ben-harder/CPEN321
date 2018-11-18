@@ -1,14 +1,1 @@
-branches:
-  except:
-    - ben-branch
-    - codeReview
-    - create-job
-    - master
-    - r-backend
-    - r-branch
-    - signup-backend
-    - ui-design
-branches:
-  only:
-    - travis-branch
 script: build.sh
