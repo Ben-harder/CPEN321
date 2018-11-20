@@ -1,6 +1,6 @@
-import { app } from "../server";
-var auth = require("./auth/auth");
-var job = require("./job/job");
+const app = "../server";
+const auth = require("./auth/auth");
+const job = require("./job/job");
 
 module.exports = function (app)
 {

@@ -1,5 +1,5 @@
-import express from "express";
-import bodyParser from "body-parser";
+const express = require("express");
+const bodyParser = require("body-parser");
 
 // Initialize http server
 const app = express();
@@ -14,3 +14,5 @@ const server = app.listen(3001, () => {
   const { address, port } = server.address();
   console.log(`Listening at http://${address}:${port}`);
 });
+
+module.exports = server;
