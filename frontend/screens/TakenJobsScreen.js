@@ -136,8 +136,6 @@ class TakenJobsScreen extends React.Component
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-                    <Text style={styles.headerText}>Your Taken Jobs</Text>
-
                     <FlatList
                         style={styles.jobList}
                         data={this.state.jobList}

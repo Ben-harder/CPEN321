@@ -42,15 +42,20 @@ const styles = StyleSheet.create({
     borderColor: Colors.sNorm,
     backgroundColor: Colors.sNorm,
     overflow: "hidden",
+    textAlign: 'center',
   },
   innerContainer: {
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "center",
+    width: "100%",  
   },
   regText: {
+    textAlign: 'center',
     fontSize: Font.normSize,
     fontWeight: Font.thick,
+  },
+  textInput: {
+    width: "90%",
+    height: 40, 
+    padding: 10,
   },
   // background: {
   //   backgroundColor: Colors.pLight,
@@ -163,13 +168,13 @@ class SignUpScreen extends React.Component {
           <View style={styles.innerContainer}>
             <Text>First Name:</Text>
             <TextInput
-              style={{height: 40, borderColor: "gray", borderWidth: 1, width: 200, padding: 10}}
+              style={styles.textInput}
               onChangeText={(text) => this.setState({firstName: text})}
               value={this.state.firstName}
             />
             <Text>Last Name:</Text>
             <TextInput
-              style={{height: 40, borderColor: "gray", borderWidth: 1, width: 200, padding: 10}}
+              style={styles.textInput}
               onChangeText={(text) => this.setState({lastName: text})}
               value={this.state.lastName}
             />
@@ -184,7 +189,7 @@ class SignUpScreen extends React.Component {
           <View style={styles.innerContainer}>
             <Text>Enter a password:</Text>
             <TextInput
-              style={{height: 40, borderColor: "gray", borderWidth: 1, width: 200, padding: 10}}
+              style={styles.textInput}
               onChangeText={(text) => this.setState({password: text})}
               value={this.state.password}
               secureTextEntry={true}
@@ -200,7 +205,7 @@ class SignUpScreen extends React.Component {
           <View style={styles.innerContainer}>
             <Text>Confirm your password:</Text>
             <TextInput
-              style={{height: 40, borderColor: "gray", borderWidth: 1, width: 200, padding: 10}}
+              style={styles.textInput}
               onChangeText={(text) => this.setState({passwordConfirm: text})}
               value={this.state.passwordConfirm}
               secureTextEntry={true}

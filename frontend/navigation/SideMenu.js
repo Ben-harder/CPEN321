@@ -74,7 +74,7 @@ class SideMenu extends Component {
         <ScrollView>
           <View style={styles.navSectionStyle}>
             <Text style={styles.sectionHeadingStyle}>
-              Welcome, {this.props.user.data.firstName}
+              Welcome {this.props.user.data.firstName}
             </Text>
           </View>
           <View style={styles.navSectionStyle}>
