@@ -5,6 +5,10 @@ var Job = require("../../models/job");
 var database = require("../../initdb");
 
 module.exports = {
+  demo() {
+    return 5;
+  },
+
   createUser(req, res) {
     let ret = {};
 

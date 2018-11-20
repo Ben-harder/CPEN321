@@ -88,6 +88,16 @@ module.exports = {
   isAbleToApply(req, res) {
     let hasApplied = false;
 
+    let ret = {};
+    if (!req.query.userID) {
+      ret.errorMessage = 'User is a required field';
+      return res.status(400).send(ret);
+    }
+    if (!req.query.jobID) {
+      ret.errorMessage = 'Job is a required field';
+      return res.status(400).send(ret);
+    }
+
     Job.findById(req.query.jobID)
     .populate('employer', '_id')
     .populate('applicants', '_id')
