@@ -139,6 +139,7 @@ class CreateJobScreen extends React.Component
                         <TextInput
                             style={styles.textInput}
                             onChangeText={(address) => this.setState({ address })}
+                            returnKeyType='done'
                             placeholder="Enter Address Here" />
 
                         <Text style={styles.formLabel}>
@@ -150,6 +151,8 @@ class CreateJobScreen extends React.Component
                             multiline = {true}
                             numberOfLines = {4}
                             onChangeText={(description) => this.setState({ description })}
+                            returnKeyType='done'
+                            blurOnSubmit={true}
                             placeholder="Enter Description Here" />
 
                         <Text style={styles.formLabel}>
@@ -160,6 +163,7 @@ class CreateJobScreen extends React.Component
                             style={styles.textInput}
                             keyboardType={"numeric"}
                             onChangeText={(wage) => this.setState({ wage })}
+                            returnKeyType='done'
                             placeholder="Enter Wage here" />
 
                         <Text style={styles.formLabel}>
@@ -192,7 +196,15 @@ class CreateJobScreen extends React.Component
             || address.toString().length <= 0 || description.toString().length <= 0 ||
             wage.toString().length <= 0)
         {
-            alert("Pleases ensure you've field out the fields.");
+            alert("Please ensure you've field out the fields.");
+        }
+        else if (!/^[0-9]+(\.[0-9]{1,2})?$/.test(wage))
+        {
+            alert("Wage must be a valid format!");
+        }
+        else if (!/^\s*\S+(?:\s+\S+){2}/.test(address) || !/^[a-zA-Z 0-9\.\-]*$/.test(address))
+        {
+            alert("Address must be a valid address!");
         }
         else
         {
