@@ -425,7 +425,7 @@ describe("User Is Able To Apply", function () {
     job.save((err) => {
       return;
     });
-    chai.request(server).get(url).end((err, res) => {
+    chai.request(server).get(url).query({jobID: "dummy"}).end((err, res) => {
       res.should.have.status(400);
       res.body.should.have.property('errorMessage').eql('User is a required field');
       done();
@@ -434,50 +434,91 @@ describe("User Is Able To Apply", function () {
   });
 
 
-//   /** 2)
-//    * Test Case: Null job
-//    * Input/Output: Pass a NULL request job parameter.
-//    * Pass/Fail Criteria: Only succeeds if it returns error code (400) with the message
-//    *                     "Job is a required field”
-//    */
-//   it("Null job", function (done) {
-//     let options = {
-//       userID: 33434
-//     };
-//     request(baseUrl + url, options, function (err, res, body) {
-//       expect(res.statusCode)
-//         .to
-//         .equal(400);
-//       expect(body.errorMessage)
-//         .to
-//         .equal("Job is a required field");
-//       done();
-//     });
-//   });
+  /** 2)
+   * Test Case: Null job
+   * Input/Output: Pass a NULL request job parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (400) with the message
+   *                     "Job is a required field”
+   */
+    it("Test Case: Null Null job", (done) => {
+      chai.request(server).get(url).query({userID: "dummy"}).end((err, res) => {
+        res.should.have.status(400);
+        res.body.should.have.property('errorMessage').eql('User is a required field');
+        done();
+      });
+    });
 
-//   /**
-//    * 3)
-//    * Test Case: User has already applied to this job.
-//    * Input/Output: Send a request with a user phone _number that has
-//    *               already applied to this job.
-//    * Pass/Fail Criteria: Only succeeds if it returns code (400) with error
-//    *                     message "You have already applied to this job"
-//    */
-//   it("User has already applied to this job", function (done) {
-//     let options = {
-//       userID: canApplyAlreadyAppliedUser.userID,
-//       jobID: canApplyAlreadyAppliedJob.jobID
-//     }
-//     request(baseUrl + url, options, function (err, res, body) {
-//       expect(res.statusCode)
-//         .to
-//         .equal(400);
-//       expect(body.errorMessage)
-//         .to
-//         .equal("You have already applied to this job");
-//       done();
-//     });
-//   });
+  /**
+   * 3)
+   * Test Case: User has already applied to this job.
+   * Input/Output: Send a request with a user phone _number that has
+   *               already applied to this job.
+   * Pass/Fail Criteria: Only succeeds if it returns code (400) with error
+   *                     message "You have already applied to this job"
+   */
+  it("Correct application form", function (done) {
+    // create a dummy employer
+    var dEmployer = new User();
+    dEmployer.first_name = "dummy";
+    dEmployer.last_name = "dummy";
+    dEmployer.phone_number = "hasapplied";
+    dEmployer.hash_password = "dummy";
+    dEmployer.verification_token = undefined;
+    dEmployer.working_job_id = undefined;
+    dEmployer.is_working = false;
+    dEmployer.is_verified = false;
+    dEmployer.is_employer = false;
+    dEmployer.images = [];
+
+    // create a new user
+    var dEmployee = new User();
+    dEmployee.first_name = "dummy";
+    dEmployee.last_name = "dummy";
+    dEmployee.phone_number = "hasapplied";
+    dEmployee.hash_password = "dummy";
+    dEmployee.verification_token = undefined;
+    dEmployee.working_job_id = undefined;
+    dEmployee.is_working = false;
+    dEmployee.is_verified = false;
+    dEmployee.is_employer = false;
+    dEmployee.images = [];
+
+    // save the dEmployee
+    dEmployee.save((err) => {
+      return;
+    });
+
+    // save the dEmployer
+    dEmployer.save((err) => {
+      return;
+    });
+    
+    var job = new Job();
+    job.job_title = "dummy";
+    job.description = "dummy";
+    job.wage = 0;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = undefined;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = false;
+    job.is_compeleted = false;
+    job.is_active = false;
+    job.applicants = [];
+    job.applicants.push(dEmployee._id);
+
+    // save the job
+    job.save((err) => {
+      return;
+    });
+    
+    chai.request(server).get(url).query({userID: dEmployee._id.toString(), jobID: job._id.toString()}).end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.not.have.property('errorMessage');
+      done();
+    });
+  });
 
 //   /**
 //    * 4)
@@ -487,21 +528,49 @@ describe("User Is Able To Apply", function () {
 //    * Pass/Fail Criteria: Only succeeds if it returns code (400) with error
 //    *                     message "You can't apply to your own job"
 //    */
-//   it("User is the creator of this job", function (done) {
-//     let options = {
-//       userID: canApplyIsCreatorUser.userID,
-//       jobID: canApplyIsCreatorJob.jobID
-//     }
-//     request(baseUrl + url, options, function (err, res, body) {
-//       expect(res.statusCode)
-//         .to
-//         .equal(400);
-//       expect(body.errorMessage)
-//         .to
-//         .equal("You can't apply to your own job");
-//       done();
-//     });
-//   });
+  it("User is the creator of this job", function (done) {
+    // create a dummy employer
+    var dEmployer = new User();
+    dEmployer.first_name = "dummy";
+    dEmployer.last_name = "dummy";
+    dEmployer.phone_number = "hasapplied";
+    dEmployer.hash_password = "dummy";
+    dEmployer.verification_token = undefined;
+    dEmployer.working_job_id = undefined;
+    dEmployer.is_working = false;
+    dEmployer.is_verified = false;
+    dEmployer.is_employer = false;
+    dEmployer.images = [];
+
+    // save the dEmployer
+    dEmployer.save((err) => {
+      return;
+    });
+    
+    var job = new Job();
+    job.job_title = "dummy";
+    job.description = "dummy";
+    job.wage = 0;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = undefined;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = false;
+    job.is_compeleted = false;
+    job.is_active = false;
+
+    // save the job
+    job.save((err) => {
+      return;
+    });
+    
+    chai.request(server).get(url).query({userID: dEmployer._id.toString(), jobID: job._id.toString()}).end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property("errorMessage").eql("You can't apply to your own job");
+      done();
+    });
+  });
 
   /**
    * 5)
@@ -572,11 +641,11 @@ describe("User Is Able To Apply", function () {
       done();
     });
   });
-
 });
 
+
 /**
- * Tests for User Is Able To Apply.
+ * Tests for Create Job.
  */
 describe("Create Job", function () {
   var url = "/create-job";
@@ -727,47 +796,44 @@ describe("Create Job", function () {
 //  * Pass/Fail Criteria: Only succeeds if it returns error code
 //  *                     (400) with the message "Employees won't work for free!”.
 //  */
-//   it("Zero wage", function (done) {
-//     let options = {
-//       job_title: "dummy",
-//       job_description: "dummy",
-//       wage: 0,
-//       address: "dummy",
-//       employerID: "dummy"
-//     };
-//     request(baseUrl + url, function (err, res, body) {
-//       expect(res.statusCode)
-//         .to
-//         .equal(400);
-//       expect(body.errorMessage)
-//         .to
-//         .equal("Employees won't work for free!");
-//       done();
-//     });
-//   });
+  it("Test Case: Zero wage", (done) => {
+    var dEmployer = new User();
+    let job = {};
+      job.employerID = "dummy";
+      job.jobType = "dummy";
+      job.description = "dummy";
+      job.wage = 0;
+      job.address = "dummy";
 
-//   /**
-//  * 8)
-//  * Test Case: Negative wage.
-//  * Input/Output: Pass a negative  wage.
-//  * Pass/Fail Criteria: Only succeeds if it returns error code
-//  *                     (400) with the message "Woah! employees won't work AND pay you money!”.
-//  */
-//   it("Negative wage", function (done) {
-//     let options = {
-//       job_title: "dummy",
-//       job_description: "dummy"
-//     }
-//     request(baseUrl + url, function (err, res, body) {
-//       expect(res.statusCode)
-//         .to
-//         .equal(400);
-//       expect(body.errorMessage)
-//         .to
-//         .equal("Woah! employees won't work AND pay you money!");
-//       done();
-//     });
-//   });
+    chai.request(server).post(url).send(job).end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property("errorMessage").eql("Employees won't work for free!");
+      done();
+    });
+  });
+
+  /**
+ * 8)
+ * Test Case: Negative wage.
+ * Input/Output: Pass a negative  wage.
+ * Pass/Fail Criteria: Only succeeds if it returns error code
+ *                     (400) with the message "Woah! employees won't work AND pay you money!”.
+ */
+  it("Test Case: Zero wage", (done) => {
+    var dEmployer = new User();
+    let job = {};
+      job.employerID = "dummy";
+      job.jobType = "dummy";
+      job.description = "dummy";
+      job.wage = -1;
+      job.address = "dummy";
+
+    chai.request(server).post(url).send(job).end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property("errorMessage").eql("Woah! employees won't work AND pay you money!");
+      done();
+    });
+  });
 
   /**
   * 9)

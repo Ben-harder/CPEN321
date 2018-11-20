@@ -54,19 +54,19 @@ var User = new Schema({
     ]
 });
 
-// Virtual for user"s URL
-User
-.virtual("url")
-.get(function () {
-  return "/user" + this.user_id;
-});
+// // Virtual for user"s URL
+// User
+// .virtual("url")
+// .get(function () {
+//   return "/user" + this.user_id;
+// });
 
-// Virtual for user"s full name
-User
-.virtual("name")
-.get(function () {
-  return this.name.last + ", " + this.name.first;
-});
+// // Virtual for user"s full name
+// User
+// .virtual("name")
+// .get(function () {
+//   return this.name.last + ", " + this.name.first;
+// });
 
 // export function to create "User" model class
 module.exports = mongoose.model("User", User);
