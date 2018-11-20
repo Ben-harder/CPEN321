@@ -119,7 +119,7 @@ describe("User Is Able To Apply", function() {
    */
   it("Null user", function (done){
     let options = {jobID: 33434};
-    request(baseUrl + url, function(err, res, body) {
+    request(baseUrl + url, options,function(err, res, body) {
       expect(res.statusCode).to.equal(400);
       expect(body.errorMessage).to.equal("User is a required field");
       done();
@@ -135,7 +135,7 @@ describe("User Is Able To Apply", function() {
    */
   it("Null job", function (done){
     let options = {userID: 33434};
-    request(baseUrl + url, function(err, res, body) {
+    request(baseUrl + url, options,function(err, res, body) {
       expect(res.statusCode).to.equal(400);
       expect(body.errorMessage).to.equal("Job is a required field");
       done();
@@ -217,17 +217,114 @@ describe("Create Job", function() {
 
  /**  
   * 2) 
-  * Test Case: Null job.
-  * Input/Output: Pass a NULL request parameter.
+  * Test Case: No job_title.
+  * Input/Output: Pass a NULL job title parameter.
   * Pass/Fail Criteria: Only succeeds if it returns error code
-  *                     (400) with the message “Job is a required filed”.
+  *                     (400) with the message “All fields have not been filled out”.
   */
  it("No job_title", function (done){
-  let options = {}
-  request(baseUrl + url, function(err, res, body) {
+  let options = {};
+  request(baseUrl + url, options, function(err, res, body) {
     expect(res.statusCode).to.equal(400);
+    expect(body.errorMessage).to.equal("All fields have not been filled out");
     done();
   });
 });
 
-});// "test": "nyc --reporter=html --reporter=text mocha --timeout 1000",
+/**  
+ * 3) 
+ * Test Case: No job_description.
+ * Input/Output: Pass a NULL job_description.
+ * Pass/Fail Criteria: Only succeeds if it returns error code
+ *                     (400) with the message “All fields have not been filled out”.
+ */
+it("No job_description", function (done){
+ let options = {job_title: "dummy"};
+ request(baseUrl + url, options, function(err, res, body) {
+   expect(res.statusCode).to.equal(400);
+   expect(body.errorMessage).to.equal("All fields have not been filled out");
+   done();
+ });
+});
+
+/**  
+ * 4) 
+ * Test Case: No wage.
+ * Input/Output: Pass a NULL wage.
+ * Pass/Fail Criteria: Only succeeds if it returns error code
+ *                     (400) with the message “All fields have not been filled out”.
+ */
+it("No wage", function (done){
+ let options = {job_title: "dummy", job_description: "dummy"};
+ request(baseUrl + url, options, function(err, res, body) {
+   expect(res.statusCode).to.equal(400);
+   expect(body.errorMessage).to.equal("All fields have not been filled out");
+   done();
+ });
+});
+
+/**  
+ * 5) 
+ * Test Case: No address.
+ * Input/Output: Pass a no address.
+ * Pass/Fail Criteria: Only succeeds if it returns error code
+ *                     (400) with the message “All fields have not been filled out”.
+ */
+it("No address", function (done){
+ let options = {job_title: "dummy", job_description: "dummy", wage: 10};
+ request(baseUrl + url, options, function(err, res, body) {
+   expect(res.statusCode).to.equal(400);
+   expect(body.errorMessage).to.equal("All fields have not been filled out");
+   done();
+ });
+});
+
+/**  
+ * 6) 
+ * Test Case: No employer ID.
+ * Input/Output: Pass a no employer ID.
+ * Pass/Fail Criteria: Only succeeds if it returns error code
+ *                     (400) with the message “All fields have not been filled out”.
+ */
+it("No employer ID", function (done){
+ let options = {job_title: "dummy", job_description: "dummy", wage: 10, address: "9832 wain street"};
+ request(baseUrl + url, options,function(err, res, body) {
+   expect(res.statusCode).to.equal(400);
+   expect(body.errorMessage).to.equal("All fields have not been filled out");
+   done();
+ });
+});
+
+/**  
+ * 7) 
+ * Test Case: Zero wage.
+ * Input/Output: Pass a zero  wage.
+ * Pass/Fail Criteria: Only succeeds if it returns error code
+ *                     (400) with the message "Employees won't work for free!”.
+ */
+it("Zero wage", function (done){
+  let options = {job_title: "dummy", job_description: "dummy", wage: 0, address: "dummy", employerID: "dummy"};
+ request(baseUrl + url, function(err, res, body) {
+   expect(res.statusCode).to.equal(400);
+   expect(body.errorMessage).to.equal("Employees won't work for free!");
+   done();
+ });
+});
+
+/**  
+ * 8) 
+ * Test Case: Negative wage.
+ * Input/Output: Pass a negative  wage.
+ * Pass/Fail Criteria: Only succeeds if it returns error code
+ *                     (400) with the message "Woah! employees won't work AND pay you money!”.
+ */
+it("Negative wage", function (done){
+ let options = {job_title: "dummy", job_description: "dummy"}
+ request(baseUrl + url, function(err, res, body) {
+   expect(res.statusCode).to.equal(400);
+   expect(body.errorMessage).to.equal("Woah! employees won't work AND pay you money!");
+   done();
+ });
+});
+
+});
