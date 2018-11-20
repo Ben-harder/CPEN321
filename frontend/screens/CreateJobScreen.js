@@ -100,7 +100,6 @@ class CreateJobScreen extends React.Component
             description: "",
             jobType: "",
             wage: "",
-            modalVisible: false,
         };
 
         this.attemptCreateJob = this.attemptCreateJob.bind(this);
@@ -113,11 +112,6 @@ class CreateJobScreen extends React.Component
 
     componentWillUnmount() {
         console.disableYellowBox = false;
-    }
-
-    setModalVisible(visible)
-    {
-        this.setState({ modalVisible: visible });
     }
 
     render()
@@ -137,6 +131,7 @@ class CreateJobScreen extends React.Component
                         </Text>
 
                         <TextInput
+                            testID="#address"
                             style={styles.textInput}
                             onChangeText={(address) => this.setState({ address })}
                             returnKeyType='done'
@@ -147,6 +142,7 @@ class CreateJobScreen extends React.Component
                         </Text>
 
                         <TextInput
+                            testID="#description"
                             style={styles.textInputJobDescription}
                             multiline = {true}
                             numberOfLines = {4}
@@ -160,6 +156,7 @@ class CreateJobScreen extends React.Component
                         </Text>
 
                         <TextInput
+                            testID="#wage"
                             style={styles.textInput}
                             keyboardType={"numeric"}
                             onChangeText={(wage) => this.setState({ wage })}
@@ -170,12 +167,14 @@ class CreateJobScreen extends React.Component
                             Job type:
                         </Text>
                         <Select
+                            testID="#type"
                             onValueChange={value => this.setState({jobType: value})}
                             items={JobTypes}
                             placeholder={{label:"     Select Job Here", value: ""}}
                         />
                         <View style={styles.buttonWrapper}>
                             <Button
+                                testID="#submit"
                                 title="Submit"
                                 onPress={this.attemptCreateJob}
                                 style={styles.button}
@@ -218,7 +217,7 @@ class CreateJobScreen extends React.Component
                 alert("You've successfully created the job post.");
                 this.props.navigation.navigate("App");
             }).catch((err) => {
-                console.log(err);
+                // console.log(err);
                 alert(err.response.data.errorMessage);
             });
         }

@@ -8,19 +8,32 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
-    "test": "node ./node_modules/jest/bin/jest.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "test": "node ./node_modules/jest/bin/jest.js -u"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "text",
+      "lcov",
+      "clover"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
     "axios": "^0.18.0",
+    "axios-mock-adapter": "^1.15.0",
     "coveralls": "^3.0.2",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
     "enzyme-to-json": "^3.3.4",
     "expo": "^30.0.1",
+    "flush-promises": "^1.0.2",
+    "jest-serializer-enzyme": "^1.0.0",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
     "react-native-phone-input": "^0.2.1",
@@ -30,10 +43,12 @@
     "react-navigation-redux-helpers": "^2.0.6",
     "react-redux": "^5.0.7",
     "redux": "^4.0.1",
+    "redux-mock-store": "^1.5.3",
     "redux-persist": "^5.10.0"
   },
   "devDependencies": {
     "jest": "^23.6.0",
-    "jest-expo": "30.0.0"
+    "jest-expo": "30.0.0",
+    "react-dom": "^16.6.3"
   }
 }
