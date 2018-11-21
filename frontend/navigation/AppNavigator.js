@@ -1,6 +1,6 @@
 // Dependencies
 import React from "react";
-import { TouchableOpacity, Dimensions } from "react-native";
+import { TouchableOpacity, Dimensions, Platform } from "react-native";
 import { createSwitchNavigator , createStackNavigator, createDrawerNavigator } from "react-navigation";
 import IOSIcon from "react-native-vector-icons/Ionicons";
 
@@ -18,12 +18,15 @@ import JobBoardScreen from "../screens/JobBoardScreen";
 
 const AppStack = createStackNavigator({ Main: JobBoardScreen, Job: JobScreen }, 
   {
+    defaultNavigationOptions: ({navigation}) => ({
+      headerStyle: {marginRight: Platform.OS === 'ios' ? 10: 0, marginLeft: Platform.OS === 'ios' ? 15: 0, borderBottomWidth: 0,}
+    }),
     navigationOptions: ({navigation}) => ({
       headerLeft:(<TouchableOpacity onPress={() => navigation.openDrawer()}>
-                    <IOSIcon name="ios-menu" size={30} />
-                  </TouchableOpacity>
+        <IOSIcon name="ios-menu" size={30} />
+        </TouchableOpacity>
       ),
-      headerStyle: { marginRight: 10, marginLeft: 15, borderBottomWidth: 0 }
+      title: 'Job Board',
     })
   }
 );
@@ -35,7 +38,7 @@ const CreateJobStack = createStackNavigator({CreateJob: CreateJobScreen},
                     <IOSIcon name="ios-menu" size={30} />
                   </TouchableOpacity>
       ),
-      headerStyle: { marginRight: 10, marginLeft: 15, borderBottomWidth: 0 }
+      title: 'Create Job',
     })
   }
 );
@@ -46,7 +49,7 @@ const TakenJobsStack = createStackNavigator({TakenJobs: TakenJobsScreen},
                     <IOSIcon name="ios-menu" size={30} />
                   </TouchableOpacity>
       ),
-      headerStyle: { marginRight: 10, marginLeft: 15, borderBottomWidth: 0 }
+      title: 'Taken Jobs',
     })
   }
 );
@@ -57,7 +60,7 @@ const EmployerJobsStack = createStackNavigator({EmployerJobs: EmployerJobsScreen
                     <IOSIcon name="ios-menu" size={30} />
                   </TouchableOpacity>
       ),
-      headerStyle: { marginRight: 10, marginLeft: 15, borderBottomWidth: 0 }
+      title: 'Posted Jobs',
     })
   }
 );
@@ -71,7 +74,7 @@ const MainApp = createSwitchNavigator(
   },
   {
     initialRouteName: "App",
-  },
+  }, 
 );
 
 const Drawer = createDrawerNavigator(

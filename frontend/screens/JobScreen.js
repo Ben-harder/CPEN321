@@ -27,12 +27,9 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: 20,
         backgroundColor: "#fff",
-        paddingHorizontal: 5,
-
     },
     contentContainer: {
-        paddingTop: 20,
-        marginBottom: 20,
+        padding: 10,
     },
     headerText: {
         fontSize: Font.titleSize,
@@ -57,12 +54,22 @@ const styles = StyleSheet.create({
         fontSize: Font.normSize,
         fontWeight: Font.thin,
       },
-    buttonWrapper: {
+    textLink: {
+        paddingVertical: 10,
+      },
+    textLinkText: {
+        fontSize: Font.butSize,
+        color: Colors.buttonText,
+        fontWeight: Font.thick,
         padding: 10,
         borderRadius: 10,
         borderColor: Colors.sNorm,
         backgroundColor: Colors.sNorm,
-        overflow: "hidden",
+        textAlign: 'center',
+    },
+    innerContainer: {
+        padding: 10,
+        width: "90%",
     },
 });
 
@@ -128,27 +135,25 @@ class JobScreen extends React.Component
         return (
             <View style={styles.container}>
             <Text style={[styles.headerText]}>Take This Job?</Text>
-                <View style={[styles.contentContainer, styles.jobItem]}>
-                    <Text style={styles.regText}>Job type: {this.state.jobType} </Text>
-                    <Text style={styles.regText}>Posted by: {this.state.author} </Text>
-                    <Text style={styles.regText}>Wage: ${this.state.wage} </Text>
-                    <Text style={styles.regText}>Address: {this.state.address} </Text>
-                    <Text style={styles.regText}>Description: {this.state.description} </Text>
+                <View style={styles.contentContainer}>
+                    <View style={styles.jobItem}>
+                        <Text style={styles.regText}>Job type: {this.state.jobType} </Text>
+                        <Text style={styles.regText}>Posted by: {this.state.author} </Text>
+                        <Text style={styles.regText}>Wage: ${this.state.wage} </Text>
+                        <Text style={styles.regText}>Address: {this.state.address} </Text>
+                        <Text style={styles.regText}>Description: {this.state.description} </Text>
+                    </View>
+
+                    <TouchableOpacity onPress={() => this.applyForJob()} style={styles.textLink}>
+                        <Text style={styles.textLinkText}>Apply for this job</Text>
+                    </TouchableOpacity>
+             
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Main")} style={styles.textLink}>
+                        <Text style={styles.textLinkText}>Cancel</Text>
+                    </TouchableOpacity>
                 </View>
-                <View style={[styles.buttonWrapper, {alignSelf: "center", marginTop: 10, width: "70%" }]}>
-                    <Button
-                        title="Apply for this job"
-                        onPress={() => { this.applyForJob() }}
-                        color={Colors.buttonText}
-                    />
-                </View>
-                <View style={[styles.buttonWrapper, {alignSelf: "center", marginTop: 10, marginBottom: 400, width: "70%" }]}>
-                    <Button
-                        title="Cancel"
-                        onPress={() => { this.props.navigation.navigate("Main") }}
-                        color={Colors.buttonText}
-                    />
-                </View>
+
+
             </View>
         );
     }
