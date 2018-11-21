@@ -22,56 +22,7 @@ import Font from "../constants/Font";
 
 import { MonoText } from "../components/StyledText";
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: 20,
-        backgroundColor: "#fff",
-    },
-    contentContainer: {
-        padding: 10,
-    },
-    headerText: {
-        fontSize: Font.titleSize,
-        textAlign: "center",
-        padding: 20,
-    },
-    jobList: {
-        width: "100%",
-        padding: 10,
-        flex: 1,
-    },
-    jobItem: {
-        borderRadius: 10,
-        borderWidth: 2,
-        borderColor: Colors.sNorm,
-        marginTop: 10,
-        backgroundColor: Colors.tile,
-        padding: 30,
-        overflow: "hidden",
-    },
-    regText: {
-        fontSize: Font.normSize,
-        fontWeight: Font.thin,
-      },
-    textLink: {
-        paddingVertical: 10,
-      },
-    textLinkText: {
-        fontSize: Font.butSize,
-        color: Colors.buttonText,
-        fontWeight: Font.thick,
-        padding: 10,
-        borderRadius: 10,
-        borderColor: Colors.sNorm,
-        backgroundColor: Colors.sNorm,
-        textAlign: 'center',
-    },
-    innerContainer: {
-        padding: 10,
-        width: "90%",
-    },
-});
+var s = require('../constants/style');
 
 class JobScreen extends React.Component
 {
@@ -133,23 +84,23 @@ class JobScreen extends React.Component
     render()
     {
         return (
-            <View style={styles.container}>
-            <Text style={[styles.headerText]}>Take This Job?</Text>
-                <View style={styles.contentContainer}>
-                    <View style={styles.jobItem}>
-                        <Text style={styles.regText}>Job type: {this.state.jobType} </Text>
-                        <Text style={styles.regText}>Posted by: {this.state.author} </Text>
-                        <Text style={styles.regText}>Wage: ${this.state.wage} </Text>
-                        <Text style={styles.regText}>Address: {this.state.address} </Text>
-                        <Text style={styles.regText}>Description: {this.state.description} </Text>
+            <View style={s.container}>
+                <Text style={[s.headerText]}>Take This Job?</Text>
+                <View style={s.contentContainer}>
+                    <View style={s.jobItem}>
+                            <Text style={s.jobText}><Text style={{fontWeight: 'bold'}}>Job type: </Text><Text>{this.state.jobType}</Text></Text>
+                            <Text style={s.jobText}><Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{this.state.author}</Text></Text>
+                            <Text style={s.jobText}><Text style={{fontWeight: 'bold'}}>Address: </Text><Text>{this.state.address}</Text></Text>
+                            <Text style={s.jobText}><Text style={{fontWeight: 'bold'}}>Wage: </Text><Text>${this.state.wage}</Text></Text>
+                            <Text style={s.jobText}><Text style={{fontWeight: 'bold'}}>Description: </Text><Text>{this.state.description}</Text></Text>
                     </View>
 
-                    <TouchableOpacity onPress={() => this.applyForJob()} style={styles.textLink}>
-                        <Text style={styles.textLinkText}>Apply for this job</Text>
+                    <TouchableOpacity onPress={() => this.applyForJob()} style={s.textLink}>
+                        <Text style={s.textLinkText}>Apply for this job</Text>
                     </TouchableOpacity>
-             
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Main")} style={styles.textLink}>
-                        <Text style={styles.textLinkText}>Cancel</Text>
+            
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Main")} style={s.textLink}>
+                        <Text style={s.textLinkText}>Cancel</Text>
                     </TouchableOpacity>
                 </View>
 

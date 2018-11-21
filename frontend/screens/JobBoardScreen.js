@@ -21,57 +21,7 @@ import Font from "../constants/Font";
 
 import { MonoText } from "../components/StyledText";
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#fff",
-    },
-    contentContainer: {
-        paddingTop: 30,
-    },
-    headerText: {
-        fontSize: Font.titleSize,
-        textAlign: "center",
-    },
-    jobList: {
-        width: "100%",
-        padding: 10,
-        flex: 1,
-    },
-    jobItem: {
-        borderRadius: 10,
-        borderWidth: 2,
-        borderColor: Colors.sNorm,
-        marginTop: 10,
-        backgroundColor: Colors.tile,
-        padding: 30,
-        overflow: "hidden",
-    },
-    regText: {
-        fontSize: Font.normSize,
-        fontWeight: Font.thin,
-      },
-    tabBarInfoContainer: {
-        position: "absolute",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        ...Platform.select({
-          ios: {
-            shadowColor: "black",
-            shadowOffset: { height: -3 },
-            shadowOpacity: 0.1,
-            shadowRadius: 3,
-          },
-          android: {
-            elevation: 20,
-          },
-        }),
-        alignItems: "center",
-        backgroundColor: "#fbfbfb",
-        paddingVertical: 20,
-      },
-});
+var s = require('../constants/style');
 
 export default class JobBoardScreen extends React.Component
 {
@@ -126,23 +76,21 @@ export default class JobBoardScreen extends React.Component
     render()
     {
         return (
-            <View style={styles.container}>
-                <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-                    <FlatList
-                        style={styles.jobList}
-                        data={this.state.jobList}
-                        renderItem={({ item }) => (
-                            <TouchableOpacity style={styles.jobItem} onPress={() => this.goToJobDetails(item)}>
-                                <Text style={styles.regText}>Job type: {item.job_title}</Text>
-                                <Text style={styles.regText}>Posted by: {item.employer.first_name} {item.employer.last_name}</Text>
-                                <Text style={styles.regText}>Address: {item.address}</Text>
-                                <Text style={styles.regText}>Wage: ${item.wage}</Text>
-                                <Text style={styles.regText}>Description: {item.description}</Text>
-                            </TouchableOpacity>
-                        )}
-                        keyExtractor={(item, index) => index.toString()}
-                    />
-                </ScrollView>
+            <View style={s.container}>
+                <FlatList
+                    style={s.jobList}
+                    data={this.state.jobList}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
+                            <Text style={s.jobText}><Text style={{fontWeight: 'bold'}}>Job type: </Text><Text>{item.job_title}</Text></Text>
+                            <Text style={s.jobText}><Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text></Text>
+                            <Text style={s.jobText}><Text style={{fontWeight: 'bold'}}>Address: </Text><Text>{item.address}</Text></Text>
+                            <Text style={s.jobText}><Text style={{fontWeight: 'bold'}}>Wage: </Text><Text>${item.wage}</Text></Text>
+                            <Text style={s.jobText}><Text style={{fontWeight: 'bold'}}>Description: </Text><Text>{item.description}</Text></Text>
+                        </TouchableOpacity>
+                    )}
+                    keyExtractor={(item, index) => index.toString()}
+                />
             </View>
         );
     }

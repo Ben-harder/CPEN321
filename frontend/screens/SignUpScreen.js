@@ -113,7 +113,7 @@ class SignUpScreen extends React.Component {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={s.container}>
         {this.state.viewState === 1 && 
-            <View style={[s.innerContainer]}>
+            <View style={[s.authContainer]}>
               <Text style={[s.regText, {paddingBottom: 40}]}>Enter your phone number to sign up:</Text>
               <PhoneInput style={{paddingBottom: 40}}
                   ref={ref => {
@@ -121,11 +121,11 @@ class SignUpScreen extends React.Component {
                   }}
                   initialCountry="ca"
                 />
-              <TouchableOpacity onPress={this.checkUserExists} style={s.textLink}>
+              <TouchableOpacity onPress={this.checkUserExists} style={[s.textLink, {paddingBottom: 40}]}>
                 <Text style={s.textLinkText}>Sign Up</Text>
               </TouchableOpacity>
-              <Text style={s.regText}>or</Text>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate("SignIn")} style={s.textLink}>
+              <Text style={[s.regText, {paddingBottom: 40}]}>or</Text>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("SignIn")} style={[s.textLink, {paddingBottom: 40}]}>
                 <Text style={s.textLinkText}>Click Here to Sign In</Text>
               </TouchableOpacity>
             </View>}
