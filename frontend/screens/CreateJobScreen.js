@@ -38,7 +38,6 @@ class CreateJobScreen extends React.Component
             description: "",
             jobType: "",
             wage: "",
-            modalVisible: false,
         };
 
         this.attemptCreateJob = this.attemptCreateJob.bind(this);
@@ -51,11 +50,6 @@ class CreateJobScreen extends React.Component
 
     componentWillUnmount() {
         console.disableYellowBox = false;
-    }
-
-    setModalVisible(visible)
-    {
-        this.setState({ modalVisible: visible });
     }
 
     render()
@@ -73,6 +67,7 @@ class CreateJobScreen extends React.Component
                         </Text>
 
                         <TextInput
+                            testID="#address"
                             style={s.textInput}
                             onChangeText={(address) => this.setState({ address })}
                             returnKeyType='done'
@@ -83,6 +78,7 @@ class CreateJobScreen extends React.Component
                         </Text>
 
                         <TextInput
+                            testID="#description"
                             style={s.textInputJobDescription}
                             multiline = {true}
                             numberOfLines = {4}
@@ -96,6 +92,7 @@ class CreateJobScreen extends React.Component
                         </Text>
 
                         <TextInput
+                            testID="#wage"
                             style={s.textInput}
                             keyboardType={"numeric"}
                             onChangeText={(wage) => this.setState({ wage })}
@@ -105,6 +102,7 @@ class CreateJobScreen extends React.Component
                         <Text style={s.formLabel}>
                             Job type:
                         </Text>
+
                         <Select
                             onValueChange={value => this.setState({jobType: value})}
                             items={JobTypes}
@@ -150,7 +148,7 @@ class CreateJobScreen extends React.Component
                 alert("You've successfully created the job post.");
                 this.props.navigation.navigate("App");
             }).catch((err) => {
-                console.log(err);
+                // console.log(err);
                 alert(err.response.data.errorMessage);
             });
         }
