@@ -189,5 +189,80 @@ module.exports = {
       }
       return res.status(200).send(jobs); 
     });
+  },
+
+  /**
+   * Mark a taken job as complete.
+   */
+  completeJob(req, res) {
+    if (!req.body.jobID) {
+      let ret = {};
+      ret.errorMessage = "Job is a required field";
+      return res.status(500).send(ret);
+    }
+    Job.findByIdAndUpdate(req.body.jobID,  {$set: {is_compeleted: true}},
+      {upsert:false}, function(err, job){
+        // err
+        if (err){
+          let ret = {};
+          ret.errorMessage = "Internal error in database"; 
+          return res.status(500).send(ret);
+        }
+        // can't find one
+        if (!job){
+          let ret = {};
+          ret.errorMessage = "This job no longer exists"; 
+          return res.status(500).send(ret);
+        }
+        // job is not taken yet
+        if (!job.is_active){
+          let ret = {};
+          ret.errorMessage = "You can't complete a job you haven't teken"; 
+          return res.status(400).send(ret);
+        }
+        // success
+        return res.status(200).send(job);
+    });
+  },
+
+  /**
+   * Mark a taken job as complete.
+   */
+  acceptAnApplicant(req, res) {
+    // null job
+    if (!req.body.jobID) {
+      let ret = {};
+      ret.errorMessage = "Job is a required field";
+      return res.status(500).send(ret);
+    }
+    // null user
+    if (!req.body.userID) {
+      let ret = {};
+      ret.errorMessage = "User is a required field";
+      return res.status(500).send(ret);
+    }
+    console.log("befor");
+    Job.findOneAndUpdate({_id: req.body.jobID ,
+      applicants: {$elemMatch: {$eq: req.body.userID}},
+      is_active: false},  
+      {$set: {is_active: true, employee: req.body.userID}},
+      {upsert:false}, function(err, job){
+        console.log("after");
+        // err
+        if (err){
+          console.log(err);
+          let ret = {};
+          ret.errorMessage = "Internal error in database"; 
+          return res.status(500).send(ret);
+        }
+        // can't find one
+        if (!job){
+          let ret = {};
+          ret.errorMessage = "This job is either already assigned or applicant is no longer interested"; 
+          return res.status(400).send(ret);
+        }
+        // success
+        return res.status(200).send(job);
+    });
   }
 };

@@ -19,4 +19,8 @@ module.exports = function (app)
   app.get("/get-employer-jobs", job.getEmployerJobs);
 
   app.get("/job/get-taken-jobs", job.getAppliedForJobs);
+
+  app.post("/job/complete-a-job", job.completeJob);
+
+  app.post("/job/accept-an-applicant", job.acceptAnApplicant);
 };

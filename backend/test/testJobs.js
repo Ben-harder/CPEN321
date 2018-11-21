@@ -810,5 +810,365 @@ describe("Create Job", function () {
       done();
     });
   });
+});
+
+  /**
+ * Tests for Complete a job.
+ */
+describe("Complete a job", function () {
+  var url = "/job/complete-a-job";
+  beforeEach((done) => {
+    Job.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+
+  /**
+  * 1)
+  * Test Case: Null jobID.
+  * Input/Output: Pass a NULL request parameter.
+  * Pass/Fail Criteria: Only succeeds if it returns error code
+  *                     (500) with the message “Job is a required field”.
+  */
+  it("Test Case: Null jobID", (done) => {
+    chai.request(server).post(url).send({userID: "dummy"}).end((err, res) => {
+      res.should.have.status(500);
+      res.body.should.have.property('errorMessage').eql('Job is a required field');
+      done();
+    });
+  });
+  
+  /**
+  * 2)
+  * Test Case: Inactive job.
+  * Input/Output: Pass a NULL request parameter.
+  * Pass/Fail Criteria: Only succeeds if it returns error code
+  *                     (400) with the message “Job is a required field”.
+  */
+  it("Test Case: Inactive job", (done) => {    
+    
+    // create a new user
+    var employee = new User();
+    employee.first_name = "dummy";
+    employee.last_name = "dummy";
+    employee.phone_number = "hasapplied";
+    employee.hash_password = "dummy";
+    employee.verification_token = undefined;
+    employee.working_job_id = undefined;
+    employee.is_working = false;
+    employee.is_verified = false;
+    employee.is_employer = false;
+    employee.images = [];
+
+    // save the employee
+    employee.save((err) => {
+      return;
+    });
+    
+    // save the job
+    var dEmployer = new User();
+    var job = new Job();
+    job.job_title = "dummy";
+    job.description = "dummy";
+    job.wage = 0;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = employee._id;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = false;
+    job.is_compeleted = false;
+    job.is_active = false;
+
+    // save the job
+    job.save((err) => {
+      return;
+    });
+
+    chai.request(server).post(url).send({jobID: job._id.toString(), userID: employee._id.toString()}).end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property('errorMessage').eql("You can't complete a job you haven't teken");
+      done();
+    });
+  });
+
+  /**
+  * 3)
+  * Test Case: Success case.
+  * Input/Output: Pass a NULL request parameter.
+  * Pass/Fail Criteria: Only succeeds if it returns code
+  *                     (200) with no error message and a job object.
+  */
+  it("Test Case: Success case", (done) => {
+
+    // create a new user
+    var employee = new User();
+    employee.first_name = "dummy";
+    employee.last_name = "dummy";
+    employee.phone_number = "hasapplied";
+    employee.hash_password = "dummy";
+    employee.verification_token = undefined;
+    employee.working_job_id = undefined;
+    employee.is_working = false;
+    employee.is_verified = false;
+    employee.is_employer = false;
+    employee.images = [];
+
+    // save the employee
+    employee.save((err) => {
+      return;
+    });
+    
+    // save the job
+    var dEmployer = new User();
+    var job = new Job();
+    job.job_title = "dummy";
+    job.description = "dummy";
+    job.wage = 0;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = employee._id;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = false;
+    job.is_compeleted = false;
+    job.is_active = true;
+
+    // save the job
+    job.save((err) => {
+      return;
+    });
+
+    chai.request(server).post(url).send({jobID: job._id.toString(), userID: employee._id.toString()}).end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.not.have.property('errorMessage');
+      res.body.should.be.a("object");
+      res.body.should.have.property("wage");
+      done();
+    });
+  });
+
+});
+
+  /**
+ * Tests for Accept an applicant.
+ */
+describe("Accept an applicant", function () {
+  var url = "/job/accept-an-applicant";
+  beforeEach((done) => {
+    Job.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+
+  /**
+  * 1)
+  * Test Case: Null jobID.
+  * Input/Output: Pass a NULL request parameter.
+  * Pass/Fail Criteria: Only succeeds if it returns error code
+  *                     (500) with the message “Job is a required field”.
+  */
+  it("Test Case: Null jobID", (done) => {
+    chai.request(server).post(url).send({userID: "dummy"}).end((err, res) => {
+      res.should.have.status(500);
+      res.body.should.have.property('errorMessage').eql('Job is a required field');
+      done();
+    });
+  });
+
+  /**
+  * 2)
+  * Test Case: Null userID.
+  * Input/Output: Pass a NULL request parameter.
+  * Pass/Fail Criteria: Only succeeds if it returns error code
+  *                     (500) with the message “Job is a required field”.
+  */
+  it("Test Case: Null userID", (done) => {
+    chai.request(server).post(url).send({jobID: "dummy"}).end((err, res) => {
+      res.should.have.status(500);
+      res.body.should.have.property('errorMessage').eql('User is a required field');
+      done();
+    });
+  });
+  
+  /**
+  * 3)
+  * Test Case: User is not an applicant.
+  * Input/Output: Pass a user that is not an applicant.
+  * Pass/Fail Criteria: Only succeeds if it returns error code
+  *                     (400) with the message This job is either already assigned or applicant is no longer interested”.
+  */
+  it("Test Case: User is not an applicant", (done) => {    
+    
+    // create a new user
+    var employee = new User();
+    employee.first_name = "dummy";
+    employee.last_name = "dummy";
+    employee.phone_number = "hasapplied";
+    employee.hash_password = "dummy";
+    employee.verification_token = undefined;
+    employee.working_job_id = undefined;
+    employee.is_working = false;
+    employee.is_verified = false;
+    employee.is_employer = false;
+    employee.images = [];
+
+    // save the employee
+    employee.save((err) => {
+      return;
+    });
+    
+    // save the job
+    var dEmployer = new User();
+    var job = new Job();
+    job.job_title = "dummy";
+    job.description = "dummy";
+    job.wage = 0;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = undefined;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = false;
+    job.is_compeleted = false;
+    job.is_active = false;
+
+
+    // save the job
+    job.save((err) => {
+      return;
+    });
+
+    chai.request(server).post(url).send({jobID: job._id.toString(), userID: employee._id.toString()}).end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property('errorMessage').eql("This job is either already assigned or applicant is no longer interested");
+      done();
+    });
+  });
+  
+  /**
+  * 4)
+  * Test Case: User is not an applicant.
+  * Input/Output: Pass a user that is not an applicant.
+  * Pass/Fail Criteria: Only succeeds if it returns error code
+  *                     (400) with the message This job is either already assigned or applicant is no longer interested”.
+  */
+  it("Test Case: Already has an employee", (done) => {    
+    
+    // create a new user
+    var employee = new User();
+    employee.first_name = "dummy";
+    employee.last_name = "dummy";
+    employee.phone_number = "hasapplied";
+    employee.hash_password = "dummy";
+    employee.verification_token = undefined;
+    employee.working_job_id = undefined;
+    employee.is_working = false;
+    employee.is_verified = false;
+    employee.is_employer = false;
+    employee.images = [];
+
+    // save the employee
+    employee.save((err) => {
+      return;
+    });
+    
+    // save the job
+    var dEmployer = new User();
+    var job = new Job();
+    job.job_title = "dummy";
+    job.description = "dummy";
+    job.wage = 0;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = undefined;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = false;
+    job.is_compeleted = false;
+    job.is_active = true;
+    job.applicants = [];
+    job.applicants.push(employee._id);
+
+
+    // save the job
+    job.save((err) => {
+      return;
+    });
+
+    chai.request(server).post(url).send({jobID: job._id.toString(), userID: employee._id.toString()}).end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property('errorMessage').eql("This job is either already assigned or applicant is no longer interested");
+      done();
+    });
+  });
+
+  /**
+  * 5)
+  * Test Case: Success case.
+  * Input/Output: Pass avalid form.
+  * Pass/Fail Criteria: Only succeeds if it returns code
+  *                     (200) with no error message and a job object.
+  */
+  it("Test Case: Success case", (done) => {
+
+    // create a new user
+    var employee = new User();
+    employee.first_name = "dummy";
+    employee.last_name = "dummy";
+    employee.phone_number = "hasapplied";
+    employee.hash_password = "dummy";
+    employee.verification_token = undefined;
+    employee.working_job_id = undefined;
+    employee.is_working = false;
+    employee.is_verified = false;
+    employee.is_employer = false;
+    employee.images = [];
+
+    // save the employee
+    employee.save((err) => {
+      return;
+    });
+    
+    // save the job
+    var dEmployer = new User();
+    var job = new Job();
+    job.job_title = "dummy";
+    job.description = "dummy";
+    job.wage = 0;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = undefined;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = false;
+    job.is_compeleted = false;
+    job.is_active = false;
+    job.applicants = [];
+    job.applicants.push(employee._id);
+
+    // save the job
+    job.save((err) => {
+      return;
+    });
+
+    chai.request(server).post(url).send({jobID: job._id.toString(), userID: employee._id.toString()}).end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.not.have.property('errorMessage');
+      res.body.should.be.a("object");
+      res.body.should.have.property("wage");
+      done();
+    });
+  });
 
 });
