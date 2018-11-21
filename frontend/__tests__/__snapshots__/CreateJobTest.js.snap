@@ -1,0 +1,348 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Create Job Test Renders the create job screen 1`] = `
+CreateJobScreen {
+  "attemptCreateJob": [Function],
+  "context": Object {},
+  "props": Object {
+    "dispatch": [Function],
+    "store": Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    },
+    "storeSubscription": Subscription {
+      "listeners": Object {
+        "clear": [Function],
+        "get": [Function],
+        "notify": [Function],
+        "subscribe": [Function],
+      },
+      "onStateChange": [Function],
+      "parentSub": undefined,
+      "store": Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+      "unsubscribe": [Function],
+    },
+    "user": Object {
+      "data": Object {
+        "ID": "12345",
+      },
+    },
+  },
+  "refs": Object {},
+  "setState": [Function],
+  "state": Object {
+    "address": "",
+    "description": "",
+    "jobType": "",
+    "wage": "",
+  },
+  "updater": Updater {
+    "_callbacks": Array [],
+    "_renderer": ReactShallowRenderer {
+      "_context": Object {},
+      "_element": <CreateJobScreen
+        dispatch={[Function]}
+        store={
+          Object {
+            "clearActions": [Function],
+            "dispatch": [Function],
+            "getActions": [Function],
+            "getState": [Function],
+            "replaceReducer": [Function],
+            "subscribe": [Function],
+          }
+        }
+        storeSubscription={
+          Subscription {
+            "listeners": Object {
+              "clear": [Function],
+              "get": [Function],
+              "notify": [Function],
+              "subscribe": [Function],
+            },
+            "onStateChange": [Function],
+            "parentSub": undefined,
+            "store": Object {
+              "clearActions": [Function],
+              "dispatch": [Function],
+              "getActions": [Function],
+              "getState": [Function],
+              "replaceReducer": [Function],
+              "subscribe": [Function],
+            },
+            "unsubscribe": [Function],
+          }
+        }
+        user={
+          Object {
+            "data": Object {
+              "ID": "12345",
+            },
+          }
+        }
+      />,
+      "_forcedUpdate": false,
+      "_instance": [Circular],
+      "_newState": null,
+      "_rendered": <TouchableWithoutFeedback
+        accessbile={false}
+        onPress={[Function]}
+      >
+        <ScrollViewMock
+          style={
+            Object {
+              "backgroundColor": "#fff",
+              "flex": 1,
+            }
+          }
+        >
+          <Component
+            style={
+              Object {
+                "alignItems": "center",
+              }
+            }
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Object {
+                  "fontSize": 30,
+                  "paddingBottom": 20,
+                }
+              }
+            >
+              Create Job
+            </Text>
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Object {
+                  "color": "#62727b",
+                  "fontSize": 18,
+                  "marginTop": 10,
+                  "paddingBottom": 20,
+                  "textAlign": "center",
+                }
+              }
+            >
+              Please complete the form below to create your job.
+            </Text>
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Object {
+                  "color": "#000000",
+                  "fontSize": 20,
+                  "marginTop": 10,
+                  "paddingBottom": 10,
+                  "textAlign": "center",
+                }
+              }
+            >
+              Address:
+            </Text>
+            <TextInput
+              allowFontScaling={true}
+              onChangeText={[Function]}
+              placeholder="Enter Address Here"
+              returnKeyType="done"
+              style={
+                Object {
+                  "backgroundColor": "#e8e8e8",
+                  "borderColor": "#00796b",
+                  "borderRadius": 10,
+                  "borderWidth": 2,
+                  "height": 40,
+                  "overflow": "hidden",
+                  "padding": 10,
+                  "width": "90%",
+                }
+              }
+              testID="#address"
+            />
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Object {
+                  "color": "#000000",
+                  "fontSize": 20,
+                  "marginTop": 10,
+                  "paddingBottom": 10,
+                  "textAlign": "center",
+                }
+              }
+            >
+              Job description:
+            </Text>
+            <TextInput
+              allowFontScaling={true}
+              blurOnSubmit={true}
+              multiline={true}
+              numberOfLines={4}
+              onChangeText={[Function]}
+              placeholder="Enter Description Here"
+              returnKeyType="done"
+              style={
+                Object {
+                  "backgroundColor": "#e8e8e8",
+                  "borderColor": "#00796b",
+                  "borderRadius": 10,
+                  "borderWidth": 2,
+                  "height": 100,
+                  "overflow": "hidden",
+                  "padding": 10,
+                  "width": "90%",
+                }
+              }
+              testID="#description"
+            />
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Object {
+                  "color": "#000000",
+                  "fontSize": 20,
+                  "marginTop": 10,
+                  "paddingBottom": 10,
+                  "textAlign": "center",
+                }
+              }
+            >
+              Wage in CAD:
+            </Text>
+            <TextInput
+              allowFontScaling={true}
+              keyboardType="numeric"
+              onChangeText={[Function]}
+              placeholder="Enter Wage here"
+              returnKeyType="done"
+              style={
+                Object {
+                  "backgroundColor": "#e8e8e8",
+                  "borderColor": "#00796b",
+                  "borderRadius": 10,
+                  "borderWidth": 2,
+                  "height": 40,
+                  "overflow": "hidden",
+                  "padding": 10,
+                  "width": "90%",
+                }
+              }
+              testID="#wage"
+            />
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Object {
+                  "color": "#000000",
+                  "fontSize": 20,
+                  "marginTop": 10,
+                  "paddingBottom": 10,
+                  "textAlign": "center",
+                }
+              }
+            >
+              Job type:
+            </Text>
+            <RNPickerSelect
+              disabled={false}
+              doneText="Done"
+              hideDoneBar={false}
+              hideIcon={false}
+              itemKey={null}
+              items={
+                Array [
+                  Object {
+                    "label": "Mow Lawn",
+                    "value": "Mow Lawn",
+                  },
+                  Object {
+                    "label": "Feed Lizard",
+                    "value": "Feed Lizard",
+                  },
+                  Object {
+                    "label": "Do Homework",
+                    "value": "Do Homework",
+                  },
+                  Object {
+                    "label": "Clean Pool",
+                    "value": "Clean Pool",
+                  },
+                ]
+              }
+              modalProps={Object {}}
+              onDonePress={null}
+              onDownArrow={null}
+              onUpArrow={null}
+              onValueChange={[Function]}
+              pickerProps={Object {}}
+              placeholder={
+                Object {
+                  "label": "     Select Job Here",
+                  "value": "",
+                }
+              }
+              placeholderTextColor="#C7C7CD"
+              style={Object {}}
+              testID="#type"
+              textInputProps={Object {}}
+            />
+            <Component
+              style={
+                Object {
+                  "backgroundColor": "#00796b",
+                  "borderColor": "#00796b",
+                  "borderRadius": 10,
+                  "marginBottom": 10,
+                  "overflow": "hidden",
+                  "padding": 10,
+                }
+              }
+            >
+              <Button
+                color="#ffffff"
+                onPress={[Function]}
+                style={
+                  Object {
+                    "fontSize": 18,
+                    "fontWeight": "600",
+                  }
+                }
+                testID="#submit"
+                title="Submit"
+              />
+            </Component>
+          </Component>
+        </ScrollViewMock>
+      </TouchableWithoutFeedback>,
+      "_rendering": false,
+      "_updater": [Circular],
+    },
+  },
+  Symbol(enzyme.__setState__): [Function],
+}
+`;

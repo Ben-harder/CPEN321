@@ -114,7 +114,6 @@ class CreateJobScreen extends React.Component
             description: "",
             jobType: "",
             wage: "",
-            modalVisible: false,
         };
 
         this.attemptCreateJob = this.attemptCreateJob.bind(this);
@@ -127,11 +126,6 @@ class CreateJobScreen extends React.Component
 
     componentWillUnmount() {
         console.disableYellowBox = false;
-    }
-
-    setModalVisible(visible)
-    {
-        this.setState({ modalVisible: visible });
     }
 
     render()
@@ -149,6 +143,7 @@ class CreateJobScreen extends React.Component
                         </Text>
 
                         <TextInput
+                            testID="#address"
                             style={styles.textInput}
                             onChangeText={(address) => this.setState({ address })}
                             returnKeyType='done'
@@ -159,6 +154,7 @@ class CreateJobScreen extends React.Component
                         </Text>
 
                         <TextInput
+                            testID="#description"
                             style={styles.textInputJobDescription}
                             multiline = {true}
                             numberOfLines = {4}
@@ -172,6 +168,7 @@ class CreateJobScreen extends React.Component
                         </Text>
 
                         <TextInput
+                            testID="#wage"
                             style={styles.textInput}
                             keyboardType={"numeric"}
                             onChangeText={(wage) => this.setState({ wage })}
@@ -181,6 +178,7 @@ class CreateJobScreen extends React.Component
                         <Text style={styles.formLabel}>
                             Job type:
                         </Text>
+
                         <View style={styles.innerContainer}>
                             <Select
                                 onValueChange={value => this.setState({jobType: value})}
@@ -231,7 +229,7 @@ class CreateJobScreen extends React.Component
                 alert("You've successfully created the job post.");
                 this.props.navigation.navigate("App");
             }).catch((err) => {
-                console.log(err);
+                // console.log(err);
                 alert(err.response.data.errorMessage);
             });
         }
