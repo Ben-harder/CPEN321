@@ -1,11 +1,3 @@
-// const request = require('request');
-// const assert = require('assert');
-// const baseUrl = "http://localhost:3001";
-// const expect = require('chai').expect;
-
-// //include tested files
-// const job = require('../api/job/job');
-
 process.env.NODE_ENV = 'test';
 
 const mongoose = require("mongoose");
@@ -22,35 +14,10 @@ const expect = chai.expect();
 
 chai.use(chaiHttp);
 
-const getAppliedUserNotApplied = {
-  phoneNumber: 6043347758
-};
-const getAppliedUserApplied = {
-  phoneNumber: 6043388885
-};
-const canApplyAlreadyAppliedUser = {
-  userID: "dummy"
-};
-const canApplyAlreadyAppliedJob = {
-  jobID: "dummy"
-};
-const canApplyIsCreatorUser = {
-  userID: "dummy"
-};
-const canApplyIsCreatorJob = {
-  jobID: "dummy"
-};
-const canApplyCorrectUser = {
-  userID: "dummy"
-};
-const canApplyCorrectJob = {
-  jobID: "dummy"
-};
-
 /**
- * Tests for Get Employer Job.
+ * Tests for Get Employer Jobs.
  */
-describe("Get Employer Job.", function () {
+describe("Get Employer Jobs.", function () {
   var url = "/get-employer-jobs";
   beforeEach((done) => {
     Job.deleteMany({}, (err) => {
@@ -110,7 +77,6 @@ describe("Get Employer Job.", function () {
       res.should.have.status(200);
       res.body.should.not.have.property('errorMessage');
       res.body.should.be.a('array');
-      res.body.should.have.length.eql(1);
       done();
     });
   });
@@ -226,7 +192,7 @@ describe("Get Applied-For Jobs", function () {
   it('Test Case: Null user', (done) => {
     chai.request(server).get(url).end((err, res) => {
       res.should.have.status(400);
-      res.body.should.have.property('message').eql('User is a required field');
+      res.body.should.have.property('errorMessage').eql('User is a required field');
       done();
     });
   });
@@ -260,7 +226,7 @@ describe("Get Applied-For Jobs", function () {
     
     chai.request(server).get(url).query({employeeID: user._id.toString()}).end((err, res) => {
       res.should.have.status(400);
-      res.body.should.have.property('errorMessage').eql('User has not applied to any jobs');
+      res.body.should.have.property('errorMessage').eql('You have applied for no jobs');
       done();
     });
   });
@@ -327,7 +293,7 @@ describe("Get Applied-For Jobs", function () {
 /**
  * Tests for Get All jobs.
  */
-describe("Get Applied-For Jobs", function () {
+describe("Get all Jobs", function () {
   var url = "/get-all-jobs";
   beforeEach((done) => {
     Job.deleteMany({}, (err) => {
@@ -440,10 +406,10 @@ describe("User Is Able To Apply", function () {
    * Pass/Fail Criteria: Only succeeds if it returns error code (400) with the message
    *                     "Job is a required field”
    */
-    it("Test Case: Null Null job", (done) => {
+    it("Test Case: Null job", (done) => {
       chai.request(server).get(url).query({userID: "dummy"}).end((err, res) => {
         res.should.have.status(400);
-        res.body.should.have.property('errorMessage').eql('User is a required field');
+        res.body.should.have.property('errorMessage').eql('Job is a required field');
         done();
       });
     });
@@ -456,7 +422,7 @@ describe("User Is Able To Apply", function () {
    * Pass/Fail Criteria: Only succeeds if it returns code (400) with error
    *                     message "You have already applied to this job"
    */
-  it("Correct application form", function (done) {
+  it("User has already applied to this job", function (done) {
     // create a dummy employer
     var dEmployer = new User();
     dEmployer.first_name = "dummy";
@@ -514,8 +480,8 @@ describe("User Is Able To Apply", function () {
     });
     
     chai.request(server).get(url).query({userID: dEmployee._id.toString(), jobID: job._id.toString()}).end((err, res) => {
-      res.should.have.status(200);
-      res.body.should.not.have.property('errorMessage');
+      res.should.have.status(400);
+      res.body.should.have.property('errorMessage').eql("You have already applied to this job");
       done();
     });
   });
@@ -675,25 +641,26 @@ describe("Create Job", function () {
     });
   });
 
-//   /**
-//   * 2)
-//   * Test Case: No job_title.
-//   * Input/Output: Pass a NULL job title parameter.
-//   * Pass/Fail Criteria: Only succeeds if it returns error code
-//   *                     (400) with the message “All fields have not been filled out”.
-//   */
-//   it("No job_title", function (done) {
-//     let options = {};
-//     request(baseUrl + url, options, function (err, res, body) {
-//       expect(res.statusCode)
-//         .to
-//         .equal(400);
-//       expect(body.errorMessage)
-//         .to
-//         .equal("All fields have not been filled out");
-//       done();
-//     });
-//   });
+  /**
+  * 2)
+  * Test Case: No job_title.
+  * Input/Output: Pass a NULL job title parameter.
+  * Pass/Fail Criteria: Only succeeds if it returns error code
+  *                     (400) with the message “All fields have not been filled out”.
+  */
+  it("No job_title", (done) => {
+    var dEmployer = new User();
+    let job = {};
+      job.employerID = "dummy";
+      job.description = "dummy";
+      job.wage = 1;
+      job.address = "dummy";
+    chai.request(server).post(url).send(job).end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property('errorMessage').eql('All fields have not been filled out');
+      done();
+    });
+  });
 
 //   /**
 //  * 3)
@@ -702,20 +669,20 @@ describe("Create Job", function () {
 //  * Pass/Fail Criteria: Only succeeds if it returns error code
 //  *                     (400) with the message “All fields have not been filled out”.
 //  */
-//   it("No job_description", function (done) {
-//     let options = {
-//       job_title: "dummy"
-//     };
-//     request(baseUrl + url, options, function (err, res, body) {
-//       expect(res.statusCode)
-//         .to
-//         .equal(400);
-//       expect(body.errorMessage)
-//         .to
-//         .equal("All fields have not been filled out");
-//       done();
-//     });
-//   });
+  it("Test Case: No job_description", (done) => {
+    var dEmployer = new User();
+    let job = {};
+      job.employerID = "dummy";
+      job.jobType = "dummy";
+      job.wage = 1;
+      job.address = "dummy";
+
+    chai.request(server).post(url).send(job).end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property("errorMessage").eql("All fields have not been filled out");
+      done();
+    });
+  });
 
 //   /**
 //  * 4)
@@ -724,21 +691,22 @@ describe("Create Job", function () {
 //  * Pass/Fail Criteria: Only succeeds if it returns error code
 //  *                     (400) with the message “All fields have not been filled out”.
 //  */
-//   it("No wage", function (done) {
-//     let options = {
-//       job_title: "dummy",
-//       job_description: "dummy"
-//     };
-//     request(baseUrl + url, options, function (err, res, body) {
-//       expect(res.statusCode)
-//         .to
-//         .equal(400);
-//       expect(body.errorMessage)
-//         .to
-//         .equal("All fields have not been filled out");
-//       done();
-//     });
-//   });
+  it("Test Case: No wage", (done) => {
+    // create a valid user
+    var dEmployer = new User();
+    let job = {
+      employerID: dEmployer._id.toString(),
+      jobType: "dummy",
+      description: "dummy",
+      address: "dummy"
+    };
+
+    chai.request(server).post(url).send(job).end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property("errorMessage").eql("All fields have not been filled out");
+      done();
+    });
+  });
 
 //   /**
 //  * 5)
@@ -747,22 +715,22 @@ describe("Create Job", function () {
 //  * Pass/Fail Criteria: Only succeeds if it returns error code
 //  *                     (400) with the message “All fields have not been filled out”.
 //  */
-//   it("No address", function (done) {
-//     let options = {
-//       job_title: "dummy",
-//       job_description: "dummy",
-//       wage: 10
-//     };
-//     request(baseUrl + url, options, function (err, res, body) {
-//       expect(res.statusCode)
-//         .to
-//         .equal(400);
-//       expect(body.errorMessage)
-//         .to
-//         .equal("All fields have not been filled out");
-//       done();
-//     });
-//   });
+  it("Test Case: No address", (done) => {
+    // create a valid user
+    var dEmployer = new User();
+    let job = {
+      employerID: dEmployer._id.toString(),
+      jobType: "dummy",
+      wage: 1,
+      description: "dummy"
+    };
+
+    chai.request(server).post(url).send(job).end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property("errorMessage").eql("All fields have not been filled out");
+      done();
+    });
+  });
 
 //   /**
 //  * 6)
@@ -771,23 +739,22 @@ describe("Create Job", function () {
 //  * Pass/Fail Criteria: Only succeeds if it returns error code
 //  *                     (400) with the message “All fields have not been filled out”.
 //  */
-//   it("No employer ID", function (done) {
-//     let options = {
-//       job_title: "dummy",
-//       job_description: "dummy",
-//       wage: 10,
-//       address: "9832 wain street"
-//     };
-//     request(baseUrl + url, options, function (err, res, body) {
-//       expect(res.statusCode)
-//         .to
-//         .equal(400);
-//       expect(body.errorMessage)
-//         .to
-//         .equal("All fields have not been filled out");
-//       done();
-//     });
-//   });
+  it("Test Case: No employer ID", (done) => {
+    // create a valid user
+    var dEmployer = new User();
+    let job = {
+      jobType: "dummy",
+      wage: 1,
+      description: "dummy",
+      address: "dummy"
+    };
+
+    chai.request(server).post(url).send(job).end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property("errorMessage").eql("All fields have not been filled out");
+      done();
+    });
+  });
 
 //   /**
 //  * 7)
@@ -819,7 +786,7 @@ describe("Create Job", function () {
  * Pass/Fail Criteria: Only succeeds if it returns error code
  *                     (400) with the message "Woah! employees won't work AND pay you money!”.
  */
-  it("Test Case: Zero wage", (done) => {
+  it("Test Case: Negative wage", (done) => {
     var dEmployer = new User();
     let job = {};
       job.employerID = "dummy";

@@ -70,12 +70,8 @@ module.exports = {
     Job.find({employer : req.query.employer}).populate({ path :'employer', select:'first_name last_name'})
     .exec(function(err, jobs) {
       if (err){
-        // console.log("Error when finding and populating the job list");
-        // console.log(err.message);
         return res.status(500).send(jobs);
       }
-      // console.log("Success when finding and populating the job list");
-      // console.log(jobs);
       return res.status(200).send(jobs); 
     });
   },
@@ -154,6 +150,11 @@ module.exports = {
    * were taken by that emplyee
    */
   getAppliedForJobs(req, res) {
+    if (!req.query.employeeID) {
+      let ret = {};
+      ret.errorMessage = "User is a required field";
+      return res.status(400).send(ret);
+    }
     // declare the queries
     const findQuery = {applicants: {$elemMatch: {$eq: req.query.employeeID}}};
     const populateQuery = {path :'employer', select:'first_name last_name'};
@@ -162,16 +163,14 @@ module.exports = {
     .populate(populateQuery)
     .exec(function(err, jobs) {
       if (err){
-        // console.log("Error when finding and populating the job list");
-        // console.log(err.message);
         return res.status(500).send(jobs);
       }
-      // console.log("Success when finding and populating the job list");
-      // console.log(jobs);
+      if (!jobs[0]) {
+        let ret = {};
+        ret.errorMessage = "You have applied for no jobs";
+        return res.status(400).send(ret);
+      }
       return res.status(200).send(jobs); 
     });
   }
-  //var populateQuery = [{path:'books', select:'title pages'}, {path:'movie', select:'director'}];
-// { "instock": { $elemMatch: { qty: 5, warehouse: "A" } } }
-
 };
