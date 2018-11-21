@@ -85,13 +85,20 @@ module.exports = {
     let hasApplied = false;
 
     let ret = {};
+    // null query
+    if (!req.query) {
+      ret.errorMessage = 'Null query';
+      return res.status(500).send(ret);
+    }
+    // null user
     if (!req.query.userID) {
       ret.errorMessage = 'User is a required field';
-      return res.status(400).send(ret);
+      return res.status(500).send(ret);
     }
+    // null job
     if (!req.query.jobID) {
       ret.errorMessage = 'Job is a required field';
-      return res.status(400).send(ret);
+      return res.status(500).send(ret);
     }
 
     Job.findById(req.query.jobID)
@@ -130,6 +137,16 @@ module.exports = {
    * User will be added in the job's list of applicants
    */
   applyForJob(req, res) {
+    // null user
+    if (!req.body.userID) {
+      ret.errorMessage = 'User is a required field';
+      return res.status(500).send(ret);
+    }
+    // null job
+    if (!req.body.jobID) {
+      ret.errorMessage = 'Job is a required field';
+      return res.status(500).send(ret);
+    }
     Job.findByIdAndUpdate(req.body.jobID,  {$push: {applicants: req.body.userID}},
     {upsert:true}, function(err, doc){
       let ret = {};
@@ -153,7 +170,7 @@ module.exports = {
     if (!req.query.employeeID) {
       let ret = {};
       ret.errorMessage = "User is a required field";
-      return res.status(400).send(ret);
+      return res.status(500).send(ret);
     }
     // declare the queries
     const findQuery = {applicants: {$elemMatch: {$eq: req.query.employeeID}}};

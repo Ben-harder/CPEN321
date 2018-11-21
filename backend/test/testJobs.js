@@ -191,7 +191,7 @@ describe("Get Applied-For Jobs", function () {
    */
   it('Test Case: Null user', (done) => {
     chai.request(server).get(url).end((err, res) => {
-      res.should.have.status(400);
+      res.should.have.status(500);
       res.body.should.have.property('errorMessage').eql('User is a required field');
       done();
     });
@@ -373,26 +373,8 @@ describe("User Is Able To Apply", function () {
    *                     “User is a required field”
    */
   it("Test Case: Null user", (done) => {
-    var job = new Job();
-    var dEmployer = new User();
-    job.job_title = "dummy";
-    job.description = "dummy";
-    job.wage = 0;
-    job.address = "dummy";
-    job.employer = dEmployer._id;
-    job.employee = undefined;
-    job.created_at = new Date();
-    job.deleted_at = undefined;
-    job.is_deleted = false;
-    job.is_compeleted = false;
-    job.is_active = false;
-
-    // save the job
-    job.save((err) => {
-      return;
-    });
     chai.request(server).get(url).query({jobID: "dummy"}).end((err, res) => {
-      res.should.have.status(400);
+      res.should.have.status(500);
       res.body.should.have.property('errorMessage').eql('User is a required field');
       done();
     });
@@ -408,7 +390,7 @@ describe("User Is Able To Apply", function () {
    */
     it("Test Case: Null job", (done) => {
       chai.request(server).get(url).query({userID: "dummy"}).end((err, res) => {
-        res.should.have.status(400);
+        res.should.have.status(500);
         res.body.should.have.property('errorMessage').eql('Job is a required field');
         done();
       });
