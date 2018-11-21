@@ -22,36 +22,7 @@ import Font from "../constants/Font";
 // actions
 import * as actions from "../actions/";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "#fff",
-    padding: 40,
-  },
-  textLink: {
-    paddingVertical: 15,
-  },
-  textLinkText: {
-    fontSize: Font.butSize,
-    color: Colors.buttonText,
-    fontWeight: Font.thick,
-    padding: 10,
-    borderRadius: 10,
-    borderColor: Colors.sNorm,
-    backgroundColor: Colors.sNorm,
-    textAlign: 'center',
-  },
-  innerContainer: {
-    width: "100%",
-    justifyContent: "center",
-  },
-  regText: {
-    fontSize: Font.normSize,
-    fontWeight: Font.thick,
-    textAlign: 'center',
-  },
-});
+var s = require('../constants/style');
 
 class SignInScreen extends React.Component {
   constructor(props) {
@@ -89,28 +60,30 @@ class SignInScreen extends React.Component {
   render() {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={styles.container}>
-          <Text style={[styles.regText, {paddingBottom: 40}]}>Enter your phone number to sign in:</Text>
-          <PhoneInput style={{paddingBottom: 40}}
-              ref={ref => {
-                this.phone = ref;
-              }}
-              initialCountry="ca"
+        <View style={s.container}>
+          <View style={s.innerContainer}>
+            <Text style={[s.regText, {paddingBottom: 40}]}>Enter your phone number to sign in:</Text>
+            <PhoneInput style={{paddingBottom: 40}}
+                ref={ref => {
+                  this.phone = ref;
+                }}
+                initialCountry="ca"
+              />
+            <Text style={s.regText}>Enter your password:</Text>
+            <TextInput
+              style={{padding: 10,}}
+              onChangeText={(text) => this.setState({password: text})}
+              value={this.state.password}
+              secureTextEntry={true}
             />
-          <Text style={styles.regText}>Enter your password:</Text>
-          <TextInput
-            style={{padding: 10,}}
-            onChangeText={(text) => this.setState({password: text})}
-            value={this.state.password}
-            secureTextEntry={true}
-          />
-          <TouchableOpacity onPress={this.attemptSignIn} style={styles.textLink}>
-            <Text style={styles.textLinkText}>Sign In</Text>
-          </TouchableOpacity>
-          <Text style={styles.regText}>or</Text>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate("SignUp")} style={styles.textLink}>
-            <Text style={styles.textLinkText}>Click Here to Sign Up</Text>
-          </TouchableOpacity>
+            <TouchableOpacity onPress={this.attemptSignIn} style={s.textLink}>
+              <Text style={s.textLinkText}>Sign In</Text>
+            </TouchableOpacity>
+            <Text style={s.regText}>or</Text>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("SignUp")} style={s.textLink}>
+              <Text style={s.textLinkText}>Click Here to Sign Up</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </TouchableWithoutFeedback>
     );
