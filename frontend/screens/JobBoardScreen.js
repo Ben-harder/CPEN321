@@ -82,11 +82,15 @@ export default class JobBoardScreen extends React.Component
                     data={this.state.jobList}
                     renderItem={({ item }) => (
                         <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
-                            <Text style={s.jobText}><Text style={{fontWeight: 'bold'}}>Job type: </Text><Text>{item.job_title}</Text></Text>
-                            <Text style={s.jobText}><Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text></Text>
-                            <Text style={s.jobText}><Text style={{fontWeight: 'bold'}}>Address: </Text><Text>{item.address}</Text></Text>
-                            <Text style={s.jobText}><Text style={{fontWeight: 'bold'}}>Wage: </Text><Text>${item.wage}</Text></Text>
-                            <Text style={s.jobText}><Text style={{fontWeight: 'bold'}}>Description: </Text><Text>{item.description}</Text></Text>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
+                                <Text style={[s.jobText, {fontSize: Font.titleSize}]}>{item.job_title}</Text>
+                                <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
+                            </View>
+                            <Text style={[s.infoText, {textAlign: 'left', borderBottomWidth: 1, borderBottomColor: Colors.sDark, padding: 10,}]}>@ {item.address}</Text>
+                            <Text style={{fontSize: Font.smallSize}}>
+                                <Text><Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text></Text>
+                            </Text>
+                
                         </TouchableOpacity>
                     )}
                     keyExtractor={(item, index) => index.toString()}

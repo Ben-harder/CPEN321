@@ -58,7 +58,7 @@ contentContainer: {
 headerText: {
     fontSize: Font.titleSize,
     textAlign: "center",
-    padding: 20,
+    // padding: 20,
 },
 regText: {
     textAlign: 'center',
@@ -67,7 +67,7 @@ regText: {
 infoText: {
     textAlign: 'center',
     fontSize: Font.normSize,
-    color: 'grey',
+    color: Colors.sLight,
     fontStyle: 'italic',
 },
 jobText: {
@@ -77,6 +77,13 @@ jobText: {
 textInput: {
     width: "100%",
     padding: 10,
+},
+jobDescription: {
+    // padding: 10,
+    backgroundColor: 'white',
+    // borderWidth: 1,
+    // borderRadius: 7,
+    // borderColor: Colors.sNorm,
 },
 textInputJobDescription: {
     height: 100,
@@ -102,9 +109,9 @@ jobItem: {
     borderRadius: 20,
     borderWidth: 1,
     borderColor: Colors.sNorm,
-    margin: 8,
+    marginVertical: 8,  
     backgroundColor: '#ffff',
-    padding: 30,
+    padding: 20,
     overflow: "hidden",
     shadowOffset: { width: 10, height: 10 },
     shadowColor: 'black',

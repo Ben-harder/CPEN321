@@ -85,15 +85,26 @@ class JobScreen extends React.Component
     {
         return (
             <View style={s.container}>
-                <Text style={[s.headerText]}>Take This Job?</Text>
-                <View style={s.contentContainer}>
+                <View style={[s.contentContainer, {flex: 1, justifyContent: 'space-evenly'}]}>
+                    <Text style={s.headerText}>Take This Job?</Text>
                     <View style={s.jobItem}>
-                            <Text style={s.jobText}><Text style={{fontWeight: 'bold'}}>Job type: </Text><Text>{this.state.jobType}</Text></Text>
-                            <Text style={s.jobText}><Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{this.state.author}</Text></Text>
-                            <Text style={s.jobText}><Text style={{fontWeight: 'bold'}}>Address: </Text><Text>{this.state.address}</Text></Text>
-                            <Text style={s.jobText}><Text style={{fontWeight: 'bold'}}>Wage: </Text><Text>${this.state.wage}</Text></Text>
-                            <Text style={s.jobText}><Text style={{fontWeight: 'bold'}}>Description: </Text><Text>{this.state.description}</Text></Text>
+
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
+                            <Text style={[s.jobText, {fontSize: Font.titleSize}]}>{this.state.jobType}</Text>
+                            <Text style={[{fontSize: Font.titleSize,}]}>${this.state.wage}</Text>
+                        </View>
+                        <Text style={[s.infoText, {textAlign: 'left', borderBottomWidth: 1, borderBottomColor: Colors.sDark, padding: 10,}]}>@ {this.state.address}</Text>
+                        <Text style={{fontSize: Font.smallSize}}>
+                                <Text><Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{this.state.author}</Text></Text>
+                        </Text>
+                        <View>
+                            <Text style={[s.jobText, {fontWeight: 'bold', marginTop: 30}]}>Description: </Text>
+                            <View style={s.jobDescription}>
+                                <Text>{this.state.description}</Text>
+                            </View>                     
+                        </View>                    
                     </View>
+
 
                     <TouchableOpacity onPress={() => this.applyForJob()} style={s.textLink}>
                         <Text style={s.textLinkText}>Apply for this job</Text>

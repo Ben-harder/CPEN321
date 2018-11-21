@@ -71,7 +71,7 @@ class SignInScreen extends React.Component {
               />
             <Text style={s.regText}>Enter your password:</Text>
             <TextInput
-              style={[s.textInput, {paddingBottom: 40}]} // Why doesn't this work
+              style={[s.textInput, {marginBottom: 40}]} // Why doesn't this work
               onChangeText={(text) => this.setState({password: text})}
               value={this.state.password}
               secureTextEntry={true}
