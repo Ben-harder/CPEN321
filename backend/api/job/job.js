@@ -1,4 +1,5 @@
 var Job = require('../../models/job');
+var JobPref = require('../../models/jobPref');
 var database = require('../../initdb');
 
 module.exports = {
@@ -264,5 +265,15 @@ module.exports = {
         // success
         return res.status(200).send(job);
     });
-  }
+  },
+
+  /**
+   * Get all the job types
+   */
+  getJobTypes(req, res) {
+    console.log("here");
+    let ret = JobPref.schema.path('stats').schema.path('job_type').enumValues;
+    console.log(ret);
+    return res.status(200).send(ret);
+  },
 };

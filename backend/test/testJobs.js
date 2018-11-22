@@ -1170,5 +1170,36 @@ describe("Accept an applicant", function () {
       done();
     });
   });
+});
 
+/**
+ * Tests for Get Job Types.
+ */
+describe("Get Job Types", function () {
+  var url = "/job/get-job-types";
+  beforeEach((done) => {
+    Job.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+
+  /** 1)
+   * Test Case: Success case.
+   * Input/Output: Return array of job types.
+   * Pass/Fail Criteria: Only succeeds if it returns error
+   *                     code (400) with the message "User is a required field”.
+   */
+  it('Test Case: Success case', (done) => {
+    chai.request(server).get(url).end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.be.a('array');
+      res.body.length.should.be.eql(3);
+      done();
+    });
+  });
 });

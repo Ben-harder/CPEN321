@@ -23,4 +23,6 @@ module.exports = function (app)
   app.post("/job/complete-a-job", job.completeJob);
 
   app.post("/job/accept-an-applicant", job.acceptAnApplicant);
+
+  app.get("/job/get-job-types", job.getJobTypes);
 };
