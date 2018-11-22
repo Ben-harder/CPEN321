@@ -117,6 +117,10 @@ class CreateJobScreen extends React.Component
                                 <TouchableOpacity testID="#submit" onPress={() => this.attemptCreateJob()} style={s.textLink}>
                                     <Text style={s.textLinkText}>Submit</Text>
                                 </TouchableOpacity>
+
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate("Main")} style={s.textLink}>
+                                    <Text style={s.textLinkTextBack}>Cancel</Text>
+                                </TouchableOpacity>
                                 
                         </ScrollView>
                     </View>
