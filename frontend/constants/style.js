@@ -138,11 +138,25 @@ module.exports = StyleSheet.create({
         fontSize: Font.normSize,
     },
     textInput: {
-        width: "100%",
-        padding: 10,
+        backgroundColor: '#ffffff99', 
+        padding: 20, 
+        borderRadius: 10,
+        marginVertical: 5,
     },
-    phoneInput: {
-    
+    textInputJobDescription: {
+        height: 100,
+        backgroundColor: '#ffffff99', 
+        borderRadius: 10,
+        padding: 10,
+        overflow: 'hidden',
+        width: "100%",
+        marginVertical: 5,
+    },
+    picker: {
+        backgroundColor: '#ffffff99',
+        padding: 5, 
+        borderRadius: 10,
+        marginVertical: 5,
     },
     jobDescription: {
         // padding: 10,
@@ -150,15 +164,6 @@ module.exports = StyleSheet.create({
         // borderWidth: 1,
         // borderRadius: 7,
         // borderColor: Colors.sNorm,
-    },
-    textInputJobDescription: {
-        height: 100,
-        borderWidth: 1,
-        borderRadius: 10,
-        padding: 10,
-        borderColor: Colors.sNorm,
-        overflow: 'hidden',
-        width: "100%",
     },
     formLabel: {
         //paddingBottom: 10,

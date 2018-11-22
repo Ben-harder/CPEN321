@@ -78,7 +78,7 @@ export default class JobBoardScreen extends React.Component
     {
         return (
             <View style={s.container}>
-                <ImageBackground source={require('../assets/images/min_art2.png')} style={{width: '100%', height: '100%',}}  resizeMode='cover'> 
+                <ImageBackground source={require('../assets/images/min_art1.png')} style={{width: '100%', height: '100%',}}  resizeMode='cover'> 
                     <View style={{width: '100%', height: '100%', alignItems: 'center'}}>
                         <FlatList
                             style={s.jobList}
@@ -89,7 +89,7 @@ export default class JobBoardScreen extends React.Component
                                         <Text style={s.jobTypeText}>{item.job_title}</Text>
                                         <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
                                     </View>
-                                    <Text style={s.addressTextAlt}>at {item.address}</Text>
+                                    <Text style={s.addressText}>at {item.address}</Text>
                                     <Text style={{fontSize: Font.smallSize}}>
                                         <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text>
                                     </Text>
