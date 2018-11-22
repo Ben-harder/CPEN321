@@ -38,8 +38,6 @@ module.exports = {
     user.is_employer = false;
     user.images = [];
     
-    /* NEED TO USE VALIDATOR*/
-
     // save the user
     user.save(function (err) {
         if (err) {
@@ -53,6 +51,11 @@ module.exports = {
 
   //
   userSignIn(req, res) {
+    if(!req.query || !req.query.phoneNumber || !req.query.password) {
+      let ret = {};
+      ret.errorMessage = "All fields have not been filled out";
+      return res.status(400).send(ret);
+    }
     User.findOne({phone_number : req.query.phoneNumber}, function(err, user) {
       let ret = {};
       if (err) {
@@ -61,7 +64,7 @@ module.exports = {
       }
 
       if (!user) {
-        ret.errorMessage = "Phone Number does not exist!";
+        ret.errorMessage = "Login info is invalid!";
         return res.status(400).send(ret);
       }
 

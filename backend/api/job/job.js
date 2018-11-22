@@ -70,12 +70,8 @@ module.exports = {
     Job.find({employer : req.query.employer}).populate({ path :'employer', select:'first_name last_name'})
     .exec(function(err, jobs) {
       if (err){
-        console.log("Error when finding and populating the job list");
-        console.log(err.message);
         return res.status(500).send(jobs);
       }
-      // console.log("Success when finding and populating the job list");
-      // console.log(jobs);
       return res.status(200).send(jobs); 
     });
   },
@@ -89,13 +85,20 @@ module.exports = {
     let hasApplied = false;
 
     let ret = {};
+    // null query
+    if (!req.query) {
+      ret.errorMessage = 'Null query';
+      return res.status(500).send(ret);
+    }
+    // null user
     if (!req.query.userID) {
       ret.errorMessage = 'User is a required field';
-      return res.status(400).send(ret);
+      return res.status(500).send(ret);
     }
+    // null job
     if (!req.query.jobID) {
       ret.errorMessage = 'Job is a required field';
-      return res.status(400).send(ret);
+      return res.status(500).send(ret);
     }
 
     Job.findById(req.query.jobID)
@@ -134,6 +137,16 @@ module.exports = {
    * User will be added in the job's list of applicants
    */
   applyForJob(req, res) {
+    // null user
+    if (!req.body.userID) {
+      ret.errorMessage = 'User is a required field';
+      return res.status(500).send(ret);
+    }
+    // null job
+    if (!req.body.jobID) {
+      ret.errorMessage = 'Job is a required field';
+      return res.status(500).send(ret);
+    }
     Job.findByIdAndUpdate(req.body.jobID,  {$push: {applicants: req.body.userID}},
     {upsert:true}, function(err, doc){
       let ret = {};
@@ -154,6 +167,11 @@ module.exports = {
    * were taken by that emplyee
    */
   getAppliedForJobs(req, res) {
+    if (!req.query.employeeID) {
+      let ret = {};
+      ret.errorMessage = "User is a required field";
+      return res.status(500).send(ret);
+    }
     // declare the queries
     const findQuery = {applicants: {$elemMatch: {$eq: req.query.employeeID}}};
     const populateQuery = {path :'employer', select:'first_name last_name'};
@@ -162,16 +180,89 @@ module.exports = {
     .populate(populateQuery)
     .exec(function(err, jobs) {
       if (err){
-        console.log("Error when finding and populating the job list");
-        console.log(err.message);
         return res.status(500).send(jobs);
       }
-      // console.log("Success when finding and populating the job list");
-      // console.log(jobs);
+      if (!jobs[0]) {
+        let ret = {};
+        ret.errorMessage = "You have applied for no jobs";
+        return res.status(400).send(ret);
+      }
       return res.status(200).send(jobs); 
     });
-  }
-  //var populateQuery = [{path:'books', select:'title pages'}, {path:'movie', select:'director'}];
-// { "instock": { $elemMatch: { qty: 5, warehouse: "A" } } }
+  },
 
+  /**
+   * Mark a taken job as complete.
+   */
+  completeJob(req, res) {
+    if (!req.body.jobID) {
+      let ret = {};
+      ret.errorMessage = "Job is a required field";
+      return res.status(500).send(ret);
+    }
+    Job.findByIdAndUpdate(req.body.jobID,  {$set: {is_compeleted: true}},
+      {upsert:false}, function(err, job){
+        // err
+        if (err){
+          let ret = {};
+          ret.errorMessage = "Internal error in database"; 
+          return res.status(500).send(ret);
+        }
+        // can't find one
+        if (!job){
+          let ret = {};
+          ret.errorMessage = "This job no longer exists"; 
+          return res.status(500).send(ret);
+        }
+        // job is not taken yet
+        if (!job.is_active){
+          let ret = {};
+          ret.errorMessage = "You can't complete a job you haven't teken"; 
+          return res.status(400).send(ret);
+        }
+        // success
+        return res.status(200).send(job);
+    });
+  },
+
+  /**
+   * Mark a taken job as complete.
+   */
+  acceptAnApplicant(req, res) {
+    // null job
+    if (!req.body.jobID) {
+      let ret = {};
+      ret.errorMessage = "Job is a required field";
+      return res.status(500).send(ret);
+    }
+    // null user
+    if (!req.body.userID) {
+      let ret = {};
+      ret.errorMessage = "User is a required field";
+      return res.status(500).send(ret);
+    }
+    console.log("befor");
+    Job.findOneAndUpdate({_id: req.body.jobID ,
+      applicants: {$elemMatch: {$eq: req.body.userID}},
+      is_active: false},  
+      {$set: {is_active: true, employee: req.body.userID}},
+      {upsert:false}, function(err, job){
+        console.log("after");
+        // err
+        if (err){
+          console.log(err);
+          let ret = {};
+          ret.errorMessage = "Internal error in database"; 
+          return res.status(500).send(ret);
+        }
+        // can't find one
+        if (!job){
+          let ret = {};
+          ret.errorMessage = "This job is either already assigned or applicant is no longer interested"; 
+          return res.status(400).send(ret);
+        }
+        // success
+        return res.status(200).send(job);
+    });
+  }
 };
