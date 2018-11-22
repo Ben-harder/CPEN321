@@ -3,6 +3,7 @@ export default {
   thick: "600",
   butSize: 18,
   thin: "300",
-  normSize: 20,
-  titleSize: 30,
+  smallSize: 15,
+  normSize: 24,
+  titleSize: 34,
 };

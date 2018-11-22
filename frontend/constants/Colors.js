@@ -21,9 +21,13 @@ export default {
   pDark: "#102027",
   pBackground: "#dddddd",
 
-  sNorm: "#00796b",
-  sLight: "#48a999",
-  sDark: "#004c40",
+  sNorm: "#278ea5",
+  sLight: "#278ea5",
+  sDark: "#1f4287",
+  
+  sNormAlt: "#a52727",
+  sLightAlt: "#a52727",
+  sDarkAlt: "#a52727",
 
   tile: "#e8e8e8",
   buttonText: "#ffffff",
