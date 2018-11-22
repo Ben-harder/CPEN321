@@ -94,9 +94,9 @@ class JobScreen extends React.Component
                                 <Text style={[s.jobText, {fontSize: Font.titleSize}]}>{this.state.jobType}</Text>
                                 <Text style={[{fontSize: Font.titleSize,}]}>${this.state.wage}</Text>
                             </View>
-                            <Text style={[s.infoText, {textAlign: 'left', borderBottomWidth: 1, borderBottomColor: Colors.sDark, padding: 10,}]}>@ {this.state.address}</Text>
+                            <Text style={s.addressText}>at {this.state.address}</Text>
                             <Text style={{fontSize: Font.smallSize}}>
-                                    <Text><Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{this.state.author}</Text></Text>
+                                    <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{this.state.author}</Text>
                             </Text>
                             <View>
                                 <Text style={[s.jobText, {fontWeight: 'bold', marginTop: 30}]}>Description: </Text>

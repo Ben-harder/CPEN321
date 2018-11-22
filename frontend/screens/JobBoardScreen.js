@@ -89,9 +89,9 @@ export default class JobBoardScreen extends React.Component
                                         <Text style={[s.jobText, {fontSize: Font.titleSize}]}>{item.job_title}</Text>
                                         <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
                                     </View>
-                                    <Text style={[s.infoText, {fontStyle: 'normal', color: Colors.sNormAlt, textAlign: 'left', borderBottomWidth: 1, borderBottomColor: Colors.sDark, padding: 10,}]}>at {item.address}</Text>
+                                    <Text style={s.addressTextAlt}>at {item.address}</Text>
                                     <Text style={{fontSize: Font.smallSize}}>
-                                        <Text><Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text></Text>
+                                        <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text>
                                     </Text>
                         
                                 </TouchableOpacity>
