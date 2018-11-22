@@ -5,10 +5,6 @@ var Job = require("../../models/job");
 var database = require("../../initdb");
 
 module.exports = {
-  demo() {
-    return 5;
-  },
-
   createUser(req, res) {
     let ret = {};
 
@@ -38,21 +34,24 @@ module.exports = {
     user.is_employer = false;
     user.images = [];
     
-    /* NEED TO USE VALIDATOR*/
-
     // save the user
     user.save(function (err) {
         if (err) {
           ret.errorMessage = err.message;
           return res.status(500).send(ret);
         }
-        console.log("New User: " + user);
+        // console.log("New User: " + user);
         return res.status(200).send(user);
     });
   },
 
   //
   userSignIn(req, res) {
+    if(!req.query || !req.query.phoneNumber || !req.query.password) {
+      let ret = {};
+      ret.errorMessage = "All fields have not been filled out";
+      return res.status(400).send(ret);
+    }
     User.findOne({phone_number : req.query.phoneNumber}, function(err, user) {
       let ret = {};
       if (err) {
@@ -61,7 +60,7 @@ module.exports = {
       }
 
       if (!user) {
-        ret.errorMessage = "Phone Number does not exist!";
+        ret.errorMessage = "Login info is invalid!";
         return res.status(400).send(ret);
       }
 

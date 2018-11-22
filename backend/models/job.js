@@ -60,11 +60,11 @@ var Job = new Schema({
 });
 
 // Virtual for job"s URL
-Job
-.virtual("url")
-.get(function () {
-  return "/job" + this.job_id;
-});
+// Job
+// .virtual("url")
+// .get(function () {
+//   return "/job" + this.job_id;
+// });
 
 // export function to create "Job" model class
 module.exports = mongoose.model("Job", Job);
