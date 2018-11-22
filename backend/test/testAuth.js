@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const ObjectId = require('mongodb').ObjectID;
 const User = require('../models/user');
 const Job = require('../models/job');
+const JobPref = require('../models/jobPref');
 
 //Require the dev-dependencies
 const chai = require('chai');
@@ -110,13 +111,13 @@ describe("Testing: doesUserExist", function() {
    * 1)
    * Test Case: Null User
    * Input/Output: Pass a NULL request parameter.
-   * Pass/Fail Criteria: Only succeeds if it returns error code (200) with 
-   *                     no error message
+   * Pass/Fail Criteria: Only succeeds if it returns error code (500) with 
+   *                     error message "User is a required field"
    */
   it("Test Case: Null job", (done) => {
     chai.request(server).get(url).end((err, res) => {
-      res.should.have.status(200);
-      res.body.should.not.have.property('errorMessage');
+      res.should.have.status(500);
+      res.body.should.have.property('errorMessage').eql("User is a required field");
       done();
     });
   });
@@ -282,6 +283,361 @@ describe("Testing: userSignIn", function() {
       res.should.have.status(200);
       res.body.should.not.have.property('errorMessage');
       res.body.should.be.a('object');
+      done();
+    });
+  });
+});
+
+/**
+ * Tests for Update User Preference.
+ */
+describe("Update User Preference", function () {
+  var url = "/auth/update-user-job-preference";
+  beforeEach((done) => {
+    Job.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    JobPref.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  
+  /**
+   * 1)
+   * Test Case: Null UserPref
+   * Input/Output: Pass a NULL request parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (200) with 
+   *                     no error message
+   */
+  it("Test Case: Null UserPref", (done) => {
+    chai.request(server).post(url).end((err, res) => {
+      res.should.have.status(500);
+      res.body.should.not.have.property('Job preference is a required field');
+      done();
+    });
+  });
+
+  /** 2)
+   * Test Case: Type already exists.
+   * Input/Output: Return array of job types.
+   * Pass/Fail Criteria: Only succeeds if it returns
+   *                     code (200) with no error messages
+   */
+  it('Test Case: Type already exists', (done) => {
+    // create a new jobPref
+    var dUser = new JobPref();
+    var jobPref = new JobPref();
+    jobPref.user = dUser._id;
+    jobPref.stats = [];
+    jobPref.stats.push({job_type: "Feed My Lizard", num_of_occurrences: 5})
+    
+    // save the jobPref
+    jobPref.save((err) => {
+      return;
+    });
+    chai.request(server)
+    .post(url)
+    .send({jobPrefID: jobPref._id.toString(), jobType: "Feed My Lizard"})
+    .end((err, res) => {
+      res.should.have.status(200);
+      JobPref.findOne({}, (err, jobPref) => {
+        jobPref.stats[0].num_of_occurrences.should.be.eql(6);
+      });
+      done();
+    });
+  });
+});
+
+/**
+ * Tests for Update User Preference.
+ */
+describe("Update User Preference", function () {
+  var url = "/auth/change-user-info";
+  beforeEach((done) => {
+    Job.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    JobPref.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  
+  /**
+   * 1)
+   * Test Case: Null UserID
+   * Input/Output: Pass a NULL request parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (500) with 
+   *                     error message "All fields have to be filled out"
+   */
+  it("Test Case: Null userID", (done) => {
+    chai.request(server)
+    .post(url)
+    .send({phoneNumber: "dummy", firstName: "dummy", lastName: "dummy"})
+    .end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property('errorMessage').eql("All fields have to be filled out");
+      done();
+    });
+  });
+  
+  /**
+   * 2)
+   * Test Case: Null PhoneNumber
+   * Input/Output: Pass a NULL request parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (500) with 
+   *                     error message "All fields have to be filled out"
+   */
+  it("Test Case: Null phone number", (done) => {
+    chai.request(server)
+    .post(url)
+    .send({userID: "dummy", firstName: "dummy", lastName: "dummy"})
+    .end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property('errorMessage').eql("All fields have to be filled out");
+      done();
+    });
+  });
+  
+  /**
+   * 3)
+   * Test Case: Null FirstName
+   * Input/Output: Pass a NULL request parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (500) with 
+   *                     error message "All fields have to be filled out"
+   */
+  it("Test Case: Null first name", (done) => {
+    chai.request(server)
+    .post(url)
+    .send({phoneNumber: "dummy", userID: "dummy", lastName: "dummy"})
+    .end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property('errorMessage').eql("All fields have to be filled out");
+      done();
+    });
+  });
+  
+  /**
+   * 4)
+   * Test Case: Null LastName
+   * Input/Output: Pass a NULL request parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (500) with 
+   *                     error message "All fields have to be filled out"
+   */
+  it("Test Case: Null last name", (done) => {
+    chai.request(server)
+    .post(url)
+    .send({phoneNumber: "dummy", firstName: "dummy", userID: "dummy"})
+    .end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property('errorMessage').eql("All fields have to be filled out");
+      done();
+    });
+  });
+  
+  /**
+   * 5)
+   * Test Case: Succes case 
+   * Input/Output: Pass a NULL request parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (500) with 
+   *                     error message "All fields have to be filled out"
+   */
+  it("Test Case: Succes case", (done) => {
+
+    // create a new user
+    var user = new User();
+    user.first_name = "old";
+    user.last_name = "old";
+    user.phone_number = "old";
+    user.hash_password = "dummy";
+    user.verification_token = undefined;
+    user.working_job_id = undefined;
+    user.is_working = false;
+    user.is_verified = false;
+    user.is_employer = false;
+    user.images = [];
+
+    // save the user
+    user.save((err) => {
+      console.log(err);
+      return;
+    });
+
+    chai.request(server)
+    .post(url)
+    .send({phoneNumber: "new", firstName: "new", userID: user._id.toString(), lastName: "new"})
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.not.have.property('errorMessage');
+      res.body.phone_number.should.be.eql('new');
+      res.body.first_name.should.be.eql('new');
+      res.body.last_name.should.be.eql('new');
+      done();
+    });
+  });
+});
+
+/**
+ * Tests for Update User Preference.
+ */
+describe("Update User Preference", function () {
+  var url = "/auth/change-user-password";
+  beforeEach((done) => {
+    Job.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    JobPref.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  
+  /**
+   * 1)
+   * Test Case: Null UserID
+   * Input/Output: Pass a NULL request parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (500) with 
+   *                     error message "All fields have to be filled out"
+   */
+  it("Test Case: Null userID", (done) => {
+    chai.request(server)
+    .post(url)
+    .send({password: "dummy", passwordConfirm: "dummy"})
+    .end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property('errorMessage').eql("All fields have to be filled out");
+      done();
+    });
+  });
+  
+  /**
+   * 2)
+   * Test Case: Null Password
+   * Input/Output: Pass a NULL request parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (500) with 
+   *                     error message "All fields have to be filled out"
+   */
+  it("Test Case: Null password", (done) => {
+    chai.request(server)
+    .post(url)
+    .send({passwordConfirm: "dummy", userID: "dummy",})
+    .end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property('errorMessage').eql("All fields have to be filled out");
+      done();
+    });
+  });
+  
+  /**
+   * 3)
+   * Test Case: Null Password Confirm
+   * Input/Output: Pass a NULL request parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (500) with 
+   *                     error message "All fields have to be filled out"
+   */
+  it("Test Case: Null confirm password", (done) => {
+    chai.request(server)
+    .post(url)
+    .send({password: "dummy", userID: "dummy"})
+    .end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property('errorMessage').eql("All fields have to be filled out");
+      done();
+    });
+  });
+  
+  /**
+   * 4)
+   * Test Case: Passwords don't match 
+   * Input/Output: Pass a NULL request parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (500) with 
+   *                     error message "All fields have to be filled out"
+   */
+  it("Test Case: Passwords don't match", (done) => {
+
+    // create a new user
+    var user = new User();
+    user.first_name = "dummy";
+    user.last_name = "dummy";
+    user.phone_number = "dummy";
+    user.hash_password = "old";
+    user.verification_token = undefined;
+    user.working_job_id = undefined;
+    user.is_working = false;
+    user.is_verified = false;
+    user.is_employer = false;
+    user.images = [];
+
+    // save the user
+    user.save((err) => {
+      console.log(err);
+      return;
+    });
+
+    chai.request(server)
+    .post(url)
+    .send({password: "new", passwordConfirm: "diff", userID: user._id.toString()})
+    .end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property('errorMessage').eql("Passwords do not match");
+      done();
+    });
+  });
+  
+  /**
+   * 5)
+   * Test Case: Succes case 
+   * Input/Output: Pass a NULL request parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (500) with 
+   *                     error message "All fields have to be filled out"
+   */
+  it("Test Case: Succes case", (done) => {
+
+    // create a new user
+    var user = new User();
+    user.first_name = "dummy";
+    user.last_name = "dummy";
+    user.phone_number = "dummy";
+    user.hash_password = "old";
+    user.verification_token = undefined;
+    user.working_job_id = undefined;
+    user.is_working = false;
+    user.is_verified = false;
+    user.is_employer = false;
+    user.images = [];
+
+    // save the user
+    user.save((err) => {
+      console.log(err);
+      return;
+    });
+
+    chai.request(server)
+    .post(url)
+    .send({password: "new", passwordConfirm: "new", userID: user._id.toString()})
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.not.have.property('errorMessage');
+      res.body.hash_password.should.be.eql('new');
       done();
     });
   });

@@ -13,8 +13,10 @@ module.exports = function (app)
 
   app.get("/job/can-apply", job.isAbleToApply);
   app.post("/job/apply", job.applyForJob);
+  app.post("/auth/update-user-job-preference", auth.updateUserJobPreference);
 
   app.get("/get-all-jobs", job.getAllJobs);
+  app.get("/get-all-jobs-Ranked", job.getAllJobsRanked);
 
   app.get("/get-employer-jobs", job.getEmployerJobs);
 
@@ -25,4 +27,8 @@ module.exports = function (app)
   app.post("/job/accept-an-applicant", job.acceptAnApplicant);
 
   app.get("/job/get-job-types", job.getJobTypes);
+
+  // manage account
+  app.post("/auth/change-user-info", auth.changeUserInfo);
+  app.post("/auth/change-user-password", auth.changeUserPassword);
 };

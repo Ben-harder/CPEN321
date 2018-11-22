@@ -49,9 +49,13 @@ var User = new Schema({
     },
     // array of imgs
     images: [{
-            type: Schema.ObjectId,
-            ref: "Image"}
-    ]
+        type: Schema.ObjectId,
+        ref: "Image"
+    }],
+    job_pref: {
+        type: Schema.ObjectId,
+        ref: "JobPref"
+    }
 });
 
 // // Virtual for user"s URL

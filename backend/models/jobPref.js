@@ -12,6 +12,7 @@ var JobPref = new Schema({
     required: true,
     ref: "User"
   },
+  /**INVARIANT: A USER HAS TO BE CREATED WITH THEESE**/
   stats: [{
     job_type: {type: String, enum: ['Feed My Lizard', 'Beat My Beef', 'Wain My Wain']},
     num_of_occurrences: Number

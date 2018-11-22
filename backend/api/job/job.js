@@ -1,4 +1,5 @@
 var Job = require('../../models/job');
+var User = require('../../models/user');
 var JobPref = require('../../models/jobPref');
 var database = require('../../initdb');
 
@@ -44,7 +45,6 @@ module.exports = {
           ret.errorMessage = err.message;
           return res.status(500).send(ret);
         }
-        // console.log('New Job: ' + job);
         return res.status(200).send(job);
     });
   },
@@ -60,6 +60,80 @@ module.exports = {
         return res.status(500).send(ret);
       }
       return res.status(200).send(jobs); 
+    });
+  },
+
+  /**NAIEVE IMPLEMENTATION IN TERMS OF O()**/
+
+  /**
+   * Get a list of all jobs
+   */
+  getAllJobsRanked(req, res) {
+    // null user
+    let ret = {};
+    if (!req.query.userID) {
+      ret.errorMessage = 'User is a required field';
+      return res.status(500).send(ret);
+    }
+
+    Job.find({})
+    .exec((err, jobs) => {
+      let ret = {};
+      if (err){
+        ret.errorMessage = ("Internal error in the database!");
+        return res.status(500).send(ret);
+      }
+
+      // check if no jobs
+      if (!jobs[0]){
+        return res.status(200).send(jobs);
+      }
+      
+      User.findById(req.query.userID)
+      .populate('job_pref')
+      .exec((err, user) => {
+
+        // if ranking failed,
+        if (!user){
+          return res.status(200).send(jobs);
+        }
+
+        let ret = {};
+        if (err){
+          ret.errorMessage = ("Internal error in the database!");
+          return res.status(500).send(ret);
+        }
+        // sort according to preference
+        var jobsArray = jobs;
+        var retArray = [];
+        var stats = user.job_pref.stats;
+        var maxOccur = 0;
+        var maxOccurIndex = 0;
+        // sort
+        while (stats.length > 0 && jobsArray.length > 0) {
+          maxOccur = 0;
+          maxOccurIndex = 0;
+          // find max
+          for (var i = 0; i < stats.length; i++) {
+            // new max
+            if (maxOccur < stats[i].num_of_occurrences) {
+              maxOccur = stats[i].num_of_occurrences;
+              maxOccurIndex = i;
+            }
+          }
+          // push top preferences
+          for (var j = 0; j < jobsArray.length; j++) {
+            if(jobsArray[j].job_title === (stats[maxOccurIndex].job_type)) {
+              retArray.push(jobsArray[j]);
+            }
+          }
+          // remove from stats 
+          stats.splice(maxOccurIndex, 1);
+        }
+        
+        // return sorted job array
+        return res.status(200).send(retArray); 
+      });
     });
   },
   
@@ -155,8 +229,6 @@ module.exports = {
         ret.errorMessage = "Internal error in database";
         return res.status(500).send(ret);
       }
-
-      // console.log(`UserID: ${req.body.userID} applied to JobID: ${req.body.jobID}`);
       return res.sendStatus(200);
     });
   },
@@ -242,16 +314,13 @@ module.exports = {
       ret.errorMessage = "User is a required field";
       return res.status(500).send(ret);
     }
-    console.log("befor");
     Job.findOneAndUpdate({_id: req.body.jobID ,
       applicants: {$elemMatch: {$eq: req.body.userID}},
       is_active: false},  
       {$set: {is_active: true, employee: req.body.userID}},
       {upsert:false}, function(err, job){
-        console.log("after");
         // err
         if (err){
-          console.log(err);
           let ret = {};
           ret.errorMessage = "Internal error in database"; 
           return res.status(500).send(ret);
@@ -268,12 +337,11 @@ module.exports = {
   },
 
   /**
-   * Get all the job types
+   * Get all the job types.
    */
   getJobTypes(req, res) {
-    console.log("here");
     let ret = JobPref.schema.path('stats').schema.path('job_type').enumValues;
-    console.log(ret);
     return res.status(200).send(ret);
-  },
+  }
 };
+

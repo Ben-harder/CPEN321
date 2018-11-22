@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const ObjectId = require('mongodb').ObjectID;
 const User = require('../models/user');
 const Job = require('../models/job');
+const JobPref = require('../models/jobPref');
 
 //Require the dev-dependencies
 const chai = require('chai');
@@ -305,6 +306,11 @@ describe("Get all Jobs", function () {
       done();
     });
   });
+  beforeEach((done) => {
+    JobPref.deleteMany({}, (err) => {
+      done();
+    });
+  });
 
   /** 1)
    * Test Case: Success case
@@ -346,6 +352,258 @@ describe("Get all Jobs", function () {
       done();
     });
     
+  });
+
+});
+
+/**
+ * Tests for Get All Jobs Ranked.
+ */
+describe("Get all Jobs Ranked", function () {
+  var url = "/get-all-jobs-ranked";
+  beforeEach((done) => {
+    Job.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    JobPref.deleteMany({}, (err) => {
+      done();
+    });
+  }); 
+
+  /** 1)
+   * Test Case: Null user
+   * Input/Output: Pass a NULL request user  parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (400) with the message
+   *                     “User is a required field”
+   */
+  it("Test Case: Null user", (done) => {
+    chai.request(server).get(url).query({jobID: "dummy"}).end((err, res) => {
+      res.should.have.status(500);
+      res.body.should.have.property('errorMessage').eql('User is a required field');
+      done();
+    });
+    
+  });
+
+  /** 2)
+   * Test Case: Simple Success Case
+   * Input/Output: Send a request to get all jobs in the database.
+   *               Now, this should return and array that includes
+   *               as many jobs as there is in the database, one test
+   *               case could be successfully adding some jobs, and then
+   *               asserting that the number of returned jobs is at least
+   *               equal to the number of added jobs.
+   * Pass/Fail Criteria: Only succeeds if it returns code (200) and no error
+   *                     message. The returned array should have at least as
+   *                     many jobs as successfully added to the database.
+   */
+  it("Test Case: Simple Success case", (done) => {
+
+    // create a job
+    var job = new Job();
+    var dEmployer = new User();
+    job.job_title = "Feed My Lizard";
+    job.description = "dummy";
+    job.wage = 0;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = undefined;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = false;
+    job.is_compeleted = false;
+    job.is_active = false;
+
+    // save the job
+    job.save((err) => {
+      return;
+    });
+
+    var stats = [];
+    stats.push({job_type: "Feed My Lizard", num_of_occurrences: 1});
+    stats.push({job_type: "Beat My Beef", num_of_occurrences: 2});
+    stats.push({job_type: "Wain My Wain", num_of_occurrences: 3});
+
+    // create job preference
+    var jobPref = new JobPref();
+    var dUser = new User();
+    jobPref.stats = stats;
+    jobPref.user = dUser._id;
+    // save the job
+    jobPref.save((err) => {
+      return;
+    });
+
+    dUser.first_name = "dummy";
+    dUser.last_name = "dummy";
+    dUser.phone_number = "hasnotapplied";
+    dUser.hash_password = "dummy";
+    dUser.verification_token = undefined;
+    dUser.working_job_id = undefined;
+    dUser.is_working = false;
+    dUser.is_verified = false;
+    dUser.is_employer = false;
+    dUser.images = [];
+    dUser.job_pref = jobPref._id;
+
+    // save the user
+    dUser.save((err) => {
+      return;
+    });
+
+    chai.request(server).get(url).query({userID: dUser._id.toString()}).end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.be.a('array');
+      res.body.length.should.be.eql(1);
+      res.body.should.not.have.property('errorMessage');
+      done();
+    });
+  });
+
+  /** 3)
+   * Test Case: Complex Success case
+   * Input/Output: Send a request to get all jobs in the database.
+   *               Now, this should return and array that includes
+   *               as many jobs as there is in the database, one test
+   *               case could be successfully adding some jobs, and then
+   *               asserting that the number of returned jobs is at least
+   *               equal to the number of added jobs.
+   * Pass/Fail Criteria: Only succeeds if it returns code (200) and no error
+   *                     message. The returned array should have at least as
+   *                     many jobs as successfully added to the database.
+   */
+  it("Test Case: Complex Success case", (done) => {
+
+    // create a job
+    var job1 = new Job();
+    var dEmployer = new User();
+    job1.job_title = "Feed My Lizard";
+    job1.description = "dummy";
+    job1.wage = 2;
+    job1.address = "dummy";
+    job1.employer = dEmployer._id;
+    job1.employee = undefined;
+    job1.created_at = new Date();
+    job1.deleted_at = undefined;
+    job1.is_deleted = false;
+    job1.is_compeleted = false;
+    job1.is_active = false;
+
+    // save the job
+    job1.save((err) => {
+      return;
+    });
+
+    // create a job
+    var job2 = new Job();
+    var dEmployer = new User();
+    job2.job_title = "Beat My Beef";
+    job2.description = "dummy";
+    job2.wage = 3;
+    job2.address = "dummy";
+    job2.employer = dEmployer._id;
+    job2.employee = undefined;
+    job2.created_at = new Date();
+    job2.deleted_at = undefined;
+    job2.is_deleted = false;
+    job2.is_compeleted = false;
+    job2.is_active = false;
+
+    // save the job
+    job2.save((err) => {
+      return;
+    });
+
+    // create a job
+    var job3 = new Job();
+    var dEmployer = new User();
+    job3.job_title = "Beat My Beef";
+    job3.description = "dummy";
+    job3.wage = 3;
+    job3.address = "dummy";
+    job3.employer = dEmployer._id;
+    job3.employee = undefined;
+    job3.created_at = new Date();
+    job3.deleted_at = undefined;
+    job3.is_deleted = false;
+    job3.is_compeleted = false;
+    job3.is_active = false;
+
+    // save the job
+    job3.save((err) => {
+      return;
+    });
+
+    // create a job
+    var job4 = new Job();
+    var dEmployer = new User();
+    job4.job_title = "Wain My Wain";
+    job4.description = "dummy";
+    job4.wage = 1;
+    job4.address = "dummy";
+    job4.employer = dEmployer._id;
+    job4.employee = undefined;
+    job4.created_at = new Date();
+    job4.deleted_at = undefined;
+    job4.is_deleted = false;
+    job4.is_compeleted = false;
+    job4.is_active = false;
+
+    // save the job
+    job4.save((err) => {
+      return;
+    });
+
+    var stats = [];
+    stats.push({job_type: "Feed My Lizard", num_of_occurrences: 2});
+    stats.push({job_type: "Beat My Beef", num_of_occurrences: 3});
+    stats.push({job_type: "Wain My Wain", num_of_occurrences: 1});
+
+    // create job preference
+    var jobPref = new JobPref();
+    var dUser = new User();
+    jobPref.stats = stats;
+    jobPref.user = dUser._id;
+    // save the job
+    jobPref.save((err) => {
+      return;
+    });
+
+    dUser.first_name = "dummy";
+    dUser.last_name = "dummy";
+    dUser.phone_number = "hasnotapplied";
+    dUser.hash_password = "dummy";
+    dUser.verification_token = undefined;
+    dUser.working_job_id = undefined;
+    dUser.is_working = false;
+    dUser.is_verified = false;
+    dUser.is_employer = false;
+    dUser.images = [];
+    dUser.job_pref = jobPref._id;
+
+    // save the user
+    dUser.save((err) => {
+      return;
+    });
+
+    chai.request(server).get(url).query({userID: dUser._id.toString()}).end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.be.a('array');
+      res.body.length.should.be.eql(4);
+      res.body.should.not.have.property('errorMessage');
+      res.body[0].should.have.property('job_title').eql("Beat My Beef");
+      res.body[1].should.have.property('job_title').eql("Beat My Beef");
+      res.body[2].should.have.property('job_title').eql("Feed My Lizard");
+      res.body[3].should.have.property('job_title').eql("Wain My Wain");
+      done();
+    });
   });
 
 });
@@ -1191,14 +1449,17 @@ describe("Get Job Types", function () {
   /** 1)
    * Test Case: Success case.
    * Input/Output: Return array of job types.
-   * Pass/Fail Criteria: Only succeeds if it returns error
-   *                     code (400) with the message "User is a required field”.
+   * Pass/Fail Criteria: Only succeeds if it returns
+   *                     code (200) with no error messages
    */
   it('Test Case: Success case', (done) => {
     chai.request(server).get(url).end((err, res) => {
       res.should.have.status(200);
       res.body.should.be.a('array');
       res.body.length.should.be.eql(3);
+      res.body.should.include("Feed My Lizard");
+      res.body.should.include("Beat My Beef");
+      res.body.should.include("Wain My Wain");
       done();
     });
   });
