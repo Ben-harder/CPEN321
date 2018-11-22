@@ -11,6 +11,7 @@ import
     Button,
     AsyncStorage,
     FlatList,
+    ImageBackground
 } from "react-native";
 import { StackNavigator } from "react-navigation";
 import { WebBrowser } from "expo";
@@ -77,24 +78,28 @@ export default class JobBoardScreen extends React.Component
     {
         return (
             <View style={s.container}>
-                <FlatList
-                    style={s.jobList}
-                    data={this.state.jobList}
-                    renderItem={({ item }) => (
-                        <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
-                                <Text style={[s.jobText, {fontSize: Font.titleSize}]}>{item.job_title}</Text>
-                                <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
-                            </View>
-                            <Text style={[s.infoText, {textAlign: 'left', borderBottomWidth: 1, borderBottomColor: Colors.sDark, padding: 10,}]}>@ {item.address}</Text>
-                            <Text style={{fontSize: Font.smallSize}}>
-                                <Text><Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text></Text>
-                            </Text>
-                
-                        </TouchableOpacity>
-                    )}
-                    keyExtractor={(item, index) => index.toString()}
-                />
+                <ImageBackground source={require('../assets/images/min_art2.png')} style={{width: '100%', height: '100%',}}  resizeMode='cover'> 
+                    <View style={{width: '100%', height: '100%', alignItems: 'center'}}>
+                        <FlatList
+                            style={s.jobList}
+                            data={this.state.jobList}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
+                                        <Text style={[s.jobText, {fontSize: Font.titleSize}]}>{item.job_title}</Text>
+                                        <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
+                                    </View>
+                                    <Text style={[s.infoText, {color: Colors.sNormAlt, textAlign: 'left', borderBottomWidth: 1, borderBottomColor: Colors.sDark, padding: 10,}]}>at {item.address}</Text>
+                                    <Text style={{fontSize: Font.smallSize}}>
+                                        <Text><Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text></Text>
+                                    </Text>
+                        
+                                </TouchableOpacity>
+                            )}
+                            keyExtractor={(item, index) => index.toString()}
+                        />
+                        </View>
+                </ImageBackground>
             </View>
         );
     }

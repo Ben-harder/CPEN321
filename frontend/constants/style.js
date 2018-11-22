@@ -15,7 +15,7 @@ container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#fff",
+    backgroundColor: '#ffff',
     flexDirection: 'column',
 },
 textLink: {
@@ -53,6 +53,21 @@ textLinkText: {
     shadowRadius: 2,
     elevation: 1,
 },
+textLinkTextAlt: {
+    fontSize: Font.butSize,
+    color: Colors.buttonText,
+    fontWeight: Font.thick,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: Colors.sNormAlt,
+    overflow: "hidden",
+    textAlign: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 1,
+},
 innerContainer: {
     width: "100%",  
     padding: 20,
@@ -76,9 +91,20 @@ headerText: {
     textAlign: "center",
     // padding: 20,
 },
+welcomeText: {
+    fontSize: 45,
+    textAlign: 'center',
+    fontStyle: 'italic',
+    fontWeight: 'bold',
+},
 regText: {
     textAlign: 'center',
     fontSize: Font.normSize,
+},
+regTextBold: {
+    textAlign: 'center',
+    fontSize: Font.normSize,
+    fontWeight: 'bold',
 },
 infoText: {
     textAlign: 'center',
@@ -93,6 +119,9 @@ jobText: {
 textInput: {
     width: "100%",
     padding: 10,
+},
+phoneInput: {
+
 },
 jobDescription: {
     // padding: 10,
@@ -123,16 +152,16 @@ jobList: {
 },
 jobItem: {
     borderRadius: 20,
-    borderWidth: 1,
-    borderColor: Colors.sNorm,
+    // borderWidth: 1,
+    borderColor: 'white',
     marginVertical: 8,  
-    backgroundColor: '#ffff',
+    backgroundColor: '#ffffff',
     padding: 20,
     overflow: "hidden",
     shadowOffset: { width: 10, height: 10 },
     shadowColor: 'black',
     shadowOpacity: 1,
-    elevation: 3,
+    elevation: 1,
 },
 
 });

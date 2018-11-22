@@ -4,6 +4,6 @@ export default {
   butSize: 18,
   thin: "300",
   smallSize: 15,
-  normSize: 20,
-  titleSize: 30,
+  normSize: 24,
+  titleSize: 34,
 };
