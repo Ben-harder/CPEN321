@@ -181,6 +181,7 @@ class CreateJobScreen extends React.Component
 
                         <View style={styles.innerContainer}>
                             <Select
+                                testID="#type"
                                 onValueChange={value => this.setState({jobType: value})}
                                 items={JobTypes}
                                 placeholder={{label:"Select Job Here", value: ""}}
@@ -188,7 +189,7 @@ class CreateJobScreen extends React.Component
                         </View>
                         
                         <View style={styles.innerContainer}>
-                            <TouchableOpacity onPress={() => this.attemptCreateJob()} style={styles.textLink}>
+                            <TouchableOpacity testID="#submit" onPress={() => this.attemptCreateJob()} style={styles.textLink}>
                                 <Text style={styles.textLinkText}>Submit</Text>
                             </TouchableOpacity>
                         </View>

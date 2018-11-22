@@ -120,23 +120,10 @@ CreateJobScreen {
               ellipsizeMode="tail"
               style={
                 Object {
-                  "fontSize": 30,
-                  "paddingBottom": 20,
-                }
-              }
-            >
-              Create Job
-            </Text>
-            <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-              style={
-                Object {
                   "color": "#62727b",
                   "fontSize": 18,
                   "marginTop": 10,
-                  "paddingBottom": 20,
+                  "padding": 20,
                   "textAlign": "center",
                 }
               }
@@ -166,7 +153,6 @@ CreateJobScreen {
               returnKeyType="done"
               style={
                 Object {
-                  "backgroundColor": "#e8e8e8",
                   "borderColor": "#00796b",
                   "borderRadius": 10,
                   "borderWidth": 2,
@@ -204,7 +190,6 @@ CreateJobScreen {
               returnKeyType="done"
               style={
                 Object {
-                  "backgroundColor": "#e8e8e8",
                   "borderColor": "#00796b",
                   "borderRadius": 10,
                   "borderWidth": 2,
@@ -240,7 +225,6 @@ CreateJobScreen {
               returnKeyType="done"
               style={
                 Object {
-                  "backgroundColor": "#e8e8e8",
                   "borderColor": "#00796b",
                   "borderRadius": 10,
                   "borderWidth": 2,
@@ -268,73 +252,96 @@ CreateJobScreen {
             >
               Job type:
             </Text>
-            <RNPickerSelect
-              disabled={false}
-              doneText="Done"
-              hideDoneBar={false}
-              hideIcon={false}
-              itemKey={null}
-              items={
-                Array [
-                  Object {
-                    "label": "Mow Lawn",
-                    "value": "Mow Lawn",
-                  },
-                  Object {
-                    "label": "Feed Lizard",
-                    "value": "Feed Lizard",
-                  },
-                  Object {
-                    "label": "Do Homework",
-                    "value": "Do Homework",
-                  },
-                  Object {
-                    "label": "Clean Pool",
-                    "value": "Clean Pool",
-                  },
-                ]
-              }
-              modalProps={Object {}}
-              onDonePress={null}
-              onDownArrow={null}
-              onUpArrow={null}
-              onValueChange={[Function]}
-              pickerProps={Object {}}
-              placeholder={
-                Object {
-                  "label": "     Select Job Here",
-                  "value": "",
-                }
-              }
-              placeholderTextColor="#C7C7CD"
-              style={Object {}}
-              testID="#type"
-              textInputProps={Object {}}
-            />
             <Component
               style={
                 Object {
-                  "backgroundColor": "#00796b",
-                  "borderColor": "#00796b",
-                  "borderRadius": 10,
-                  "marginBottom": 10,
-                  "overflow": "hidden",
                   "padding": 10,
+                  "width": "90%",
                 }
               }
             >
-              <Button
-                color="#ffffff"
+              <RNPickerSelect
+                disabled={false}
+                doneText="Done"
+                hideDoneBar={false}
+                hideIcon={false}
+                itemKey={null}
+                items={
+                  Array [
+                    Object {
+                      "label": "Mow Lawn",
+                      "value": "Mow Lawn",
+                    },
+                    Object {
+                      "label": "Feed Lizard",
+                      "value": "Feed Lizard",
+                    },
+                    Object {
+                      "label": "Do Homework",
+                      "value": "Do Homework",
+                    },
+                    Object {
+                      "label": "Clean Pool",
+                      "value": "Clean Pool",
+                    },
+                  ]
+                }
+                modalProps={Object {}}
+                onDonePress={null}
+                onDownArrow={null}
+                onUpArrow={null}
+                onValueChange={[Function]}
+                pickerProps={Object {}}
+                placeholder={
+                  Object {
+                    "label": "Select Job Here",
+                    "value": "",
+                  }
+                }
+                placeholderTextColor="#C7C7CD"
+                style={Object {}}
+                testID="#type"
+                textInputProps={Object {}}
+              />
+            </Component>
+            <Component
+              style={
+                Object {
+                  "padding": 10,
+                  "width": "90%",
+                }
+              }
+            >
+              <TouchableOpacity
+                activeOpacity={0.2}
                 onPress={[Function]}
                 style={
                   Object {
-                    "fontSize": 18,
-                    "fontWeight": "600",
+                    "paddingVertical": 10,
                   }
                 }
                 testID="#submit"
-                title="Submit"
-              />
+              >
+                <Text
+                  accessible={true}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                  style={
+                    Object {
+                      "backgroundColor": "#00796b",
+                      "borderColor": "#00796b",
+                      "borderRadius": 10,
+                      "color": "#ffffff",
+                      "fontSize": 18,
+                      "fontWeight": "600",
+                      "padding": 10,
+                      "textAlign": "center",
+                    }
+                  }
+                >
+                  Submit
+                </Text>
+              </TouchableOpacity>
             </Component>
           </Component>
         </ScrollViewMock>
