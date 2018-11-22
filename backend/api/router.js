@@ -1,6 +1,7 @@
 const app = "../server";
 const auth = require("./auth/auth");
 const job = require("./job/job");
+const user = require("./user/user");
 
 module.exports = function (app)
 {
@@ -8,6 +9,10 @@ module.exports = function (app)
   app.post("/auth/create-user", auth.createUser);
   app.get("/auth/user-exists", auth.doesUserExist);
   app.get("/auth/sign-in", auth.userSignIn);
+
+  // user routes
+  app.post("/user/change-info", user.changeInfo);
+  app.post("/user/update-password", user.updatePassword);
 
   app.post("/create-job", job.createJob);
 
