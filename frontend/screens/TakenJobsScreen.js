@@ -93,12 +93,12 @@ class TakenJobsScreen extends React.Component
                         renderItem={({ item }) => (
                             <View style={s.jobItem}>
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
-                                    <Text style={[s.jobText, {fontSize: Font.titleSize}]}>{item.job_title}</Text> 
+                                    <Text style={s.jobTypeText}>{item.job_title}</Text> 
                                     <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
                                 </View>
-                                <Text style={[s.infoText, {fontStyle: 'normal', textAlign: 'left', borderBottomWidth: 1, borderBottomColor: Colors.sDark, padding: 10,}]}>at {item.address}</Text>
+                                <Text style={s.addressText}>at {item.address}</Text>
                                 <Text style={{fontSize: Font.smallSize}}>
-                                        <Text><Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.author}</Text></Text>
+                                        <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.author}</Text>
                                 </Text>
                                 <View>
                                     <Text style={[s.jobText, {fontWeight: 'bold', marginTop: 30}]}>Description: </Text>

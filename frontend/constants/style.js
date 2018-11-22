@@ -96,6 +96,10 @@ module.exports = StyleSheet.create({
         fontStyle: 'italic',
         fontWeight: 'bold',
     },
+    jobTypeText: {
+        textAlign: 'left',
+        fontSize: Font.normSize,
+    },
     regText: {
         textAlign: 'center',
         fontSize: Font.normSize,
@@ -106,7 +110,6 @@ module.exports = StyleSheet.create({
         borderBottomWidth: 1, 
         borderBottomColor: Colors.sDark, 
         padding: 10,
-        textAlign: 'center',
         fontSize: Font.normSize,
         color: Colors.sLight,
     },
@@ -116,7 +119,6 @@ module.exports = StyleSheet.create({
         borderBottomWidth: 1, 
         borderBottomColor: Colors.sDark, 
         padding: 10,
-        textAlign: 'left',
         fontSize: Font.normSize,
         color: Colors.sNormAlt,
     },
