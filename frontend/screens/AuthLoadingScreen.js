@@ -7,13 +7,7 @@ import {
   View,
 } from "react-native";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+var s = require('../constants/style');
 
 class AuthLoadingScreen extends React.Component {
   constructor(props) {
@@ -33,7 +27,7 @@ class AuthLoadingScreen extends React.Component {
   // Render any loading content that you like here
   render() {
     return (
-      <View style={styles.container}>
+      <View style={s.container}>
         <ActivityIndicator />
         <StatusBar barStyle="default" />
       </View>

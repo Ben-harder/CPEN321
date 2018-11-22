@@ -22,57 +22,7 @@ import Font from "../constants/Font";
 
 import { MonoText } from "../components/StyledText";
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#fff",
-    },
-    contentContainer: {
-        paddingTop: 30,
-    },
-    headerText: {
-        fontSize: Font.titleSize,
-        textAlign: "center",
-    },
-    jobList: {
-        width: "100%",
-        padding: 10,
-        flex: 1,
-    },
-    jobItem: {
-        borderRadius: 10,
-        borderWidth: 2,
-        borderColor: Colors.sNorm,
-        marginTop: 10,
-        backgroundColor: Colors.tile,
-        padding: 30,
-        overflow: "hidden",
-    },
-    regText: {
-        fontSize: Font.normSize,
-        fontWeight: Font.thin,
-    },
-    tabBarInfoContainer: {
-        position: "absolute",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        ...Platform.select({
-            ios: {
-                shadowColor: "black",
-                shadowOffset: { height: -3 },
-                shadowOpacity: 0.1,
-                shadowRadius: 3,
-            },
-            android: {
-                elevation: 20,
-            },
-        }),
-        alignItems: "center",
-        backgroundColor: "#fbfbfb",
-        paddingVertical: 20,
-    },
-});
+var s = require('../constants/style');
 
 class TakenJobsScreen extends React.Component
 {
@@ -122,7 +72,7 @@ class TakenJobsScreen extends React.Component
     goToJobDetails(job)
     {
         this.props.navigation.navigate("Job", {
-            jobType: job.jobType,
+            jobType: job.job_title,
             address: job.address,
             author: job.author,
             wage: job.wage,
@@ -134,23 +84,25 @@ class TakenJobsScreen extends React.Component
     render()
     {
         return (
-            <View style={styles.container}>
-                <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-                    <FlatList
-                        style={styles.jobList}
-                        data={this.state.jobList}
-                        renderItem={({ item }) => (
-                            <View style={styles.jobItem}>
-                                <Text style={styles.regText}>Job type: {item.job_title}</Text>
-                                <Text style={styles.regText}>Posted by: {item.author}</Text>
-                                <Text style={styles.regText}>Address: {item.address}</Text>
-                                <Text style={styles.regText}>Wage: ${item.wage}</Text>
-                                <Text style={styles.regText}>Description: {item.description}</Text>
+            <View style={s.container}>
+                <FlatList
+                    style={s.jobList}
+                    data={this.state.jobList}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
+                                <Text style={[s.jobText, {fontSize: Font.titleSize}]}>{item.job_title}</Text>
+                                <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
                             </View>
-                        )}
-                        keyExtractor={(item, index) => index.toString()}
-                    />
-                </ScrollView>
+                            <Text style={[s.infoText, {textAlign: 'left', borderBottomWidth: 1, borderBottomColor: Colors.sDark, padding: 10,}]}>@ {item.address}</Text>
+                            <Text style={{fontSize: Font.smallSize}}>
+                                <Text><Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text></Text>
+                            </Text>
+                
+                        </TouchableOpacity>
+                    )}
+                    keyExtractor={(item, index) => index.toString()}
+                />
             </View>
         );
     }

@@ -5,6 +5,10 @@ var Job = require("../../models/job");
 var database = require("../../initdb");
 
 module.exports = {
+  demo() {
+    return 5;
+  },
+
   createUser(req, res) {
     let ret = {};
 
@@ -40,7 +44,7 @@ module.exports = {
           ret.errorMessage = err.message;
           return res.status(500).send(ret);
         }
-        // console.log("New User: " + user);
+        console.log("New User: " + user);
         return res.status(200).send(user);
     });
   },
