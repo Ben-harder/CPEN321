@@ -85,7 +85,8 @@ class JobScreen extends React.Component
     {
         return (
             <View style={s.container}>
-                <View style={[s.contentContainer, {flex: 1, justifyContent: 'space-evenly'}]}>
+                <View style={s.contentContainer}>
+
                     <Text style={s.headerText}>Take This Job?</Text>
                     <View style={s.jobItem}>
 

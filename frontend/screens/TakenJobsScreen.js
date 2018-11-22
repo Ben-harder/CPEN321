@@ -71,14 +71,14 @@ class TakenJobsScreen extends React.Component
 
     goToJobDetails(job)
     {
-        this.props.navigation.navigate("Job", {
-            jobType: job.job_title,
-            address: job.address,
-            author: job.author,
-            wage: job.wage,
-            description: job.description,
-            jobID: job.jobID,
-        });
+        // this.props.navigation.navigate("Job", {
+        //     jobType: job.job_title,
+        //     address: job.address,
+        //     author: job.author,
+        //     wage: job.wage,
+        //     description: job.description,
+        //     jobID: job.jobID,
+        // });
     }
 
     render()
@@ -89,17 +89,22 @@ class TakenJobsScreen extends React.Component
                     style={s.jobList}
                     data={this.state.jobList}
                     renderItem={({ item }) => (
-                        <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
+                        <View style={s.jobItem}>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
-                                <Text style={[s.jobText, {fontSize: Font.titleSize}]}>{item.job_title}</Text>
+                                <Text style={[s.jobText, {fontSize: Font.titleSize}]}>{item.job_title}</Text> 
                                 <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
                             </View>
                             <Text style={[s.infoText, {textAlign: 'left', borderBottomWidth: 1, borderBottomColor: Colors.sDark, padding: 10,}]}>@ {item.address}</Text>
                             <Text style={{fontSize: Font.smallSize}}>
-                                <Text><Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text></Text>
+                                    <Text><Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.author}</Text></Text>
                             </Text>
-                
-                        </TouchableOpacity>
+                            <View>
+                                <Text style={[s.jobText, {fontWeight: 'bold', marginTop: 30}]}>Description: </Text>
+                                <View style={s.jobDescription}>
+                                    <Text>{item.description}</Text>
+                                </View>                     
+                            </View>                    
+                        </View>
                     )}
                     keyExtractor={(item, index) => index.toString()}
                 />
