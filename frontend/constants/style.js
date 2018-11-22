@@ -116,7 +116,7 @@ module.exports = StyleSheet.create({
         borderBottomWidth: 1, 
         borderBottomColor: Colors.sDark, 
         padding: 10,
-        textAlign: 'center',
+        textAlign: 'left',
         fontSize: Font.normSize,
         color: Colors.sNormAlt,
     },
