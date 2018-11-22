@@ -81,12 +81,7 @@ class SideMenu extends Component {
             <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate("Main")}}>
               Browse
             </Text>
-          </View>
-          <View style={styles.navSectionStyle}>
-            <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate("Profile")}}>
-              My Profile
-            </Text>
-          </View>
+          </View>          
           <View style={styles.navSectionStyle}>
             <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate("EmployerJobs")}}>
               My Job Postings
@@ -100,6 +95,11 @@ class SideMenu extends Component {
           <View style={styles.navSectionStyle}>
             <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate("CreateJob")}}>
               Create Job
+            </Text>
+          </View>
+          <View style={styles.navSectionStyle}>
+            <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate("Profile")}}>
+              My Profile
             </Text>
           </View>
         </ScrollView>
