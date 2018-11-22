@@ -292,7 +292,7 @@ describe("Testing: userSignIn", function() {
  * Tests for Update User Preference.
  */
 describe("Update User Preference", function () {
-  var url = "/auth/update-user-job-preference";
+  var url = "/user/update-job-preference";
   beforeEach((done) => {
     Job.deleteMany({}, (err) => {
       done();
@@ -356,10 +356,10 @@ describe("Update User Preference", function () {
 });
 
 /**
- * Tests for Update User Preference.
+ * Tests for Update User Info.
  */
-describe("Update User Preference", function () {
-  var url = "/auth/change-user-info";
+describe("Update User Info", function () {
+  var url = "/user/change-info";
   beforeEach((done) => {
     Job.deleteMany({}, (err) => {
       done();
@@ -491,10 +491,10 @@ describe("Update User Preference", function () {
 });
 
 /**
- * Tests for Update User Preference.
+ * Update User Password.
  */
-describe("Update User Preference", function () {
-  var url = "/auth/change-user-password";
+describe("Update User Password", function () {
+  var url = "/user/update-password";
   beforeEach((done) => {
     Job.deleteMany({}, (err) => {
       done();
