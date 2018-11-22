@@ -62,32 +62,35 @@ class SignInScreen extends React.Component {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={s.container}>
-          <ImageBackground source={require('../assets/images/min_art2.png')} style={{width: '100%', height: '100%',}}  resizeMode='cover'>
+          <ImageBackground source={require('../assets/images/min_art1.png')} style={{width: '100%', height: '100%',}}  resizeMode='cover'>
             <Text style={[s.welcomeText, {paddingTop: 80,}]}>Emplorium</Text>
             <View style={s.authContainer}>
-              <Text style={[s.regTextBold, {paddingBottom: 40}]}>Enter your phone number to sign in:</Text>
-              <PhoneInput style={{backgroundColor: '#ffffff99', padding: 20, borderRadius: 10,}}
-                  ref={ref => {
-                    this.phone = ref;
-                  }}
-                  initialCountry="ca"
+              <View>
+                <Text style={[s.regTextBold, {marginTop: 15, marginBottom: 5,}]}>Enter your phone number to sign in:</Text>
+                <PhoneInput style={{backgroundColor: '#ffffff99', padding: 20, borderRadius: 10,}}
+                    ref={ref => {
+                      this.phone = ref;
+                    }}
+                    initialCountry="ca"
+                  />
+              </View>
+              <View>
+                <Text style={[s.regTextBold, {marginTop: 15, marginBottom: 5,}]}>Enter your password:</Text>
+                <TextInput
+                  style={s.textInput}
+                  onChangeText={(text) => this.setState({password: text})}
+                  value={this.state.password}
+                  secureTextEntry={true}
+                  underlineColorAndroid='transparent'
                 />
-              <Text style={[s.regTextBold, {marginTop: 20,}]}>Enter your password:</Text>
-              <TextInput
-                style={[s.textInput,]}
-                onChangeText={(text) => this.setState({password: text})}
-                value={this.state.password}
-                secureTextEntry={true}
-                borderBottomColor={'black'}
-                underlineColorAndroid={'black'}
-                selectionColor={'black'}
-              />
+              </View>
+              
               <TouchableOpacity onPress={this.attemptSignIn} style={[s.textLink, {paddingVertical: 40}]}>
-                <Text style={s.textLinkTextAlt}>Sign In</Text>
+                <Text style={s.textLinkText}>Sign In</Text>
               </TouchableOpacity>
               <Text style={[s.regTextBold]}>or</Text>
               <TouchableOpacity onPress={() => this.props.navigation.navigate("SignUp")} style={[s.textLink, {paddingVertical: 40}]}>
-                <Text style={s.textLinkTextAlt}>Click Here to Sign Up</Text>
+                <Text style={s.textLinkText}>Click Here to Sign Up</Text>
               </TouchableOpacity>
             </View>
         
