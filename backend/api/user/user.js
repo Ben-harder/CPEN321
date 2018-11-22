@@ -10,11 +10,11 @@ module.exports = {
    */
   updateUserJobPreference(req, res) {
     let ret = {};
-    if (!req.body.jobPrefID) {
+    if (!req.body.jobID) {
       ret.errorMessage = "Job preference is a required field"
       return res.status(500).send(ret);
     }
-    JobPref.findOneAndUpdate({_id: req.body.jobPrefID, "stats.job_type": req.body.jobType},
+    JobPref.findOneAndUpdate({_id: req.body.jobID, "stats.job_type": req.body.jobType},
     {$inc : {"stats.$.num_of_occurrences": 1} },
     {upsert: true},
     function(err, jobPref) {

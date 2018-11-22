@@ -60,7 +60,7 @@ describe("Create Job Test", () => {
 
   it("Successful job post", async () => {
     // set axios to post to resolve
-    mockAxios.onPost(`${api}/create-job`).reply(200, {});
+    mockAxios.onPost(`${api}/job/create-job`).reply(200, {});
 
     const wrapper = shallow(<CreateJob store={store} navigation={navigation} />).dive();
 
@@ -88,7 +88,7 @@ describe("Create Job Test", () => {
 
   it("Server request errors", async () => {
     // set axios to post to resolve
-    mockAxios.onPost(`${api}/create-job`).reply(400, {err: {
+    mockAxios.onPost(`${api}/job/create-job`).reply(400, {err: {
       response: {
         data: {
           errorMessage: 'Mock error message'

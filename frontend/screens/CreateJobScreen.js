@@ -149,7 +149,7 @@ class CreateJobScreen extends React.Component
         }
         else
         {
-            axios.post(`${api}/create-job`, {
+            axios.post(`${api}/job/create-job`, {
                 address: address,
                 description: description,
                 jobType: jobType,

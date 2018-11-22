@@ -103,7 +103,7 @@ class EmployerJobsScreen extends React.Component
     tryFetchJobList()
     {
         // console.log("trying to fetch jobs...");
-        axios.get(`${api}/get-employer-jobs`, {
+        axios.get(`${api}/job/get-employer-jobs`, {
             params: {
                 employer: this.props.user.data.ID,
             }

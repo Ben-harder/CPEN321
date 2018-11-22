@@ -45,7 +45,7 @@ class JobScreen extends React.Component
     }
 
     componentDidMount() {
-        const { navigation } = this.props;
+        const { user, navigation } = this.props;
 
         this.setState({
             jobType: navigation.getParam("jobType", "NO JOB TYPE"),
@@ -54,6 +54,15 @@ class JobScreen extends React.Component
             wage: navigation.getParam("wage", "NO WAGE"),
             address: navigation.getParam("address", "NO ADDRESS"),
             jobID: navigation.getParam("jobID", "NO JOBID")
+        });
+
+        axios.post(`${api}/job/apply`, {
+            userID: this.props.user.data.ID,
+            jobID: this.state.jobID,
+            jobType: navigation.getParam()
+        }).catch((err) => {
+            console.log(err);
+            alert(err.response.data.errorMessage);
         });
     }
 
