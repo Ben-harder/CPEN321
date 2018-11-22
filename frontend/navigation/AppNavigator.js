@@ -15,6 +15,9 @@ import JobScreen from "../screens/JobScreen";
 import TakenJobsScreen from "../screens/TakenJobsScreen";
 import EmployerJobsScreen from "../screens/EmployerJobsScreen";
 import JobBoardScreen from "../screens/JobBoardScreen";
+import ProfileScreen from "../screens/ProfileScreen";
+import EditProfileScreen from "../screens/EditProfileScreen";
+import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 
 const AppStack = createStackNavigator({ Main: JobBoardScreen, Job: JobScreen }, 
   {
@@ -65,12 +68,24 @@ const EmployerJobsStack = createStackNavigator({EmployerJobs: EmployerJobsScreen
   }
 );
 
+const ProfileStack = createStackNavigator({ProfileDetails: ProfileScreen, EditProfile: EditProfileScreen, ChangePassword: ChangePasswordScreen},
+  {
+    navigationOptions: ({navigation}) => ({
+      headerLeft:(<TouchableOpacity onPress={() => navigation.openDrawer()}>
+                    <IOSIcon name="ios-menu" size={30} />
+                  </TouchableOpacity>
+      ),
+    })
+  }
+);
+
 const MainApp = createSwitchNavigator(
   {
     App: AppStack,
     CreateJob: CreateJobStack,
     TakenJobs: TakenJobsStack,
     EmployerJobs: EmployerJobsStack,
+    Profile: ProfileStack
   },
   {
     initialRouteName: "App",
