@@ -9,6 +9,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
+  ImageBackground,
 } from "react-native";
 import PhoneInput from "react-native-phone-input";
 import { bindActionCreators } from "redux";
@@ -61,29 +62,36 @@ class SignInScreen extends React.Component {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={s.container}>
-          <View style={s.innerContainer}>
-            <Text style={[s.regText, {paddingBottom: 40}]}>Enter your phone number to sign in:</Text>
-            <PhoneInput style={{paddingBottom: 40}}
-                ref={ref => {
-                  this.phone = ref;
-                }}
-                initialCountry="ca"
+          <ImageBackground source={require('../assets/images/min_art2.png')} style={{width: '100%', height: '100%',}}  resizeMode='cover'>
+            <Text style={[s.welcomeText, {paddingTop: 80,}]}>Emplorium</Text>
+            <View style={s.authContainer}>
+              <Text style={[s.regTextBold, {paddingBottom: 40}]}>Enter your phone number to sign in:</Text>
+              <PhoneInput style={{backgroundColor: '#ffffff99', padding: 20, borderRadius: 10,}}
+                  ref={ref => {
+                    this.phone = ref;
+                  }}
+                  initialCountry="ca"
+                />
+              <Text style={[s.regTextBold, {marginTop: 20,}]}>Enter your password:</Text>
+              <TextInput
+                style={[s.textInput,]}
+                onChangeText={(text) => this.setState({password: text})}
+                value={this.state.password}
+                secureTextEntry={true}
+                borderBottomColor={'black'}
+                underlineColorAndroid={'black'}
+                selectionColor={'black'}
               />
-            <Text style={s.regText}>Enter your password:</Text>
-            <TextInput
-              style={{padding: 10,}}
-              onChangeText={(text) => this.setState({password: text})}
-              value={this.state.password}
-              secureTextEntry={true}
-            />
-            <TouchableOpacity onPress={this.attemptSignIn} style={s.textLink}>
-              <Text style={s.textLinkText}>Sign In</Text>
-            </TouchableOpacity>
-            <Text style={s.regText}>or</Text>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate("SignUp")} style={s.textLink}>
-              <Text style={s.textLinkText}>Click Here to Sign Up</Text>
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity onPress={this.attemptSignIn} style={[s.textLink, {paddingVertical: 40}]}>
+                <Text style={s.textLinkTextAlt}>Sign In</Text>
+              </TouchableOpacity>
+              <Text style={[s.regTextBold]}>or</Text>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("SignUp")} style={[s.textLink, {paddingVertical: 40}]}>
+                <Text style={s.textLinkTextAlt}>Click Here to Sign Up</Text>
+              </TouchableOpacity>
+            </View>
+        
+          </ImageBackground>
         </View>
       </TouchableWithoutFeedback>
     );
