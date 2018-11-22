@@ -61,7 +61,7 @@ class SignInScreen extends React.Component {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={s.container}>
-          <View style={s.authContainer}>
+          <View style={s.innerContainer}>
             <Text style={[s.regText, {paddingBottom: 40}]}>Enter your phone number to sign in:</Text>
             <PhoneInput style={{paddingBottom: 40}}
                 ref={ref => {
@@ -71,7 +71,7 @@ class SignInScreen extends React.Component {
               />
             <Text style={s.regText}>Enter your password:</Text>
             <TextInput
-              style={[s.textInput, {marginBottom: 40}]} // Why doesn't this work
+              style={{padding: 10,}}
               onChangeText={(text) => this.setState({password: text})}
               value={this.state.password}
               secureTextEntry={true}
@@ -79,7 +79,7 @@ class SignInScreen extends React.Component {
             <TouchableOpacity onPress={this.attemptSignIn} style={s.textLink}>
               <Text style={s.textLinkText}>Sign In</Text>
             </TouchableOpacity>
-            <Text style={[s.regText, {paddingVertical: 20}]}>or</Text>
+            <Text style={s.regText}>or</Text>
             <TouchableOpacity onPress={() => this.props.navigation.navigate("SignUp")} style={s.textLink}>
               <Text style={s.textLinkText}>Click Here to Sign Up</Text>
             </TouchableOpacity>

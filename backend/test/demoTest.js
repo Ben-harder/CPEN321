@@ -25,20 +25,20 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
-// remove all jobs
-describe('Jobs', () => {
-  beforeEach((done) => {
-    Job.remove({}, (err) => {
-      done();
-    });
-  });
+// // remove all jobs
+// describe('Jobs', () => {
+//   beforeEach((done) => {
+//     Job.remove({}, (err) => {
+//       done();
+//     });
+//   });
 
-  describe('get all jobs', () => {
-    it('it should get all jobs', (done) => {
-      chai.request(server).get('/get-all-jobs').end((err, res) => {
-        res.should.have.status(200);
-        done();
-      });
-    });
-  });
-});
+//   describe('get all jobs', () => {
+//     it('it should get all jobs', (done) => {
+//       chai.request(server).get('/get-all-jobs').end((err, res) => {
+//         res.should.have.status(200);
+//         done();
+//       });
+//     });
+//   });
+// });

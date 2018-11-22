@@ -381,30 +381,6 @@ describe("User Is Able To Apply", function () {
     
   });
 
-//   /**
-//    * 3)
-//    * Test Case: Successfully create a user, apply for a few
-//    *            jobs and send a request to get those jobs.
-//    * Input/Output: Send a request with a user phone _number
-//    *               that has not applied to any job.
-//    * Pass/Fail Criteria: Only succeeds if it returns code (200) with
-//    *                     no error message and an array of correct expected jobs.
-//    */
-//   it("Applicant has applied for any jobs", function (done) {
-//     /**shou */
-//     let options = {
-//       phoneNumber: getAppliedUserApplied.phoneNumber
-//     }
-//     request(baseUrl + url, options, function (err, res, body) {
-//       expect(res.statusCode)
-//         .to
-//         .equal(200);
-//       expect(body.errorMessage)
-//         .to
-//         .equal("User hasn't applied for jobs");
-//       done();
-//     });
-//   });
 
   /** 2)
    * Test Case: Null job
@@ -442,55 +418,43 @@ describe("User Is Able To Apply", function () {
     dEmployer.is_employer = false;
     dEmployer.images = [];
 
-// });
+    // create a new user
+    var dEmployee = new User();
+    dEmployee.first_name = "dummy";
+    dEmployee.last_name = "dummy";
+    dEmployee.phone_number = "hasapplied";
+    dEmployee.hash_password = "dummy";
+    dEmployee.verification_token = undefined;
+    dEmployee.working_job_id = undefined;
+    dEmployee.is_working = false;
+    dEmployee.is_verified = false;
+    dEmployee.is_employer = false;
+    dEmployee.images = [];
 
-// /**
-//  * Tests for User Is Able To Apply.
-//  */
-// describe("User Is Able To Apply", function () {
-//   var url = "/job/can-apply";
+    // save the dEmployee
+    dEmployee.save((err) => {
+      return;
+    });
 
-//   /** 1)
-//    * Test Case: Null user
-//    * Input/Output: Pass a NULL request user  parameter.
-//    * Pass/Fail Criteria: Only succeeds if it returns error code (400) with the message
-//    *                     “User is a required field”
-//    */
-//   it("Null user", function (done) {
-//     let options = {
-//       jobID: 33434
-//     };
-//     request(baseUrl + url, options, function (err, res, body) {
-//       expect(res.statusCode)
-//         .to
-//         .equal(400);
-//       expect(body.errorMessage)
-//         .to
-//         .equal("User is a required field");
-//       done();
-//     });
-//   });
-
-//   /** 2)
-//    * Test Case: Null job
-//    * Input/Output: Pass a NULL request job parameter.
-//    * Pass/Fail Criteria: Only succeeds if it returns error code (400) with the message
-//    *                     "Job is a required field”
-//    */
-//   it("Null job", function (done) {
-//     let options = {
-//       userID: 33434
-//     };
-//     request(baseUrl + url, options, function (err, res, body) {
-//       expect(res.statusCode)
-//         .to
-//         .equal(400);
-//       expect(body.errorMessage)
-//         .to
-//         .equal("Job is a required field");
-//       done();
-//     });
-//   });
+    // save the dEmployer
+    dEmployer.save((err) => {
+      return;
+    });
+    
+    var job = new Job();
+    job.job_title = "dummy";
+    job.description = "dummy";
+    job.wage = 0;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = undefined;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = false;
+    job.is_compeleted = false;
+    job.is_active = false;
+    job.applicants = [];
+    job.applicants.push(dEmployee._id);
 
     // save the job
     job.save((err) => {
@@ -512,69 +476,152 @@ describe("User Is Able To Apply", function () {
 //    * Pass/Fail Criteria: Only succeeds if it returns code (400) with error
 //    *                     message "You can't apply to your own job"
 //    */
-//   it("User is the creator of this job", function (done) {
-//     let options = {
-//       userID: canApplyIsCreatorUser.userID,
-//       jobID: canApplyIsCreatorJob.jobID
-//     }
-//     request(baseUrl + url, options, function (err, res, body) {
-//       expect(res.statusCode)
-//         .to
-//         .equal(400);
-//       expect(body.errorMessage)
-//         .to
-//         .equal("You can't apply to your own job");
-//       done();
-//     });
-//   });
+  it("User is the creator of this job", function (done) {
+    // create a dummy employer
+    var dEmployer = new User();
+    dEmployer.first_name = "dummy";
+    dEmployer.last_name = "dummy";
+    dEmployer.phone_number = "hasapplied";
+    dEmployer.hash_password = "dummy";
+    dEmployer.verification_token = undefined;
+    dEmployer.working_job_id = undefined;
+    dEmployer.is_working = false;
+    dEmployer.is_verified = false;
+    dEmployer.is_employer = false;
+    dEmployer.images = [];
 
-//   /**
-//    * 5)
-//    * Test Case: Correct application form.
-//    * Input/Output: Send a request with a correct phone_number that
-//    *               is neither an employer nor a previous applicant of this job.
-//    * Pass/Fail Criteria: Only succeeds if it returns code (200) with
-//    *                     no error messages.
-//    */
-//   it("Correct application form", function (done) {
-//     let options = {
-//       userID: canApplyCorrectUser.userID,
-//       jobID: canApplyCorrectJob.jobID
-//     }
-//     request(baseUrl + url, options, function (err, res, body) {
-//       expect(res.statusCode)
-//         .to
-//         .equal(200);
-//       done();
-//     });
-//   });
+    // save the dEmployer
+    dEmployer.save((err) => {
+      return;
+    });
+    
+    var job = new Job();
+    job.job_title = "dummy";
+    job.description = "dummy";
+    job.wage = 0;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = undefined;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = false;
+    job.is_compeleted = false;
+    job.is_active = false;
 
-// });
+    // save the job
+    job.save((err) => {
+      return;
+    });
+    
+    chai.request(server).get(url).query({userID: dEmployer._id.toString(), jobID: job._id.toString()}).end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property("errorMessage").eql("You can't apply to your own job");
+      done();
+    });
+  });
 
-// /**
-//  * Tests for User Is Able To Apply.
-//  */
-// describe("Create Job", function () {
-//   var url = "/create-job";
+  /**
+   * 5)
+   * Test Case: Correct application form.
+   * Input/Output: Send a request with a correct phone_number that
+   *               is neither an employer nor a previous applicant of this job.
+   * Pass/Fail Criteria: Only succeeds if it returns code (200) with
+   *                     no error messages.
+   */
+  it("Correct application form", function (done) {
+    // create a dummy employer
+    var dEmployer = new User();
+    dEmployer.first_name = "dummy";
+    dEmployer.last_name = "dummy";
+    dEmployer.phone_number = "hasapplied";
+    dEmployer.hash_password = "dummy";
+    dEmployer.verification_token = undefined;
+    dEmployer.working_job_id = undefined;
+    dEmployer.is_working = false;
+    dEmployer.is_verified = false;
+    dEmployer.is_employer = false;
+    dEmployer.images = [];
 
-//   /**
-//   * 1)
-//   * Test Case: Null job.
-//   * Input/Output: Pass a NULL request parameter.
-//   * Pass/Fail Criteria: Only succeeds if it returns error code
-//   *                     (400) with the message “All fields have not been filled out”.
-//   */
-//   it("Pass a NULL request parameter", function (done) {
-//     request(baseUrl + url, function (err, res, body) {
-//       expect(res.statusCode)
-//         .to
-//         .equal(400);
-//       expect(body.errorMessage)
-//         .to
-//         .equal("All fields have not been filled out");
-//       done();
-//     });
-//   });
+    // save the dEmployer
+    dEmployer.save((err) => {
+      return;
+    });
+    
+    var job = new Job();
+    job.job_title = "dummy";
+    job.description = "dummy";
+    job.wage = 0;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = undefined;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = false;
+    job.is_compeleted = false;
+    job.is_active = false;
+
+    // save the job
+    job.save((err) => {
+      return;
+    });
+
+    // create a new user
+    var user = new User();
+    user.first_name = "dummy";
+    user.last_name = "dummy";
+    user.phone_number = "hasapplied";
+    user.hash_password = "dummy";
+    user.verification_token = undefined;
+    user.working_job_id = undefined;
+    user.is_working = false;
+    user.is_verified = false;
+    user.is_employer = false;
+    user.images = [];
+
+    // save the user
+    user.save((err) => {
+      return;
+    });
+    
+    chai.request(server).get(url).query({userID: user._id.toString(), jobID: job._id.toString()}).end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.not.have.property('errorMessage');
+      done();
+    });
+  });
+});
+
+
+/**
+ * Tests for Create Job.
+ */
+describe("Create Job", function () {
+  var url = "/create-job";
+  beforeEach((done) => {
+    Job.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+
+  /**
+  * 1)
+  * Test Case: Null job.
+  * Input/Output: Pass a NULL request parameter.
+  * Pass/Fail Criteria: Only succeeds if it returns error code
+  *                     (400) with the message “All fields have not been filled out”.
+  */
+  it("Test Case: Null job", (done) => {
+    chai.request(server).post(url).end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property('errorMessage').eql('All fields have not been filled out');
+      done();
+    });
+  });
 
   /**
   * 2)

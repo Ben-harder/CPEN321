@@ -171,26 +171,36 @@ describe("Testing: doesUserExist", function() {
 });
 
 
-// /**
-//  * Tests for userSignIn().
-//  */
-// describe("Testing: userSignIn", function() {
-//   var url = "/auth/sign-in";
-//   /**
-//    * 1)
-//    * Test Case: Null user
-//    * Input/Output: Pass a NULL request parameter. 
-//    * Pass/Fail Criteria: Only succeeds if it returns error code (400) with the 
-//    *                     message “Can’t handle undefined objects”.
-//    */
-//   it("Null User", function(done) {
-//     let options = null;
-//     request(baseUrl + url, options, function(error, response, body) {
-//       expect(response.statusCode).to.equal(400);
-//       expect(body.errorMessage).to.equal("Can't handle undefined objects");
-//       done();
-//     });
-//   });
+/**
+ * Tests for userSignIn().
+ */
+describe("Testing: userSignIn", function() {
+  var url = "/auth/user-exists";
+  beforeEach((done) => {
+    Job.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  var url = "/auth/sign-in";
+  /**
+   * 1)
+   * Test Case: Null user
+   * Input/Output: Pass a NULL request parameter. 
+   * Pass/Fail Criteria: Only succeeds if it returns error code (400) with the 
+   *                     message “Can’t handle undefined objects”.
+   */
+  it("Test Case: Null user", (done) => {
+    chai.request(server).get(url).end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property('errorMessage').eql('All fields have not been filled out');
+      done();
+    });
+  });
 
   /**
    * 2)
@@ -207,35 +217,72 @@ describe("Testing: doesUserExist", function() {
     });
   });
 
-//   /**
-//    * 3)
-//    * Test Case: Incorrect password
-//    * Input/Output: Send a request with a user phone _number that does not exist.
-//    * Pass/Fail Criteria: Only succeeds if it returns error code (400) with 
-//    *                     error message “Incorrect password”.
-//    */
-//   it("Incorrect Password", function(done) {
-//     let options = signInNonExisting;
-//     request(baseUrl + url, options, function(error, response, body) {
-//       expect(response.statusCode).to.equal(400);
-//       expect(body.errorMessage).to.equal("Incorrect password");
-//       done();
-//     });
-//   });
+  /**
+   * 3)
+   * Test Case: Incorrect password
+   * Input/Output: Send a request with a user phone _number that does not exist.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (400) with 
+   *                     error message “Incorrect password”.
+   */
+  it("Test Case: Incorrect password", (done) => {
 
-//   /**
-//    * 4)
-//    * Test Case: Correct sign in info
-//    * Input/Output: Send a request with a correct phone_number and password.
-//    * Pass/Fail Criteria: Only succeeds if it returns code (200) with no 
-//    *                     error messages.
-//    */
-//   it("Correct Sign In Info", function(done) {
-//     let options = signInCorrect;
-//     request(baseUrl + url, options, function(error, response, body) {
-//       expect(response.statusCode).to.equal(200);
-//       expect(body.errorMessage).to.equal(undefined);
-//       done();
-//     });
-//   });
-// });
+    // create a new user
+    var user = new User();
+    user.first_name = "dummy";
+    user.last_name = "dummy";
+    user.phone_number = "hasapplied";
+    user.hash_password = "dummy";
+    user.verification_token = undefined;
+    user.working_job_id = undefined;
+    user.is_working = false;
+    user.is_verified = false;
+    user.is_employer = false;
+    user.images = [];
+
+    // save the user
+    user.save((err) => {
+      return;
+    });
+
+    chai.request(server).get(url).query({phoneNumber: user.phone_number.toString(), password:  "0xdeadbeef"}).end((err, res) => {
+      res.should.have.status(400);
+      res.body.should.have.property('errorMessage').eql('Login info is invalid!');
+      done();
+    });
+  }); 
+
+  /**
+   * 4)
+   * Test Case: Correct sign in info
+   * Input/Output: Send a request with a correct phone_number and password.
+   * Pass/Fail Criteria: Only succeeds if it returns code (200) with no 
+   *                     error messages.
+   */
+  it("Test Case: Correct sign in info", (done) => {
+
+    // create a new user
+    var user = new User();
+    user.first_name = "dummy";
+    user.last_name = "dummy";
+    user.phone_number = "whatever";
+    user.hash_password = "dummy";
+    user.verification_token = undefined;
+    user.working_job_id = undefined;
+    user.is_working = false;
+    user.is_verified = false;
+    user.is_employer = false;
+    user.images = [];
+
+    // save the user
+    user.save((err) => {
+      return;
+    });
+
+    chai.request(server).get(url).query({phoneNumber: user.phone_number.toString(), password: user.hash_password.toString()}).end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.not.have.property('errorMessage');
+      res.body.should.be.a('object');
+      done();
+    });
+  });
+});

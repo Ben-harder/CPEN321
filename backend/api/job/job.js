@@ -6,7 +6,7 @@ module.exports = {
     let ret = {};
     var job = new Job();
     // if a field is missing return an error
-    if (!req.body || !req.body.jobType || !req.body.description || !req.body.wage
+    if (!req.body || !req.body.jobType || !req.body.description || req.body.wage === undefined
       || !req.body.address || !req.body.employerID) {
       ret.errorMessage = 'All fields have not been filled out';
       return res.status(400).send(ret);
@@ -43,7 +43,7 @@ module.exports = {
           ret.errorMessage = err.message;
           return res.status(500).send(ret);
         }
-        console.log('New Job: ' + job);
+        // console.log('New Job: ' + job);
         return res.status(200).send(job);
     });
   },
@@ -155,7 +155,7 @@ module.exports = {
         return res.status(500).send(ret);
       }
 
-      console.log(`UserID: ${req.body.userID} applied to JobID: ${req.body.jobID}`);
+      // console.log(`UserID: ${req.body.userID} applied to JobID: ${req.body.jobID}`);
       return res.sendStatus(200);
     });
   },

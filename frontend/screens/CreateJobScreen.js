@@ -26,7 +26,83 @@ import Font from '../constants/Font';
 
 import { MonoText } from '../components/StyledText';
 
-var s = require('../constants/style');
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
+    titleText: {
+        fontSize: Font.titleSize,
+        paddingBottom: 20,
+    },
+    formLabel: {
+        paddingBottom: 10,
+        fontSize: Font.normSize,
+        color: '#000000',
+        marginTop: 10,
+        textAlign: 'center',
+    },
+    infoText: {
+        marginTop: 10,
+        fontSize: 18,
+        padding: 20,
+        color: Colors.pLight,
+        textAlign: 'center',
+    },
+    contentContainer: {
+        alignItems: "center",
+    },
+    textInputJobDescription: {
+        height: 100,
+        borderWidth: 2,
+        borderRadius: 10,
+        padding: 10,
+        borderColor: Colors.sNorm,
+        //backgroundColor: Colors.tile,
+        overflow: 'hidden',
+        width: "90%",
+    },
+    textInput: {
+        height: 40,
+        borderWidth: 2,
+        borderRadius: 10,
+        padding: 10,
+        borderColor: Colors.sNorm,
+        // backgroundColor: Colors.tile,
+        overflow: 'hidden',
+        width: "90%",
+    },
+    button: {
+        fontSize: Font.butSize,
+        fontWeight: Font.thick,
+    },
+    buttonWrapper: {
+        padding: 10,
+        borderRadius: 10,
+        borderColor: Colors.sNorm,
+        backgroundColor: Colors.sNorm,
+        overflow: 'hidden',
+        marginBottom: 10,
+    },
+    textLink: {
+        paddingVertical: 10,
+      },
+      textLinkText: {
+        fontSize: Font.butSize,
+        color: Colors.buttonText,
+        fontWeight: Font.thick,
+        padding: 10,
+        borderRadius: 10,
+        borderColor: Colors.sNorm,
+        backgroundColor: Colors.sNorm,
+        // overflow: "hidden",
+        textAlign: 'center',
+    },
+    innerContainer: {
+        padding: 10,
+        width: "90%",
+    },
+});
 
 class CreateJobScreen extends React.Component
 {
@@ -56,30 +132,30 @@ class CreateJobScreen extends React.Component
     {
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessbile={false}>
-                <View style={s.container}>
-                    <View style={s.innerContainer}>
-                        <Text style={s.infoText}>Please complete the form below to create your job.</Text>
+                <ScrollView style={styles.container}>
+                    <View style={styles.contentContainer}>
+                        <Text style={styles.infoText}>Please complete the form below to create your job.</Text>
 
                         {/* Job creater needs to input: job type, address, description */}
 
-                        <Text style={s.formLabel}>
+                        <Text style={styles.formLabel}>
                             Address:
                         </Text>
 
                         <TextInput
                             testID="#address"
-                            style={s.textInput}
+                            style={styles.textInput}
                             onChangeText={(address) => this.setState({ address })}
                             returnKeyType='done'
                             placeholder="Enter Address Here" />
 
-                        <Text style={s.formLabel}>
+                        <Text style={styles.formLabel}>
                             Job description:
                         </Text>
 
                         <TextInput
                             testID="#description"
-                            style={s.textInputJobDescription}
+                            style={styles.textInputJobDescription}
                             multiline = {true}
                             numberOfLines = {4}
                             onChangeText={(description) => this.setState({ description })}
@@ -87,33 +163,38 @@ class CreateJobScreen extends React.Component
                             blurOnSubmit={true}
                             placeholder="Enter Description Here" />
 
-                        <Text style={s.formLabel}>
+                        <Text style={styles.formLabel}>
                             Wage in CAD:
                         </Text>
 
                         <TextInput
                             testID="#wage"
-                            style={s.textInput}
+                            style={styles.textInput}
                             keyboardType={"numeric"}
                             onChangeText={(wage) => this.setState({ wage })}
                             returnKeyType='done'
                             placeholder="Enter Wage here" />
 
-                        <Text style={s.formLabel}>
+                        <Text style={styles.formLabel}>
                             Job type:
                         </Text>
 
-                        <Select
-                            onValueChange={value => this.setState({jobType: value})}
-                            items={JobTypes}
-                            placeholder={{label:"Select Job Here", value: ""}}
-                        />
+                        <View style={styles.innerContainer}>
+                            <Select
+                                onValueChange={value => this.setState({jobType: value})}
+                                items={JobTypes}
+                                placeholder={{label:"Select Job Here", value: ""}}
+                            />
+                        </View>
                         
-                        <TouchableOpacity onPress={() => this.attemptCreateJob()} style={s.textLink}>
-                            <Text style={s.textLinkText}>Submit</Text>
-                        </TouchableOpacity>
+                        <View style={styles.innerContainer}>
+                            <TouchableOpacity onPress={() => this.attemptCreateJob()} style={styles.textLink}>
+                                <Text style={styles.textLinkText}>Submit</Text>
+                            </TouchableOpacity>
+                        </View>
+                        
                     </View>
-                </View>
+                </ScrollView>
             </TouchableWithoutFeedback>
         );
     }
