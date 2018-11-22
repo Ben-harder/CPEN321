@@ -121,66 +121,74 @@ class SignUpScreen extends React.Component {
                   }}
                   initialCountry="ca"
                 />
-              <TouchableOpacity onPress={this.checkUserExists} style={[s.textLink, {paddingBottom: 40}]}>
+              <TouchableOpacity onPress={this.checkUserExists} style={s.textLink}>
                 <Text style={s.textLinkText}>Sign Up</Text>
               </TouchableOpacity>
-              <Text style={[s.regText, {paddingBottom: 40}]}>or</Text>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate("SignIn")} style={[s.textLink, {paddingBottom: 40}]}>
+              <Text style={[s.regText, {paddingVertical: 20}]}>or</Text>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("SignIn")} style={s.textLink}>
                 <Text style={s.textLinkText}>Click Here to Sign In</Text>
               </TouchableOpacity>
             </View>}
             {this.state.viewState === 2 &&
             <View style={s.innerContainer}>
-              <Text>First Name:</Text>
-              <TextInput
-                style={s.textInput}
-                onChangeText={(text) => this.setState({firstName: text})}
-                value={this.state.firstName}
-              />
-              <Text>Last Name:</Text>
-              <TextInput
-                style={s.textInput}
-                onChangeText={(text) => this.setState({lastName: text})}
-                value={this.state.lastName}
-              />
-              <TouchableOpacity onPress={this.inputName} style={s.textLink}>
-                <Text style={s.textLinkText}>Continue</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.setState({viewState: 1})} style={s.textLink}>
-                <Text style={s.textLinkText}>Back</Text>
-              </TouchableOpacity>
+              <View>
+                <Text style={[s.regText, {textAlign: 'left',}]}>First Name:</Text>
+                <TextInput
+                  style={s.textInput}
+                  onChangeText={(text) => this.setState({firstName: text})}
+                  value={this.state.firstName}/>
+
+                <Text style={[s.regText, {textAlign: 'left',}]}>Last Name:</Text>
+                <TextInput
+                  style={s.textInput}
+                  onChangeText={(text) => this.setState({lastName: text})}
+                  value={this.state.lastName}
+                />
+
+                <TouchableOpacity onPress={this.inputName} style={s.textLink}>
+                  <Text style={s.textLinkText}>Continue</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.setState({viewState: 1})} style={s.textLink}>
+                  <Text style={s.textLinkTextBack}>Back</Text>
+                </TouchableOpacity>
+
+              </View>
             </View>}
             {this.state.viewState === 3 && 
             <View style={s.innerContainer}>
-              <Text>Enter a password:</Text>
-              <TextInput
-                style={s.textInput}
-                onChangeText={(text) => this.setState({password: text})}
-                value={this.state.password}
-                secureTextEntry={true}
-              />
-              <TouchableOpacity onPress={this.inputPassword} style={s.textLink}>
-                <Text style={s.textLinkText}>Continue</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.setState({viewState: 2})} style={s.textLink}>
-                <Text style={s.textLinkText}>Back</Text>
-              </TouchableOpacity>
+              <View>
+                <Text style={[s.regText, {textAlign: 'left',}]}>Enter a password:</Text>
+                <TextInput
+                  style={s.textInput}
+                  onChangeText={(text) => this.setState({password: text})}
+                  value={this.state.password}
+                  secureTextEntry={true}
+                />
+                <TouchableOpacity onPress={this.inputPassword} style={s.textLink}>
+                  <Text style={s.textLinkText}>Continue</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.setState({viewState: 2})} style={s.textLink}>
+                  <Text style={s.textLinkTextBack}>Back</Text>
+                </TouchableOpacity>
+              </View>
             </View>}
             {this.state.viewState === 4 &&
             <View style={s.innerContainer}>
-              <Text>Confirm your password:</Text>
-              <TextInput
-                style={s.textInput}
-                onChangeText={(text) => this.setState({passwordConfirm: text})}
-                value={this.state.passwordConfirm}
-                secureTextEntry={true}
-              />
-              <TouchableOpacity onPress={this.attemptSignup} style={s.textLink}>
-                <Text style={s.textLinkText}>Create Account</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.setState({viewState: 3})} style={s.textLink}>
-                <Text style={s.textLinkText}>Back</Text>
-              </TouchableOpacity>
+              <View>
+                <Text style={[s.regText, {textAlign: 'left',}]}>Confirm your password:</Text>
+                <TextInput
+                  style={s.textInput}
+                  onChangeText={(text) => this.setState({passwordConfirm: text})}
+                  value={this.state.passwordConfirm}
+                  secureTextEntry={true}
+                />
+                <TouchableOpacity onPress={this.attemptSignup} style={s.textLink}>
+                  <Text style={s.textLinkText}>Create Account</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.setState({viewState: 3})} style={s.textLink}>
+                  <Text style={s.textLinkTextBack}>Back</Text>
+                </TouchableOpacity>
+              </View>
             </View>}
       </View>
       </TouchableWithoutFeedback>

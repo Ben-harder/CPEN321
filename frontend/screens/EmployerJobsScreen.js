@@ -71,7 +71,7 @@ class EmployerJobsScreen extends React.Component
     goToJobDetails(job)
     {
         this.props.navigation.navigate("Job", {
-            jobType: job.jobType,
+            jobType: job.job_title,
             address: job.address,
             author: job.author,
             wage: job.wage,
@@ -89,11 +89,20 @@ class EmployerJobsScreen extends React.Component
                     data={this.state.jobList}
                     renderItem={({ item }) => (
                         <View style={s.jobItem}>
-                            <Text style={s.regText}>Job type: {item.job_title}</Text>
-                            <Text style={s.regText}>Posted by: {item.employer.first_name} {item.employer.last_name}</Text>
-                            <Text style={s.regText}>Address: {item.address}</Text>
-                            <Text style={s.regText}>Wage: ${item.wage}</Text>
-                            <Text style={s.regText}>Description: {item.description}</Text>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
+                                <Text style={[s.jobText, {fontSize: Font.titleSize}]}>{item.job_title}</Text> 
+                                <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
+                            </View>
+                            <Text style={[s.infoText, {textAlign: 'left', borderBottomWidth: 1, borderBottomColor: Colors.sDark, padding: 10,}]}>@ {item.address}</Text>
+                            <Text style={{fontSize: Font.smallSize}}>
+                                    <Text><Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.author}</Text></Text>
+                            </Text>
+                            <View>
+                                <Text style={[s.jobText, {fontWeight: 'bold', marginTop: 30}]}>Description: </Text>
+                                <View style={s.jobDescription}>
+                                    <Text>{item.description}</Text>
+                                </View>                     
+                            </View>                    
                         </View>
                     )}
                     keyExtractor={(item, index) => index.toString()}

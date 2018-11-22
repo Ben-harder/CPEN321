@@ -76,11 +76,11 @@ class SignInScreen extends React.Component {
               value={this.state.password}
               secureTextEntry={true}
             />
-            <TouchableOpacity onPress={this.attemptSignIn} style={[s.textLink, {paddingBottom: 40}]}>
+            <TouchableOpacity onPress={this.attemptSignIn} style={s.textLink}>
               <Text style={s.textLinkText}>Sign In</Text>
             </TouchableOpacity>
-            <Text style={[s.regText, {paddingBottom: 40}]}>or</Text>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate("SignUp")} style={[s.textLink, {paddingBottom: 40}]}>
+            <Text style={[s.regText, {paddingVertical: 20}]}>or</Text>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("SignUp")} style={s.textLink}>
               <Text style={s.textLinkText}>Click Here to Sign Up</Text>
             </TouchableOpacity>
           </View>

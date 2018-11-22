@@ -72,7 +72,7 @@ class TakenJobsScreen extends React.Component
     goToJobDetails(job)
     {
         this.props.navigation.navigate("Job", {
-            jobType: job.jobType,
+            jobType: job.job_title,
             address: job.address,
             author: job.author,
             wage: job.wage,
@@ -89,13 +89,17 @@ class TakenJobsScreen extends React.Component
                     style={s.jobList}
                     data={this.state.jobList}
                     renderItem={({ item }) => (
-                        <View style={s.jobItem}>
-                            <Text style={s.regText}>Job type: {item.job_title}</Text>
-                            <Text style={s.regText}>Posted by: {item.author}</Text>
-                            <Text style={s.regText}>Address: {item.address}</Text>
-                            <Text style={s.regText}>Wage: ${item.wage}</Text>
-                            <Text style={s.regText}>Description: {item.description}</Text>
-                        </View>
+                        <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
+                                <Text style={[s.jobText, {fontSize: Font.titleSize}]}>{item.job_title}</Text>
+                                <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
+                            </View>
+                            <Text style={[s.infoText, {textAlign: 'left', borderBottomWidth: 1, borderBottomColor: Colors.sDark, padding: 10,}]}>@ {item.address}</Text>
+                            <Text style={{fontSize: Font.smallSize}}>
+                                <Text><Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text></Text>
+                            </Text>
+                
+                        </TouchableOpacity>
                     )}
                     keyExtractor={(item, index) => index.toString()}
                 />
