@@ -19,6 +19,8 @@ import ProfileScreen from "../screens/ProfileScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
 import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 import JobDetailsScreen from "../screens/JobDetailsScreen";
+import AppliedJobsScreen from "../screens/AppliedJobsScreen";
+import ActiveJobsScreen from "../screens/ActiveJobsScreen";
 
 // constants
 import Colors from "../constants/Colors";
@@ -64,7 +66,36 @@ const TakenJobsStack = createStackNavigator({TakenJobs: TakenJobsScreen},
     })
   }
 );
+
 const EmployerJobsStack = createStackNavigator({EmployerJobs: EmployerJobsScreen, JobDetails: JobDetailsScreen},
+  {
+    navigationOptions: ({navigation}) => ({
+      headerTintColor: 'white',
+      headerStyle: {backgroundColor: Colors.sDark, marginRight: 0, marginLeft: 0, borderBottomWidth: 0,},
+      headerLeft:(<TouchableOpacity onPress={() => navigation.openDrawer()}>
+        <IOSIcon name="ios-menu" size={30} style={{color: 'white', paddingLeft: 15,}}/>
+        </TouchableOpacity>
+      ),
+      title: 'Posted Jobs',
+    })
+  }
+);
+
+const AppliedJobsStack = createStackNavigator({AppliedJobs: AppliedJobsScreen, JobDetails: JobDetailsScreen},
+  {
+    navigationOptions: ({navigation}) => ({
+      headerTintColor: 'white',
+      headerStyle: {backgroundColor: Colors.sDark, marginRight: 0, marginLeft: 0, borderBottomWidth: 0,},
+      headerLeft:(<TouchableOpacity onPress={() => navigation.openDrawer()}>
+        <IOSIcon name="ios-menu" size={30} style={{color: 'white', paddingLeft: 15,}}/>
+        </TouchableOpacity>
+      ),
+      title: 'Posted Jobs',
+    })
+  }
+);
+
+const ActiveJobsStack = createStackNavigator({ActiveJobs: ActiveJobsScreen, JobDetails: JobDetailsScreen},
   {
     navigationOptions: ({navigation}) => ({
       headerTintColor: 'white',
@@ -97,7 +128,9 @@ const MainApp = createSwitchNavigator(
     CreateJob: CreateJobStack,
     TakenJobs: TakenJobsStack,
     EmployerJobs: EmployerJobsStack,
-    Profile: ProfileStack
+    Profile: ProfileStack,
+    AppliedJobs: AppliedJobsStack,
+    ActiveJobs: ActiveJobsStack
   },
   {
     initialRouteName: "App",
