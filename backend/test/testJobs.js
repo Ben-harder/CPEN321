@@ -1571,6 +1571,46 @@ describe("Accept an applicant", function () {
 });
 
 /**
+ * Tests for Cancel Job.
+ */
+describe("Cancel Job", function () {
+  var url = "/job/cancel-job";
+  beforeEach((done) => {
+    Job.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    Image.deleteMany({}, (err) => {
+      done();
+    });
+  });
+
+  /** 1)
+   * Test Case: Success case.
+   * Input/Output: Return array of job types.
+   * Pass/Fail Criteria: Only succeeds if it returns
+   *                     code (200) with no error messages
+   */
+  it('Test Case: Success case', (done) => {
+    chai.request(server).get(url).end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.be.a('array');
+      res.body.length.should.be.eql(3);
+      res.body.should.include("Feed My Lizard");
+      res.body.should.include("Beat My Beef");
+      res.body.should.include("Wain My Wain");
+      done();
+    });
+  });
+});
+
+/**
  * Tests for Get Job Types.
  */
 describe("Get Job Types", function () {
@@ -1608,42 +1648,4 @@ describe("Get Job Types", function () {
       done();
     });
   });
-});/**
-* Tests for Get Job Types.
-*/
-describe("Get Job Types", function () {
- var url = "/job/get-job-types";
- beforeEach((done) => {
-   Job.deleteMany({}, (err) => {
-     done();
-   });
- });
- beforeEach((done) => {
-   User.deleteMany({}, (err) => {
-     done();
-   });
- });
-  beforeEach((done) => {
-    Image.deleteMany({}, (err) => {
-      done();
-    });
-  });
-
- /** 1)
-  * Test Case: Success case.
-  * Input/Output: Return array of job types.
-  * Pass/Fail Criteria: Only succeeds if it returns
-  *                     code (200) with no error messages
-  */
- it('Test Case: Success case', (done) => {
-   chai.request(server).get(url).end((err, res) => {
-     res.should.have.status(200);
-     res.body.should.be.a('array');
-     res.body.length.should.be.eql(3);
-     res.body.should.include("Feed My Lizard");
-     res.body.should.include("Beat My Beef");
-     res.body.should.include("Wain My Wain");
-     done();
-   });
- });
 });
