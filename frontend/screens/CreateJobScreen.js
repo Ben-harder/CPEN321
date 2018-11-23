@@ -77,7 +77,7 @@ class CreateJobScreen extends React.Component
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessbile={false}>
                         <View style={s.innerContainer}>
                             <View>
-                                <Text style={s.formLabel}>
+                                <Text style={s.regText}>
                                     Address:
                                 </Text>
                                 <TextInput
@@ -91,7 +91,7 @@ class CreateJobScreen extends React.Component
                             </View>
 
                             <View>
-                                <Text style={s.formLabel}>
+                                <Text style={s.regText}>
                                     Job description:
                                 </Text>
 
@@ -109,7 +109,7 @@ class CreateJobScreen extends React.Component
                             </View>
 
                             <View>
-                                <Text style={s.formLabel}>
+                                <Text style={s.regText}>
                                     Wage in CAD:
                                 </Text>
                                 <TextInput
@@ -124,7 +124,7 @@ class CreateJobScreen extends React.Component
                             </View>
 
                             <View>
-                                <Text style={s.formLabel}>
+                                <Text style={s.regText}>
                                     Job type:
                                 </Text>
                                 <View style={s.picker}>
