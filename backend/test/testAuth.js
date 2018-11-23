@@ -480,7 +480,6 @@ describe("Update User Info", function () {
 
     // save the user
     user.save((err) => {
-      console.log(err);
       return;
     });
 
@@ -599,7 +598,6 @@ describe("Update User Password", function () {
 
     // save the user
     user.save((err) => {
-      console.log(err);
       return;
     });
 
@@ -639,7 +637,6 @@ describe("Update User Password", function () {
 
     // save the user
     user.save((err) => {
-      console.log(err);
       return;
     });
 
@@ -650,6 +647,168 @@ describe("Update User Password", function () {
       res.should.have.status(200);
       res.body.should.not.have.property('errorMessage');
       res.body.hash_password.should.be.eql('new');
+      done();
+    });
+  });
+});
+
+/**
+ * Rate User.
+ */
+describe("Rate User", function () {
+  var url = "/user/rate-user";
+  beforeEach((done) => {
+    Job.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    JobPref.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  
+  /**
+   * 1)
+   * Test Case: Null UserID
+   * Input/Output: Pass a NULL request parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (500) with 
+   *                     error message "All fields have to be filled out"
+   */
+  it("Test Case: Null userID", (done) => {
+    chai.request(server)
+    .post(url)
+    .send({rating: "dummy"})
+    .end((err, res) => {
+      res.should.have.status(500);
+      res.body.should.have.property('errorMessage').eql("All fields have to be filled out");
+      done();
+    });
+  });
+  
+  /**
+   * 2)
+   * Test Case: Null rating
+   * Input/Output: Pass a NULL request parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (500) with 
+   *                     error message "All fields have to be filled out"
+   */
+  it("Test Case: Null userID", (done) => {
+    chai.request(server)
+    .post(url)
+    .send({rating: true})
+    .end((err, res) => {
+      res.should.have.status(500);
+      res.body.should.have.property('errorMessage').eql("All fields have to be filled out");
+      done();
+    });
+  });
+  
+  /**
+   * 3)
+   * Test Case: Non boolean rating
+   * Input/Output: Pass a NULL request parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (500) with 
+   *                     error message "All fields have to be filled out"
+   */
+  it("Test Case: Non boolean rating", (done) => {
+    chai.request(server)
+    .post(url)
+    .send({rating: 0, userID: "3232"})
+    .end((err, res) => {
+      res.should.have.status(500);
+      res.body.should.have.property('errorMessage').eql("Rating has to be boolean");
+      done();
+    });
+  });
+  
+  /**
+   * 3)
+   * Test Case: Up vote success case.
+   * Input/Output: Pass a NULL request parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (500) with 
+   *                     error message "All fields have to be filled out"
+   */
+  it("Test Case: Up vote success case", (done) => {
+
+    // create a new user
+    var user = new User();
+    user.first_name = "dummy";
+    user.last_name = "dummy";
+    user.phone_number = "dummy";
+    user.hash_password = "old";
+    user.verification_token = undefined;
+    user.working_job_id = undefined;
+    user.is_working = false;
+    user.is_verified = false;
+    user.is_employer = false;
+    user.up_votes = 0;
+    user.down_votes = 0;
+    user.images = [];
+
+    // save the user
+    user.save((err) => {
+      return;
+    });
+
+    chai.request(server)
+    .post(url)
+    .send({rating: true, userID: user._id.toString()})
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.not.have.property('errorMessage');
+      res.body.should.have.property('up_votes');
+      res.body.up_votes.should.be.eql(1);
+      res.body.should.have.property('down_votes');
+      res.body.down_votes.should.be.eql(0);
+      done();
+    });
+  });
+  
+  /**
+   * 4)
+   * Test Case: Down vote success case.
+   * Input/Output: Pass a NULL request parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (500) with 
+   *                     error message "All fields have to be filled out"
+   */
+  it("Test Case: Up vote success case", (done) => {
+
+    // create a new user
+    var user = new User();
+    user.first_name = "dummy";
+    user.last_name = "dummy";
+    user.phone_number = "dummy";
+    user.hash_password = "old";
+    user.verification_token = undefined;
+    user.working_job_id = undefined;
+    user.is_working = false;
+    user.is_verified = false;
+    user.is_employer = false;
+    user.up_votes = 0;
+    user.down_votes = 0;
+    user.images = [];
+
+    // save the user
+    user.save((err) => {
+      return;
+    });
+
+    chai.request(server)
+    .post(url)
+    .send({rating: false, userID: user._id.toString()})
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.not.have.property('errorMessage');
+      res.body.should.have.property('up_votes');
+      res.body.up_votes.should.be.eql(0);
+      res.body.should.have.property('down_votes');
+      res.body.down_votes.should.be.eql(1);
       done();
     });
   });

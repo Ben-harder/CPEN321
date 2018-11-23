@@ -112,8 +112,20 @@ module.exports = {
       ret.errorMessage = "Rating has to be boolean";
       return res.status(500).send(ret);
     }
+    
+    // decide what to incriment
+    var upVote = 0;
+    var downVote = 0;
+    if (req.body.rating) {
+      upVote = 1;
+      downVote = 0;
+    } 
+    else {
+      upVote = 0;
+      downVote = 1;
+    }
     User.findByIdAndUpdate(req.body.userID,
-    {$set: {hash_password: req.body.password}},
+    {$inc: {"up_votes": upVote, "down_votes": downVote}},
     {new: true,
     upsert: true},
     (err, user) => {
