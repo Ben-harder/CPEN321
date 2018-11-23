@@ -65,7 +65,7 @@ class ActiveJobs extends React.Component
                 this.setState({ jobList: response.data });
         }).catch((err) =>
         {
-            console.log(err);
+            console.log(err.repsonse.data.errorMessage);
         });
     }
 

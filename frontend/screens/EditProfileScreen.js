@@ -82,7 +82,7 @@ class EditProfile extends React.Component
         this.props.actions.userData(res.data);
         this.props.navigation.navigate("ProfileDetails");
       }).catch((err) => {
-        console.log(err);
+        console.log(err.repsonse.data.errorMessage);
         alert(err.response.data.errorMessage);
       });
     } else {

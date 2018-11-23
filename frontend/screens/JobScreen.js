@@ -60,7 +60,7 @@ class JobScreen extends React.Component
             jobPrefID: user.data.jobPref,
             jobType: navigation.getParam("jobType", "NO JOB TYPE")
         }).catch((err) => {
-            console.log(err);
+            console.log(err.repsonse.data.errorMessage);
             alert(err.response.data.errorMessage);
         });
     }
@@ -80,11 +80,11 @@ class JobScreen extends React.Component
                 alert("You applied to the job successfuly.");
                 this.props.navigation.navigate("Main");
             }).catch((err) => {
-                console.log(err);
+                console.log(err.repsonse.data.errorMessage);
                 alert(err.response.data.errorMessage);
             });
         }).catch((err) => {
-            console.log(err);
+            console.log(err.repsonse.data.errorMessage);
             alert(err.response.data.errorMessage);
         });
         

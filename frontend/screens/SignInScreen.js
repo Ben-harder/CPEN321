@@ -53,7 +53,7 @@ class SignInScreen extends React.Component {
           this.props.actions.userData(res.data);
           this.props.navigation.navigate("App");
         }).catch((err) => {
-          console.log(err);
+          console.log(err.repsonse.data.errorMessage);
           alert(err.response.data.errorMessage);
         });
     } else {

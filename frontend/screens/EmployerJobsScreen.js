@@ -65,7 +65,7 @@ class EmployerJobsScreen extends React.Component
                 this.setState({ jobList: response.data });
         }).catch((err) =>
         {
-            console.log(err);
+            console.log(err.repsonse.data.errorMessage);
         });
     }
 
@@ -80,7 +80,8 @@ class EmployerJobsScreen extends React.Component
             jobID: job._id,
             showAction: true,
             buttonText: "Cancel Job",
-            source: "EmployerJobs"
+            source: "EmployerJobs",
+            updateJobList: this.tryFetchJobList
         });
     }
 
