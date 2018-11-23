@@ -56,7 +56,7 @@ class ActiveJobs extends React.Component
         // console.log("trying to fetch jobs...");
         axios.get(`${api}/job/get-applied-for-jobs`, {
             params: {
-                employer: this.props.user.data.ID,
+                employeeID: this.props.user.data.ID,
             }
         }).then((response) =>
         {
@@ -65,6 +65,7 @@ class ActiveJobs extends React.Component
                 this.setState({ jobList: response.data });
         }).catch((err) =>
         {
+            console.log(err);
             console.log(err.repsonse.data.errorMessage);
         });
     }
