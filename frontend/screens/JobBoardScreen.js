@@ -93,7 +93,7 @@ class JobBoardScreen extends React.Component
                                     <Text style={s.jobTypeText}>{item.job_title}</Text>
                                     <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
                                 </View>
-                                <View style={{flexDirection: 'row', padding: 10,}}>
+                                <View style={{flexDirection: 'row', paddingVertical: 10,}}>
                                     <IOSIcon name="ios-compass" size={30} style={{color: Colors.sDark}}/>
                                     <Text style={s.addressText}> {item.address} </Text> 
                                 </View>
