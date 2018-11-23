@@ -14,7 +14,6 @@ import
     TouchableHighlight,
     TouchableWithoutFeedback,
     Keyboard,
-    ImageBackground,
 } from 'react-native';
 import { WebBrowser } from 'expo';
 import axios from 'axios';
@@ -71,82 +70,79 @@ class CreateJobScreen extends React.Component
     render()
     {
         return (
-            <View style={s.container}>
-                <ImageBackground source={require('../assets/images/min_art1.png')} style={{width: '100%', height: '100%', flex: 1, justifyContent: 'center', alignItems: 'center'}}  resizeMode='cover'> 
-                
-                    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessbile={false}>
-                        <View style={s.innerContainer}>
-                            <View>
-                                <Text style={s.regText}>
-                                    Address:
-                                </Text>
-                                <TextInput
-                                    testID="#address"
-                                    style={s.textInput}
-                                    onChangeText={(address) => this.setState({ address })}
-                                    returnKeyType='done'
-                                    placeholder="Ex: 1234 Address Rd" 
-                                    underlineColorAndroid='transparent'
-                                    />
-                            </View>
-
-                            <View>
-                                <Text style={s.regText}>
-                                    Job description:
-                                </Text>
-
-                                <TextInput
-                                    testID="#description"
-                                    style={s.textInputJobDescription}
-                                    multiline = {true}
-                                    numberOfLines = {4}
-                                    onChangeText={(description) => this.setState({ description })}
-                                    returnKeyType='done'
-                                    blurOnSubmit={true}
-                                    placeholder="Enter Description Here" 
-                                    underlineColorAndroid='transparent'
-                                    />
-                            </View>
-
-                            <View>
-                                <Text style={s.regText}>
-                                    Wage in CAD:
-                                </Text>
-                                <TextInput
-                                    testID="#wage"
-                                    style={s.textInput}
-                                    keyboardType={"numeric"}
-                                    onChangeText={(wage) => this.setState({ wage })}
-                                    returnKeyType='done'
-                                    placeholder="Enter Wage here" 
-                                    underlineColorAndroid='transparent'
-                                    />
-                            </View>
-
-                            <View>
-                                <Text style={s.regText}>
-                                    Job type:
-                                </Text>
-                                <View style={s.picker}>
-                                    <Select
-                                        testID="#type"
-                                        onValueChange={value => this.setState({jobType: value})}
-                                        items={this.state.jobTypes}
-                                        placeholder={{label:"Select Job Here", value: ""}}
-                                    />
-                                </View>
-                            </View>
-
-                            <TouchableOpacity testID="#submit" onPress={() => this.attemptCreateJob()} style={s.textLink}>
-                                <Text style={s.textLinkText}>Submit</Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate("Main")} style={s.textLink}>
-                                <Text style={s.textLinkTextBack}>Cancel</Text>
-                            </TouchableOpacity>
+            <View style={s.container}>           
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessbile={false}>
+                    <View style={s.innerContainer}>
+                        <View>
+                            <Text style={s.regText}>
+                                Address:
+                            </Text>
+                            <TextInput
+                                testID="#address"
+                                style={s.textInput}
+                                onChangeText={(address) => this.setState({ address })}
+                                returnKeyType='done'
+                                placeholder="Ex: 1234 Address Rd" 
+                                underlineColorAndroid='transparent'
+                                />
                         </View>
-                    </TouchableWithoutFeedback>
-                </ImageBackground>
+
+                        <View>
+                            <Text style={s.regText}>
+                                Job description:
+                            </Text>
+
+                            <TextInput
+                                testID="#description"
+                                style={s.textInputJobDescription}
+                                multiline = {true}
+                                numberOfLines = {4}
+                                onChangeText={(description) => this.setState({ description })}
+                                returnKeyType='done'
+                                blurOnSubmit={true}
+                                placeholder="Enter Description Here" 
+                                underlineColorAndroid='transparent'
+                                />
+                        </View>
+
+                        <View>
+                            <Text style={s.regText}>
+                                Wage in CAD:
+                            </Text>
+                            <TextInput
+                                testID="#wage"
+                                style={s.textInput}
+                                keyboardType={"numeric"}
+                                onChangeText={(wage) => this.setState({ wage })}
+                                returnKeyType='done'
+                                placeholder="Enter Wage here" 
+                                underlineColorAndroid='transparent'
+                                />
+                        </View>
+
+                        <View>
+                            <Text style={s.regText}>
+                                Job type:
+                            </Text>
+                            <View style={s.picker}>
+                                <Select
+                                    testID="#type"
+                                    onValueChange={value => this.setState({jobType: value})}
+                                    items={this.state.jobTypes}
+                                    placeholder={{label:"Select Job Here", value: ""}}
+                                />
+                            </View>
+                        </View>
+
+                        <TouchableOpacity testID="#submit" onPress={() => this.attemptCreateJob()} style={s.textLink}>
+                            <Text style={s.textLinkText}>Submit</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("Main")} style={s.textLink}>
+                            <Text style={s.textLinkTextBack}>Cancel</Text>
+                        </TouchableOpacity>
+                    </View>
+                </TouchableWithoutFeedback>
             </View>
         );
     }

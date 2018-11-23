@@ -11,7 +11,6 @@ import
     Button,
     AsyncStorage,
     FlatList,
-    ImageBackground,
 } from "react-native";
 import { StackNavigator } from "react-navigation";
 import { WebBrowser } from "expo";
@@ -89,30 +88,28 @@ class EmployerJobsScreen extends React.Component
     {
         return (
             <View style={s.container}>
-                <ImageBackground source={require('../assets/images/min_art1.png')} style={{width: '100%', height: '100%',}}  resizeMode='cover'> 
-                    <View style={{width: '100%', height: '100%', alignItems: 'center'}}>
-                        <FlatList
-                            style={s.jobList}
-                            data={this.state.jobList}
-                            renderItem={({ item }) => (
-                                <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
-                                        <Text style={s.jobTypeText}>{item.job_title}</Text>
-                                        <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row', padding: 10,}}>
-                                        <IOSIcon name="ios-compass" size={30} style={{color: Colors.sDark}}/>
-                                        <Text style={s.addressText}> {item.address}</Text> 
-                                    </View>
-                                    <Text style={{fontSize: Font.smallSize}}>
-                                        <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text>
-                                    </Text>
-                                </TouchableOpacity>
-                            )}
-                            keyExtractor={(item, index) => index.toString()}
-                        />
-                        </View>
-                </ImageBackground>
+                <View style={{width: '100%', height: '100%', alignItems: 'center'}}>
+                    <FlatList
+                        style={s.jobList}
+                        data={this.state.jobList}
+                        renderItem={({ item }) => (
+                            <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
+                                    <Text style={s.jobTypeText}>{item.job_title}</Text>
+                                    <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
+                                </View>
+                                <View style={{flexDirection: 'row', padding: 10,}}>
+                                    <IOSIcon name="ios-compass" size={30} style={{color: Colors.sDark}}/>
+                                    <Text style={s.addressText}> {item.address}</Text> 
+                                </View>
+                                <Text style={{fontSize: Font.smallSize}}>
+                                    <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text>
+                                </Text>
+                            </TouchableOpacity>
+                        )}
+                        keyExtractor={(item, index) => index.toString()}
+                    />
+                    </View>
             </View>
         );
     }

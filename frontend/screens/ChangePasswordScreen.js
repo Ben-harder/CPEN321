@@ -7,7 +7,6 @@ import
     TextInput,
     TouchableWithoutFeedback,
     Keyboard,
-    ImageBackground,
 } from "react-native";
 import { connect } from "react-redux";
 import api from "../constants/Url";
@@ -76,7 +75,6 @@ class ChangePassword extends React.Component
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={s.container}>
-        <ImageBackground source={require('../assets/images/min_art1.png')} style={{width: '100%', height: '100%', flex: 1, justifyContent: 'center', alignItems: 'center'}}  resizeMode='cover'> 
           <View style={s.contentContainer}>
             <View>
               <Text style={s.regText}>Old Password:</Text>
@@ -115,7 +113,6 @@ class ChangePassword extends React.Component
               <Text style={s.textLinkTextBack}>Cancel</Text>
             </TouchableOpacity>
           </View>
-        </ImageBackground>
         </View>
       </TouchableWithoutFeedback>
     );

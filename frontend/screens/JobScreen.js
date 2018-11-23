@@ -11,7 +11,6 @@ import
     Button,
     AsyncStorage,
     FlatList,
-    ImageBackground,
 } from "react-native";
 import { StackNavigator } from "react-navigation";
 import { WebBrowser } from "expo";
@@ -95,41 +94,39 @@ class JobScreen extends React.Component
     {
         return (
             <View style={s.container}>
-                <ImageBackground source={require('../assets/images/min_art1.png')} style={{width: '100%', height: '100%', flex: 1, justifyContent: 'center', alignItems: 'center'}}  resizeMode='cover'> 
-                    <View style={[s.contentContainer,]}>
-                        <Text style={s.headerText}>Take This Job?</Text>
-                        <View style={s.jobItem}>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
-                                <Text style={s.jobTypeText}>{this.state.jobType}</Text>
-                                <Text style={[{fontSize: Font.titleSize,}]}>${this.state.wage}</Text>
-                            </View>
-                            
-                            <View style={{flexDirection: 'row', padding: 10,}}>
-                                        <IOSIcon name="ios-compass" size={30} style={{color: Colors.sDark}}/>
-                                        <Text style={s.addressText}> {this.state.address}</Text> 
-                            </View>
-
-                            <Text style={{fontSize: Font.smallSize}}>
-                                    <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{this.state.author}</Text>
-                            </Text>
-                            
-                            <View>
-                                <Text style={[s.jobText, {fontWeight: 'bold', marginTop: 30}]}>Description: </Text>
-                                <View style={s.jobDescription}>
-                                    <Text>{this.state.description}</Text>
-                                </View>                     
-                            </View>                    
+                <View style={[s.contentContainer,]}>
+                    <Text style={s.headerText}>Take This Job?</Text>
+                    <View style={s.jobItem}>
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
+                            <Text style={s.jobTypeText}>{this.state.jobType}</Text>
+                            <Text style={[{fontSize: Font.titleSize,}]}>${this.state.wage}</Text>
+                        </View>
+                        
+                        <View style={{flexDirection: 'row', padding: 10,}}>
+                                    <IOSIcon name="ios-compass" size={30} style={{color: Colors.sDark}}/>
+                                    <Text style={s.addressText}> {this.state.address}</Text> 
                         </View>
 
-                        <TouchableOpacity onPress={() => this.applyForJob()} style={s.textLink}>
-                            <Text style={s.textLinkText}>Apply for this job</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("Main")} style={s.textLink}>
-                            <Text style={s.textLinkTextBack}>Back</Text>
-                        </TouchableOpacity>
+                        <Text style={{fontSize: Font.smallSize}}>
+                                <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{this.state.author}</Text>
+                        </Text>
+                        
+                        <View>
+                            <Text style={[s.jobText, {fontWeight: 'bold', marginTop: 30}]}>Description: </Text>
+                            <View style={s.jobDescription}>
+                                <Text>{this.state.description}</Text>
+                            </View>                     
+                        </View>                    
                     </View>
-                </ImageBackground>
+
+                    <TouchableOpacity onPress={() => this.applyForJob()} style={s.textLink}>
+                        <Text style={s.textLinkText}>Apply for this job</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Main")} style={s.textLink}>
+                        <Text style={s.textLinkTextBack}>Back</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     }

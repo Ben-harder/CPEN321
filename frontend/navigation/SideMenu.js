@@ -14,7 +14,8 @@ import * as actions from "../actions/";
 const styles = StyleSheet.create({
   container: {
     paddingTop: 20,
-    flex: 1
+    flex: 1,
+    backgroundColor: "#E1E2E1",
   },
   navItemStyle: {
     padding: 10,
@@ -22,8 +23,9 @@ const styles = StyleSheet.create({
     fontSize: Font.normSize,
   },
   navSectionStyle: {
+    backgroundColor: "#E1E2E1",
     borderBottomWidth: 2,
-    borderBottomColor: Colors.sNorm,
+    borderBottomColor: Colors.sDark,
     paddingVertical: 10
   },
   sectionHeadingStyle: {

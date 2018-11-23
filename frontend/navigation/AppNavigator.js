@@ -27,7 +27,7 @@ const AppStack = createStackNavigator({ Main: JobBoardScreen, Job: JobScreen },
   {
     navigationOptions: ({navigation}) => ({
       headerTintColor: 'white',
-      headerStyle: {backgroundColor: Colors.sDark, marginRight: 0, marginLeft: 0, borderBottomWidth: 0,},
+      headerStyle: {backgroundColor: Colors.sDark, marginRight: 0, marginLeft: 0, borderBottomWidth: 0, height: 60},
       headerLeft:(<TouchableOpacity onPress={() => navigation.openDrawer()}>
         <IOSIcon name="ios-menu" size={30} style={{color: 'white', paddingLeft: 15,}}/>
         </TouchableOpacity>
