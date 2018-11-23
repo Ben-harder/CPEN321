@@ -85,6 +85,7 @@ module.exports = {
     }
 
     Job.find({})
+    .populate('employer')
     .exec((err, jobs) => {
       let ret = {};
       if (err){
@@ -98,7 +99,6 @@ module.exports = {
       }
       
       User.findById(req.query.userID)
-      .populate('employer')
       .populate('job_pref')
       .exec((err, user) => {
 
