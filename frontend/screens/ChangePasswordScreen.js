@@ -79,7 +79,7 @@ class ChangePassword extends React.Component
         <ImageBackground source={require('../assets/images/min_art1.png')} style={{width: '100%', height: '100%', flex: 1, justifyContent: 'center', alignItems: 'center'}}  resizeMode='cover'> 
           <View style={s.contentContainer}>
             <View>
-              <Text style={s.formLabel}>Old Password:</Text>
+              <Text style={s.regText}>Old Password:</Text>
               <TextInput
                 style={s.textInput}
                 onChangeText={(text) => this.setState({oldPassword: text})}
@@ -89,7 +89,7 @@ class ChangePassword extends React.Component
             </View>
 
             <View>
-              <Text style={s.formLabel}>New Password:</Text>
+              <Text style={s.regText}>New Password:</Text>
               <TextInput
                 style={s.textInput}
                 onChangeText={(text) => this.setState({newPassword: text})}
@@ -99,7 +99,7 @@ class ChangePassword extends React.Component
             </View>
 
             <View>
-              <Text style={s.formLabel}>New Password Confirm:</Text>
+              <Text style={s.regText}>New Password Confirm:</Text>
               <TextInput
                 style={s.textInput}
                 onChangeText={(text) => this.setState({newPasswordConfirm: text})}
