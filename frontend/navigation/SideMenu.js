@@ -101,7 +101,7 @@ class SideMenu extends Component {
           </View>
           <View style={styles.navSectionStyle}>
             <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate("AppliedJobs")}}>
-              Applied Jobs
+              Job Applications
             </Text>
           </View>
           <View style={styles.navSectionStyle}>

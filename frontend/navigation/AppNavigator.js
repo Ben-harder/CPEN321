@@ -90,7 +90,7 @@ const AppliedJobsStack = createStackNavigator({AppliedJobs: AppliedJobsScreen, J
         <IOSIcon name="ios-menu" size={30} style={{color: 'white', paddingLeft: 15,}}/>
         </TouchableOpacity>
       ),
-      title: 'Posted Jobs',
+      title: 'Job Applications',
     })
   }
 );
@@ -104,7 +104,7 @@ const ActiveJobsStack = createStackNavigator({ActiveJobs: ActiveJobsScreen, JobD
         <IOSIcon name="ios-menu" size={30} style={{color: 'white', paddingLeft: 15,}}/>
         </TouchableOpacity>
       ),
-      title: 'Posted Jobs',
+      title: 'Active Jobs',
     })
   }
 );
