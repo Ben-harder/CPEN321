@@ -19,12 +19,13 @@ import api from "../constants/Url";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
 import IOSIcon from "react-native-vector-icons/Ionicons";
+import { connect } from 'react-redux';
 
 import { MonoText } from "../components/StyledText";
 
 const s = require('../constants/style');
 
-export default class JobBoardScreen extends React.Component
+class JobBoardScreen extends React.Component
 {
     _isMounted = false;
 
@@ -53,7 +54,11 @@ export default class JobBoardScreen extends React.Component
 
     tryFetchJobList() {
         // console.log("trying to fetch jobs...");
-        axios.get(`${api}/job/get-all-jobs`).then((response) => {
+        axios.get(`${api}/job/get-all-jobs-ranked`, {
+            params: {
+                userID: this.props.user.data.ID,
+            }
+        }).then((response) => {
             // console.log(response.data);
             if (this._isMounted)
                 this.setState({jobList: response.data});
@@ -103,5 +108,13 @@ export default class JobBoardScreen extends React.Component
             </View>
         );
     }
-
 }
+
+function mapStateToProps(state) {
+	const props = {
+		user: state.user,
+	};
+	return props;
+}
+
+export default connect(mapStateToProps)(JobBoardScreen);
