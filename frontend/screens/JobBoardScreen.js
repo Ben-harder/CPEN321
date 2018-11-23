@@ -19,6 +19,7 @@ import axios from "axios";
 import api from "../constants/Url";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
+import IOSIcon from "react-native-vector-icons/Ionicons";
 
 import { MonoText } from "../components/StyledText";
 
@@ -89,7 +90,10 @@ export default class JobBoardScreen extends React.Component
                                         <Text style={s.jobTypeText}>{item.job_title}</Text>
                                         <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
                                     </View>
-                                    <Text style={s.addressText}>at {item.address}</Text>
+                                    <View style={{flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: Colors.sDark, padding: 10,}}>
+                                        <IOSIcon name="ios-compass" size={30} style={{color: Colors.sDark}}/>
+                                        <Text style={s.addressText}> {item.address}</Text> 
+                                    </View>
                                     <Text style={{fontSize: Font.smallSize}}>
                                         <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text>
                                     </Text>
