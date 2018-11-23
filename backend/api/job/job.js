@@ -98,7 +98,7 @@ module.exports = {
       }
       
       User.findById(req.query.userID)
-      .populate('job_pref')
+      .populate('job_pref employer')
       .exec((err, user) => {
 
         // if ranking failed,
@@ -363,6 +363,42 @@ module.exports = {
   getJobTypes(req, res) {
     let ret = JobPref.schema.path('stats').schema.path('job_type').enumValues;
     return res.status(200).send(ret);
+  },
+
+  /**
+   * Get all the job types.
+   */
+  deleteJob(req, res) {
+    // null job
+    if (!req.body.jobID) {
+      let ret = {};
+      ret.errorMessage = "Job is a required field";
+      return res.status(500).send(ret);
+    }
+    // null job
+    if (!req.body.userID) {
+      let ret = {};
+      ret.errorMessage = "User is a required field";
+      return res.status(500).send(ret);
+    }
+    Job.findOneAndRemove({ 
+      _id: req.body.jobID,
+      employer: req.body.userId,
+      $or : [{is_compeleted : true},
+      {is_active : false}]
+    })
+    .exec((err, job) => {
+      // err
+      if (err){
+        let ret = {};
+        ret.errorMessage = "Internal error in database"; 
+        return res.status(500).send(ret);
+      }
+      if(!job) {
+        return res.status(400).send("Job is either in progress or previously deleted");
+      }
+      return res.status(200).send(job);
+    });
   }
 };
 

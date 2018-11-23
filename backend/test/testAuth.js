@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const ObjectId = require('mongodb').ObjectID;
 const User = require('../models/user');
 const Job = require('../models/job');
+const Image = require('../models/image');
 const JobPref = require('../models/jobPref');
 
 //Require the dev-dependencies
@@ -27,6 +28,11 @@ describe("Testing: createUser", function() {
   });
   beforeEach((done) => {
     User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    Image.deleteMany({}, (err) => {
       done();
     });
   });
@@ -103,6 +109,11 @@ describe("Testing: doesUserExist", function() {
   });
   beforeEach((done) => {
     User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    Image.deleteMany({}, (err) => {
       done();
     });
   });
@@ -188,6 +199,11 @@ describe("Testing: userSignIn", function() {
   });
   beforeEach((done) => {
     User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    Image.deleteMany({}, (err) => {
       done();
     });
   });
@@ -316,6 +332,11 @@ describe("Update User Preference", function () {
     });
   });
   beforeEach((done) => {
+    Image.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
     JobPref.deleteMany({}, (err) => {
       done();
     });
@@ -379,6 +400,11 @@ describe("Update User Info", function () {
   });
   beforeEach((done) => {
     User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    Image.deleteMany({}, (err) => {
       done();
     });
   });
@@ -517,6 +543,11 @@ describe("Update User Password", function () {
   });
   beforeEach((done) => {
     User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    Image.deleteMany({}, (err) => {
       done();
     });
   });
@@ -676,6 +707,11 @@ describe("Rate User", function () {
   });
   beforeEach((done) => {
     User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    Image.deleteMany({}, (err) => {
       done();
     });
   });
