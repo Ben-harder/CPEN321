@@ -173,5 +173,9 @@ module.exports = StyleSheet.create({
         shadowOpacity: 1,
         elevation: 1,
     },
-    
+    profilePicture: {
+        width: 200, 
+        height: 200, 
+        borderRadius: 20,
+    },
 });
