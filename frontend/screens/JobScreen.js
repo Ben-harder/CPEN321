@@ -55,11 +55,10 @@ class JobScreen extends React.Component
             address: navigation.getParam("address", "NO ADDRESS"),
             jobID: navigation.getParam("jobID", "NO JOBID")
         });
-
-        axios.post(`${api}/job/apply`, {
-            userID: this.props.user.data.ID,
-            jobID: this.state.jobID,
-            jobType: navigation.getParam()
+        console.log(user);
+        axios.post(`${api}/user/update-job-preference`, {
+            jobPrefID: user.data.jobPref,
+            jobType: navigation.getParam("jobType", "NO JOB TYPE")
         }).catch((err) => {
             console.log(err);
             alert(err.response.data.errorMessage);

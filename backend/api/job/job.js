@@ -212,6 +212,7 @@ module.exports = {
    * User will be added in the job's list of applicants
    */
   applyForJob(req, res) {
+    let ret = {};
     // null user
     if (!req.body.userID) {
       ret.errorMessage = 'User is a required field';

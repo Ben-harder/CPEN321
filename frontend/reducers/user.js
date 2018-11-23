@@ -14,6 +14,7 @@ const reducer = (state = initialState, action) => {
 		if (action.payload.is_employer) newState.data.isEmployer = action.payload.is_employer;
 		if (action.payload.is_verified) newState.data.isVerified = action.payload.is_verified;
 		if (action.payload.is_working) newState.data.isWorking = action.payload.is_working;
+		if (action.payload.job_pref) newState.data.jobPref = action.payload.job_pref;
     return newState;
     
 	case types.CLEAR_USER_DATA:
