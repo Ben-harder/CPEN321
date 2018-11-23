@@ -43,25 +43,16 @@ class SignInScreen extends React.Component {
       .phone
       .getValue();
     if (phoneNumber && this.state.password) {
-      axios
-        .get(`${api}/auth/sign-in`, {
+      axios.get(`${api}/auth/sign-in`, {
         params: {
           phoneNumber: phoneNumber,
           password: this.state.password
         }
-      })
-        .then(async(res) => {
+      }).then(async(res) => {
           await AsyncStorage.setItem("userToken", "abc");
-          this
-            .props
-            .actions
-            .userData(res.data);
-          this
-            .props
-            .navigation
-            .navigate("App");
-        })
-        .catch((err) => {
+          this.props.actions.userData(res.data);
+          this.props.navigation.navigate("App");
+        }).catch((err) => {
           console.log(err);
           alert(err.response.data.errorMessage);
         });

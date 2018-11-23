@@ -82,26 +82,17 @@ class SignUpScreen extends React.Component {
 
   attemptSignup() {
     if (this.state.passwordConfirm) {
-      axios
-        .post(`${api}/auth/create-user`, {
+      axios.post(`${api}/auth/create-user`, {
         phoneNumber: this.state.phoneNumber,
         password: this.state.password,
         passwordConfirm: this.state.passwordConfirm,
         firstName: this.state.firstName,
         lastName: this.state.lastName
-      })
-        .then(async(res) => {
+      }).then(async(res) => {
           await AsyncStorage.setItem("userToken", "abc");
-          this
-            .props
-            .actions
-            .userData(res.data);
-          this
-            .props
-            .navigation
-            .navigate("App");
-        })
-        .catch((err) => {
+          this.props.actions.userData(res.data);
+          this.props.navigation.navigate("App");
+        }).catch((err) => {
           console.log(err);
           alert(err.response.data.errorMessage);
         });

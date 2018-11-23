@@ -9,9 +9,13 @@ import
     Keyboard,
 } from "react-native";
 import { connect } from "react-redux";
+import {bindActionCreators} from "redux";
 import PhoneInput from "react-native-phone-input";
 import api from "../constants/Url";
 import axios from "axios";
+
+// actions
+import * as actions from "../actions/";
 
 // styles
 const s = require('../constants/style');
@@ -57,6 +61,7 @@ class EditProfile extends React.Component
         lastName: this.state.lastName
       }).then((res) => {
         alert("Successfully updated your info!");
+        this.props.actions.userData(res.data);
         this.props.navigation.navigate("ProfileDetails");
       }).catch((err) => {
         console.log(err);
@@ -127,4 +132,10 @@ function mapStateToProps(state) {
 	return props;
 }
 
-export default connect(mapStateToProps)(EditProfile);
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);
