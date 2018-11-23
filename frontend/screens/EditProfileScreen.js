@@ -79,7 +79,7 @@ class EditProfile extends React.Component
             <View style={s.contentContainer}>
               <View>
                 <Text style={s.formLabel}>Phone #:</Text>
-                <PhoneInput style={{backgroundColor: '#ffffff99', padding: 20, borderRadius: 10,}}
+                <PhoneInput style={{backgroundColor: '#ffffff99', padding: 20, borderRadius: 10, marginVertical: 5,}}
                     ref={ref => {
                       this.phone = ref;
                     }}

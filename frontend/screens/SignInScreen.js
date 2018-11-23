@@ -67,7 +67,7 @@ class SignInScreen extends React.Component {
             <View style={s.authContainer}>
               <View>
                 <Text style={[s.regTextBold, {marginTop: 15, marginBottom: 5,}]}>Enter your phone number to sign in:</Text>
-                <PhoneInput style={{backgroundColor: '#ffffff99', padding: 20, borderRadius: 10,}}
+                <PhoneInput style={{backgroundColor: '#ffffff99', padding: 20, borderRadius: 10, marginVertical: 5,}}
                     ref={ref => {
                       this.phone = ref;
                     }}
