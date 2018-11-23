@@ -184,7 +184,7 @@ describe("Apply for a job.", function () {
  * Tests for Get Applied-For Jobs.
  */
 describe("Get Applied-For Jobs", function () {
-  var url = "/job/get-taken-jobs";
+  var url = "/job/get-applied-for-jobs";
   beforeEach((done) => {
     Job.deleteMany({}, (err) => {
       done();

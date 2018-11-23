@@ -22,7 +22,7 @@ module.exports = function (app) {
   app.get("/job/get-all-jobs", job.getAllJobs);
   app.get("/job/get-all-jobs-ranked", job.getAllJobsRanked);
   app.get("/job/get-employer-jobs", job.getEmployerJobs);
-  app.get("/job/get-taken-jobs", job.getAppliedForJobs);
+  app.get("/job/get-applied-for-jobs", job.getAppliedForJobs);
   app.post("/job/complete-a-job", job.completeJob);
   app.post("/job/accept-an-applicant", job.acceptAnApplicant);
   app.get("/job/get-job-types", job.getJobTypes);
