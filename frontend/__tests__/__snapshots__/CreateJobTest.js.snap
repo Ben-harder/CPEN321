@@ -269,6 +269,7 @@ CreateJobScreen {
                   style={
                     Object {
                       "inputIOS": Object {
+                        "color": "#000000",
                         "height": 50,
                         "paddingLeft": 10,
                       },
