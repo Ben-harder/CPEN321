@@ -21,7 +21,6 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import api from "../constants/Url";
 import Select from 'react-native-picker-select';
-import JobTypes from '../constants/JobTypes';
 import Colors from '../constants/Colors';
 import Font from '../constants/Font';
 
@@ -39,6 +38,7 @@ class CreateJobScreen extends React.Component
             description: "",
             jobType: "",
             wage: "",
+            jobTypes: [],
         };
 
         this.attemptCreateJob = this.attemptCreateJob.bind(this);
@@ -47,6 +47,21 @@ class CreateJobScreen extends React.Component
     componentDidMount() {
         // to do get new picker cause this one sucks
         console.disableYellowBox = true;
+
+        // get job types
+        axios.get(`${api}/job/get-job-types`).then((response) =>
+        {
+            let jobTypes = [];
+            for (const i in response.data) {
+                jobTypes[i] = {key: i, label: response.data[i], value: response.data[i]};
+            } 
+            this.setState({
+                jobTypes: jobTypes
+            });
+        }).catch((err) =>
+        {
+            console.log(err);
+        });
     }
 
     componentWillUnmount() {
@@ -116,7 +131,7 @@ class CreateJobScreen extends React.Component
                                             <Select
                                                 testID="#type"
                                                 onValueChange={value => this.setState({jobType: value})}
-                                                items={JobTypes}
+                                                items={this.state.jobTypes}
                                                 placeholder={{label:"Select Job Here", value: ""}}
                                             />
                                         </View>

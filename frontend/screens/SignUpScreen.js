@@ -138,6 +138,7 @@ class SignUpScreen extends React.Component {
                     style={s.textInput}
                     onChangeText={(text) => this.setState({firstName: text})}
                     value={this.state.firstName}
+                    returnKeyType='done'
                     />
 
                   <Text style={[s.regTextBold, {textAlign: 'left',}]}>Last Name:</Text>
@@ -146,6 +147,7 @@ class SignUpScreen extends React.Component {
                     onChangeText={(text) => this.setState({lastName: text})}
                     value={this.state.lastName}
                     underlineColorAndroid='transparent'
+                    returnKeyType='done'
                   />
 
                   <TouchableOpacity onPress={this.inputName} style={s.textLink}>
@@ -167,6 +169,7 @@ class SignUpScreen extends React.Component {
                     value={this.state.password}
                     secureTextEntry={true}
                     underlineColorAndroid='transparent'
+                    returnKeyType='done'
                   />
                   <TouchableOpacity onPress={this.inputPassword} style={s.textLink}>
                     <Text style={s.textLinkText}>Continue</Text>
@@ -186,6 +189,7 @@ class SignUpScreen extends React.Component {
                     value={this.state.passwordConfirm}
                     secureTextEntry={true}
                     underlineColorAndroid='transparent'
+                    returnKeyType='done'
                   />
                   <TouchableOpacity onPress={this.attemptSignup} style={s.textLink}>
                     <Text style={s.textLinkText}>Create Account</Text>

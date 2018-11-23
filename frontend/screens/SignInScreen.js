@@ -82,6 +82,7 @@ class SignInScreen extends React.Component {
                   value={this.state.password}
                   secureTextEntry={true}
                   underlineColorAndroid='transparent'
+                  returnKeyType='done'
                 />
               </View>
               
