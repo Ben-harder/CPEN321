@@ -6,7 +6,8 @@ import
     View,
     TextInput,
     TouchableWithoutFeedback,
-    Keyboard
+    Keyboard,
+    ImageBackground,
 } from "react-native";
 import { connect } from "react-redux";
 import PhoneInput from "react-native-phone-input";
@@ -73,37 +74,48 @@ class EditProfile extends React.Component
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={s.container}>
-          <View style={s.contentContainer}>
-            <Text>Phone #:</Text>
-            <PhoneInput style={{paddingBottom: 40}}
-                ref={ref => {
-                  this.phone = ref;
-                }}
-                initialCountry="ca"
-                value={user.data.phoneNumber}
-              />
-            <Text>First Name:</Text>
-            <TextInput
-              style={s.textInput}
-              onChangeText={(text) => this.setState({firstName: text})}
-              value={this.state.firstName}
-              returnKeyType='done'
-            />
-            <Text>Last Name:</Text>
-            <TextInput
-              style={s.textInput}
-              onChangeText={(text) => this.setState({lastName: text})}
-              value={this.state.lastName}
-              returnKeyType='done'
-            />
+          <ImageBackground source={require('../assets/images/min_art1.png')} style={{width: '100%', height: '100%', flex: 1, justifyContent: 'center', alignItems: 'center'}}  resizeMode='cover'> 
+            
+            <View style={s.contentContainer}>
+              <View>
+                <Text style={s.formLabel}>Phone #:</Text>
+                <PhoneInput style={{backgroundColor: '#ffffff99', padding: 20, borderRadius: 10,}}
+                    ref={ref => {
+                      this.phone = ref;
+                    }}
+                    initialCountry="ca"
+                    value={user.data.phoneNumber}
+                  />
+              </View>
+              
+              <View>
+                <Text style={s.formLabel}>First Name:</Text>
+                <TextInput
+                  style={s.textInput}
+                  onChangeText={(text) => this.setState({firstName: text})}
+                  value={this.state.firstName}
+                  returnKeyType='done'
+                />
+              </View>
 
-            <TouchableOpacity onPress={this.save} style={s.textLink}>
-              <Text style={s.textLinkText}>Save</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("ProfileDetails")} style={s.textLink}>
-              <Text style={s.textLinkText}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
+              <View>
+                <Text style={s.formLabel}>Last Name:</Text>
+                <TextInput
+                  style={s.textInput}
+                  onChangeText={(text) => this.setState({lastName: text})}
+                  value={this.state.lastName}
+                  returnKeyType='done'
+                />
+              </View>
+
+              <TouchableOpacity onPress={this.save} style={s.textLink}>
+                <Text style={s.textLinkText}>Save</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("ProfileDetails")} style={s.textLink}>
+                <Text style={s.textLinkTextBack}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </ImageBackground>
         </View>
       </TouchableWithoutFeedback>
     );
