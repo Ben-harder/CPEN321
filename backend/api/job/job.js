@@ -382,13 +382,14 @@ module.exports = {
       ret.errorMessage = "User is a required field";
       return res.status(500).send(ret);
     }
-    Job.findOneAndRemove({ 
-      _id: req.body.jobID,
-      employer: req.body.userId,
-      $or : [{is_compeleted : true},
-      {is_active : false}]
-    })
-    .exec((err, job) => {
+    Job.find({ 
+    _id: req.body.jobID,
+    employer: req.body.userID,
+    $or: [
+      {is_compeleted : true},
+      {is_active : false}
+    ]},
+    (err, job) => {
       // err
       if (err){
         let ret = {};
@@ -398,7 +399,7 @@ module.exports = {
       if(!job) {
         return res.status(400).send("Job is either in progress or previously deleted");
       }
-      return res.status(200).send(job);
+      return res.status(200).send(job);  
     });
   }
 };

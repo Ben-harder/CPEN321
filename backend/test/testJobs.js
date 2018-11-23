@@ -1574,7 +1574,7 @@ describe("Accept an applicant", function () {
  * Tests for Cancel Job.
  */
 describe("Cancel Job", function () {
-  var url = "/job/cancel-job";
+  var url = "/job/get-job-types";
   beforeEach((done) => {
     Job.deleteMany({}, (err) => {
       done();
@@ -1614,7 +1614,7 @@ describe("Cancel Job", function () {
  * Tests for Get Job Types.
  */
 describe("Get Job Types", function () {
-  var url = "/job/get-job-types";
+  var url = "/job/cancel-job";
   beforeEach((done) => {
     Job.deleteMany({}, (err) => {
       done();
@@ -1631,20 +1631,69 @@ describe("Get Job Types", function () {
     });
   });
 
+  /**
+  * 1)
+  * Test Case: Null jobID.
+  * Input/Output: Pass a NULL request parameter.
+  * Pass/Fail Criteria: Only succeeds if it returns error code
+  *                     (500) with the message “Job is a required field”.
+  */
+  it("Test Case: Null jobID", (done) => {
+    chai.request(server).post(url).send({userID: "dummy"}).end((err, res) => {
+      res.should.have.status(500);
+      res.body.should.have.property('errorMessage').eql('Job is a required field');
+      done();
+    });
+  });
+
+  /**
+  * 2)
+  * Test Case: Null userID.
+  * Input/Output: Pass a NULL request parameter.
+  * Pass/Fail Criteria: Only succeeds if it returns error code
+  *                     (500) with the message “Job is a required field”.
+  */
+  it("Test Case: Null userID", (done) => {
+    chai.request(server).post(url).send({jobID: "dummy"}).end((err, res) => {
+      res.should.have.status(500);
+      res.body.should.have.property('errorMessage').eql('User is a required field');
+      done();
+    });
+  });
+
   /** 1)
    * Test Case: Success case.
    * Input/Output: Return array of job types.
    * Pass/Fail Criteria: Only succeeds if it returns
    *                     code (200) with no error messages
    */
-  it('Test Case: Success case', (done) => {
-    chai.request(server).get(url).end((err, res) => {
+  it('Test Case: Success case', (done) => {    
+    
+    // save the job
+    var dEmployer = new User();
+    var job = new Job();
+    job.job_title = "dummy";
+    job.description = "dummy";
+    job.wage = 0;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = undefined;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = false;
+    job.is_compeleted = false;
+    job.is_active = false;
+    job.applicants = [];
+
+    // save the job
+    job.save((err) => {
+      return;
+    });
+    
+    console.log(job);
+
+    chai.request(server).post(url).send({jobID: job._id.toString(), userID: dEmployer._id.toString()}).end((err, res) => {
       res.should.have.status(200);
-      res.body.should.be.a('array');
-      res.body.length.should.be.eql(3);
-      res.body.should.include("Feed My Lizard");
-      res.body.should.include("Beat My Beef");
-      res.body.should.include("Wain My Wain");
       done();
     });
   });
