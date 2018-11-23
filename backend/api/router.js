@@ -14,6 +14,7 @@ module.exports = function (app) {
   app.post("/user/update-password", user.changeUserPassword);
   app.post("/user/update-job-preference", user.updateUserJobPreference);
   app.post("/user/rate-user", user.rateUser);
+  app.get("/user/get-user-profile", user.getUserProfile);
 
   // job routes
   app.post("/job/create-job", job.createJob);
@@ -27,4 +28,5 @@ module.exports = function (app) {
   app.post("/job/accept-an-applicant", job.acceptAnApplicant);
   app.get("/job/get-job-types", job.getJobTypes);
   app.post("/job/cancel-job", job.deleteJob);
+  // app.post("/job/cancel-job-application", job.deleteJobApplication);
 };

@@ -79,12 +79,17 @@ module.exports = {
   getAllJobsRanked(req, res) {
     // null user
     let ret = {};
-    if (!req.query.userID) {
+    if (req.query.userID === undefined) {
       ret.errorMessage = 'User is a required field';
       return res.status(500).send(ret);
     }
 
-    Job.find({})
+    Job.find({
+      $and: [
+        {employer : {$ne: req.query.userID}}, 
+        {is_deleted: false}
+      ]
+    })
     .populate('employer')
     .exec((err, jobs) => {
       let ret = {};
@@ -94,7 +99,7 @@ module.exports = {
       }
 
       // check if no jobs
-      if (!jobs[0]){
+      if (jobs.length == 0){
         return res.status(200).send(jobs);
       }
       
@@ -310,6 +315,7 @@ module.exports = {
 
   /**
    * Mark a taken job as complete.
+   * Clear array
    */
   acceptAnApplicant(req, res) {
     // null job
@@ -397,10 +403,52 @@ module.exports = {
         return res.status(500).send(ret);
       }
       if(!job) {
-        return res.status(400).send("Job is either in progress or previously deleted");
+        let ret = {};
+        ret.errorMessage = "Job is either in progress or previously deleted"; 
+        return res.status(400).send(ret);
       }
       return res.status(200).send(job);  
     });
   }
+
+  // /**
+  //  * Get all the job types.
+  //  */
+  // deleteJobApplication(req, res) {
+  //   // null job
+  //   if (!req.body.jobID) {
+  //     let ret = {};
+  //     ret.errorMessage = "Job is a required field";
+  //     return res.status(500).send(ret);
+  //   }
+  //   // null job
+  //   if (!req.body.userID) {
+  //     let ret = {};
+  //     ret.errorMessage = "User is a required field";
+  //     return res.status(500).send(ret);
+  //   }
+  //   const findQuery = {applicants: {$elemMatch: {$eq: req.body.userID}}};
+  //   Job.findOneAndUpdate({ 
+  //   _id: req.body.jobID,
+  //   employer: req.body.userID,
+  //   $or: [
+  //     {is_compeleted : true},
+  //     {is_active : false}
+  //   ]},
+  //   (err, job) => {
+  //     // err
+  //     if (err){
+  //       let ret = {};
+  //       ret.errorMessage = "Internal error in database"; 
+  //       return res.status(500).send(ret);
+  //     }
+  //     if(!job) {
+  //       let ret = {};
+  //       ret.errorMessage = "Job is either in progress or previously deleted"; 
+  //       return res.status(400).send(ret);
+  //     }
+  //     return res.status(200).send(job);  
+  //   });
+  // }
 };
 

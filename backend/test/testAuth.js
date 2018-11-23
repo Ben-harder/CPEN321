@@ -865,3 +865,155 @@ describe("Rate User", function () {
     });
   });
 });
+
+/**
+ * Get User Profile.
+ */
+describe("Get User Profile", function () {
+  var url = "/user/get-user-profile";
+  beforeEach((done) => {
+    Job.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    Image.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    JobPref.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  
+  /**
+   * 1)
+   * Test Case: Null UserID
+   * Input/Output: Pass a NULL request parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (500) with 
+   *                     error message "User is a required field"
+   */
+  it("Test Case: Null userID", (done) => {
+    chai.request(server)
+    .get(url)
+    .end((err, res) => {
+      res.should.have.status(500);
+      res.body.should.have.property('errorMessage').eql("User is a required field");
+      done();
+    });
+  });
+  
+  /**
+   * 2)
+   * Test Case: Success zero case.
+   * Input/Output: Pass a NULL request parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (500) with 
+   *                     error message "User does not exist"
+   */
+  it("Test Case: Success zero case", (done) => {
+
+    // create a new user
+    var user = new User();
+    var profilePicture = new Image();
+    profilePicture.user = user._id;
+    profilePicture.image_src = "dummy";
+    user.first_name = "dummy";
+    user.last_name = "dummy";
+    user.phone_number = "dummy";
+    user.hash_password = "old";
+    user.verification_token = undefined;
+    user.working_job_id = undefined;
+    user.is_working = false;
+    user.is_verified = false;
+    user.is_employer = false;
+    user.up_votes = 0;
+    user.down_votes = 0;
+    user.posted_jobs = 0;
+    user.taken_jobs = 0;
+    user.profile_picture = profilePicture._id;
+    user.images = [];
+
+    // save the user
+    user.save((err) => {
+      return;
+    });
+    // save the user
+    profilePicture.save((err) => {
+      return;
+    });
+    chai.request(server)
+    .get(url)
+    .query({userID: user._id.toString()})
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.not.have.property('errorMessage');
+      res.body.should.be.a('object');
+      res.body.should.have.property('upVotes').eql(user.up_votes);
+      res.body.should.have.property('downVotes').eql(user.down_votes);
+      res.body.should.have.property('numOfPostedJobs').eql(user.posted_jobs);
+      res.body.should.have.property('numOfTakenJobs').eql(user.taken_jobs);
+      res.body.should.have.property('profilePicture').eql(profilePicture.image_src);
+      done();
+    });
+  });
+  
+  /**
+   * 2)
+   * Test Case: Success non zero case.
+   * Input/Output: Pass a NULL request parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns error code (500) with 
+   *                     error message "User does not exist"
+   */
+  it("Test Case: Success non zero case", (done) => {
+
+    // create a new user
+    var user = new User();
+    var profilePicture = new Image();
+    profilePicture.user = user._id;
+    profilePicture.image_src = "dummy";
+    user.first_name = "dummy";
+    user.last_name = "dummy";
+    user.phone_number = "dummy";
+    user.hash_password = "old";
+    user.verification_token = undefined;
+    user.working_job_id = undefined;
+    user.is_working = false;
+    user.is_verified = false;
+    user.is_employer = false;
+    user.up_votes = 4;
+    user.down_votes = 5;
+    user.posted_jobs = 6;
+    user.taken_jobs = 2;
+    user.profile_picture = profilePicture._id;
+    user.images = [];
+
+    // save the user
+    user.save((err) => {
+      return;
+    });
+    // save the user
+    profilePicture.save((err) => {
+      return;
+    });
+    chai.request(server)
+    .get(url)
+    .query({userID: user._id.toString()})
+    .end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.not.have.property('errorMessage');
+      res.body.should.be.a('object');
+      res.body.should.have.property('upVotes').eql(user.up_votes);
+      res.body.should.have.property('downVotes').eql(user.down_votes);
+      res.body.should.have.property('numOfPostedJobs').eql(user.posted_jobs);
+      res.body.should.have.property('numOfTakenJobs').eql(user.taken_jobs);
+      res.body.should.have.property('profilePicture').eql(profilePicture.image_src);
+      done();
+    });
+  });
+});

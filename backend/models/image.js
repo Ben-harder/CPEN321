@@ -15,7 +15,7 @@ var Image = new Schema({
     },
     // one user
     user: {
-            type: Schema.Types.ObjectId,
+            type: Schema.ObjectId,
             ref: "User"
     }
 });
