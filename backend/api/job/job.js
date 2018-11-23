@@ -98,7 +98,8 @@ module.exports = {
       }
       
       User.findById(req.query.userID)
-      .populate('job_pref employer')
+      .populate('employer')
+      .populate('job_pref')
       .exec((err, user) => {
 
         // if ranking failed,
