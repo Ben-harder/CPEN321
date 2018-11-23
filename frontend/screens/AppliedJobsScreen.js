@@ -54,7 +54,7 @@ class AppliedJobsScreen extends React.Component
 
     tryFetchJobList() {
         // console.log("trying to fetch jobs...");
-        axios.get(`${api}/job/get-employer-jobs`, {
+        axios.get(`${api}/job/get-applied-for-jobs`, {
             params: {
                 employer: this.props.user.data.ID,
             }
