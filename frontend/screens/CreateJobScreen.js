@@ -59,7 +59,7 @@ class CreateJobScreen extends React.Component
             });
         }).catch((err) =>
         {
-            console.log(err);
+            console.log(err.repsonse.data.errorMessage);
         });
     }
 
@@ -130,7 +130,7 @@ class CreateJobScreen extends React.Component
                                     onValueChange={value => this.setState({jobType: value})}
                                     items={this.state.jobTypes}
                                     placeholder={{label:"Select Job Here", value: ""}}
-                                    style={{inputIOS: { height: 50, paddingLeft: 10 }}}
+                                    style={{inputIOS: { height: 50, paddingLeft: 10, color: '#000000' }}}
                                 />
                             </View>
                         </View>
@@ -178,7 +178,7 @@ class CreateJobScreen extends React.Component
                 alert("You've successfully created the job post.");
                 this.props.navigation.navigate("App");
             }).catch((err) => {
-                // console.log(err);
+                // console.log(err.repsonse.data.errorMessage);
                 alert(err.response.data.errorMessage);
             });
         }

@@ -67,6 +67,9 @@ class JobDetailsScreen extends React.Component
     }
 
     buttonAction() {
+        const { state, setParams, navigate } = this.props.navigation;
+        const params = state.params || {};
+
         let apiCall;
         // cancel job
         if (this.state.source === "EmployerJobs") {
@@ -78,6 +81,7 @@ class JobDetailsScreen extends React.Component
                 userID: this.props.user.data.ID,
                 jobID: this.state.jobID
             }).then((res) => {
+                params.updateJobList();
                 alert("You've successfully cancelled the job post.");
                 this.props.navigation.navigate(this.state.source);
             }).catch((err) => {

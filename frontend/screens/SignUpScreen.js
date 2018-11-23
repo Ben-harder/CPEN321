@@ -72,8 +72,10 @@ class SignUpScreen extends React.Component {
           });
         })
         .catch((err) => {
+          // console.log(err.repsonse.data.errorMessage);
+          // alert(err.response.data.errorMessage);
           console.log(err);
-          alert(err.response.data.errorMessage);
+          console.log(err.response);
         });
     } else {
       alert("Invalid phone number");
@@ -93,7 +95,7 @@ class SignUpScreen extends React.Component {
           this.props.actions.userData(res.data);
           this.props.navigation.navigate("App");
         }).catch((err) => {
-          console.log(err);
+          console.log(err.repsonse.data.errorMessage);
           alert(err.response.data.errorMessage);
         });
     } else {

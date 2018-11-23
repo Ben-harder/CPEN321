@@ -57,7 +57,7 @@ export default class TakenJobsScreen extends React.Component
             if (this._isMounted)
                 this.setState({jobList: response.data});
         }).catch((err) => {
-            console.log(err);
+            console.log(err.repsonse.data.errorMessage);
         });
     }
 

@@ -55,7 +55,7 @@ class ChangePassword extends React.Component
           alert("You have successfully changed your password!");
           this.props.navigation.navigate("ProfileDetails");
         }).catch((err) => {
-          console.log(err);
+          console.log(err.repsonse.data.errorMessage);
           alert(err.response.data.errorMessage);
         });
       }).catch((err) => {
