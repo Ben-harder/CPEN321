@@ -6,7 +6,8 @@ import
     View,
     TextInput,
     TouchableWithoutFeedback,
-    Keyboard
+    Keyboard,
+    ImageBackground,
 } from "react-native";
 import { connect } from "react-redux";
 import api from "../constants/Url";
@@ -75,36 +76,46 @@ class ChangePassword extends React.Component
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={s.container}>
+        <ImageBackground source={require('../assets/images/min_art1.png')} style={{width: '100%', height: '100%', flex: 1, justifyContent: 'center', alignItems: 'center'}}  resizeMode='cover'> 
           <View style={s.contentContainer}>
-            <Text>Old Password:</Text>
-            <TextInput
-              style={s.textInput}
-              onChangeText={(text) => this.setState({oldPassword: text})}
-              value={this.state.oldPassword}
-              returnKeyType='done'
-            />
-            <Text>New Password:</Text>
-            <TextInput
-              style={s.textInput}
-              onChangeText={(text) => this.setState({newPassword: text})}
-              value={this.state.newPassword}
-              returnKeyType='done'
-            />
-            <Text>New Password Confirm:</Text>
-            <TextInput
-              style={s.textInput}
-              onChangeText={(text) => this.setState({newPasswordConfirm: text})}
-              value={this.state.newPasswordConfirm}
-              returnKeyType='done'
-            />
+            <View>
+              <Text style={s.formLabel}>Old Password:</Text>
+              <TextInput
+                style={s.textInput}
+                onChangeText={(text) => this.setState({oldPassword: text})}
+                value={this.state.oldPassword}
+                returnKeyType='done'
+              />
+            </View>
+
+            <View>
+              <Text style={s.formLabel}>New Password:</Text>
+              <TextInput
+                style={s.textInput}
+                onChangeText={(text) => this.setState({newPassword: text})}
+                value={this.state.newPassword}
+                returnKeyType='done'
+              />
+            </View>
+
+            <View>
+              <Text style={s.formLabel}>New Password Confirm:</Text>
+              <TextInput
+                style={s.textInput}
+                onChangeText={(text) => this.setState({newPasswordConfirm: text})}
+                value={this.state.newPasswordConfirm}
+                returnKeyType='done'
+              />
+            </View>
 
             <TouchableOpacity onPress={this.changePassword} style={s.textLink}>
               <Text style={s.textLinkText}>Change Password</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate("ProfileDetails")} style={s.textLink}>
-              <Text style={s.textLinkText}>Cancel</Text>
+              <Text style={s.textLinkTextBack}>Cancel</Text>
             </TouchableOpacity>
           </View>
+        </ImageBackground>
         </View>
       </TouchableWithoutFeedback>
     );
