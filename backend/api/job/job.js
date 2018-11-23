@@ -382,7 +382,7 @@ module.exports = {
       ret.errorMessage = "User is a required field";
       return res.status(500).send(ret);
     }
-    Job.find({ 
+    Job.findOneAndRemove({ 
     _id: req.body.jobID,
     employer: req.body.userID,
     $or: [

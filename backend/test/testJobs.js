@@ -1661,7 +1661,43 @@ describe("Get Job Types", function () {
     });
   });
 
-  /** 1)
+  // /** 5)
+  //  * Test Case: Success case.
+  //  * Input/Output: Return array of job types.
+  //  * Pass/Fail Criteria: Only succeeds if it returns
+  //  *                     code (200) with no error messages
+  //  */
+  // it('Test Case: Active and not complete case', (done) => {    
+    
+  //   // save the job
+  //   var dEmployer = new User();
+  //   var job = new Job();
+  //   job.job_title = "dummy";
+  //   job.description = "dummy";
+  //   job.wage = 0;
+  //   job.address = "dummy";
+  //   job.employer = dEmployer._id;
+  //   job.employee = undefined;
+  //   job.created_at = new Date();
+  //   job.deleted_at = undefined;
+  //   job.is_deleted = false;
+  //   job.is_compeleted = false;
+  //   job.is_active = false;
+  //   job.applicants = [];
+
+  //   // save the job
+  //   job.save((err) => {
+  //     return;
+  //   });
+  
+  //   chai.request(server).post(url).send({jobID: "dummy"}).end((err, res) => {
+  //     res.should.have.status(500);
+  //     res.body.should.have.property('errorMessage').eql('User is a required field');
+  //     done();
+  //   });
+  // });
+
+  /** 5)
    * Test Case: Success case.
    * Input/Output: Return array of job types.
    * Pass/Fail Criteria: Only succeeds if it returns
@@ -1689,8 +1725,6 @@ describe("Get Job Types", function () {
     job.save((err) => {
       return;
     });
-    
-    console.log(job);
 
     chai.request(server).post(url).send({jobID: job._id.toString(), userID: dEmployer._id.toString()}).end((err, res) => {
       res.should.have.status(200);
