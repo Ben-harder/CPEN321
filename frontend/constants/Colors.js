@@ -22,8 +22,8 @@ export default {
   pBackground: "#dddddd",
 
   sNorm: "#278ea5",
-  sLight: "#278ea5",
-  sDark: "#1f4287",
+  sLight: "#6bb8c8",
+  sDark: "#014d8a",
   
   sNormAlt: "#a52727",
   sLightAlt: "#a52727",
