@@ -11,67 +11,19 @@ import
     Button,
     AsyncStorage,
     FlatList,
+    ImageBackground,
 } from "react-native";
 import { StackNavigator } from "react-navigation";
 import { WebBrowser } from "expo";
+import { connect } from 'react-redux';
 import axios from "axios";
 import api from "../constants/Url";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#fff",
-    },
-    contentContainer: {
-        paddingTop: 30,
-    },
-    headerText: {
-        fontSize: Font.titleSize,
-        textAlign: "center",
-    },
-    jobList: {
-        width: "100%",
-        padding: 10,
-        flex: 1,
-    },
-    jobItem: {
-        borderRadius: 10,
-        borderWidth: 2,
-        borderColor: Colors.sNorm,
-        marginTop: 10,
-        backgroundColor: Colors.tile,
-        padding: 30,
-        overflow: "hidden",
-    },
-    regText: {
-        fontSize: Font.normSize,
-        fontWeight: Font.thin,
-    },
-    tabBarInfoContainer: {
-        position: "absolute",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        ...Platform.select({
-            ios: {
-                shadowColor: "black",
-                shadowOffset: { height: -3 },
-                shadowOpacity: 0.1,
-                shadowRadius: 3,
-            },
-            android: {
-                elevation: 20,
-            },
-        }),
-        alignItems: "center",
-        backgroundColor: "#fbfbfb",
-        paddingVertical: 20,
-    },
-});
+import { MonoText } from "../components/StyledText";
+
+const s = require('../constants/style');
 
 class EmployerJobsScreen extends React.Component
 {
@@ -82,7 +34,7 @@ class EmployerJobsScreen extends React.Component
         super(props);
         this.state = {
             jobList: [],
-        };
+        }
 
         this.tryFetchJobList = this.tryFetchJobList.bind(this);
     }
@@ -100,8 +52,7 @@ class EmployerJobsScreen extends React.Component
         clearInterval(this.jobInterval);
     }
 
-    tryFetchJobList()
-    {
+    tryFetchJobList() {
         // console.log("trying to fetch jobs...");
         axios.get(`${api}/job/get-employer-jobs`, {
             params: {
@@ -120,40 +71,48 @@ class EmployerJobsScreen extends React.Component
 
     goToJobDetails(job)
     {
-        this.props.navigation.navigate("Job", {
-            jobType: job.jobType,
+        this.props.navigation.navigate("JobDetails", {
+            jobType: job.job_title,
             address: job.address,
-            author: job.author,
+            author: `${job.employer.first_name} ${job.employer.last_name}`,
             wage: job.wage,
             description: job.description,
-            jobID: job.jobID,
+            jobID: job._id,
+            showAction: true,
+            buttonText: "Cancel Job",
+            source: "EmployerJobs"
         });
     }
 
     render()
     {
         return (
-            <View style={styles.container}>
-                <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-                    <FlatList
-                        style={styles.jobList}
-                        data={this.state.jobList}
-                        renderItem={({ item }) => (
-                            <View style={styles.jobItem}>
-                                <Text style={styles.regText}>Job type: {item.job_title}</Text>
-                                <Text style={styles.regText}>Posted by: {item.employer.first_name} {item.employer.last_name}</Text>
-                                <Text style={styles.regText}>Address: {item.address}</Text>
-                                <Text style={styles.regText}>Wage: ${item.wage}</Text>
-                                <Text style={styles.regText}>Description: {item.description}</Text>
-                            </View>
-                        )}
-                        keyExtractor={(item, index) => index.toString()}
-                    />
-                </ScrollView>
+            <View style={s.container}>
+                <ImageBackground source={require('../assets/images/min_art1.png')} style={{width: '100%', height: '100%',}}  resizeMode='cover'> 
+                    <View style={{width: '100%', height: '100%', alignItems: 'center'}}>
+                        <FlatList
+                            style={s.jobList}
+                            data={this.state.jobList}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
+                                        <Text style={s.jobTypeText}>{item.job_title}</Text>
+                                        <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
+                                    </View>
+                                    <Text style={s.addressText}>at {item.address}</Text>
+                                    <Text style={{fontSize: Font.smallSize}}>
+                                        <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text>
+                                    </Text>
+                        
+                                </TouchableOpacity>
+                            )}
+                            keyExtractor={(item, index) => index.toString()}
+                        />
+                        </View>
+                </ImageBackground>
             </View>
         );
     }
-
 }
 
 function mapStateToProps(state) {

@@ -25,7 +25,7 @@ import { MonoText } from "../components/StyledText";
 
 const s = require('../constants/style');
 
-class JobScreen extends React.Component
+class JobDetailsScreen extends React.Component
 {
     static navigationOptions = {
         header: null,
@@ -40,7 +40,10 @@ class JobScreen extends React.Component
             description: "",
             wage: 0,
             address: "",
-            jobID: ""
+            jobID: "",
+            showAction: false,
+            buttonText: "",
+            source: "Main"
         }
     }
 
@@ -53,15 +56,10 @@ class JobScreen extends React.Component
             description: navigation.getParam("description", "NO DESCRIPTION"),
             wage: navigation.getParam("wage", "NO WAGE"),
             address: navigation.getParam("address", "NO ADDRESS"),
-            jobID: navigation.getParam("jobID", "NO JOBID")
-        });
-        console.log(user);
-        axios.post(`${api}/user/update-job-preference`, {
-            jobPrefID: user.data.jobPref,
-            jobType: navigation.getParam("jobType", "NO JOB TYPE")
-        }).catch((err) => {
-            console.log(err);
-            alert(err.response.data.errorMessage);
+            jobID: navigation.getParam("jobID", "NO JOBID"),
+            showAction: navigation.getParam("showAction", false),
+            buttonText: navigation.getParam("buttonText", "NO BUTTON TEXT"),
+            source: navigation.getParam("source", "Main")
         });
     }
 
@@ -71,10 +69,9 @@ class JobScreen extends React.Component
             <View style={s.container}>
                 <ImageBackground source={require('../assets/images/min_art1.png')} style={{width: '100%', height: '100%', flex: 1, justifyContent: 'center', alignItems: 'center'}}  resizeMode='cover'> 
                     <View style={[s.contentContainer,]}>
-                        <Text style={s.headerText}>Take This Job?</Text>
+                        <Text style={s.headerText}>{this.state.jobType}</Text>
                         <View style={s.jobItem}>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
-                                <Text style={s.jobTypeText}>{this.state.jobType}</Text>
                                 <Text style={[{fontSize: Font.titleSize,}]}>${this.state.wage}</Text>
                             </View>
                             <Text style={s.addressText}>at {this.state.address}</Text>
@@ -90,11 +87,10 @@ class JobScreen extends React.Component
                         </View>
 
                         <TouchableOpacity onPress={() => this.applyForJob()} style={s.textLink}>
-                            <Text style={s.textLinkText}>Apply for this job</Text>
+                            <Text style={s.textLinkText}>{this.state.buttonText}</Text>
                         </TouchableOpacity>
-
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("Main")} style={s.textLink}>
-                            <Text style={s.textLinkTextBack}>Cancel</Text>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate(this.state.source)} style={s.textLink}>
+                            <Text style={s.textLinkTextBack}>Back</Text>
                         </TouchableOpacity>
                     </View>
                 </ImageBackground>
@@ -111,4 +107,4 @@ function mapStateToProps(state) {
 	return props;
 }
 
-export default connect(mapStateToProps)(JobScreen);
+export default connect(mapStateToProps)(JobDetailsScreen);

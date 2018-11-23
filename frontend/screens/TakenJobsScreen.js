@@ -11,13 +11,12 @@ import
     Button,
     AsyncStorage,
     FlatList,
-    ImageBackground
+    ImageBackground,
 } from "react-native";
 import { StackNavigator } from "react-navigation";
 import { WebBrowser } from "expo";
 import axios from "axios";
 import api from "../constants/Url";
-import { connect } from "react-redux";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
 
@@ -25,7 +24,7 @@ import { MonoText } from "../components/StyledText";
 
 const s = require('../constants/style');
 
-class TakenJobsScreen extends React.Component
+export default class TakenJobsScreen extends React.Component
 {
     _isMounted = false;
 
@@ -34,7 +33,7 @@ class TakenJobsScreen extends React.Component
         super(props);
         this.state = {
             jobList: [],
-        };
+        }
 
         this.tryFetchJobList = this.tryFetchJobList.bind(this);
     }
@@ -52,20 +51,13 @@ class TakenJobsScreen extends React.Component
         clearInterval(this.jobInterval);
     }
 
-    tryFetchJobList()
-    {
+    tryFetchJobList() {
         // console.log("trying to fetch jobs...");
-        axios.get(`${api}/job/get-taken-jobs`, {
-            params: {
-                employeeID: this.props.user.data.ID,
-            }
-        }).then((response) =>
-        {
+        axios.get(`${api}/job/get-taken-jobs`).then((response) => {
             // console.log(response.data);
             if (this._isMounted)
-                this.setState({ jobList: response.data });
-        }).catch((err) =>
-        {
+                this.setState({jobList: response.data});
+        }).catch((err) => {
             console.log(err);
         });
     }
@@ -73,12 +65,12 @@ class TakenJobsScreen extends React.Component
     goToJobDetails(job)
     {
         this.props.navigation.navigate("Job", {
-            jobType: job.jobType,
+            jobType: job.job_title,
             address: job.address,
-            author: job.author,
+            author: `${job.employer.first_name} ${job.employer.last_name}`,
             wage: job.wage,
             description: job.description,
-            jobID: job.jobID,
+            jobID: job._id
         });
     }
 
@@ -86,42 +78,30 @@ class TakenJobsScreen extends React.Component
     {
         return (
             <View style={s.container}>
-                <ImageBackground source={require('../assets/images/min_art1.png')} style={{width: '100%', height: '100%', flex: 1, justifyContent: 'center', alignItems: 'center'}}  resizeMode='cover'> 
-                    <FlatList
-                        style={s.jobList}
-                        data={this.state.jobList}
-                        renderItem={({ item }) => (
-                            <View style={s.jobItem}>
-                                <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
-                                    <Text style={s.jobTypeText}>{item.job_title}</Text> 
-                                    <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
-                                </View>
-                                <Text style={s.addressText}>at {item.address}</Text>
-                                <Text style={{fontSize: Font.smallSize}}>
-                                        <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.author}</Text>
-                                </Text>
-                                <View>
-                                    <Text style={[s.jobText, {fontWeight: 'bold', marginTop: 30}]}>Description: </Text>
-                                    <View style={s.jobDescription}>
-                                        <Text>{item.description}</Text>
-                                    </View>                     
-                                </View>                    
-                            </View>
-                        )}
-                        keyExtractor={(item, index) => index.toString()}
-                    />
+                <ImageBackground source={require('../assets/images/min_art1.png')} style={{width: '100%', height: '100%',}}  resizeMode='cover'> 
+                    <View style={{width: '100%', height: '100%', alignItems: 'center'}}>
+                        <FlatList
+                            style={s.jobList}
+                            data={this.state.jobList}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
+                                    <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
+                                        <Text style={s.jobTypeText}>{item.job_title}</Text>
+                                        <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
+                                    </View>
+                                    <Text style={s.addressText}>at {item.address}</Text>
+                                    <Text style={{fontSize: Font.smallSize}}>
+                                        <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text>
+                                    </Text>
+                        
+                                </TouchableOpacity>
+                            )}
+                            keyExtractor={(item, index) => index.toString()}
+                        />
+                        </View>
                 </ImageBackground>
             </View>
         );
     }
 
 }
-
-function mapStateToProps(state) {
-	const props = {
-		user: state.user,
-	};
-	return props;
-}
-
-export default connect(mapStateToProps)(TakenJobsScreen);

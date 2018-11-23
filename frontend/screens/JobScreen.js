@@ -55,7 +55,7 @@ class JobScreen extends React.Component
             address: navigation.getParam("address", "NO ADDRESS"),
             jobID: navigation.getParam("jobID", "NO JOBID")
         });
-        console.log(user);
+        
         axios.post(`${api}/user/update-job-preference`, {
             jobPrefID: user.data.jobPref,
             jobType: navigation.getParam("jobType", "NO JOB TYPE")
@@ -119,7 +119,7 @@ class JobScreen extends React.Component
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("Main")} style={s.textLink}>
-                            <Text style={s.textLinkTextBack}>Cancel</Text>
+                            <Text style={s.textLinkTextBack}>Back</Text>
                         </TouchableOpacity>
                     </View>
                 </ImageBackground>
