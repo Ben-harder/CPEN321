@@ -145,6 +145,7 @@ class SignUpScreen extends React.Component {
                     style={s.textInput}
                     onChangeText={(text) => this.setState({lastName: text})}
                     value={this.state.lastName}
+                    underlineColorAndroid='transparent'
                   />
 
                   <TouchableOpacity onPress={this.inputName} style={s.textLink}>
@@ -159,12 +160,13 @@ class SignUpScreen extends React.Component {
               {this.state.viewState === 3 && 
               <View style={s.innerContainer}>
                 <View>
-                  <Text style={[s.regText, {textAlign: 'left',}]}>Enter a password:</Text>
+                  <Text style={[s.regTextBold, {textAlign: 'left',}]}>Enter a password:</Text>
                   <TextInput
                     style={s.textInput}
                     onChangeText={(text) => this.setState({password: text})}
                     value={this.state.password}
                     secureTextEntry={true}
+                    underlineColorAndroid='transparent'
                   />
                   <TouchableOpacity onPress={this.inputPassword} style={s.textLink}>
                     <Text style={s.textLinkText}>Continue</Text>
@@ -177,12 +179,13 @@ class SignUpScreen extends React.Component {
               {this.state.viewState === 4 &&
               <View style={s.innerContainer}>
                 <View>
-                  <Text style={[s.regText, {textAlign: 'left',}]}>Confirm your password:</Text>
+                  <Text style={[s.regTextBold, {textAlign: 'left',}]}>Confirm your password:</Text>
                   <TextInput
                     style={s.textInput}
                     onChangeText={(text) => this.setState({passwordConfirm: text})}
                     value={this.state.passwordConfirm}
                     secureTextEntry={true}
+                    underlineColorAndroid='transparent'
                   />
                   <TouchableOpacity onPress={this.attemptSignup} style={s.textLink}>
                     <Text style={s.textLinkText}>Create Account</Text>
