@@ -9,18 +9,9 @@ var Schema = mongoose.Schema;
 var Image = new Schema({
     image_src: {
         type: String,
-        required: true
     },
-    created_at: {
-        type: Date,
-        required: true
-    },
-    deleted_at: {
-        type: Date
-    },
-    is_deleted: {
+    valid: {
         type: Boolean,
-        required: true
     },
     // one user
     user: {
@@ -30,11 +21,11 @@ var Image = new Schema({
 });
 
 // Virtual for image"s URL
-Image
-.virtual("url")
-.get(function () {
-  return "/image" + this.image_id;
-});
+// Image
+// .virtual("url")
+// .get(function () {
+//   return "/image" + this.image_id;
+// });
 
 // export function to create "Image" model class
 module.exports = mongoose.model("Image", Image);

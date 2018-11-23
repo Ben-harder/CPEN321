@@ -47,6 +47,10 @@ var User = new Schema({
         type: String,
         required: true
     },
+    profile_picture: {
+        type: Schema.ObjectId,
+        ref: "Image"
+    },
     // array of imgs
     images: [{
         type: Schema.ObjectId,
@@ -61,6 +65,14 @@ var User = new Schema({
         required: true
     },
     down_votes: {
+        type: Number,
+        required: true
+    },
+    taken_jobs: {
+        type: Number,
+        required: true
+    },
+    posted_jobs: {
         type: Number,
         required: true
     }

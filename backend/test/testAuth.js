@@ -144,6 +144,8 @@ describe("Testing: doesUserExist", function() {
     user.is_employer = false;
     user.up_votes = 0;
     user.down_votes = 0;
+    user.posted_jobs = 0;
+    user.taken_jobs = 0;
     user.images = [];
 
     // save the user
@@ -242,6 +244,8 @@ describe("Testing: userSignIn", function() {
     user.is_employer = false;
     user.up_votes = 0;
     user.down_votes = 0;
+    user.posted_jobs = 0;
+    user.taken_jobs = 0;
     user.images = [];
 
     // save the user
@@ -278,6 +282,8 @@ describe("Testing: userSignIn", function() {
     user.is_employer = false;
     user.up_votes = 0;
     user.down_votes = 0;
+    user.posted_jobs = 0;
+    user.taken_jobs = 0;
     user.images = [];
 
     // save the user
@@ -476,6 +482,8 @@ describe("Update User Info", function () {
     user.is_employer = false;
     user.up_votes = 0;
     user.down_votes = 0;
+    user.posted_jobs = 0;
+    user.taken_jobs = 0;
     user.images = [];
 
     // save the user
@@ -594,6 +602,8 @@ describe("Update User Password", function () {
     user.is_employer = false;
     user.up_votes = 0;
     user.down_votes = 0;
+    user.posted_jobs = 0;
+    user.taken_jobs = 0;
     user.images = [];
 
     // save the user
@@ -633,6 +643,8 @@ describe("Update User Password", function () {
     user.is_employer = false;
     user.up_votes = 0;
     user.down_votes = 0;
+    user.posted_jobs = 0;
+    user.taken_jobs = 0;
     user.images = [];
 
     // save the user
@@ -749,6 +761,8 @@ describe("Rate User", function () {
     user.is_employer = false;
     user.up_votes = 0;
     user.down_votes = 0;
+    user.posted_jobs = 0;
+    user.taken_jobs = 0;
     user.images = [];
 
     // save the user
@@ -792,6 +806,8 @@ describe("Rate User", function () {
     user.is_employer = false;
     user.up_votes = 0;
     user.down_votes = 0;
+    user.posted_jobs = 0;
+    user.taken_jobs = 0;
     user.images = [];
 
     // save the user
