@@ -10,7 +10,6 @@ module.exports = {
    */
   updateUserJobPreference(req, res) {
     let ret = {};
-    console.log(req.body);
     if (!req.body.jobPrefID) {
       ret.errorMessage = "Job preference is a required field"
       return res.status(500).send(ret);
