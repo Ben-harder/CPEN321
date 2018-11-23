@@ -14,15 +14,16 @@ import {bindActionCreators} from "redux";
 import PhoneInput from "react-native-phone-input";
 import api from "../constants/Url";
 import axios from "axios";
-import { ImagePicker } from 'expo';
+import { ImagePicker, Permissions } from 'expo';
 import Colors from "../constants/Colors";
-
 
 // actions
 import * as actions from "../actions/";
 
 // styles
 const s = require('../constants/style');
+
+const placeholderImage = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
 
 class EditProfile extends React.Component
 {
@@ -36,10 +37,11 @@ class EditProfile extends React.Component
     this.state = {
       firstName: "",
       lastName: "",
-      image: null,
+      image: "",
     };
 
     this.save = this.save.bind(this);
+    this.pickImage = this.pickImage.bind(this);
   }
 
   componentDidMount() {
@@ -52,15 +54,25 @@ class EditProfile extends React.Component
   }
   
   pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-    });
+    const permission = await Permissions.getAsync(Permissions.CAMERA_ROLL);
 
-    console.log(result);
+    if (permission.status === 'granted') {
+        const newPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+        if (newPermission.status === 'granted') {
+          let result = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing: true,
+            aspect: [4, 3],
+          });
+      
+          if (!result.cancelled) {
+            // set the image
+            this.setState({ image: result.uri });
 
-    if (!result.cancelled) {
-      this.setState({ image: result.uri });
+            // TODO save the image to the database
+          }
+        }
+    } else {
+      alert("You will to need to accept permissions to upload an image!");
     }
   };
 
@@ -93,17 +105,15 @@ class EditProfile extends React.Component
 
   render() {
     const { user, navigation } = this.props;
-    let { image } = this.state;
 
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={s.container}>
           <View style={s.contentContainer}>
             <View style={{alignItems: 'center',}}>
-              <Text style={s.regText}>Profile Picture:</Text>
-              <TouchableOpacity onPress={this.pickImage} style={[s.profilePicture, {backgroundColor: Colors.sNorm}]}>
-                {image && 
-                  <Image source={{ uri: image }} style={s.profilePicture} />}
+              <Text style={s.regText}>Click to Change:</Text>
+              <TouchableOpacity onPress={this.pickImage} style={[s.profilePicture, {backgroundColor: Colors.sLight}]}>
+                <Image source={{ uri: this.state.image ? this.state.image : placeholderImage }} style={s.profilePicture} />
               </TouchableOpacity>
             </View>
             

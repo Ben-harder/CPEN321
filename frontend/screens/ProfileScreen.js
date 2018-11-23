@@ -16,6 +16,10 @@ class Profile extends React.Component
     title: "My Profile",
   };
 
+  componentDidMount() {
+    
+  }
+
   render() {
     const { user, navigation } = this.props;
 
