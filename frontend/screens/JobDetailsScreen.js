@@ -20,6 +20,8 @@ import axios from "axios";
 import api from "../constants/Url";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
+import IOSIcon from "react-native-vector-icons/Ionicons";
+
 
 import { MonoText } from "../components/StyledText";
 
@@ -69,15 +71,21 @@ class JobDetailsScreen extends React.Component
             <View style={s.container}>
                 <ImageBackground source={require('../assets/images/min_art1.png')} style={{width: '100%', height: '100%', flex: 1, justifyContent: 'center', alignItems: 'center'}}  resizeMode='cover'> 
                     <View style={[s.contentContainer,]}>
-                        <Text style={s.headerText}>{this.state.jobType}</Text>
                         <View style={s.jobItem}>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
+                                <Text style={s.jobTypeText}>{this.state.jobType}</Text>
                                 <Text style={[{fontSize: Font.titleSize,}]}>${this.state.wage}</Text>
                             </View>
-                            <Text style={s.addressText}>at {this.state.address}</Text>
+                            
+                            <View style={{flexDirection: 'row', padding: 10,}}>
+                                        <IOSIcon name="ios-compass" size={30} style={{color: Colors.sDark}}/>
+                                        <Text style={s.addressText}> {this.state.address}</Text> 
+                            </View>
+
                             <Text style={{fontSize: Font.smallSize}}>
                                     <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{this.state.author}</Text>
                             </Text>
+                            
                             <View>
                                 <Text style={[s.jobText, {fontWeight: 'bold', marginTop: 30}]}>Description: </Text>
                                 <View style={s.jobDescription}>
