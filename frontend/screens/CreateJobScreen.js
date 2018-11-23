@@ -130,6 +130,7 @@ class CreateJobScreen extends React.Component
                                     onValueChange={value => this.setState({jobType: value})}
                                     items={this.state.jobTypes}
                                     placeholder={{label:"Select Job Here", value: ""}}
+                                    style={{inputIOS: { height: 50, paddingLeft: 10 }}}
                                 />
                             </View>
                         </View>

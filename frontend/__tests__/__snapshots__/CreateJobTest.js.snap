@@ -241,10 +241,8 @@ CreateJobScreen {
                   Object {
                     "backgroundColor": "#F5F5F6",
                     "borderRadius": 10,
-                    "height": 50,
                     "marginVertical": 5,
-                    "paddingLeft": 10,
-                    "paddingTop": 15,
+                    "padding": 5,
                   }
                 }
               >
@@ -268,7 +266,14 @@ CreateJobScreen {
                     }
                   }
                   placeholderTextColor="#C7C7CD"
-                  style={Object {}}
+                  style={
+                    Object {
+                      "inputIOS": Object {
+                        "height": 50,
+                        "paddingLeft": 10,
+                      },
+                    }
+                  }
                   testID="#type"
                   textInputProps={Object {}}
                 />
