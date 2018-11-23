@@ -148,15 +148,15 @@ module.exports = {
   /**
   * Get user stats
   */
-  getUserStats(req, res) {
+  getUserProfile(req, res) {
     let ret = {};
     // all fields have to be valid
-    if (req.body.userID === undefined) {
-      ret.errorMessage = "All fields have to be filled out";
+    if (req.query.userID === undefined) {
+      ret.errorMessage = "User is a required field";
       return res.status(500).send(ret);
     }
-
-    User.findById(req.body.userID).populate('profilePicture')
+    User.findById(req.query.userID)
+    .populate('profile_picture')
     .exec((err, user) => {
       let ret = {};
       // internal err
@@ -164,20 +164,20 @@ module.exports = {
         ret.errorMessage = "Internal error in database";
         return res.status(500).send(ret);
       }
+
       // no match
       if (!user){
         ret.errorMessage = "User dose not exist";
         return res.status(500).send(ret);
       }
-      var postedJobs;
-      var takenJobs;
-      var upVotes;
-      var downVotes;
-      var profilePicture;
-      upVotes = user.up_votes;
-      downVotes = user.down_votes;
-      profilePicture = user.profile_picture.image_src;
-      takenJobs = user.num;
+
+      // success
+      ret.upVotes = user.up_votes;
+      ret.downVotes = user.down_votes;
+      ret.profilePicture = user.profile_picture.image_src;
+      ret.numOfTakenJobs = user.taken_jobs;
+      ret.numOfPostedJobs = user.posted_jobs;
+      return res.status(200).send(ret);
    });
   }
 }
