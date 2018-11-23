@@ -87,7 +87,7 @@ export default class TakenJobsScreen extends React.Component
                                     <Text style={s.jobTypeText}>{item.job_title}</Text>
                                     <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
                                 </View>
-                                <Text style={s.addressText}>at {item.address}</Text>
+                                <Text style={s.addressText}>at {item.address} </Text>
                                 <Text style={{fontSize: Font.smallSize}}>
                                     <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text>
                                 </Text>

@@ -131,6 +131,9 @@ module.exports = StyleSheet.create({
         textAlign: 'left',
         fontSize: Font.normSize,
     },
+    jobDescriptionText: {
+        fontSize: Font.smallSize,
+    },
     textInput: {
         backgroundColor: '#F5F5F6', 
         padding: 20, 
@@ -151,12 +154,6 @@ module.exports = StyleSheet.create({
         padding: 5, 
         borderRadius: 10,
         marginVertical: 5,
-    },
-    jobDescription: {
-        // padding: 10,
-        // borderWidth: 1,
-        // borderRadius: 7,
-        // borderColor: Colors.sNorm,
     },
     jobList: {
         marginTop: 20,

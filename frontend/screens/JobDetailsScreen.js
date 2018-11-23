@@ -75,9 +75,9 @@ class JobDetailsScreen extends React.Component
                             <Text style={[{fontSize: Font.titleSize,}]}>${this.state.wage}</Text>
                         </View>
                         
-                        <View style={{flexDirection: 'row', padding: 10,}}>
+                        <View style={{flexDirection: 'row', paddingVertical: 10,}}>
                                     <IOSIcon name="ios-compass" size={30} style={{color: Colors.sDark}}/>
-                                    <Text style={s.addressText}> {this.state.address}</Text> 
+                                    <Text style={s.addressText}> {this.state.address} </Text> 
                         </View>
 
                         <Text style={{fontSize: Font.smallSize}}>
@@ -86,8 +86,8 @@ class JobDetailsScreen extends React.Component
                         
                         <View>
                             <Text style={[s.jobText, {fontWeight: 'bold', marginTop: 30}]}>Description: </Text>
-                            <View style={s.jobDescription}>
-                                <Text>{this.state.description}</Text>
+                            <View>
+                                <Text style={s.jobDescriptionText}>{this.state.description}</Text>
                             </View>                     
                         </View>                    
                     </View>
