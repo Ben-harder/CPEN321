@@ -46,6 +46,8 @@ class JobDetailsScreen extends React.Component
             buttonText: "",
             source: "Main"
         }
+
+        this.buttonAction = this.buttonAction.bind(this);
     }
 
     componentDidMount() {
@@ -62,6 +64,28 @@ class JobDetailsScreen extends React.Component
             buttonText: navigation.getParam("buttonText", "NO BUTTON TEXT"),
             source: navigation.getParam("source", "Main")
         });
+    }
+
+    buttonAction() {
+        let apiCall;
+        // cancel job
+        if (this.state.source === "EmployerJobs") {
+            apiCall = `${api}/job/cancel-job`;
+        }
+
+        if (apiCall) {
+            axios.post(apiCall, {
+                userID: this.props.user.data.ID,
+                jobID: this.state.jobID
+            }).then((res) => {
+                alert("You've successfully cancelled the job post.");
+                this.props.navigation.navigate(this.state.source);
+            }).catch((err) => {
+                console.log(err);
+                alert(err.response.data.errorMessage);
+            });
+        }
+        
     }
 
     render()
@@ -92,7 +116,7 @@ class JobDetailsScreen extends React.Component
                         </View>                    
                     </View>
 
-                    <TouchableOpacity onPress={() => this.applyForJob()} style={s.textLink}>
+                    <TouchableOpacity onPress={() => this.buttonAction()} style={s.textLink}>
                         <Text style={s.textLinkText}>{this.state.buttonText}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate(this.state.source)} style={s.textLink}>

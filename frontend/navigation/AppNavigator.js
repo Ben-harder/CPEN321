@@ -43,7 +43,7 @@ const CreateJobStack = createStackNavigator({CreateJob: CreateJobScreen},
   {
     navigationOptions: ({navigation}) => ({
       headerTintColor: 'white',
-      headerStyle: {backgroundColor: Colors.sDark, marginRight: 0, marginLeft: 0, borderBottomWidth: 0,},
+      headerStyle: {backgroundColor: Colors.sDark, marginRight: 0, marginLeft: 0, borderBottomWidth: 0, height: 60},
       headerLeft:(<TouchableOpacity onPress={() => navigation.openDrawer()}>
         <IOSIcon name="ios-menu" size={30} style={{color: 'white', paddingLeft: 15,}}/>
         </TouchableOpacity>
@@ -57,7 +57,7 @@ const TakenJobsStack = createStackNavigator({TakenJobs: TakenJobsScreen},
   {
     navigationOptions: ({navigation}) => ({
       headerTintColor: 'white',
-      headerStyle: {backgroundColor: Colors.sDark, marginRight: 0, marginLeft: 0, borderBottomWidth: 0,},
+      headerStyle: {backgroundColor: Colors.sDark, marginRight: 0, marginLeft: 0, borderBottomWidth: 0, height: 60},
       headerLeft:(<TouchableOpacity onPress={() => navigation.openDrawer()}>
         <IOSIcon name="ios-menu" size={30} style={{color: 'white', paddingLeft: 15,}}/>
         </TouchableOpacity>
@@ -71,7 +71,7 @@ const EmployerJobsStack = createStackNavigator({EmployerJobs: EmployerJobsScreen
   {
     navigationOptions: ({navigation}) => ({
       headerTintColor: 'white',
-      headerStyle: {backgroundColor: Colors.sDark, marginRight: 0, marginLeft: 0, borderBottomWidth: 0,},
+      headerStyle: {backgroundColor: Colors.sDark, marginRight: 0, marginLeft: 0, borderBottomWidth: 0, height: 60},
       headerLeft:(<TouchableOpacity onPress={() => navigation.openDrawer()}>
         <IOSIcon name="ios-menu" size={30} style={{color: 'white', paddingLeft: 15,}}/>
         </TouchableOpacity>
@@ -85,7 +85,7 @@ const AppliedJobsStack = createStackNavigator({AppliedJobs: AppliedJobsScreen, J
   {
     navigationOptions: ({navigation}) => ({
       headerTintColor: 'white',
-      headerStyle: {backgroundColor: Colors.sDark, marginRight: 0, marginLeft: 0, borderBottomWidth: 0,},
+      headerStyle: {backgroundColor: Colors.sDark, marginRight: 0, marginLeft: 0, borderBottomWidth: 0, height: 60},
       headerLeft:(<TouchableOpacity onPress={() => navigation.openDrawer()}>
         <IOSIcon name="ios-menu" size={30} style={{color: 'white', paddingLeft: 15,}}/>
         </TouchableOpacity>
@@ -99,7 +99,7 @@ const ActiveJobsStack = createStackNavigator({ActiveJobs: ActiveJobsScreen, JobD
   {
     navigationOptions: ({navigation}) => ({
       headerTintColor: 'white',
-      headerStyle: {backgroundColor: Colors.sDark, marginRight: 0, marginLeft: 0, borderBottomWidth: 0,},
+      headerStyle: {backgroundColor: Colors.sDark, marginRight: 0, marginLeft: 0, borderBottomWidth: 0, height: 60},
       headerLeft:(<TouchableOpacity onPress={() => navigation.openDrawer()}>
         <IOSIcon name="ios-menu" size={30} style={{color: 'white', paddingLeft: 15,}}/>
         </TouchableOpacity>
@@ -113,7 +113,7 @@ const ProfileStack = createStackNavigator({ProfileDetails: ProfileScreen, EditPr
   {
     navigationOptions: ({navigation}) => ({
       headerTintColor: 'white',
-      headerStyle: {backgroundColor: Colors.sDark, marginRight: 0, marginLeft: 0, borderBottomWidth: 0,},
+      headerStyle: {backgroundColor: Colors.sDark, marginRight: 0, marginLeft: 0, borderBottomWidth: 0, height: 60},
       headerLeft:(<TouchableOpacity onPress={() => navigation.openDrawer()}>
         <IOSIcon name="ios-menu" size={30} style={{color: 'white', paddingLeft: 15,}}/>
         </TouchableOpacity>

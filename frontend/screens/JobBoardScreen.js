@@ -91,11 +91,11 @@ class JobBoardScreen extends React.Component
                             <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
                                 <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
                                     <Text style={s.jobTypeText}>{item.job_title}</Text>
-                                    <Text style={[{fontSize: Font.normSize,}]}>${item.wage}</Text>
+                                    <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
                                 </View>
-                                <View style={{flexDirection: 'row', paddingVertical: 10}}>
+                                <View style={{flexDirection: 'row', padding: 10,}}>
                                     <IOSIcon name="ios-compass" size={30} style={{color: Colors.sDark}}/>
-                                    <Text style={s.addressText}> {item.address} </Text> 
+                                    <Text style={s.addressText}> {item.address}</Text> 
                                 </View>
                                 <Text style={{fontSize: Font.smallSize}}>
                                     <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text>

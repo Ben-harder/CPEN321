@@ -151,12 +151,14 @@ module.exports = StyleSheet.create({
     },
     picker: {
         backgroundColor: '#F5F5F6',
-        padding: 5, 
+        paddingTop: 15,
+        paddingLeft: 10,
         borderRadius: 10,
         marginVertical: 5,
+        height: 50,
     },
     jobList: {
-        marginTop: 20,
+        paddingTop: 30,
         width: "90%",
         flex: 1,
     },
