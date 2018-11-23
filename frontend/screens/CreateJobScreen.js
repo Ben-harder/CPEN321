@@ -76,74 +76,74 @@ class CreateJobScreen extends React.Component
                 
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessbile={false}>
                         <View style={s.innerContainer}>
-                                    <View>
-                                        <Text style={s.formLabel}>
-                                            Address:
-                                        </Text>
-                                        <TextInput
-                                            testID="#address"
-                                            style={s.textInput}
-                                            onChangeText={(address) => this.setState({ address })}
-                                            returnKeyType='done'
-                                            placeholder="Enter Address Here" 
-                                            underlineColorAndroid='transparent'
-                                            />
-                                    </View>
+                            <View>
+                                <Text style={s.formLabel}>
+                                    Address:
+                                </Text>
+                                <TextInput
+                                    testID="#address"
+                                    style={s.textInput}
+                                    onChangeText={(address) => this.setState({ address })}
+                                    returnKeyType='done'
+                                    placeholder="Ex: 1234 Address Rd" 
+                                    underlineColorAndroid='transparent'
+                                    />
+                            </View>
 
-                                    <View>
-                                        <Text style={s.formLabel}>
-                                            Job description:
-                                        </Text>
+                            <View>
+                                <Text style={s.formLabel}>
+                                    Job description:
+                                </Text>
 
-                                        <TextInput
-                                            testID="#description"
-                                            style={s.textInputJobDescription}
-                                            multiline = {true}
-                                            numberOfLines = {4}
-                                            onChangeText={(description) => this.setState({ description })}
-                                            returnKeyType='done'
-                                            blurOnSubmit={true}
-                                            placeholder="Enter Description Here" 
-                                            underlineColorAndroid='transparent'
-                                            />
-                                    </View>
+                                <TextInput
+                                    testID="#description"
+                                    style={s.textInputJobDescription}
+                                    multiline = {true}
+                                    numberOfLines = {4}
+                                    onChangeText={(description) => this.setState({ description })}
+                                    returnKeyType='done'
+                                    blurOnSubmit={true}
+                                    placeholder="Enter Description Here" 
+                                    underlineColorAndroid='transparent'
+                                    />
+                            </View>
 
-                                    <View>
-                                        <Text style={s.formLabel}>
-                                            Wage in CAD:
-                                        </Text>
-                                        <TextInput
-                                            testID="#wage"
-                                            style={s.textInput}
-                                            keyboardType={"numeric"}
-                                            onChangeText={(wage) => this.setState({ wage })}
-                                            returnKeyType='done'
-                                            placeholder="Enter Wage here" 
-                                            underlineColorAndroid='transparent'
-                                            />
-                                    </View>
+                            <View>
+                                <Text style={s.formLabel}>
+                                    Wage in CAD:
+                                </Text>
+                                <TextInput
+                                    testID="#wage"
+                                    style={s.textInput}
+                                    keyboardType={"numeric"}
+                                    onChangeText={(wage) => this.setState({ wage })}
+                                    returnKeyType='done'
+                                    placeholder="Enter Wage here" 
+                                    underlineColorAndroid='transparent'
+                                    />
+                            </View>
 
-                                    <View>
-                                        <Text style={s.formLabel}>
-                                            Job type:
-                                        </Text>
-                                        <View style={s.picker}>
-                                            <Select
-                                                testID="#type"
-                                                onValueChange={value => this.setState({jobType: value})}
-                                                items={this.state.jobTypes}
-                                                placeholder={{label:"Select Job Here", value: ""}}
-                                            />
-                                        </View>
-                                    </View>
+                            <View>
+                                <Text style={s.formLabel}>
+                                    Job type:
+                                </Text>
+                                <View style={s.picker}>
+                                    <Select
+                                        testID="#type"
+                                        onValueChange={value => this.setState({jobType: value})}
+                                        items={this.state.jobTypes}
+                                        placeholder={{label:"Select Job Here", value: ""}}
+                                    />
+                                </View>
+                            </View>
 
-                                    <TouchableOpacity testID="#submit" onPress={() => this.attemptCreateJob()} style={s.textLink}>
-                                        <Text style={s.textLinkText}>Submit</Text>
-                                    </TouchableOpacity>
+                            <TouchableOpacity testID="#submit" onPress={() => this.attemptCreateJob()} style={s.textLink}>
+                                <Text style={s.textLinkText}>Submit</Text>
+                            </TouchableOpacity>
 
-                                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Main")} style={s.textLink}>
-                                        <Text style={s.textLinkTextBack}>Cancel</Text>
-                                    </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate("Main")} style={s.textLink}>
+                                <Text style={s.textLinkTextBack}>Cancel</Text>
+                            </TouchableOpacity>
                         </View>
                     </TouchableWithoutFeedback>
                 </ImageBackground>
