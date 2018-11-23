@@ -4,6 +4,7 @@ import
     Text,
     TouchableOpacity,
     View,
+    ImageBackground
 } from "react-native";
 import { connect } from "react-redux";
 
@@ -21,22 +22,29 @@ class Profile extends React.Component
 
     return (
       <View style={s.container}>
-        <View style={s.contentContainer}>
+        <ImageBackground source={require('../assets/images/min_art1.png')} style={{width: '100%', height: '100%', flex: 1, justifyContent: 'center', alignItems: 'center'}}  resizeMode='cover'> 
+          <View style={[s.contentContainer, {flex: 1, justifyContent: 'center'}]}>
+            <View style={{flexDirection: 'row', borderRadius: 10,}}>
+              <Text style={[s.regTextBold, {textAlign: 'left'}]}>Name: </Text>
+              <Text style={[s.regText, {textAlign: 'left'}]}>{user.data.firstName} {user.data.lastName}</Text>
+            </View>
 
-          <Text style={s.headerText}>Name: {user.data.firstName} {user.data.lastName}</Text>
+            <View style={{flexDirection: 'row', borderRadius: 10,}}>
+              <Text style={[s.regTextBold, {textAlign: 'left'}]}>Phone #: </Text>
+              <Text style={[s.regText, {textAlign: 'left'}]}>{user.data.phoneNumber}</Text>
+            </View>
 
-          <Text>Phone #: {user.data.phoneNumber}</Text>
-          
+            <View>
+              <TouchableOpacity onPress={() => navigation.navigate("EditProfile")} style={s.textLink}>
+                <Text style={s.textLinkText}>Edit Info</Text>
+              </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate("EditProfile")} style={s.textLink}>
-            <Text style={s.textLinkText}>Edit Info</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("ChangePassword")} style={s.textLink}>
-            <Text style={s.textLinkText}>Change Password</Text>
-          </TouchableOpacity>
-        </View>
-
-
+              <TouchableOpacity onPress={() => navigation.navigate("ChangePassword")} style={s.textLink}>
+                <Text style={s.textLinkText}>Change Password</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ImageBackground>
       </View>
     );
   }

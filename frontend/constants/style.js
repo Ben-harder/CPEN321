@@ -159,13 +159,6 @@ module.exports = StyleSheet.create({
         // borderRadius: 7,
         // borderColor: Colors.sNorm,
     },
-    formLabel: {
-        //paddingBottom: 10,
-        fontSize: Font.normSize,
-        color: '#000000',
-        //marginTop: 10,
-        textAlign: 'left',
-    },
     jobList: {
         width: "90%",
         flex: 1,

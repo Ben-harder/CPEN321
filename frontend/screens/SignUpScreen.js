@@ -133,7 +133,7 @@ class SignUpScreen extends React.Component {
               {this.state.viewState === 2 &&
               <View style={s.innerContainer}>
                 <View>
-                  <Text style={[s.regTextBold, {textAlign: 'left',}]}>First Name:</Text>
+                  <Text style={[s.regTextBold]}>First Name:</Text>
                   <TextInput
                     style={s.textInput}
                     onChangeText={(text) => this.setState({firstName: text})}
@@ -141,7 +141,7 @@ class SignUpScreen extends React.Component {
                     returnKeyType='done'
                     />
 
-                  <Text style={[s.regTextBold, {textAlign: 'left',}]}>Last Name:</Text>
+                  <Text style={[s.regTextBold]}>Last Name:</Text>
                   <TextInput
                     style={s.textInput}
                     onChangeText={(text) => this.setState({lastName: text})}
@@ -162,7 +162,7 @@ class SignUpScreen extends React.Component {
               {this.state.viewState === 3 && 
               <View style={s.innerContainer}>
                 <View>
-                  <Text style={[s.regTextBold, {textAlign: 'left',}]}>Enter a password:</Text>
+                  <Text style={[s.regTextBold]}>Enter a password:</Text>
                   <TextInput
                     style={s.textInput}
                     onChangeText={(text) => this.setState({password: text})}
@@ -182,7 +182,7 @@ class SignUpScreen extends React.Component {
               {this.state.viewState === 4 &&
               <View style={s.innerContainer}>
                 <View>
-                  <Text style={[s.regTextBold, {textAlign: 'left',}]}>Confirm your password:</Text>
+                  <Text style={[s.regTextBold]}>Confirm your password:</Text>
                   <TextInput
                     style={s.textInput}
                     onChangeText={(text) => this.setState({passwordConfirm: text})}

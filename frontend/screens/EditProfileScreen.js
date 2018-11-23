@@ -75,10 +75,9 @@ class EditProfile extends React.Component
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={s.container}>
           <ImageBackground source={require('../assets/images/min_art1.png')} style={{width: '100%', height: '100%', flex: 1, justifyContent: 'center', alignItems: 'center'}}  resizeMode='cover'> 
-            
             <View style={s.contentContainer}>
               <View>
-                <Text style={s.formLabel}>Phone #:</Text>
+                <Text style={s.regText}>Phone #:</Text>
                 <PhoneInput style={{backgroundColor: '#ffffff99', padding: 20, borderRadius: 10, marginVertical: 5,}}
                     ref={ref => {
                       this.phone = ref;
@@ -89,7 +88,7 @@ class EditProfile extends React.Component
               </View>
               
               <View>
-                <Text style={s.formLabel}>First Name:</Text>
+                <Text style={s.regText}>First Name:</Text>
                 <TextInput
                   style={s.textInput}
                   onChangeText={(text) => this.setState({firstName: text})}
@@ -99,7 +98,7 @@ class EditProfile extends React.Component
               </View>
 
               <View>
-                <Text style={s.formLabel}>Last Name:</Text>
+                <Text style={s.regText}>Last Name:</Text>
                 <TextInput
                   style={s.textInput}
                   onChangeText={(text) => this.setState({lastName: text})}
@@ -111,6 +110,7 @@ class EditProfile extends React.Component
               <TouchableOpacity onPress={this.save} style={s.textLink}>
                 <Text style={s.textLinkText}>Save</Text>
               </TouchableOpacity>
+
               <TouchableOpacity onPress={() => navigation.navigate("ProfileDetails")} style={s.textLink}>
                 <Text style={s.textLinkTextBack}>Cancel</Text>
               </TouchableOpacity>
