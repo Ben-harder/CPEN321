@@ -100,7 +100,7 @@ class JobScreen extends React.Component
                         <Text style={s.headerText}>Take This Job?</Text>
                         <View style={s.jobItem}>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
-                                <Text style={[s.jobText, {fontSize: Font.titleSize}]}>{this.state.jobType}</Text>
+                                <Text style={s.jobTypeText}>{this.state.jobType}</Text>
                                 <Text style={[{fontSize: Font.titleSize,}]}>${this.state.wage}</Text>
                             </View>
                             <Text style={s.addressText}>at {this.state.address}</Text>
