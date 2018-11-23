@@ -20,6 +20,7 @@ import axios from "axios";
 import api from "../constants/Url";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
+import IOSIcon from "react-native-vector-icons/Ionicons";
 
 import { MonoText } from "../components/StyledText";
 
@@ -102,10 +103,16 @@ class JobScreen extends React.Component
                                 <Text style={s.jobTypeText}>{this.state.jobType}</Text>
                                 <Text style={[{fontSize: Font.titleSize,}]}>${this.state.wage}</Text>
                             </View>
-                            <Text style={s.addressText}>at {this.state.address}</Text>
+                            
+                            <View style={{flexDirection: 'row', padding: 10,}}>
+                                        <IOSIcon name="ios-compass" size={30} style={{color: Colors.sDark}}/>
+                                        <Text style={s.addressText}> {this.state.address}</Text> 
+                            </View>
+
                             <Text style={{fontSize: Font.smallSize}}>
                                     <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{this.state.author}</Text>
                             </Text>
+                            
                             <View>
                                 <Text style={[s.jobText, {fontWeight: 'bold', marginTop: 30}]}>Description: </Text>
                                 <View style={s.jobDescription}>
