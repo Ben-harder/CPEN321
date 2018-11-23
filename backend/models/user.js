@@ -55,6 +55,14 @@ var User = new Schema({
     job_pref: {
         type: Schema.ObjectId,
         ref: "JobPref"
+    },
+    up_votes: {
+        type: Number,
+        required: true
+    },
+    down_votes: {
+        type: Number,
+        required: true
     }
 });
 

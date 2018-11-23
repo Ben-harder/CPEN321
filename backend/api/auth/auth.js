@@ -31,6 +31,7 @@ module.exports = {
       {job_type: "Beat My Beef", num_of_occurrences: 0},
       {job_type: "Wain My Wain", num_of_occurrences: 0}
     ];
+
     user.first_name = req.body.firstName;
     user.last_name = req.body.lastName;
     user.phone_number = req.body.phoneNumber;
@@ -42,14 +43,22 @@ module.exports = {
     user.is_employer = false;
     user.images = [];
     user.job_pref = jobPref._id;
-    
-    // save the user
-    user.save(function (err) {
+    user.up_votes = 0;
+    user.down_votes = 0;
+
+    jobPref.save(function (err) {
         if (err) {
           ret.errorMessage = err.message;
           return res.status(500).send(ret);
         }
-        return res.status(200).send(user);
+        // save the user
+        user.save(function (err) {
+            if (err) {
+              ret.errorMessage = err.message;
+              return res.status(500).send(ret);
+            }
+            return res.status(200).send(user);
+        });
     });
   },
 

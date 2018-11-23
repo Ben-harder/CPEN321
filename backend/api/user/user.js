@@ -95,5 +95,41 @@ module.exports = {
       }
       return res.status(200).send(user);
     });
+  },
+  
+  /**
+  * Update user PW give an ID
+  */
+  rateUser(req, res) {
+    let ret = {};
+    // all fields have to be valid
+    if (req.body.userID === undefined || req.body.rating === undefined) {
+      ret.errorMessage = "All fields have to be filled out";
+      return res.status(500).send(ret);
+    }
+    // all fields have to be valid
+    if ((typeof req.body.rating) !== "boolean") {
+      ret.errorMessage = "Rating has to be boolean";
+      return res.status(500).send(ret);
+    }
+    User.findByIdAndUpdate(req.body.userID,
+    {$set: {hash_password: req.body.password}},
+    {new: true,
+    upsert: true},
+    (err, user) => {
+      // internal err
+      if (err){
+        let ret = {};
+        ret.errorMessage = "Internal error in database"; 
+        return res.status(500).send(ret);
+      }
+      // bad user id
+      if (!user){
+        let ret = {};
+        ret.errorMessage = "User does not exist"; 
+        return res.status(500).send(ret);
+      }
+      return res.status(200).send(user);
+    });
   }
 }

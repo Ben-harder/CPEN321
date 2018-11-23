@@ -49,6 +49,8 @@ describe("Get Employer Jobs.", function () {
     dEmployer.is_working = false;
     dEmployer.is_verified = false;
     dEmployer.is_employer = false;
+    dEmployer.up_votes = 0;
+    dEmployer.down_votes = 0;
     dEmployer.images = [];
 
     // save the dEmployer
@@ -117,6 +119,8 @@ describe("Apply for a job.", function () {
     dEmployer.is_working = false;
     dEmployer.is_verified = false;
     dEmployer.is_employer = false;
+    dEmployer.up_votes = 0;
+    dEmployer.down_votes = 0;
     dEmployer.images = [];
 
     // save the dEmployer
@@ -153,6 +157,8 @@ describe("Apply for a job.", function () {
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;
+    user.up_votes = 0;
+    user.down_votes = 0;
     user.images = [];
 
     // save the user
@@ -218,6 +224,8 @@ describe("Get Applied-For Jobs", function () {
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;
+    user.up_votes = 0;
+    user.down_votes = 0;
     user.images = [];
 
     // save the user
@@ -253,6 +261,8 @@ describe("Get Applied-For Jobs", function () {
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;
+    user.up_votes = 0;
+    user.down_votes = 0;
     user.images = [];
 
     // save the user
@@ -450,8 +460,12 @@ describe("Get all Jobs Ranked", function () {
     dUser.is_working = false;
     dUser.is_verified = false;
     dUser.is_employer = false;
+    dUser.up_votes = 0;
+    dUser.down_votes = 0;
     dUser.images = [];
     dUser.job_pref = jobPref._id;
+    dUser.up_votes = 0;
+    dUser.down_votes = 0;
 
     // save the user
     dUser.save((err) => {
@@ -585,6 +599,8 @@ describe("Get all Jobs Ranked", function () {
     dUser.is_working = false;
     dUser.is_verified = false;
     dUser.is_employer = false;
+    dUser.up_votes = 0;
+    dUser.down_votes = 0;
     dUser.images = [];
     dUser.job_pref = jobPref._id;
 
@@ -674,6 +690,8 @@ describe("User Is Able To Apply", function () {
     dEmployer.is_working = false;
     dEmployer.is_verified = false;
     dEmployer.is_employer = false;
+    dEmployer.up_votes = 0;
+    dEmployer.down_votes = 0;
     dEmployer.images = [];
 
     // create a new user
@@ -687,6 +705,8 @@ describe("User Is Able To Apply", function () {
     dEmployee.is_working = false;
     dEmployee.is_verified = false;
     dEmployee.is_employer = false;
+    dEmployee.up_votes = 0;
+    dEmployee.down_votes = 0;
     dEmployee.images = [];
 
     // save the dEmployee
@@ -746,6 +766,8 @@ describe("User Is Able To Apply", function () {
     dEmployer.is_working = false;
     dEmployer.is_verified = false;
     dEmployer.is_employer = false;
+    dEmployer.up_votes = 0;
+    dEmployer.down_votes = 0;
     dEmployer.images = [];
 
     // save the dEmployer
@@ -798,6 +820,8 @@ describe("User Is Able To Apply", function () {
     dEmployer.is_working = false;
     dEmployer.is_verified = false;
     dEmployer.is_employer = false;
+    dEmployer.up_votes = 0;
+    dEmployer.down_votes = 0;
     dEmployer.images = [];
 
     // save the dEmployer
@@ -834,6 +858,8 @@ describe("User Is Able To Apply", function () {
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;
+    user.up_votes = 0;
+    user.down_votes = 0;
     user.images = [];
 
     // save the user
@@ -1121,6 +1147,8 @@ describe("Complete a job", function () {
     employee.is_working = false;
     employee.is_verified = false;
     employee.is_employer = false;
+    employee.up_votes = 0;
+    employee.down_votes = 0;
     employee.images = [];
 
     // save the employee
@@ -1175,6 +1203,8 @@ describe("Complete a job", function () {
     employee.is_working = false;
     employee.is_verified = false;
     employee.is_employer = false;
+    employee.up_votes = 0;
+    employee.down_votes = 0;
     employee.images = [];
 
     // save the employee
@@ -1279,6 +1309,8 @@ describe("Accept an applicant", function () {
     employee.is_working = false;
     employee.is_verified = false;
     employee.is_employer = false;
+    employee.up_votes = 0;
+    employee.down_votes = 0;
     employee.images = [];
 
     // save the employee
@@ -1334,6 +1366,8 @@ describe("Accept an applicant", function () {
     employee.is_working = false;
     employee.is_verified = false;
     employee.is_employer = false;
+    employee.up_votes = 0;
+    employee.down_votes = 0;
     employee.images = [];
 
     // save the employee
@@ -1391,6 +1425,8 @@ describe("Accept an applicant", function () {
     employee.is_working = false;
     employee.is_verified = false;
     employee.is_employer = false;
+    employee.up_votes = 0;
+    employee.down_votes = 0;
     employee.images = [];
 
     // save the employee

@@ -13,6 +13,7 @@ module.exports = function (app) {
   app.post("/user/change-info", user.changeUserInfo);
   app.post("/user/update-password", user.changeUserPassword);
   app.post("/user/update-job-preference", user.updateUserJobPreference);
+  app.post("/user/rate-user", user.rateUser);
 
   // job routes
   app.post("/job/create-job", job.createJob);
