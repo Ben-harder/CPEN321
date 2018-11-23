@@ -34,6 +34,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 5,
     fontSize: Font.normSize,
+    fontWeight: 'bold',
+    fontStyle: 'italic',
   },
   footerContainer: {
     padding: 20,
