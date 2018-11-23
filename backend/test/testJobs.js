@@ -19,7 +19,7 @@ chai.use(chaiHttp);
  * Tests for Get Employer Jobs.
  */
 describe("Get Employer Jobs.", function () {
-  var url = "/get-employer-jobs";
+  var url = "/job/get-employer-jobs";
   beforeEach((done) => {
     Job.deleteMany({}, (err) => {
       done();
@@ -295,7 +295,7 @@ describe("Get Applied-For Jobs", function () {
  * Tests for Get All jobs.
  */
 describe("Get all Jobs", function () {
-  var url = "/get-all-jobs";
+  var url = "/job/get-all-jobs";
   beforeEach((done) => {
     Job.deleteMany({}, (err) => {
       done();
@@ -360,7 +360,7 @@ describe("Get all Jobs", function () {
  * Tests for Get All Jobs Ranked.
  */
 describe("Get all Jobs Ranked", function () {
-  var url = "/get-all-jobs-ranked";
+  var url = "/job/get-all-jobs-ranked";
   beforeEach((done) => {
     Job.deleteMany({}, (err) => {
       done();
@@ -854,7 +854,7 @@ describe("User Is Able To Apply", function () {
  * Tests for Create Job.
  */
 describe("Create Job", function () {
-  var url = "/create-job";
+  var url = "/job/create-job";
   beforeEach((done) => {
     Job.deleteMany({}, (err) => {
       done();
