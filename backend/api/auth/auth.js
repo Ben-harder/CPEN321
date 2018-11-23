@@ -2,6 +2,7 @@ const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 var User = require("../../models/user");
 var JobPref = require("../../models/jobPref");
+var Image = require("../../models/image");
 var Job = require("../../models/job");
 var database = require("../../initdb");
 
@@ -24,7 +25,11 @@ module.exports = {
 
     // create a new user
     var jobPref = new JobPref();
+    var profilePicture = new Image();
     var user = new User();
+    user.profile_picture = profilePicture._id;
+    profilePicture.user = user._id;
+    profilePicture.valid = false;
     jobPref.user = user._id;
     jobPref.stats = [
       {job_type: "Feed My Lizard", num_of_occurrences: 0},
@@ -45,19 +50,28 @@ module.exports = {
     user.job_pref = jobPref._id;
     user.up_votes = 0;
     user.down_votes = 0;
+    user.posted_jobs = 0;
+    user.taken_jobs = 0;
 
-    jobPref.save(function (err) {
+    jobPref.save((err) => {
         if (err) {
           ret.errorMessage = err.message;
           return res.status(500).send(ret);
         }
         // save the user
-        user.save(function (err) {
-            if (err) {
-              ret.errorMessage = err.message;
-              return res.status(500).send(ret);
-            }
-            return res.status(200).send(user);
+        profilePicture.save((err) => {
+          if (err) {
+            ret.errorMessage = err.message;
+            return res.status(500).send(ret);
+          }
+          // save the user
+          user.save((err) => {
+              if (err) {
+                ret.errorMessage = err.message;
+                return res.status(500).send(ret);
+              }
+              return res.status(200).send(user);
+          });
         });
     });
   },

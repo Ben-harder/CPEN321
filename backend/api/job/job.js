@@ -41,11 +41,19 @@ module.exports = {
 
     // save the job
     job.save(function (err) {
-        if (err) {
-          ret.errorMessage = err.message;
+      User.findOneAndUpdate({_id: req.body.employerID},
+      {$inc: {posted_jobs: 1}},
+      {upsert:false}, 
+      (err, user) => {
+        // err
+        if (err){
+          let ret = {};
+          ret.errorMessage = "Internal error in database"; 
           return res.status(500).send(ret);
         }
+        // success
         return res.status(200).send(job);
+      });
     });
   },
 
@@ -224,7 +232,7 @@ module.exports = {
       return res.status(500).send(ret);
     }
     Job.findByIdAndUpdate(req.body.jobID,  {$push: {applicants: req.body.userID}},
-    {upsert:true}, function(err, doc){
+    {upsert:true}, (err, doc) => {
       let ret = {};
       if (err) {
         ret.errorMessage = "Internal error in database";
@@ -275,7 +283,7 @@ module.exports = {
       return res.status(500).send(ret);
     }
     Job.findByIdAndUpdate(req.body.jobID,  {$set: {is_compeleted: true}},
-      {upsert:false}, function(err, job){
+      {upsert:false}, (err, job) => {
         // err
         if (err){
           let ret = {};
@@ -316,24 +324,36 @@ module.exports = {
       return res.status(500).send(ret);
     }
     Job.findOneAndUpdate({_id: req.body.jobID ,
-      applicants: {$elemMatch: {$eq: req.body.userID}},
-      is_active: false},  
-      {$set: {is_active: true, employee: req.body.userID}},
-      {upsert:false}, function(err, job){
+    applicants: {$elemMatch: {$eq: req.body.userID}},
+    is_active: false},  
+    {$set: {is_active: true, employee: req.body.userID}},
+    {upsert:false},
+    (err, job) => {
+      // err
+      if (err){
+        let ret = {};
+        ret.errorMessage = "Internal error in database"; 
+        return res.status(500).send(ret);
+      }
+      // can't find one
+      if (!job){
+        let ret = {};
+        ret.errorMessage = "This job is either already assigned or applicant is no longer interested"; 
+        return res.status(400).send(ret);
+      }
+      User.findOneAndUpdate({_id: req.body.userID},
+      {$inc: {taken_jobs: 1}},
+      {upsert:false}, 
+      (err, user) => {
         // err
         if (err){
           let ret = {};
           ret.errorMessage = "Internal error in database"; 
           return res.status(500).send(ret);
         }
-        // can't find one
-        if (!job){
-          let ret = {};
-          ret.errorMessage = "This job is either already assigned or applicant is no longer interested"; 
-          return res.status(400).send(ret);
-        }
         // success
         return res.status(200).send(job);
+      });
     });
   },
 

@@ -51,6 +51,8 @@ describe("Get Employer Jobs.", function () {
     dEmployer.is_employer = false;
     dEmployer.up_votes = 0;
     dEmployer.down_votes = 0;
+    dEmployer.posted_jobs = 0;
+    dEmployer. taken_jobs = 0;
     dEmployer.images = [];
 
     // save the dEmployer
@@ -121,6 +123,8 @@ describe("Apply for a job.", function () {
     dEmployer.is_employer = false;
     dEmployer.up_votes = 0;
     dEmployer.down_votes = 0;
+    dEmployer.posted_jobs = 0;
+    dEmployer. taken_jobs = 0;
     dEmployer.images = [];
 
     // save the dEmployer
@@ -159,6 +163,8 @@ describe("Apply for a job.", function () {
     user.is_employer = false;
     user.up_votes = 0;
     user.down_votes = 0;
+    user.posted_jobs = 0;
+    user. taken_jobs = 0;
     user.images = [];
 
     // save the user
@@ -226,6 +232,8 @@ describe("Get Applied-For Jobs", function () {
     user.is_employer = false;
     user.up_votes = 0;
     user.down_votes = 0;
+    user.posted_jobs = 0;
+    user. taken_jobs = 0;
     user.images = [];
 
     // save the user
@@ -263,6 +271,8 @@ describe("Get Applied-For Jobs", function () {
     user.is_employer = false;
     user.up_votes = 0;
     user.down_votes = 0;
+    user.posted_jobs = 0;
+    user.taken_jobs = 0;
     user.images = [];
 
     // save the user
@@ -462,10 +472,14 @@ describe("Get all Jobs Ranked", function () {
     dUser.is_employer = false;
     dUser.up_votes = 0;
     dUser.down_votes = 0;
+    dUser.posted_jobs = 0;
+    dUser. taken_jobs = 0;
     dUser.images = [];
     dUser.job_pref = jobPref._id;
     dUser.up_votes = 0;
     dUser.down_votes = 0;
+    dUser.posted_jobs = 0;
+    dUser. taken_jobs = 0;
 
     // save the user
     dUser.save((err) => {
@@ -601,6 +615,8 @@ describe("Get all Jobs Ranked", function () {
     dUser.is_employer = false;
     dUser.up_votes = 0;
     dUser.down_votes = 0;
+    dUser.posted_jobs = 0;
+    dUser. taken_jobs = 0;
     dUser.images = [];
     dUser.job_pref = jobPref._id;
 
@@ -692,6 +708,8 @@ describe("User Is Able To Apply", function () {
     dEmployer.is_employer = false;
     dEmployer.up_votes = 0;
     dEmployer.down_votes = 0;
+    dEmployer.posted_jobs = 0;
+    dEmployer. taken_jobs = 0;
     dEmployer.images = [];
 
     // create a new user
@@ -707,6 +725,8 @@ describe("User Is Able To Apply", function () {
     dEmployee.is_employer = false;
     dEmployee.up_votes = 0;
     dEmployee.down_votes = 0;
+    dEmployee.posted_jobs = 0;
+    dEmployee. taken_jobs = 0;
     dEmployee.images = [];
 
     // save the dEmployee
@@ -768,6 +788,8 @@ describe("User Is Able To Apply", function () {
     dEmployer.is_employer = false;
     dEmployer.up_votes = 0;
     dEmployer.down_votes = 0;
+    dEmployer.posted_jobs = 0;
+    dEmployer. taken_jobs = 0;
     dEmployer.images = [];
 
     // save the dEmployer
@@ -822,6 +844,8 @@ describe("User Is Able To Apply", function () {
     dEmployer.is_employer = false;
     dEmployer.up_votes = 0;
     dEmployer.down_votes = 0;
+    dEmployer.posted_jobs = 0;
+    dEmployer. taken_jobs = 0;
     dEmployer.images = [];
 
     // save the dEmployer
@@ -860,6 +884,8 @@ describe("User Is Able To Apply", function () {
     user.is_employer = false;
     user.up_votes = 0;
     user.down_votes = 0;
+    user.posted_jobs = 0;
+    user. taken_jobs = 0;
     user.images = [];
 
     // save the user
@@ -1077,7 +1103,27 @@ describe("Create Job", function () {
   */
   it("Test Case: Success Case", (done) => {
     // create a valid user
+    //     // create a new user
     var dEmployer = new User();
+    dEmployer.first_name = "dummy";
+    dEmployer.last_name = "dummy";
+    dEmployer.phone_number = "hasapplied";
+    dEmployer.hash_password = "dummy";
+    dEmployer.verification_token = undefined;
+    dEmployer.working_job_id = undefined;
+    dEmployer.is_working = false;
+    dEmployer.is_verified = false;
+    dEmployer.is_employer = false;
+    dEmployer.up_votes = 0;
+    dEmployer.down_votes = 0;
+    dEmployer.posted_jobs = 0;
+    dEmployer. taken_jobs = 0;
+    dEmployer.images = [];
+
+    // save the dEmployer
+    dEmployer.save((err) => {
+      return;
+    });
     let job = {
       employerID: dEmployer._id.toString(),
       jobType: "dummy",
@@ -1085,6 +1131,8 @@ describe("Create Job", function () {
       wage: 1,
       address: "dummy"
     };
+    
+    
 
     chai.request(server).post(url).send(job).end((err, res) => {
       res.should.have.status(200);
@@ -1149,6 +1197,8 @@ describe("Complete a job", function () {
     employee.is_employer = false;
     employee.up_votes = 0;
     employee.down_votes = 0;
+    employee.posted_jobs = 0;
+    employee. taken_jobs = 0;
     employee.images = [];
 
     // save the employee
@@ -1205,6 +1255,8 @@ describe("Complete a job", function () {
     employee.is_employer = false;
     employee.up_votes = 0;
     employee.down_votes = 0;
+    employee.posted_jobs = 0;
+    employee. taken_jobs = 0;
     employee.images = [];
 
     // save the employee
@@ -1311,6 +1363,8 @@ describe("Accept an applicant", function () {
     employee.is_employer = false;
     employee.up_votes = 0;
     employee.down_votes = 0;
+    employee.posted_jobs = 0;
+    employee. taken_jobs = 0;
     employee.images = [];
 
     // save the employee
@@ -1368,6 +1422,8 @@ describe("Accept an applicant", function () {
     employee.is_employer = false;
     employee.up_votes = 0;
     employee.down_votes = 0;
+    employee.posted_jobs = 0;
+    employee. taken_jobs = 0;
     employee.images = [];
 
     // save the employee
@@ -1427,6 +1483,8 @@ describe("Accept an applicant", function () {
     employee.is_employer = false;
     employee.up_votes = 0;
     employee.down_votes = 0;
+    employee.posted_jobs = 0;
+    employee. taken_jobs = 0;
     employee.images = [];
 
     // save the employee

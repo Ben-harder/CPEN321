@@ -143,5 +143,41 @@ module.exports = {
       }
       return res.status(200).send(user);
     });
+  },
+  
+  /**
+  * Get user stats
+  */
+  getUserStats(req, res) {
+    let ret = {};
+    // all fields have to be valid
+    if (req.body.userID === undefined) {
+      ret.errorMessage = "All fields have to be filled out";
+      return res.status(500).send(ret);
+    }
+
+    User.findById(req.body.userID).populate('profilePicture')
+    .exec((err, user) => {
+      let ret = {};
+      // internal err
+      if (err){
+        ret.errorMessage = "Internal error in database";
+        return res.status(500).send(ret);
+      }
+      // no match
+      if (!user){
+        ret.errorMessage = "User dose not exist";
+        return res.status(500).send(ret);
+      }
+      var postedJobs;
+      var takenJobs;
+      var upVotes;
+      var downVotes;
+      var profilePicture;
+      upVotes = user.up_votes;
+      downVotes = user.down_votes;
+      profilePicture = user.profile_picture.image_src;
+      takenJobs = user.num;
+   });
   }
 }
