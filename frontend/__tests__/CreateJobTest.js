@@ -53,8 +53,14 @@ describe("Create Job Test", () => {
     NavigationTestUtils.resetInternalState();
   });
 
+  it("Renders the loading screen", async () => {
+    const wrapper = shallow(<CreateJob store={store} />).dive();
+    expect(wrapper.instance()).toMatchSnapshot();
+  });
+
   it("Renders the create job screen", async () => {
     const wrapper = shallow(<CreateJob store={store} />).dive();
+    wrapper.setState({ loading: false });
     expect(wrapper.instance()).toMatchSnapshot();
   });
 
@@ -63,6 +69,8 @@ describe("Create Job Test", () => {
     mockAxios.onPost(`${api}/job/create-job`).reply(200, {});
 
     const wrapper = shallow(<CreateJob store={store} navigation={navigation} />).dive();
+
+    wrapper.setState({ loading: false });
 
     // set text inputs
     wrapper.find({testID: '#address'}).simulate('ChangeText', '123 Wain Street');
@@ -98,6 +106,8 @@ describe("Create Job Test", () => {
 
     const wrapper = shallow(<CreateJob store={store} navigation={navigation} />).dive();
 
+    wrapper.setState({ loading: false });
+
     // set text inputs
     wrapper.find({testID: '#address'}).simulate('ChangeText', '123 Wain Street');
     wrapper.find({testID: '#description'}).simulate('ChangeText', 'A valid description');
@@ -123,6 +133,8 @@ describe("Create Job Test", () => {
   it("Has empty fields", async () => {
     const wrapper = shallow(<CreateJob store={store} navigation={navigation} />).dive();
 
+    wrapper.setState({ loading: false });
+
     // press button
     wrapper.find({testID: '#submit'}).simulate('press');
 
@@ -134,6 +146,8 @@ describe("Create Job Test", () => {
 
   it("Has invalid wage", async () => {
     const wrapper = shallow(<CreateJob store={store} navigation={navigation} />).dive();
+
+    wrapper.setState({ loading: false });
 
     // set text inputs
     wrapper.find({testID: '#address'}).simulate('ChangeText', '123 Wain Street');
@@ -155,6 +169,8 @@ describe("Create Job Test", () => {
   it("Has invalid address", async () => {
     const wrapper = shallow(<CreateJob store={store} navigation={navigation} />).dive();
 
+    wrapper.setState({ loading: false });
+
     // set text inputs
     wrapper.find({testID: '#address'}).simulate('ChangeText', '123 Wain!!!! Street');
     wrapper.find({testID: '#description'}).simulate('ChangeText', 'A valid description');
@@ -174,6 +190,8 @@ describe("Create Job Test", () => {
 
   it("Component unmounts", async () => {
     const wrapper = shallow(<CreateJob store={store} navigation={navigation} />).dive();
+
+    wrapper.setState({ loading: false });
 
     const component = wrapper.instance();
 
