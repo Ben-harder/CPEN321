@@ -23,7 +23,8 @@ import Select from 'react-native-picker-select';
 import Colors from '../constants/Colors';
 import Font from '../constants/Font';
 
-import { MonoText } from '../components/StyledText';
+// components
+import Loading from "../components/Loading";
 
 const s = require('../constants/style');
 
@@ -38,6 +39,7 @@ class CreateJobScreen extends React.Component
             jobType: "",
             wage: "",
             jobTypes: [],
+            loading: true
         };
 
         this.attemptCreateJob = this.attemptCreateJob.bind(this);
@@ -55,7 +57,8 @@ class CreateJobScreen extends React.Component
                 jobTypes[i] = {key: i, label: response.data[i], value: response.data[i]};
             } 
             this.setState({
-                jobTypes: jobTypes
+                jobTypes: jobTypes,
+                loading: false
             });
         }).catch((err) =>
         {
@@ -69,6 +72,7 @@ class CreateJobScreen extends React.Component
 
     render()
     {
+        if (this.state.loading) return (<Loading />);
         return (
             <View style={s.container}>           
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessbile={false}>

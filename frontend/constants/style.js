@@ -1,8 +1,8 @@
 'use strict';
 
 var React = require('react-native');
-import Font from "../constants/Font";
-import Colors from "../constants/Colors";
+import Font from "./Font";
+import Colors from "./Colors";
 
 
 var {
@@ -178,4 +178,8 @@ module.exports = StyleSheet.create({
         height: 200, 
         borderRadius: 20,
     },
+    loadingText: {
+        fontSize: Font.normSize,
+        marginBottom: 15
+    }
 });

@@ -23,6 +23,9 @@ import { connect } from 'react-redux';
 
 import { MonoText } from "../components/StyledText";
 
+// components
+import Loading from "../components/Loading";
+
 const s = require('../constants/style');
 
 class JobBoardScreen extends React.Component
@@ -34,6 +37,7 @@ class JobBoardScreen extends React.Component
         super(props);
         this.state = {
             jobList: [],
+            loading: true
         }
 
         this.tryFetchJobList = this.tryFetchJobList.bind(this);
@@ -61,7 +65,7 @@ class JobBoardScreen extends React.Component
         }).then((response) => {
             // console.log(response.data);
             if (this._isMounted)
-                this.setState({jobList: response.data});
+                this.setState({jobList: response.data, loading: false});
         }).catch((err) => {
             console.log(err.repsonse.data.errorMessage);
         });
@@ -81,6 +85,7 @@ class JobBoardScreen extends React.Component
 
     render()
     {
+        if (this.state.loading) return (<Loading />);
         return (
             <View style={s.container}>
                 <View style={{width: '100%', height: '100%', alignItems: 'center'}}>

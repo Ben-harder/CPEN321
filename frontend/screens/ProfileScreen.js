@@ -10,6 +10,9 @@ import { connect } from "react-redux";
 import api from "../constants/Url";
 import axios from "axios";
 
+// components
+import Loading from "../components/Loading";
+
 // styles
 const s = require('../constants/style');
 
@@ -28,7 +31,8 @@ class Profile extends React.Component
       downVotes: 0,
       upVotes: 0,
       numOfTakenJobs: 0,
-      numOfPostedJobs: 0
+      numOfPostedJobs: 0,
+      loading: true
     };
 
     this.getUserStats = this.getUserStats.bind(this);
@@ -50,7 +54,8 @@ class Profile extends React.Component
         downVotes: res.data.downVotes,
         upVotes: res.data.upVotes,
         numOfTakenJobs: res.data.numOfTakenJobs,
-        numOfPostedJobs: res.data.numOfPostedJobs
+        numOfPostedJobs: res.data.numOfPostedJobs,
+        loading: false
       });
     }).catch((err) => {
       console.log(err);
@@ -60,6 +65,8 @@ class Profile extends React.Component
 
   render() {
     const { user, navigation } = this.props;
+
+    if (this.state.loading) return (<Loading />);
 
     return (
       <View style={s.container}>

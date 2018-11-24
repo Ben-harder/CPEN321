@@ -19,7 +19,8 @@ import api from "../constants/Url";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
 
-import { MonoText } from "../components/StyledText";
+// components
+import Loading from "../components/Loading";
 
 const s = require('../constants/style');
 
@@ -32,6 +33,7 @@ export default class TakenJobsScreen extends React.Component
         super(props);
         this.state = {
             jobList: [],
+            loading: true
         }
 
         this.tryFetchJobList = this.tryFetchJobList.bind(this);
@@ -55,7 +57,7 @@ export default class TakenJobsScreen extends React.Component
         axios.get(`${api}/job/get-taken-jobs`).then((response) => {
             // console.log(response.data);
             if (this._isMounted)
-                this.setState({jobList: response.data});
+                this.setState({jobList: response.data, loading: false});
         }).catch((err) => {
             console.log(err.repsonse.data.errorMessage);
         });
@@ -75,6 +77,7 @@ export default class TakenJobsScreen extends React.Component
 
     render()
     {
+        if (this.state.loading) return (<Loading />);
         return (
             <View style={s.container}>
                 <View style={{width: '100%', height: '100%', alignItems: 'center'}}>

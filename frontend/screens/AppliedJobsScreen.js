@@ -21,7 +21,8 @@ import Colors from "../constants/Colors";
 import Font from "../constants/Font";
 import IOSIcon from "react-native-vector-icons/Ionicons";
 
-import { MonoText } from "../components/StyledText";
+// components
+import Loading from "../components/Loading";
 
 const s = require('../constants/style');
 
@@ -34,6 +35,7 @@ class AppliedJobsScreen extends React.Component
         super(props);
         this.state = {
             jobList: [],
+            loading: true
         }
 
         this.tryFetchJobList = this.tryFetchJobList.bind(this);
@@ -62,7 +64,7 @@ class AppliedJobsScreen extends React.Component
         {
             // console.log(response.data);
             if (this._isMounted)
-                this.setState({ jobList: response.data });
+                this.setState({ jobList: response.data, loading: false });
         }).catch((err) =>
         {
             console.log(err.response.data.errorMessage);
@@ -86,6 +88,7 @@ class AppliedJobsScreen extends React.Component
 
     render()
     {
+        if (this.state.loading) return (<Loading />);
         return (
             <View style={s.container}>
                 <View style={{width: '100%', height: '100%', alignItems: 'center'}}>
