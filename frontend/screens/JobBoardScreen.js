@@ -84,23 +84,41 @@ class JobBoardScreen extends React.Component
         });
     }
 
+    populateJobs()
+    {
+        if (this.state.jobList.length == 0)
+        {
+            return (
+                <View style={{flex: 1, justifyContent: 'center'}}>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={[s.regText,]}>No jobs to view </Text>
+                        <IOSIcon name="ios-sad" size={25} style={{color: Colors.sNorm}}/>
+                    </View>
+                </View>
+            );
+        }
+        else return (
+            <FlatList
+                style={s.jobList}
+                data={this.state.jobList}
+                renderItem={({ item }) => (
+                    <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
+                        <JobItem job={item}/>
+                    </TouchableOpacity>
+                )}
+                keyExtractor={(item, index) => index.toString()}
+            />
+        );
+    }
+
     render()
     {
         if (this.state.loading) return (<Loading />);
         return (
             <View style={s.container}>
                 <View style={{width: '100%', height: '100%', alignItems: 'center'}}>
-                    <FlatList
-                        style={s.jobList}
-                        data={this.state.jobList}
-                        renderItem={({ item }) => (
-                            <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
-                                <JobItem job={item}/>
-                            </TouchableOpacity>
-                        )}
-                        keyExtractor={(item, index) => index.toString()}
-                    />
-                    </View>
+                    {this.populateJobs()}
+                </View>
             </View>
         );
     }
