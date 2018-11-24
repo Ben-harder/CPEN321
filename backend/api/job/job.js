@@ -330,11 +330,20 @@ module.exports = {
       ret.errorMessage = "User is a required field";
       return res.status(500).send(ret);
     }
-    Job.findOneAndUpdate({_id: req.body.jobID ,
-    applicants: {$elemMatch: {$eq: req.body.userID}},
-    is_active: false},  
-    {$set: {is_active: true, employee: req.body.userID}},
-    {upsert:false},
+    Job.findOneAndUpdate({
+      _id: req.body.jobID ,
+      applicants: {$elemMatch: {$eq: req.body.userID}},
+      is_active: false
+    },  
+      {$set: {
+        is_active: true,
+        employee: req.body.userID,
+        applicants: []
+      }
+    },
+      {new: true,
+      upsert:false
+    },
     (err, job) => {
       // err
       if (err){
@@ -409,46 +418,70 @@ module.exports = {
       }
       return res.status(200).send(job);  
     });
-  }
+  },
 
-  // /**
-  //  * Get all the job types.
-  //  */
-  // deleteJobApplication(req, res) {
-  //   // null job
-  //   if (!req.body.jobID) {
-  //     let ret = {};
-  //     ret.errorMessage = "Job is a required field";
-  //     return res.status(500).send(ret);
-  //   }
-  //   // null job
-  //   if (!req.body.userID) {
-  //     let ret = {};
-  //     ret.errorMessage = "User is a required field";
-  //     return res.status(500).send(ret);
-  //   }
-  //   const findQuery = {applicants: {$elemMatch: {$eq: req.body.userID}}};
-  //   Job.findOneAndUpdate({ 
-  //   _id: req.body.jobID,
-  //   employer: req.body.userID,
-  //   $or: [
-  //     {is_compeleted : true},
-  //     {is_active : false}
-  //   ]},
-  //   (err, job) => {
-  //     // err
-  //     if (err){
-  //       let ret = {};
-  //       ret.errorMessage = "Internal error in database"; 
-  //       return res.status(500).send(ret);
-  //     }
-  //     if(!job) {
-  //       let ret = {};
-  //       ret.errorMessage = "Job is either in progress or previously deleted"; 
-  //       return res.status(400).send(ret);
-  //     }
-  //     return res.status(200).send(job);  
-  //   });
-  // }
+  /**
+   * Delete job application.
+   */
+  deleteJobApplication(req, res) {
+    // null job
+    if (!req.body.jobID) {
+      let ret = {};
+      ret.errorMessage = "Job is a required field";
+      return res.status(500).send(ret);
+    }
+    // null job
+    if (!req.body.userID) {
+      let ret = {};
+      ret.errorMessage = "User is a required field";
+      return res.status(500).send(ret);
+    }
+    const findQuery = {applicants: {$elemMatch: {$eq: req.body.userID}}};
+    Job.findOneAndUpdate(findQuery, 
+    {$pull: {applicants: req.body.userID}},
+    {upsert:false,
+    new: true},
+    (err, job) => {
+      // err
+      if (err) {
+        let ret = {};
+        ret.errorMessage = "Internal error in database"; 
+        return res.status(500).send(ret);
+      }
+      if(!job) {
+        let ret = {};
+        ret.errorMessage = "Job is either in progress or previously deleted"; 
+        return res.status(400).send(ret);
+      }
+      return res.status(200).send(job);  
+    });
+  },
+
+  /**
+   * Get my active jobs.
+   */
+  getEmployeeActiveJobs(req, res) {
+    // null job
+    if (!req.query.userID) {
+      let ret = {};
+      ret.errorMessage = "User is a required field";
+      return res.status(500).send(ret);
+    }
+    const findQuery = {$and: [
+      {employee: req.query.userID},
+      {is_compeleted: false}
+    ]};
+    Job.find(findQuery) 
+    .exec((err, jobs) => {
+      // err
+      if (err) {
+        let ret = {};
+        ret.errorMessage = "Internal error in database"; 
+        return res.status(500).send(ret);
+      }
+      // success
+      return res.status(200).send(jobs);  
+    });
+  }
 };
 

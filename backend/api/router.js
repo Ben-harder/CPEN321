@@ -28,5 +28,6 @@ module.exports = function (app) {
   app.post("/job/accept-an-applicant", job.acceptAnApplicant);
   app.get("/job/get-job-types", job.getJobTypes);
   app.post("/job/cancel-job", job.deleteJob);
-  // app.post("/job/cancel-job-application", job.deleteJobApplication);
+  app.post("/job/cancel-application", job.deleteJobApplication);
+  app.get("/job/get-employee-active-jobs", job.getEmployeeActiveJobs);
 };

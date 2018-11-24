@@ -1811,7 +1811,9 @@ describe("Accept an applicant", function () {
       res.should.have.status(200);
       res.body.should.not.have.property('errorMessage');
       res.body.should.be.a("object");
-      res.body.should.have.property("wage");
+      res.body.should.have.property("is_active").eql(true);
+      res.body.should.have.property("employee").eql(employee._id.toString());
+      res.body.applicants.length.should.be.eql(0);
       done();
     });
   });
@@ -1975,6 +1977,343 @@ describe("Get Job Types", function () {
 
     chai.request(server).post(url).send({jobID: job._id.toString(), userID: dEmployer._id.toString()}).end((err, res) => {
       res.should.have.status(200);
+      done();
+    });
+  });
+});
+
+/**
+ * Tests for Delete Application.
+ */
+describe("Delete Application", function () {
+  var url = "/job/cancel-application";
+  beforeEach((done) => {
+    Job.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    Image.deleteMany({}, (err) => {
+      done();
+    });
+  });
+
+  /**
+  * 1)
+  * Test Case: Null jobID.
+  * Input/Output: Pass a NULL request parameter.
+  * Pass/Fail Criteria: Only succeeds if it returns error code
+  *                     (500) with the message “Job is a required field”.
+  */
+  it("Test Case: Null jobID", (done) => {
+    chai.request(server).post(url).send({userID: "dummy"}).end((err, res) => {
+      res.should.have.status(500);
+      res.body.should.have.property('errorMessage').eql('Job is a required field');
+      done();
+    });
+  });
+
+  /**
+  * 2)
+  * Test Case: Null userID.
+  * Input/Output: Pass a NULL request parameter.
+  * Pass/Fail Criteria: Only succeeds if it returns error code
+  *                     (500) with the message “Job is a required field”.
+  */
+  it("Test Case: Null userID", (done) => {
+    chai.request(server).post(url).send({jobID: "dummy"}).end((err, res) => {
+      res.should.have.status(500);
+      res.body.should.have.property('errorMessage').eql('User is a required field');
+      done();
+    });
+  });
+
+  /**
+  * 3)
+  * Test Case: Success case.
+  * Input/Output: Pass avalid form.
+  * Pass/Fail Criteria: Only succeeds if it returns code
+  *                     (200) with no error message and a job object.
+  */
+  it("Test Case: Success case", (done) => {
+
+    // create a new user
+    var employee = new User();
+    employee.first_name = "dummy";
+    employee.last_name = "dummy";
+    employee.phone_number = "hasapplied";
+    employee.hash_password = "dummy";
+    employee.verification_token = undefined;
+    employee.working_job_id = undefined;
+    employee.is_working = false;
+    employee.is_verified = false;
+    employee.is_employer = false;
+    employee.up_votes = 0;
+    employee.down_votes = 0;
+    employee.posted_jobs = 0;
+    employee. taken_jobs = 0;
+    employee.images = [];
+
+    // save the employee
+    employee.save((err) => {
+      return;
+    });
+    
+    // save the job
+    var dEmployer = new User();
+    var job = new Job();
+    job.job_title = "dummy";
+    job.description = "dummy";
+    job.wage = 0;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = undefined;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = false;
+    job.is_compeleted = false;
+    job.is_active = false;
+    job.applicants = [];
+    job.applicants.push(employee._id);
+
+    // save the job
+    job.save((err) => {
+      return;
+    });
+
+    chai.request(server).post(url).send({jobID: job._id.toString(), userID: employee._id.toString()}).end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.not.have.property('errorMessage');
+      res.body.should.be.a("object");
+      res.body.applicants.length.should.be.eql(0);
+      done();
+    });
+  });
+});
+
+/**
+ * Tests for Delete Application.
+ */
+describe("Delete Application", function () {
+  var url = "/job/get-employee-active-jobs";
+  beforeEach((done) => {
+    Job.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    Image.deleteMany({}, (err) => {
+      done();
+    });
+  });
+
+  /**
+  * 1)
+  * Test Case: Null userID.
+  * Input/Output: Pass a NULL request parameter.
+  * Pass/Fail Criteria: Only succeeds if it returns error code
+  *                     (500) with the message “Job is a required field”.
+  */
+  it("Test Case: Null userID", (done) => {
+    chai.request(server).get(url).end((err, res) => {
+      res.should.have.status(500);
+      res.body.should.have.property('errorMessage').eql('User is a required field');
+      done();
+    });
+  });
+
+  /**
+  * 2)
+  * Test Case: Empty success case.
+  * Input/Output: Pass avalid form.
+  * Pass/Fail Criteria: Only succeeds if it returns code
+  *                     (200) with no error message and a job object.
+  */
+  it("Test Case: Empty success case", (done) => {
+
+    // create a new user
+    var employee = new User();
+    employee.first_name = "dummy";
+    employee.last_name = "dummy";
+    employee.phone_number = "hasapplied";
+    employee.hash_password = "dummy";
+    employee.verification_token = undefined;
+    employee.working_job_id = undefined;
+    employee.is_working = false;
+    employee.is_verified = false;
+    employee.is_employer = false;
+    employee.up_votes = 0;
+    employee.down_votes = 0;
+    employee.posted_jobs = 0;
+    employee. taken_jobs = 0;
+    employee.images = [];
+
+    // save the employee
+    employee.save((err) => {
+      return;
+    });    
+    
+    // save the job
+    var dEmployer = new User();
+    var job = new Job();
+    job.job_title = "dummy";
+    job.description = "dummy";
+    job.wage = 0;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = undefined;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = false;
+    job.is_compeleted = false;
+    job.is_active = false;
+    job.applicants = [];
+    job.applicants.push(employee._id);
+
+    // save the job
+    job.save((err) => {
+      return;
+    });
+
+    chai.request(server).get(url).query({userID: employee._id.toString()}).end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.not.have.property('errorMessage');
+      res.body.length.should.be.eql(0);
+      done();
+    });
+  });
+
+  /**
+  * 3)
+  * Test Case: Inactive success case.
+  * Input/Output: Pass avalid form.
+  * Pass/Fail Criteria: Only succeeds if it returns code
+  *                     (200) with no error message and a job object.
+  */
+  it("Test Case: Completed success case", (done) => {
+
+    // create a new user
+    var employee = new User();
+    var job = new Job();
+    job.employee = employee._id;
+    employee.first_name = "dummy";
+    employee.last_name = "dummy";
+    employee.phone_number = "hasapplied";
+    employee.hash_password = "dummy";
+    employee.verification_token = undefined;
+    employee.working_job_id = undefined;
+    employee.is_working = false;
+    employee.is_verified = false;
+    employee.is_employer = false;
+    employee.up_votes = 0;
+    employee.down_votes = 0;
+    employee.posted_jobs = 0;
+    employee. taken_jobs = 0;
+    employee.images = [];
+
+    // save the employee
+    employee.save((err) => {
+      return;
+    });
+    
+    // save the job
+    var dEmployer = new User();
+    var job = new Job();
+    job.job_title = "dummy";
+    job.description = "dummy";
+    job.wage = 0;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = employee._id;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = false;
+    job.is_compeleted = true;
+    job.is_active = false;
+    job.applicants = [];
+    job.applicants.push(employee._id);
+
+    // save the job
+    job.save((err) => {
+      return;
+    });
+
+    chai.request(server).get(url).query({userID: employee._id.toString()}).end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.not.have.property('errorMessage');
+      res.body.length.should.be.eql(0);
+      done();
+    });
+  });
+
+  /**
+  * 4)
+  * Test Case: Success case.
+  * Input/Output: Pass avalid form.
+  * Pass/Fail Criteria: Only succeeds if it returns code
+  *                     (200) with no error message and a job object.
+  */
+  it("Test Case: Success case", (done) => {
+
+    // create a new user
+    var employee = new User();
+    var job = new Job();
+    job.employee = employee._id;
+    employee.first_name = "dummy";
+    employee.last_name = "dummy";
+    employee.phone_number = "hasapplied";
+    employee.hash_password = "dummy";
+    employee.verification_token = undefined;
+    employee.working_job_id = undefined;
+    employee.is_working = false;
+    employee.is_verified = false;
+    employee.is_employer = false;
+    employee.up_votes = 0;
+    employee.down_votes = 0;
+    employee.posted_jobs = 0;
+    employee. taken_jobs = 0;
+    employee.images = [];
+
+    // save the employee
+    employee.save((err) => {
+      return;
+    });
+    
+    // save the job
+    var dEmployer = new User();
+    var job = new Job();
+    job.job_title = "dummy";
+    job.description = "dummy";
+    job.wage = 0;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = employee._id;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = false;
+    job.is_compeleted = false;
+    job.is_active = false;
+    job.applicants = [];
+
+    // save the job
+    job.save((err) => {
+      return;
+    });
+
+    chai.request(server).get(url).query({userID: employee._id.toString()}).end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.not.have.property('errorMessage');
+      res.body.length.should.be.eql(1);
       done();
     });
   });
