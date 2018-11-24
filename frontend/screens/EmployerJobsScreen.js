@@ -23,6 +23,7 @@ import IOSIcon from "react-native-vector-icons/Ionicons";
 
 // components
 import Loading from "../components/Loading";
+import JobItem from "../components/JobItem";
 
 const s = require('../constants/style');
 
@@ -97,19 +98,7 @@ class EmployerJobsScreen extends React.Component
                         style={s.jobList}
                         data={this.state.jobList}
                         renderItem={({ item }) => (
-                            <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
-                                <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
-                                    <Text style={s.jobTypeText}>{item.job_title}</Text>
-                                    <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
-                                </View>
-                                <View style={{flexDirection: 'row', paddingVertical: 10,}}>
-                                    <IOSIcon name="ios-compass" size={30} style={{color: Colors.sDark}}/>
-                                    <Text style= {s.addressText}> {item.address} </Text> 
-                                </View>
-                                <Text style={{fontSize: Font.smallSize}}>
-                                    <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text>
-                                </Text>
-                            </TouchableOpacity>
+                            <JobItem jobType={item.job_title} address={item.address} first_name={item.employer.first_name} last_name={item.employer.last_name} wage={item.wage}/>
                         )}
                         keyExtractor={(item, index) => index.toString()}
                     />
