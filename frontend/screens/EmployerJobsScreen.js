@@ -98,7 +98,9 @@ class EmployerJobsScreen extends React.Component
                         style={s.jobList}
                         data={this.state.jobList}
                         renderItem={({ item }) => (
-                            <JobItem jobType={item.job_title} address={item.address} first_name={item.employer.first_name} last_name={item.employer.last_name} wage={item.wage}/>
+                            <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
+                                <JobItem job={item}/>
+                            </TouchableOpacity>
                         )}
                         keyExtractor={(item, index) => index.toString()}
                     />
