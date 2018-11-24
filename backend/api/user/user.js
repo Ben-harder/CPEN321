@@ -19,7 +19,6 @@ module.exports = {
     {upsert: true},
     function(err, jobPref) {
       // err
-      console.log(err);
       if (err){
         let ret = {};
         ret.errorMessage = "Internal error in database"; 
