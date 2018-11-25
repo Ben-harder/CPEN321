@@ -124,7 +124,7 @@ module.exports = StyleSheet.create({
     infoText: {
         textAlign: 'center',
         fontSize: Font.normSize,
-        color: Colors.sLight,
+        color: Colors.sNorm,
         fontStyle: 'italic',
     },
     jobText: {
