@@ -30,4 +30,5 @@ module.exports = function (app) {
   app.post("/job/cancel-job", job.deleteJob);
   app.post("/job/cancel-application", job.deleteJobApplication);
   app.get("/job/get-employee-active-jobs", job.getEmployeeActiveJobs);
+  app.get("/job/get-job-applicants", job.getJobApplicants);
 };

@@ -477,6 +477,50 @@ module.exports = {
       // success
       return res.status(200).send(jobs);  
     });
-  }
+  },
+
+  /**
+   * Get all applicants for a specific job if the user
+   * is the employer for that job.
+   */
+  getJobApplicants(req, res) {
+    // null job
+    if (!req.query.userID) {
+      let ret = {};
+      ret.errorMessage = "User is a required field";
+      return res.status(500).send(ret);
+    }
+    // null job
+    if (!req.query.jobID) {
+      let ret = {};
+      ret.errorMessage = "Job is a required field";
+      return res.status(500).send(ret);
+    }
+    const findQuery = {$and: [
+      {employer: req.query.userID},
+      {_id: req.query.jobID}
+    ]};
+    Job.findOne(findQuery)
+    .populate('applicants')
+    .exec((err, job) => {
+      // err
+      if (err) {
+        console.log(err);
+        let ret = {};
+        ret.errorMessage = "Internal error in database"; 
+        return res.status(500).send(ret);
+      }
+      // not user
+      if (!job) {
+        let ret = {};
+        ret.errorMessage = "User is not the employer"; 
+        return res.status(500).send(ret);
+      }
+      // success
+      return res.status(200).send(job.applicants);  
+    });
+  },
+
+  
 };
 
