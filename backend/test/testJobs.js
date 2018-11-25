@@ -258,8 +258,9 @@ describe("Get Applied-For Jobs", function () {
     });
     
     chai.request(server).get(url).query({employeeID: user._id.toString()}).end((err, res) => {
-      res.should.have.status(400);
-      res.body.should.have.property('errorMessage').eql('You have applied for no jobs');
+      res.should.have.status(200);
+      res.body.should.not.have.property('errorMessage');
+      res.body.length.should.be.eql(0);
       done();
     });
   });
@@ -321,6 +322,7 @@ describe("Get Applied-For Jobs", function () {
     chai.request(server).get(url).query({employeeID: user._id.toString()}).end((err, res) => {
       res.should.have.status(200);
       res.body.should.not.have.property('errorMessage');
+      res.body.length.should.be.eql(1);
       done();
     });
     

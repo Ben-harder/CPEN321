@@ -270,11 +270,6 @@ module.exports = {
       if (err){
         return res.status(500).send(jobs);
       }
-      if (!jobs[0]) {
-        let ret = {};
-        ret.errorMessage = "You have applied for no jobs";
-        return res.status(400).send(ret);
-      }
       return res.status(200).send(jobs); 
     });
   },
