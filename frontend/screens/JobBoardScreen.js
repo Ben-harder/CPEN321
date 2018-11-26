@@ -80,7 +80,8 @@ class JobBoardScreen extends React.Component
             author: `${job.employer.first_name} ${job.employer.last_name}`,
             wage: job.wage,
             description: job.description,
-            jobID: job._id
+            jobID: job._id,
+            updateJobList: this.tryFetchJobList
         });
     }
 
@@ -92,7 +93,7 @@ class JobBoardScreen extends React.Component
                 <View style={{flex: 1, justifyContent: 'center'}}>
                     <View style={{flexDirection: 'row'}}>
                         <Text style={[s.regText,]}> No jobs to view </Text>
-                        <IOSIcon name="ios-sad" size={25} style={{color: Colors.sNorm}}/>
+                        <IOSIcon name="ios-sad" size={25} style={{color: Colors.sNorm, marginLeft: 5}}/>
                     </View>
                 </View>
             );

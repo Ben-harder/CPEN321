@@ -78,7 +78,7 @@ class AppliedJobsScreen extends React.Component
                 <View style={{flex: 1, justifyContent: 'center', alignContent: 'center'}}>
                     <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                         <Text style={[s.regText]}>No applications yet </Text>
-                        <IOSIcon name="ios-sad" size={25} style={{color: Colors.sNorm}}/>
+                        <IOSIcon name="ios-sad" size={25} style={{color: Colors.sNorm, marginLeft: 5}}/>
                     </View>
                     <Text style={s.regText}> Start applying you lazy bastard </Text>
                 </View>
