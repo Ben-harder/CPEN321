@@ -176,6 +176,7 @@ module.exports = {
       ret.profilePicture = user.profile_picture.image_src;
       ret.numOfTakenJobs = user.taken_jobs;
       ret.numOfPostedJobs = user.posted_jobs;
+      ret.balance = user.balance;
       return res.status(200).send(ret);
    });
   }

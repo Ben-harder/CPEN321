@@ -949,7 +949,7 @@ describe("Get User Profile", function () {
     user.is_verified = false;
     user.is_employer = false;
     user.is_admin = false;
-    user.balance = 0;
+    user.balance = 1;
     user.up_votes = 0;
     user.down_votes = 0;
     user.posted_jobs = 0;
@@ -977,6 +977,7 @@ describe("Get User Profile", function () {
       res.body.should.have.property('numOfPostedJobs').eql(user.posted_jobs);
       res.body.should.have.property('numOfTakenJobs').eql(user.taken_jobs);
       res.body.should.have.property('profilePicture').eql(profilePicture.image_src);
+      res.body.should.have.property('balance').eql(user.balance);
       done();
     });
   });
@@ -1033,6 +1034,7 @@ describe("Get User Profile", function () {
       res.body.should.have.property('numOfPostedJobs').eql(user.posted_jobs);
       res.body.should.have.property('numOfTakenJobs').eql(user.taken_jobs);
       res.body.should.have.property('profilePicture').eql(profilePicture.image_src);
+      res.body.should.have.property('balance').eql(user.balance);
       done();
     });
   });
