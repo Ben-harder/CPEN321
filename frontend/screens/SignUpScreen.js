@@ -77,8 +77,8 @@ class SignUpScreen extends React.Component {
   }
 
   attemptSignup() {
-    this.setState({ loading: true });
     if (this.state.passwordConfirm) {
+      this.setState({ loading: true });
       axios.post(`${api}/auth/create-user`, {
         phoneNumber: this.state.phoneNumber,
         password: this.state.password,
@@ -96,7 +96,6 @@ class SignUpScreen extends React.Component {
           alert(err.response.data.errorMessage);
         });
     } else {
-      this.setState({ loading: false });
       alert("Please fill out the field");
     }
   }

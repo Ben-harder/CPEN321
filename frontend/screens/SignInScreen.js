@@ -44,8 +44,8 @@ class SignInScreen extends React.Component {
 
   attemptSignIn() {
     const phoneNumber = this.phone.getValue();
-    this.setState({ loading: true });
     if (phoneNumber && this.state.password) {
+      this.setState({ loading: true });
       axios.get(`${api}/auth/sign-in`, {
         params: {
           phoneNumber: phoneNumber,
@@ -63,7 +63,6 @@ class SignInScreen extends React.Component {
         });
     } else {
       alert("Please fill all the fields");
-      this.setState({ loading: false });
     }
   }
 
