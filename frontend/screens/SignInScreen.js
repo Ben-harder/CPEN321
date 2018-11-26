@@ -9,7 +9,8 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
-  ImageBackground
+  ImageBackground,
+  Image,
 } from "react-native";
 import PhoneInput from "react-native-phone-input";
 import {bindActionCreators} from "redux";
@@ -19,6 +20,8 @@ import axios from "axios";
 import phoneNumber from "react-native-phone-input/lib/phoneNumber";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
+
+const logo = require('../assets/images/emplorium-light.png');
 
 // components
 import Loading from "../components/Loading";
@@ -72,13 +75,8 @@ class SignInScreen extends React.Component {
 
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={s.container}>
-          <Text
-            style={[
-            s.welcomeText, {
-              paddingTop: 80
-            }
-          ]}>Emplorium</Text>
+        <View style={[s.container]}>
+          <Image source={logo} style={{flex: 3/5, marginTop: 50, backgroundColor: 'transparent'}} resizeMode={'contain'}/>
           <View style={s.authContainer}>
             <View>
               <Text

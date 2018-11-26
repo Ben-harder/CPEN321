@@ -24,6 +24,8 @@ import Font from "../constants/Font";
 // components
 import Loading from "../components/Loading";
 
+const logo = require('../assets/images/emplorium-light.png');
+
 var s = require('../constants/style');
 
 // actions
@@ -122,12 +124,7 @@ class SignUpScreen extends React.Component {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={s.container}>
-          <Text
-            style={[
-            s.welcomeText, {
-              paddingTop: 80
-            }
-          ]}>Emplorium</Text>
+          <Image source={logo} style={{flex: 3/5, marginTop: 50, backgroundColor: 'transparent',}} resizeMode={'contain'}/>
           {this.state.viewState === 1 && <View style={[s.authContainer]}>
             <Text
               style={[
