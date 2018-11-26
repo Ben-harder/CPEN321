@@ -50,25 +50,25 @@ class SignUpScreen extends React.Component {
   }
 
   checkUserExists() {
+    const phoneNumber = this.phone.getValue();
+
     if (this.phone.isValidNumber()) {
       this.setState({ loading: true });
       axios.get(`${api}/auth/user-exists`, {
         params: {
-          phoneNumber: this.phone.getValue()
+          phoneNumber: phoneNumber
         }
-      })
-        .then((res) => {
+      }).then((res) => {
           this.setState({
-            phoneNumber: this.phone.getValue(),
+            phoneNumber: phoneNumber,
             viewState: 2,
             loading: false
           });
-        })
-        .catch((err) => {
-          // console.log(err.repsonse.data.errorMessage);
-          // alert(err.response.data.errorMessage);
+        }).catch((err) => {
           console.log(err);
-          console.log(err.response);
+          // console.log(err.repsonse.data.errorMessage);
+          alert(err.response.data.errorMessage);
+          console.log(err);
           this.setState({ loading: false });
         });
     } else {

@@ -44,6 +44,7 @@ class SignInScreen extends React.Component {
 
   attemptSignIn() {
     const phoneNumber = this.phone.getValue();
+    
     if (phoneNumber && this.state.password) {
       this.setState({ loading: true });
       axios.get(`${api}/auth/sign-in`, {

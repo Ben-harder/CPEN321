@@ -46,7 +46,6 @@ class ChangePassword extends React.Component
       alert("Your new passwords do not match! Please fill them out again.");
     } else {
       this.setState({ loading: true });
-      
       // login user to see if old password is correct
       axios.get(`${api}/auth/sign-in`, {
         params: {
@@ -57,13 +56,14 @@ class ChangePassword extends React.Component
         axios.post(`${api}/user/update-password`, {
           userID: user.data.ID,
           password: this.state.newPassword,
+          passwordConfirm: this.state.newPasswordConfirm
         }).then((res) => {
           this.setState({ loading: false });
           alert("You have successfully changed your password!");
           this.props.navigation.navigate("ProfileDetails");
         }).catch((err) => {
           this.setState({ loading: false });
-          console.log(err.repsonse.data.errorMessage);
+          console.log(err.response.data.errorMessage);
           alert(err.response.data.errorMessage);
         });
       }).catch((err) => {
