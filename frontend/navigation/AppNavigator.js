@@ -12,7 +12,6 @@ import AuthLoadingScreen from "../screens/AuthLoadingScreen";
 import CreateJobScreen from "../screens/CreateJobScreen";
 import SideMenu from "./SideMenu";
 import JobScreen from "../screens/JobScreen";
-import TakenJobsScreen from "../screens/TakenJobsScreen";
 import EmployerJobsScreen from "../screens/EmployerJobsScreen";
 import JobBoardScreen from "../screens/JobBoardScreen";
 import ProfileScreen from "../screens/ProfileScreen";
@@ -50,20 +49,6 @@ const CreateJobStack = createStackNavigator({CreateJob: CreateJobScreen},
         </TouchableOpacity>
       ),
       title: 'Create Job',
-    })
-  }
-);
-
-const TakenJobsStack = createStackNavigator({TakenJobs: TakenJobsScreen},
-  {
-    navigationOptions: ({navigation}) => ({
-      headerTintColor: 'white',
-      headerStyle: {backgroundColor: Colors.sDark, marginRight: 0, marginLeft: 0, borderBottomWidth: 0, height: 60},
-      headerLeft:(<TouchableOpacity onPress={() => navigation.openDrawer()}>
-        <IOSIcon name="ios-menu" size={30} style={{color: 'white', paddingLeft: 15,}}/>
-        </TouchableOpacity>
-      ),
-      title: 'Taken Jobs',
     })
   }
 );
@@ -127,7 +112,6 @@ const MainApp = createSwitchNavigator(
   {
     App: AppStack,
     CreateJob: CreateJobStack,
-    TakenJobs: TakenJobsStack,
     EmployerJobs: EmployerJobsStack,
     Profile: ProfileStack,
     AppliedJobs: AppliedJobsStack,

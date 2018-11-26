@@ -21,7 +21,8 @@ import Colors from "../constants/Colors";
 import Font from "../constants/Font";
 import IOSIcon from "react-native-vector-icons/Ionicons";
 
-import { MonoText } from "../components/StyledText";
+// components
+import Loading from "../components/Loading";
 
 const s = require('../constants/style');
 
@@ -40,7 +41,8 @@ class JobScreen extends React.Component
             description: "",
             wage: 0,
             address: "",
-            jobID: ""
+            jobID: "",
+            loading: false
         }
     }
 
@@ -67,6 +69,7 @@ class JobScreen extends React.Component
 
     applyForJob()
     {
+        this.setState({ loading: true });
         axios.get(`${api}/job/can-apply`, {
             params: {
                 jobID: this.state.jobID,
@@ -77,13 +80,16 @@ class JobScreen extends React.Component
                 userID: this.props.user.data.ID,
                 jobID: this.state.jobID
             }).then((res) => {
+                this.setState({ loading: false });
                 alert("You applied to the job successfuly.");
                 this.props.navigation.navigate("Main");
             }).catch((err) => {
+                this.setState({ loading: false });
                 console.log(err.repsonse.data.errorMessage);
                 alert(err.response.data.errorMessage);
             });
         }).catch((err) => {
+            this.setState({ loading: false });
             console.log(err.repsonse.data.errorMessage);
             alert(err.response.data.errorMessage);
         });
@@ -92,6 +98,8 @@ class JobScreen extends React.Component
 
     render()
     {
+        if (this.state.loading) return <Loading />;
+
         return (
             <View style={s.container}>
                 <View style={[s.contentContainer,]}>

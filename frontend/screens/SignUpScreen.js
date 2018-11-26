@@ -21,6 +21,9 @@ import axios from "axios";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
 
+// components
+import Loading from "../components/Loading";
+
 var s = require('../constants/style');
 
 // actions
@@ -36,39 +39,29 @@ class SignUpScreen extends React.Component {
       password: "",
       passwordConfirm: "",
       firstName: "",
-      lastName: ""
+      lastName: "",
+      loading: false
     };
 
-    this.attemptSignup = this
-      .attemptSignup
-      .bind(this);
-    this.checkUserExists = this
-      .checkUserExists
-      .bind(this);
-    this.inputPassword = this
-      .inputPassword
-      .bind(this);
-    this.inputName = this
-      .inputName
-      .bind(this);
+    this.attemptSignup = this.attemptSignup.bind(this);
+    this.checkUserExists = this.checkUserExists.bind(this);
+    this.inputPassword = this.inputPassword.bind(this);
+    this.inputName = this.inputName.bind(this);
   }
 
   checkUserExists() {
     if (this.phone.isValidNumber()) {
-      axios
-        .get(`${api}/auth/user-exists`, {
+      this.setState({ loading: true });
+      axios.get(`${api}/auth/user-exists`, {
         params: {
-          phoneNumber: this
-            .phone
-            .getValue()
+          phoneNumber: this.phone.getValue()
         }
       })
         .then((res) => {
           this.setState({
-            phoneNumber: this
-              .phone
-              .getValue(),
-            viewState: 2
+            phoneNumber: this.phone.getValue(),
+            viewState: 2,
+            loading: false
           });
         })
         .catch((err) => {
@@ -76,6 +69,7 @@ class SignUpScreen extends React.Component {
           // alert(err.response.data.errorMessage);
           console.log(err);
           console.log(err.response);
+          this.setState({ loading: false });
         });
     } else {
       alert("Invalid phone number");
@@ -84,6 +78,7 @@ class SignUpScreen extends React.Component {
 
   attemptSignup() {
     if (this.state.passwordConfirm) {
+      this.setState({ loading: true });
       axios.post(`${api}/auth/create-user`, {
         phoneNumber: this.state.phoneNumber,
         password: this.state.password,
@@ -91,10 +86,12 @@ class SignUpScreen extends React.Component {
         firstName: this.state.firstName,
         lastName: this.state.lastName
       }).then(async(res) => {
+        this.setState({ loading: false });
           await AsyncStorage.setItem("userToken", "abc");
           this.props.actions.userData(res.data);
           this.props.navigation.navigate("App");
         }).catch((err) => {
+          this.setState({ loading: false });
           console.log(err.repsonse.data.errorMessage);
           alert(err.response.data.errorMessage);
         });
@@ -120,6 +117,8 @@ class SignUpScreen extends React.Component {
   }
 
   render() {
+    if (this.state.loading) return <Loading />;
+
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={s.container}>

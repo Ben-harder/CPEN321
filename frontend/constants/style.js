@@ -182,5 +182,18 @@ module.exports = StyleSheet.create({
         color: Colors.sDark,
         fontSize: Font.normSize,
         marginBottom: 15
-    }
+    },
+    navHeader: {
+        // flex: 1,
+        justifyContent: 'space-evenly',
+        backgroundColor: Colors.sDark,
+        width: '100%',
+        flexDirection: 'row',
+        paddingVertical: 50,
+    },
+    navItem: {
+        justifyContent: 'center',
+        paddingVertical: 25,
+        width: '100%',
+    },
 });
