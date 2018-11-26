@@ -3,60 +3,61 @@ import React, {Component} from "react";
 import {NavigationActions} from "react-navigation";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import {ScrollView, Text, View, StyleSheet, AsyncStorage} from "react-native";
+import {ScrollView, Text, View, StyleSheet, AsyncStorage, Image} from "react-native";
 import { StackNavigator } from "react-navigation";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
+import { TouchableOpacity } from 'react-native';
+import api from "../constants/Url";
+import axios from "axios";
+import IOSIcon from "react-native-vector-icons/Ionicons";
+
+const s = require('../constants/style');
+
+const placeholderImage = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
 
 // actions
 import * as actions from "../actions/";
-
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 20,
-    flex: 1,
-    backgroundColor: "#E1E2E1",
-  },
-  navItemStyle: {
-    padding: 10,
-    textAlign: "center",
-    fontSize: Font.normSize,
-  },
-  navSectionStyle: {
-    backgroundColor: "#E1E2E1",
-    borderBottomWidth: 2,
-    borderBottomColor: Colors.sDark,
-    paddingVertical: 10
-  },
-  sectionHeadingStyle: {
-    paddingTop: 20,
-    textAlign: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 5,
-    fontSize: Font.normSize,
-    fontWeight: 'bold',
-    fontStyle: 'italic',
-  },
-  footerContainer: {
-    padding: 20,
-  },
-  button: {
-    fontSize: Font.butSize,
-    color: Colors.buttonText,
-    fontWeight: Font.thick,
-    padding: 10,
-    borderRadius: 10,
-    borderColor: Colors.sNorm,
-    backgroundColor: Colors.sNorm,
-    overflow: "hidden",
-  },
-});
 
 class SideMenu extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      downVotes: 0,
+      upVotes: 0,
+      numOfTakenJobs: 0,
+      numOfPostedJobs: 0,
+      loading: true,
+    };
+
+    this.getUserStats = this.getUserStats.bind(this);
     this.signOut = this.signOut.bind(this);
+  }
+
+  componentDidMount() {
+    this.getUserStats();
+  }
+
+  getUserStats() {
+    const { user } = this.props;
+
+    axios.get(`${api}/user/get-user-profile`, {
+      params: {
+        userID: user.data.ID
+      }
+    }).then((res) => {
+      this.setState({
+        downVotes: res.data.downVotes,
+        upVotes: res.data.upVotes,
+        numOfTakenJobs: res.data.numOfTakenJobs,
+        numOfPostedJobs: res.data.numOfPostedJobs,
+        loading: false
+      });
+    }).catch((err) => {
+      console.log(err);
+      alert(err.response.data.errorMessage);
+    });
   }
 
   navigateToScreen = (route) => () => {
@@ -73,51 +74,65 @@ class SideMenu extends Component {
   }
 
   render () {
-    return (
-      <View style={styles.container}>
-        <ScrollView>
-          <View style={styles.navSectionStyle}>
-            <Text style={styles.sectionHeadingStyle}>
-              Welcome {this.props.user.data.firstName}
+
+    return ( 
+      <View style={s.container}>
+        <View style={s.navHeader}>
+          <Image source={{ uri: placeholderImage }} style={[s.profilePicture, {width: 75, height: 75}]} />
+          <View style={{justifyContent: 'space-evenly'}}>
+            <Text style={[s.regTextBold,{fontStyle: 'italic', color: 'white'}]}>
+              <Text> Welcome {this.props.user.data.firstName} </Text>
             </Text>
+
+            <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+              <View style={{flexDirection: 'row'}}>
+                <IOSIcon name={'ios-thumbs-up'} size={30} color={Colors.sLight}/>
+                <Text style={[s.regTextBold, {color: 'white'}]}> {this.state.upVotes} </Text>
+              </View>
+
+              <View style={{flexDirection: 'row'}}>
+                <IOSIcon name={'ios-thumbs-down'} size={30} color={Colors.sLight}/>
+                <Text style={[s.regTextBold, {color: 'white'}]}> {this.state.downVotes} </Text>
+              </View>
+            </View>
           </View>
-          <View style={styles.navSectionStyle}>
-            <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate("CreateJob")}}>
+        </View>
+        <ScrollView style={{width: '100%'}}>
+          <View style={s.navItem}>
+            <Text style={s.regText} onPress={() => {this.props.navigation.navigate("CreateJob")}}>
               Create Job
             </Text>
           </View>
-          <View style={styles.navSectionStyle}>
-            <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate("Main")}}>
+          <View style={s.navItem}>
+            <Text style={s.regText} onPress={() => {this.props.navigation.navigate("Main")}}>
               Browse
             </Text>
           </View>          
-          <View style={styles.navSectionStyle}>
-            <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate("EmployerJobs")}}>
+          <View style={s.navItem}>
+            <Text style={s.regText} onPress={() => {this.props.navigation.navigate("EmployerJobs")}}>
               My Job Postings
             </Text>
           </View>
-          <View style={styles.navSectionStyle}>
-            <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate("ActiveJobs")}}>
+          <View style={s.navItem}>
+            <Text style={s.regText} onPress={() => {this.props.navigation.navigate("ActiveJobs")}}>
               Active Jobs
             </Text>
           </View>
-          <View style={styles.navSectionStyle}>
-            <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate("AppliedJobs")}}>
+          <View style={s.navItem}> 
+            <Text style={s.regText} onPress={() => {this.props.navigation.navigate("AppliedJobs")}}>
               Job Applications
             </Text>
           </View>
-          <View style={styles.navSectionStyle}>
-            <Text style={styles.navItemStyle} onPress={() => {this.props.navigation.navigate("Profile")}}>
+          <View style={s.navItem}>
+            <Text style={s.regText} onPress={() => {this.props.navigation.navigate("Profile")}}>
               My Profile
             </Text>
           </View>
         </ScrollView>
-        <View style={styles.footerContainer}>
-          <View>
-            <Text style={[styles.navItemStyle, styles.button]} onPress={this.signOut}>
-              Sign Out
-            </Text>
-          </View>
+        <View style={{width: '90%', paddingVertical: 20}}>
+          <TouchableOpacity style={s.textLink} onPress={this.signOut}>
+            <Text style={s.textLinkText}> Sign Out </Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
