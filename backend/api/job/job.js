@@ -531,15 +531,15 @@ module.exports = {
    * This doesn't actually pay the employee, the money 
    * is kept in the system until the job is completed.
    */
-  payEmployee(req, res) {
+  chargeEmployer(req, res) {
     // null employee
-    if (!req.body.emplyeeID) {
+    if (!req.body.employeeID) {
       let ret = {};
       ret.errorMessage = "Employee is a required field";
       return res.status(500).send(ret);
     }
     // null employer
-    if (!req.body.emplyerID) {
+    if (!req.body.employerID) {
       let ret = {};
       ret.errorMessage = "Employer is a required field";
       return res.status(500).send(ret);
@@ -554,7 +554,6 @@ module.exports = {
     .populate('employer')
     .populate('applicants')
     .exec((err, job) => {
-      console.log(job);
       // err
       if (err) {
         let ret = {};
@@ -568,14 +567,19 @@ module.exports = {
         return res.status(400).send(ret);
       }
       // not employer
-      if (job.employer.toString() !== req.body.employerID.toString) {
+      if (job.employer._id.toString() !== req.body.employerID.toString()) {
         let ret = {};
         ret.errorMessage = "Looks like job was deleted!"; 
         return res.status(400).send(ret);
       }
+      // make sure applicant is actually an applicant
+      var i = 0;
+      for (i = 0; i < job.applicants.length; i++) {
+        if (job.applicants[i]._id.toString() === req.body.employeeID.toString())
+          break;
+      }
       // not applicant
-      if (job.applicant.indexOf(req.body.employeeID) < 0) {
-        console.log("FUCK");
+      if (i == job.applicants.length) {
         let ret = {};
         ret.errorMessage = "Looks like this user is no longer an applicant!"; 
         return res.status(400).send(ret);
@@ -585,7 +589,6 @@ module.exports = {
       {$inc: {balance : -(job.wage)}},
       {new: true},
       (err, user) => {
-        console.log(user);
         // err
         if (err || !user) {
           let ret = {};
@@ -593,7 +596,7 @@ module.exports = {
           return res.status(500).send(ret);
         }
         // success
-        return res.status(200).send(job.applicants);  
+        return res.status(200).send(user);  
 
         })
     });
