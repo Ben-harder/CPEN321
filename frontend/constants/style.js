@@ -192,4 +192,9 @@ module.exports = StyleSheet.create({
         paddingVertical: 25,
         width: '100%',
     },
+    logo: {
+        flex: 3/5, 
+        marginTop: 50, 
+        backgroundColor: 'transparent',
+    },
 });

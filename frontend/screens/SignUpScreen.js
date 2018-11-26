@@ -124,7 +124,7 @@ class SignUpScreen extends React.Component {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={s.container}>
-          <Image source={logo} style={{flex: 3/5, marginTop: 50, backgroundColor: 'transparent',}} resizeMode={'contain'}/>
+          <Image source={logo} style={s.logo} resizeMode={'contain'}/>
           {this.state.viewState === 1 && <View style={[s.authContainer]}>
             <Text
               style={[
