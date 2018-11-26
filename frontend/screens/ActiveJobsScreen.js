@@ -68,7 +68,7 @@ class ActiveJobs extends React.Component
         }).catch((err) =>
         {
             console.log(err);
-            console.log(err.repsonse.data.errorMessage);
+            alert(err.repsonse.data.errorMessage);
         });
     }
 
@@ -84,8 +84,9 @@ class ActiveJobs extends React.Component
             showAction: true,
             showPrimaryButton: false,
             primaryButtonText: "",
-            secondaryButtonText: "Cancel Application",
-            source: "ActiveJobs"
+            secondaryButtonText: "Complete Job",
+            source: "ActiveJobs",
+            updateJobList: this.tryFetchJobList
         });
     }
 

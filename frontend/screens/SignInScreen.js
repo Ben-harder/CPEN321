@@ -20,6 +20,9 @@ import phoneNumber from "react-native-phone-input/lib/phoneNumber";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
 
+// components
+import Loading from "../components/Loading";
+
 // actions
 import * as actions from "../actions/";
 
@@ -30,7 +33,8 @@ class SignInScreen extends React.Component {
     super(props);
 
     this.state = {
-      password: ""
+      password: "",
+      loading: false
     };
 
     this.attemptSignIn = this
@@ -39,9 +43,8 @@ class SignInScreen extends React.Component {
   }
 
   attemptSignIn() {
-    const phoneNumber = this
-      .phone
-      .getValue();
+    const phoneNumber = this.phone.getValue();
+    this.setState({ loading: true });
     if (phoneNumber && this.state.password) {
       axios.get(`${api}/auth/sign-in`, {
         params: {
@@ -49,19 +52,24 @@ class SignInScreen extends React.Component {
           password: this.state.password
         }
       }).then(async(res) => {
+        this.setState({ loading: false });
           await AsyncStorage.setItem("userToken", "abc");
           this.props.actions.userData(res.data);
           this.props.navigation.navigate("App");
         }).catch((err) => {
+          this.setState({ loading: false });
           console.log(err.repsonse.data.errorMessage);
           alert(err.response.data.errorMessage);
         });
     } else {
       alert("Please fill all the fields");
+      this.setState({ loading: false });
     }
   }
 
   render() {
+    if (this.state.loading) return <Loading />;
+
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={s.container}>

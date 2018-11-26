@@ -21,8 +21,8 @@ import Colors from "../constants/Colors";
 import Font from "../constants/Font";
 import IOSIcon from "react-native-vector-icons/Ionicons";
 
-
-import { MonoText } from "../components/StyledText";
+// components
+import Loading from "../components/Loading";
 
 const s = require('../constants/style');
 
@@ -48,12 +48,14 @@ class JobDetailsScreen extends React.Component
             secondaryButtonText: "",
             source: "Main",
             primarySource: "Main",
-            inProgress: false
+            inProgress: false,
+            loading: false
         }
 
         this.primaryButtonAction = this.primaryButtonAction.bind(this);
         this.secondaryButtonAction = this.secondaryButtonAction.bind(this);
         this.activateJob = this.activateJob.bind(this);
+        this.completeJob = this.completeJob.bind(this);
     }
 
     componentDidMount() {
@@ -90,12 +92,16 @@ class JobDetailsScreen extends React.Component
         const { state, setParams, navigate } = this.props.navigation;
         const params = state.params || {};
 
+        this.setState({ loading: true });
+
         let apiCall;
         // cancel job
         if (this.state.source === "EmployerJobs") {
             apiCall = `${api}/job/cancel-job`;
         } else if (this.state.source === "AppliedJobs") {
             apiCall = `${api}/job/cancel-application`;
+        } else if (this.state.source === "ActiveJobs") {
+            return this.completeJob();
         }
 
         if (apiCall) {
@@ -103,14 +109,23 @@ class JobDetailsScreen extends React.Component
                 userID: this.props.user.data.ID,
                 jobID: this.state.jobID
             }).then((res) => {
+                this.setState({ loading: false });
                 params.updateJobList();
                 alert("You've successfully cancelled the job post.");
                 this.props.navigation.navigate(this.state.source);
             }).catch((err) => {
+                this.setState({ loading: false });
                 console.log(err);
                 alert(err.response.data.errorMessage);
             });
         }
+    }
+
+    completeJob() {
+        const { state, setParams, navigate } = this.props.navigation;
+        const params = state.params || {};
+
+        
     }
 
     activateJob() {
@@ -119,6 +134,8 @@ class JobDetailsScreen extends React.Component
 
     render()
     {
+        if (this.state.loading) return <Loading />;
+
         return (
             <View style={s.container}>
                 <View style={[s.contentContainer]}>

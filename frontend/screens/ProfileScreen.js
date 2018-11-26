@@ -102,6 +102,9 @@ class Profile extends React.Component
       navigation.navigate("JobDetails");
       alert("Successfully accepted the applicant");
     }).catch((err) => {
+      this.setState({
+        loading: false
+      });
       alert(err.response.data.errorMessage);
     });
   }

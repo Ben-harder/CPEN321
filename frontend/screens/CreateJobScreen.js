@@ -70,6 +70,45 @@ class CreateJobScreen extends React.Component
         console.disableYellowBox = false;
     }
 
+    attemptCreateJob()
+    {
+        const { address, description, jobType, wage } = this.state;
+
+        if (address.toString() == "Address" || description.toString() == "Description"
+            || address.toString().length <= 0 || description.toString().length <= 0 ||
+            wage.toString().length <= 0)
+        {
+            alert("Please ensure you've field out the fields.");
+        }
+        else if (!/^[0-9]+(\.[0-9]{1,2})?$/.test(wage))
+        {
+            alert("Wage must be a valid format!");
+        }
+        else if (!/^\s*\S+(?:\s+\S+){2}/.test(address) || !/^[a-zA-Z 0-9\.\-]*$/.test(address))
+        {
+            alert("Address must be a valid address!");
+        }
+        else
+        {
+            this.setState({ loading: true });
+            axios.post(`${api}/job/create-job`, {
+                address: address,
+                description: description,
+                jobType: jobType,
+                wage: wage,
+                employerID: this.props.user.data.ID,
+            }).then((res) => {
+                this.setState({ loading: false });
+                alert("You've successfully created the job post.");
+                this.props.navigation.navigate("App");
+            }).catch((err) => {
+                // console.log(err.repsonse.data.errorMessage);
+                this.setState({ loading: false });
+                alert(err.response.data.errorMessage);
+            });
+        }
+    }
+
     render()
     {
         if (this.state.loading) return (<Loading />);
@@ -150,42 +189,6 @@ class CreateJobScreen extends React.Component
                 </TouchableWithoutFeedback>
             </View>
         );
-    }
-
-    attemptCreateJob()
-    {
-        const { address, description, jobType, wage } = this.state;
-
-        if (address.toString() == "Address" || description.toString() == "Description"
-            || address.toString().length <= 0 || description.toString().length <= 0 ||
-            wage.toString().length <= 0)
-        {
-            alert("Please ensure you've field out the fields.");
-        }
-        else if (!/^[0-9]+(\.[0-9]{1,2})?$/.test(wage))
-        {
-            alert("Wage must be a valid format!");
-        }
-        else if (!/^\s*\S+(?:\s+\S+){2}/.test(address) || !/^[a-zA-Z 0-9\.\-]*$/.test(address))
-        {
-            alert("Address must be a valid address!");
-        }
-        else
-        {
-            axios.post(`${api}/job/create-job`, {
-                address: address,
-                description: description,
-                jobType: jobType,
-                wage: wage,
-                employerID: this.props.user.data.ID,
-            }).then((res) => {
-                alert("You've successfully created the job post.");
-                this.props.navigation.navigate("App");
-            }).catch((err) => {
-                // console.log(err.repsonse.data.errorMessage);
-                alert(err.response.data.errorMessage);
-            });
-        }
     }
 }
 
