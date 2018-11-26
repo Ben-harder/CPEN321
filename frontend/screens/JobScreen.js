@@ -69,6 +69,9 @@ class JobScreen extends React.Component
 
     applyForJob()
     {
+        const { state, setParams, navigate } = this.props.navigation;
+        const params = state.params || {};
+        
         this.setState({ loading: true });
         axios.get(`${api}/job/can-apply`, {
             params: {
@@ -81,6 +84,7 @@ class JobScreen extends React.Component
                 jobID: this.state.jobID
             }).then((res) => {
                 this.setState({ loading: false });
+                params.updateJobList();
                 alert("You applied to the job successfuly.");
                 this.props.navigation.navigate("Main");
             }).catch((err) => {

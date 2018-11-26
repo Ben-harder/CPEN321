@@ -125,7 +125,20 @@ class JobDetailsScreen extends React.Component
         const { state, setParams, navigate } = this.props.navigation;
         const params = state.params || {};
 
-        
+        this.setState({ loading: true });
+
+        axios.post(`${api}/job/complete-a-job`, {
+            jobID: this.state.jobID
+        }).then((res) => {
+            this.setState({ loading: false });
+            params.updateJobList();
+            alert("You've successfully completed the job!");
+            this.props.navigation.navigate(this.state.source);
+        }).catch((err) => {
+            this.setState({ loading: false });
+            console.log(err);
+            alert(err.response.data.errorMessage);
+        });
     }
 
     activateJob() {

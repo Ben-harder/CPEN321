@@ -80,7 +80,8 @@ class JobBoardScreen extends React.Component
             author: `${job.employer.first_name} ${job.employer.last_name}`,
             wage: job.wage,
             description: job.description,
-            jobID: job._id
+            jobID: job._id,
+            updateJobList: this.tryFetchJobList
         });
     }
 
