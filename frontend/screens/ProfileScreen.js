@@ -34,22 +34,40 @@ class Profile extends React.Component
       upVotes: 0,
       numOfTakenJobs: 0,
       numOfPostedJobs: 0,
-      loading: true
+      loading: true,
+      userProfile: true,
+      userID: "",
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
+      jobID: ""
     };
 
     this.getUserStats = this.getUserStats.bind(this);
+    this.acceptApplicant = this.acceptApplicant.bind(this);
+    this.declineApplicant = this.declineApplicant.bind(this);
   }
 
   componentDidMount() {
+    const { user, navigation } = this.props;
+
     this.getUserStats();
+    this.setState({
+      userProfile: navigation.getParam("userProfile", true),
+      userID: navigation.getParam("userID", user.data.ID),
+      firstName: navigation.getParam("firstName", user.data.firstName),
+      lastName: navigation.getParam("lastName", user.data.lastName),
+      phoneNumber: navigation.getParam("phoneNumber", user.data.phoneNumber),
+      jobID: navigation.getParam("jobID", "NO JOBID")
+    });
   }
 
   getUserStats() {
-    const { user } = this.props;
+    const { user, navigation } = this.props;
 
     axios.get(`${api}/user/get-user-profile`, {
       params: {
-        userID: user.data.ID
+        userID: navigation.getParam("userID", user.data.ID)
       }
     }).then((res) => {
       this.setState({
@@ -65,6 +83,33 @@ class Profile extends React.Component
     });
   }
 
+  acceptApplicant() {
+    const { navigation } = this.props;
+    const { state, setParams, navigate } = navigation;
+    const params = state.params || {};
+
+    this.setState({
+      loading: true
+    });
+    axios.post(`${api}/job/accept-an-applicant`, {
+      jobID: this.state.jobID,
+      userID: this.state.userID
+    }).then((res) => {
+      this.setState({
+        loading: false
+      });
+      params.activateJob();
+      navigation.navigate("JobDetails");
+      alert("Successfully accepted the applicant");
+    }).catch((err) => {
+      alert(err.response.data.errorMessage);
+    });
+  }
+
+  declineApplicant() {
+
+  }
+
   render() {
     const { user, navigation } = this.props;
 
@@ -74,9 +119,9 @@ class Profile extends React.Component
       <View style={[s.container, {justifyContent: 'flex-end'}]}>
         <View style={[s.contentContainer, {flex: 1, alignItems: 'center', justifyContent: 'space-around', paddingBottom: 20}]}>
             <Image source={{ uri: placeholderImage }} style={s.profilePicture} />
-            <Text style={[s.regTextBold, {textAlign: 'left'}]}> {user.data.firstName} {user.data.lastName} </Text>
-            <Text style={[s.infoText, {color: Colors.sNorm, textAlign: 'left'}]}>{user.data.phoneNumber}</Text>
-            <View style={{width: '100%', flexDirection: 'row', justifyContent: 'space-evenly'}}>
+            <Text style={[s.regTextBold, {textAlign: 'left'}, { marginTop: 20, marginBottom: 10 }]}> {this.state.firstName} {this.state.lastName} </Text>
+            <Text style={[s.infoText, {color: Colors.sNorm, textAlign: 'left', marginTop: 30, marginBottom: 45}]}>{this.state.phoneNumber}</Text>
+            <View style={{width: '100%', flexDirection: 'row', justifyContent: 'space-evenly', marginBottom: 20}}>
               <View style={{flexDirection: 'row'}}>
                 <IOSIcon name={'ios-thumbs-up'} size={30} color={Colors.sDark}/>
                 <Text style={[s.regText, {textAlign: 'left'}]}> {this.state.upVotes}</Text>
@@ -102,13 +147,30 @@ class Profile extends React.Component
           </View>
 
           <View style={{width: '90%', paddingBottom: 20, justifyContent: 'space-evenly'}}> 
+            {this.state.userProfile &&
             <TouchableOpacity onPress={() => navigation.navigate("EditProfile")} style={s.textLink}>
               <Text style={s.textLinkText}>Edit Info</Text>
-            </TouchableOpacity>
+            </TouchableOpacity>}
 
+            {this.state.userProfile &&
             <TouchableOpacity onPress={() => navigation.navigate("ChangePassword")} style={s.textLink}>
               <Text style={s.textLinkText}>Change Password</Text>
-            </TouchableOpacity>
+            </TouchableOpacity>}
+
+            {!this.state.userProfile &&
+            <TouchableOpacity onPress={this.acceptApplicant} style={s.textLink}>
+              <Text style={s.textLinkText}>Accept</Text>
+            </TouchableOpacity>}
+
+            {!this.state.userProfile &&
+            <TouchableOpacity onPress={this.declineApplicant} style={s.textLink}>
+              <Text style={s.textLinkText}>Decline</Text>
+            </TouchableOpacity>}
+
+            {!this.state.userProfile &&
+            <TouchableOpacity onPress={() => navigation.navigate("ApplicantList")} style={s.textLink}>
+              <Text style={s.textLinkTextBack}>Back</Text>
+            </TouchableOpacity>}
           </View>
         </View>
       </View>

@@ -43,15 +43,21 @@ class JobDetailsScreen extends React.Component
             address: "",
             jobID: "",
             showAction: false,
-            buttonText: "",
-            source: "Main"
+            primaryButtonText: "",
+            showPrimaryButton: false,
+            secondaryButtonText: "",
+            source: "Main",
+            primarySource: "Main",
+            inProgress: false
         }
 
-        this.buttonAction = this.buttonAction.bind(this);
+        this.primaryButtonAction = this.primaryButtonAction.bind(this);
+        this.secondaryButtonAction = this.secondaryButtonAction.bind(this);
+        this.activateJob = this.activateJob.bind(this);
     }
 
     componentDidMount() {
-        const { user, navigation } = this.props;
+        const { navigation } = this.props;
 
         this.setState({
             jobType: navigation.getParam("jobType", "NO JOB TYPE"),
@@ -61,12 +67,26 @@ class JobDetailsScreen extends React.Component
             address: navigation.getParam("address", "NO ADDRESS"),
             jobID: navigation.getParam("jobID", "NO JOBID"),
             showAction: navigation.getParam("showAction", false),
-            buttonText: navigation.getParam("buttonText", "NO BUTTON TEXT"),
-            source: navigation.getParam("source", "Main")
+            primaryButtonText: navigation.getParam("primaryButtonText", "NO PRIMARY BUTTON TEXT"),
+            showPrimaryButton: navigation.getParam("showPrimaryButton", false),
+            secondaryButtonText: navigation.getParam("secondaryButtonText", "NO SECONDARY BUTTON TEXT"),
+            source: navigation.getParam("source", "Main"),
+            primarySource: navigation.getParam("primarySource", "Main"),
+            inProgress: navigation.getParam("inProgress", false)
         });
     }
 
-    buttonAction() {
+    primaryButtonAction() {
+        const { user } = this.props;
+
+        this.props.navigation.navigate(this.state.primarySource, {
+            jobID: this.state.jobID,
+            userID: user.data.ID,
+            activateJob: this.activateJob
+        });
+    }
+
+    secondaryButtonAction() {
         const { state, setParams, navigate } = this.props.navigation;
         const params = state.params || {};
 
@@ -74,6 +94,8 @@ class JobDetailsScreen extends React.Component
         // cancel job
         if (this.state.source === "EmployerJobs") {
             apiCall = `${api}/job/cancel-job`;
+        } else if (this.state.source === "AppliedJobs") {
+            apiCall = `${api}/job/cancel-application`;
         }
 
         if (apiCall) {
@@ -89,7 +111,10 @@ class JobDetailsScreen extends React.Component
                 alert(err.response.data.errorMessage);
             });
         }
-        
+    }
+
+    activateJob() {
+        this.setState({ inProgress: true });
     }
 
     render()
@@ -120,9 +145,14 @@ class JobDetailsScreen extends React.Component
                         </View>                    
                     </View>
 
-                    <TouchableOpacity onPress={() => this.buttonAction()} style={s.textLink}>
-                        <Text style={s.textLinkText}>{this.state.buttonText}</Text>
-                    </TouchableOpacity>
+                    {(!this.state.inProgress && this.state.showPrimaryButton) &&
+                    <TouchableOpacity onPress={() => this.primaryButtonAction()} style={s.textLink}>
+                        <Text style={s.textLinkText}>{this.state.primaryButtonText}</Text>
+                    </TouchableOpacity>}
+                    {!this.state.inProgress &&
+                    <TouchableOpacity onPress={() => this.secondaryButtonAction()} style={s.textLink}>
+                        <Text style={s.textLinkText}>{this.state.secondaryButtonText}</Text>
+                    </TouchableOpacity>}
                     <TouchableOpacity onPress={() => this.props.navigation.navigate(this.state.source)} style={s.textLink}>
                         <Text style={s.textLinkTextBack}>Back</Text>
                     </TouchableOpacity>
