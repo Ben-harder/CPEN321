@@ -98,33 +98,33 @@ class SideMenu extends Component {
           </View>
         </View>
         <ScrollView style={{width: '100%'}}>
-          <View style={s.navItem}>
-            <Text style={s.regText} onPress={() => {this.props.navigation.navigate("CreateJob")}}>
+          <View style={s.navItem} onPress={() => {this.props.navigation.navigate("CreateJob")}}>
+            <Text style={s.regText}>
               Create Job
             </Text>
           </View>
-          <View style={s.navItem}>
-            <Text style={s.regText} onPress={() => {this.props.navigation.navigate("Main")}}>
+          <View style={s.navItem} onPress={() => {this.props.navigation.navigate("Main")}}>
+            <Text style={s.regText}>
               Browse
             </Text>
           </View>          
-          <View style={s.navItem}>
-            <Text style={s.regText} onPress={() => {this.props.navigation.navigate("EmployerJobs")}}>
+          <View style={s.navItem} onPress={() => {this.props.navigation.navigate("EmployerJobs")}}>
+            <Text style={s.regText}>
               My Job Postings
             </Text>
           </View>
-          <View style={s.navItem}>
-            <Text style={s.regText} onPress={() => {this.props.navigation.navigate("ActiveJobs")}}>
+          <View style={s.navItem} onPress={() => {this.props.navigation.navigate("ActiveJobs")}}>
+            <Text style={s.regText}>
               Active Jobs
             </Text>
           </View>
-          <View style={s.navItem}> 
-            <Text style={s.regText} onPress={() => {this.props.navigation.navigate("AppliedJobs")}}>
+          <View style={s.navItem} onPress={() => {this.props.navigation.navigate("AppliedJobs")}}> 
+            <Text style={s.regText}>
               Job Applications
             </Text>
           </View>
-          <View style={s.navItem}>
-            <Text style={s.regText} onPress={() => {this.props.navigation.navigate("Profile")}}>
+          <View style={s.navItem} onPress={() => {this.props.navigation.navigate("Profile")}}>
+            <Text style={s.regText}>
               My Profile
             </Text>
           </View>
