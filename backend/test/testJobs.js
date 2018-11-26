@@ -848,6 +848,96 @@ describe("Get all Jobs Ranked", function () {
   });
 
   /** 6)
+   * Test Case: User is an applicant
+   * Input/Output: Send a request to get all jobs in the database.
+   *               Now, this should return and array that includes
+   *               as many jobs as there is in the database, one test
+   *               case could be successfully adding some jobs, and then
+   *               asserting that the number of returned jobs is at least
+   *               equal to the number of added jobs.
+   * Pass/Fail Criteria: Only succeeds if it returns code (200) and no error
+   *                     message. The returned array should have at least as
+   *                     many jobs as successfully added to the database.
+   */
+  it("Test Case: User is an applicant", (done) => {
+
+    // create a job
+    var job = new Job();
+    var dEmployer = new User();
+    var dUser = new User();
+    var jobPref = new JobPref();
+    job.job_title = "Feed My Lizard";
+    job.description = "dummy";
+    job.wage = 0;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = undefined;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = false;
+    job.is_compeleted = false;
+    job.is_active = false;
+
+    // this hsould make it fail
+    job.applicants = [];
+    job.applicants.push(dUser._id);
+
+    // save the job
+    job.save((err) => {
+      return;
+    });
+
+    var stats = [];
+    stats.push({job_type: "Feed My Lizard", num_of_occurrences: 1});
+    stats.push({job_type: "Beat My Beef", num_of_occurrences: 2});
+    stats.push({job_type: "Wain My Wain", num_of_occurrences: 3});
+
+    // create job preference
+    jobPref.stats = stats;
+    jobPref.user = dUser._id;
+    // save the job
+    jobPref.save((err) => {
+      return;
+    });
+
+    dUser.first_name = "dummy";
+    dUser.last_name = "dummy";
+    dUser.phone_number = "hasnotapplied";
+    dUser.hash_password = "dummy";
+    dUser.verification_token = undefined;
+    dUser.working_job_id = undefined;
+    dUser.is_working = false;
+    dUser.is_verified = false;
+    dUser.is_employer = false;
+    dUser.is_admin = false;
+    dUser.balance = 0;
+    dUser.up_votes = 0;
+    dUser.down_votes = 0;
+    dUser.posted_jobs = 0;
+    dUser. taken_jobs = 0;
+    dUser.images = [];
+    dUser.job_pref = jobPref._id;
+    dUser.up_votes = 0;
+    dUser.down_votes = 0;
+    dUser.posted_jobs = 0;
+    dUser. taken_jobs = 0;
+
+    // save the user
+    dUser.save((err) => {
+      return;
+    });
+
+    chai.request(server).get(url).query({userID: dUser._id.toString()}).end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.be.a('array');
+      res.body.length.should.be.eql(0);
+      res.body.should.not.have.property('errorMessage');
+      done();
+    });
+  });
+  
+
+  /** 7)
    * Test Case: Simple Success Case
    * Input/Output: Send a request to get all jobs in the database.
    *               Now, this should return and array that includes
@@ -932,7 +1022,7 @@ describe("Get all Jobs Ranked", function () {
     });
   });
 
-  /** 7)
+  /** 8)
    * Test Case: Complex Success case
    * Input/Output: Send a request to get all jobs in the database.
    *               Now, this should return and array that includes
@@ -3059,6 +3149,225 @@ describe("Can Employee Affort", function () {
     chai.request(server).get(url).query({jobID: job._id.toString(), userID: dEmployer._id.toString()}).end((err, res) => {
       res.should.have.status(200);
       res.body.should.not.have.property('errorMessage');
+      done();
+    });
+  });
+});
+
+/**
+ * Tests for Pay Employee.
+ */
+describe("Pay Employee", function () {
+  var url = "/job/pay-employee";
+  beforeEach((done) => {
+    Job.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    User.deleteMany({}, (err) => {
+      done();
+    });
+  });
+  beforeEach((done) => {
+    Image.deleteMany({}, (err) => {
+      done();
+    });
+  });
+
+  /**
+  * 1)
+  * Test Case: Null userID.
+  * Input/Output: Pass a NULL request parameter.
+  * Pass/Fail Criteria: Only succeeds if it returns error code
+  *                     (500) with the message “Job is a required field”.
+  */
+  it("Test Case: Null userID", (done) => {
+    chai.request(server).post(url).send({jobID: "dummy"}).end((err, res) => {
+      res.should.have.status(500);
+      res.body.should.have.property('errorMessage').eql('User is a required field');
+      done();
+    });
+  });
+
+  /**
+  * 2)
+  * Test Case: Null jobID.
+  * Input/Output: Pass a NULL request parameter.
+  * Pass/Fail Criteria: Only succeeds if it returns error code
+  *                     (500) with the message “Job is a required field”.
+  */
+  it("Test Case: Null jobID", (done) => {
+    chai.request(server).post(url).send({userID: "dummy"}).end((err, res) => {
+      res.should.have.status(500);
+      res.body.should.have.property('errorMessage').eql('Job is a required field');
+      done();
+    });
+  });
+
+  /**
+  * 3)
+  * Test Case: Faliur cese.
+  * Input/Output: Pass a NULL request parameter.
+  * Pass/Fail Criteria: Only succeeds if it returns error code
+  *                     (500) with the message “Job is a required field”.
+  */
+  it("Test Case: Not employee", (done) => {
+
+    // create a new user
+    var employee = new User();
+    var job = new Job();
+    employee.first_name = "dummy";
+    employee.last_name = "dummy";
+    employee.phone_number = "hasapplied";
+    employee.hash_password = "dummy";
+    employee.verification_token = undefined;
+    employee.working_job_id = undefined;
+    employee.is_working = false;
+    employee.is_verified = false;
+    employee.is_employer = false;
+    employee.is_admin = false;
+    employee.balance = 0;
+    employee.up_votes = 0;
+    employee.down_votes = 0;
+    employee.posted_jobs = 0;
+    employee. taken_jobs = 0;
+    employee.images = [];
+
+    // save the employee
+    employee.save((err) => {
+      return;
+    });
+    
+    // save the job
+    var dEmployer = new User();
+    dEmployer.first_name = "dummy";
+    dEmployer.last_name = "dummy";
+    dEmployer.phone_number = "hasapplied";
+    dEmployer.hash_password = "dummy";
+    dEmployer.verification_token = undefined;
+    dEmployer.working_job_id = undefined;
+    dEmployer.is_working = false;
+    dEmployer.is_verified = false;
+    dEmployer.is_employer = false;
+    dEmployer.is_admin = false;
+    dEmployer.balance = 0;
+    dEmployer.up_votes = 0;
+    dEmployer.down_votes = 0;
+    dEmployer.posted_jobs = 0;
+    dEmployer. taken_jobs = 0;
+    dEmployer.images = [];
+
+    // save the employee
+    dEmployer.save((err) => {
+      return;
+    });
+
+    var job = new Job();
+    job.job_title = "dummy";
+    job.description = "dummy";
+    job.wage = 10;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = dEmployer._id;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = false;
+    job.is_compeleted = false;
+    job.is_active = false;
+    job.applicants = [];
+
+    // save the job
+    job.save((err) => {
+      return;
+    });
+    chai.request(server).post(url).send({jobID: job._id.toString(), userID: employee._id.toString()}).end((err, res) => {
+      res.should.have.status(500);
+      res.body.should.have.property('errorMessage').eql("User is not an employee for this job");
+      done();
+    });
+  });
+
+  /**
+  * 4)
+  * Test Case: Success cese.
+  * Input/Output: Pass a NULL request parameter.
+  * Pass/Fail Criteria: Only succeeds if it returns error code
+  *                     (500) with the message “Job is a required field”.
+  */
+  it("Test Case: Success cese", (done) => {
+
+    // create a new user
+    var employee = new User();
+    var job = new Job();
+    employee.first_name = "dummy";
+    employee.last_name = "dummy";
+    employee.phone_number = "hasapplied";
+    employee.hash_password = "dummy";
+    employee.verification_token = undefined;
+    employee.working_job_id = undefined;
+    employee.is_working = false;
+    employee.is_verified = false;
+    employee.is_employer = false;
+    employee.is_admin = false;
+    employee.balance = 0;
+    employee.up_votes = 0;
+    employee.down_votes = 0;
+    employee.posted_jobs = 0;
+    employee. taken_jobs = 0;
+    employee.images = [];
+
+    // save the employee
+    employee.save((err) => {
+      return;
+    });
+    
+    // save the job
+    var dEmployer = new User();
+    dEmployer.first_name = "dummy";
+    dEmployer.last_name = "dummy";
+    dEmployer.phone_number = "hasapplied";
+    dEmployer.hash_password = "dummy";
+    dEmployer.verification_token = undefined;
+    dEmployer.working_job_id = undefined;
+    dEmployer.is_working = false;
+    dEmployer.is_verified = false;
+    dEmployer.is_employer = false;
+    dEmployer.is_admin = false;
+    dEmployer.balance = 0;
+    dEmployer.up_votes = 0;
+    dEmployer.down_votes = 0;
+    dEmployer.posted_jobs = 0;
+    dEmployer. taken_jobs = 0;
+    dEmployer.images = [];
+
+    // save the employee
+    dEmployer.save((err) => {
+      return;
+    });
+
+    var job = new Job();
+    job.job_title = "dummy";
+    job.description = "dummy";
+    job.wage = 10;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = employee._id;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = false;
+    job.is_compeleted = false;
+    job.is_active = false;
+    job.applicants = [];
+
+    // save the job
+    job.save((err) => {
+      return;
+    });
+    chai.request(server).post(url).send({jobID: job._id.toString(), userID: employee._id.toString()}).end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.not.have.property('errorMessage');
+      res.body.balance.should.eql(employee.balance + job.wage);
       done();
     });
   });

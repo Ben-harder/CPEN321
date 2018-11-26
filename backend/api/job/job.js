@@ -88,7 +88,8 @@ module.exports = {
       $and: [
         {employer : {$ne: req.query.userID}}, 
         {is_deleted: false},
-        {is_active: false}
+        {is_active: false},
+        {applicants: {$ne: req.query.userID}}
       ]
     })
     .populate('employer')
@@ -635,6 +636,53 @@ module.exports = {
       }
       // success
       return res.status(200).send(job);
+    });
+  },
+
+  /**
+   * Check if an employer can afford it.
+   */
+  payEmployee(req, res) {
+    // null employer
+    if (!req.body.userID) {
+      let ret = {};
+      ret.errorMessage = "User is a required field";
+      return res.status(500).send(ret);
+    }
+    // null job
+    if (!req.body.jobID) {
+      let ret = {};
+      ret.errorMessage = "Job is a required field";
+      return res.status(500).send(ret);
+    }
+    Job.findById(req.body.jobID)
+    .populate('employee')
+    .exec((err, job) => {
+      // err
+      if (err || !job) {
+        let ret = {};
+        ret.errorMessage = "Internal error in database"; 
+        return res.status(500).send(ret);
+      }
+      if (job.employee._id.toString() !== req.body.userID.toString()) {
+        let ret = {};
+        ret.errorMessage = "User is not an employee for this job"; 
+        return res.status(500).send(ret);
+      }
+      User.findOneAndUpdate({_id: req.body.userID},
+      {$inc: {balance: job.wage}},
+      {new: true},
+      (err, user) => {
+        // err
+        if (err || !user) {
+          let ret = {};
+          ret.errorMessage = "Internal error in database"; 
+          return res.status(500).send(ret);
+        }
+        // success
+        return res.status(200).send(user);
+      })
+      
     });
   }
 
