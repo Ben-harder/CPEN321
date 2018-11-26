@@ -179,6 +179,7 @@ module.exports = StyleSheet.create({
         borderRadius: 20,
     },
     loadingText: {
+        color: Colors.sDark,
         fontSize: Font.normSize,
         marginBottom: 15
     }

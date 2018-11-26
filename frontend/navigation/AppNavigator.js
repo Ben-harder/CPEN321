@@ -21,6 +21,7 @@ import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 import JobDetailsScreen from "../screens/JobDetailsScreen";
 import AppliedJobsScreen from "../screens/AppliedJobsScreen";
 import ActiveJobsScreen from "../screens/ActiveJobsScreen";
+import ApplicantListScreen from "../screens/ApplicantListScreen";
 
 // constants
 import Colors from "../constants/Colors";
@@ -67,7 +68,7 @@ const TakenJobsStack = createStackNavigator({TakenJobs: TakenJobsScreen},
   }
 );
 
-const EmployerJobsStack = createStackNavigator({EmployerJobs: EmployerJobsScreen, JobDetails: JobDetailsScreen},
+const EmployerJobsStack = createStackNavigator({EmployerJobs: EmployerJobsScreen, JobDetails: JobDetailsScreen, ApplicantList: ApplicantListScreen, ApplicantProfile: ProfileScreen},
   {
     navigationOptions: ({navigation}) => ({
       headerTintColor: 'white',
