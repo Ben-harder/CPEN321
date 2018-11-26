@@ -90,33 +90,50 @@ class ActiveJobs extends React.Component
         });
     }
 
+    populateActiveJobs() {
+        if (this.state.jobList.length == 0)
+        {
+            return (
+                <View style={{flex: 1, justifyContent: 'center'}}>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={[s.regText,]}> No active jobs </Text>
+                        <IOSIcon name="ios-sad" size={25} style={{color: Colors.sNorm}}/>
+                    </View>
+                </View>
+            );
+        }
+        else return (
+            <FlatList
+                style={s.jobList}
+                data={this.state.jobList}
+                renderItem={({ item }) => (
+                    <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
+                            <Text style={s.jobTypeText}>{item.job_title}</Text>
+                            <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
+                        </View>
+                        <View style={{flexDirection: 'row', paddingVertical: 10,}}>
+                            <IOSIcon name="ios-compass" size={30} style={{color: Colors.sDark}}/>
+                            <Text style={s.addressText}> {item.address} </Text> 
+                        </View>
+                        <Text style={{fontSize: Font.smallSize}}>
+                            <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text>
+                        </Text>
+                    </TouchableOpacity>
+                )}
+                keyExtractor={(item, index) => index.toString()}
+            />
+        );
+    }
+
     render()
     {
         if (this.state.loading) return (<Loading />);
         return (
             <View style={s.container}>
                 <View style={{width: '100%', height: '100%', alignItems: 'center'}}>
-                    <FlatList
-                        style={s.jobList}
-                        data={this.state.jobList}
-                        renderItem={({ item }) => (
-                            <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
-                                <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
-                                    <Text style={s.jobTypeText}>{item.job_title}</Text>
-                                    <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
-                                </View>
-                                <View style={{flexDirection: 'row', paddingVertical: 10,}}>
-                                    <IOSIcon name="ios-compass" size={30} style={{color: Colors.sDark}}/>
-                                    <Text style={s.addressText}> {item.address} </Text> 
-                                </View>
-                                <Text style={{fontSize: Font.smallSize}}>
-                                    <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text>
-                                </Text>
-                            </TouchableOpacity>
-                        )}
-                        keyExtractor={(item, index) => index.toString()}
-                    />
-                    </View>
+                    { this.populateActiveJobs() }
+                </View>
             </View>
         );
     }

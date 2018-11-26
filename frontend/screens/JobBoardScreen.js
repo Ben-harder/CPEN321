@@ -91,7 +91,7 @@ class JobBoardScreen extends React.Component
             return (
                 <View style={{flex: 1, justifyContent: 'center'}}>
                     <View style={{flexDirection: 'row'}}>
-                        <Text style={[s.regText,]}>No jobs to view </Text>
+                        <Text style={[s.regText,]}> No jobs to view </Text>
                         <IOSIcon name="ios-sad" size={25} style={{color: Colors.sNorm}}/>
                     </View>
                 </View>
