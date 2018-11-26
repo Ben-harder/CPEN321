@@ -18,8 +18,8 @@ import axios from "axios";
 import api from "../constants/Url";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
+import IOSIcon from "react-native-vector-icons/Ionicons";
 
 import { MonoText } from "../components/StyledText";
 
@@ -38,7 +38,7 @@ class ApplicantListScreen extends React.Component
             headerStyle: {backgroundColor: Colors.pBackground, marginRight: 0, marginLeft: 0, borderBottomWidth: 0, height: 60},
             headerLeft:(
                 <TouchableOpacity onPress={() => navigation.navigate("JobDetails")}>
-                    <Icon name="arrow-left" size={25} style={{color: 'black', paddingLeft: 15,}}/>
+                    <IOSIcon name="ios-arrow-back" size={25} style={{color: 'black', paddingLeft: 15,}}/>
                 </TouchableOpacity>
             ),
             title: 'Applicants',
@@ -131,8 +131,8 @@ class ApplicantListScreen extends React.Component
             return (
                 <View style={{flex: 1, justifyContent: 'center'}}>
                     <View style={{flexDirection: 'row'}}>
-                        <Text style={[s.regText]}>No applications yet </Text>
-                        <IOSIcon name="ios-sad" size={25} style={{color: Colors.sNorm, marginLeft: 10}}/>
+                        <Text style={[s.regText]}> No applications yet </Text>
+                        <IOSIcon name="ios-sad" size={25} style={{color: Colors.sNorm,}}/>
                     </View>
                 </View>
             );
