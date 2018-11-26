@@ -52,6 +52,8 @@ module.exports = {
     user.down_votes = 0;
     user.posted_jobs = 0;
     user.taken_jobs = 0;
+    user.is_admin = false;
+    user.balance = 0;
 
     jobPref.save((err) => {
         if (err) {

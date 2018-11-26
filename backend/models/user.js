@@ -75,6 +75,14 @@ var User = new Schema({
     posted_jobs: {
         type: Number,
         required: true
+    },
+    is_admin: {
+        type: Boolean,
+        required: true
+    },
+    balance: {
+        type: Number,
+        required: true
     }
 });
 
