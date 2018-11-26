@@ -471,7 +471,8 @@ module.exports = {
       {employee: req.query.userID},
       {is_compeleted: false}
     ]};
-    Job.find(findQuery) 
+    Job.find(findQuery)
+    .populate('employer') 
     .exec((err, jobs) => {
       // err
       if (err) {
@@ -534,13 +535,13 @@ module.exports = {
     // null employee
     if (!req.body.emplyeeID) {
       let ret = {};
-      ret.errorMessage = "User is a required field";
+      ret.errorMessage = "Employee is a required field";
       return res.status(500).send(ret);
     }
     // null employer
     if (!req.body.emplyerID) {
       let ret = {};
-      ret.errorMessage = "User is a required field";
+      ret.errorMessage = "Employer is a required field";
       return res.status(500).send(ret);
     }
     // null job
@@ -567,19 +568,34 @@ module.exports = {
         return res.status(400).send(ret);
       }
       // not employer
-      if (job.applicant.indexOf(req.body.employee) < 0) {
+      if (job.employer.toString() !== req.body.employerID.toString) {
         let ret = {};
         ret.errorMessage = "Looks like job was deleted!"; 
         return res.status(400).send(ret);
       }
       // not applicant
-      if (job.applicant.indexOf(req.body.employee) < 0) {
+      if (job.applicant.indexOf(req.body.employeeID) < 0) {
+        console.log("FUCK");
         let ret = {};
         ret.errorMessage = "Looks like this user is no longer an applicant!"; 
         return res.status(400).send(ret);
       }
-      // success
-      return res.status(200).send(job.applicants);  
+      // charge employer
+      User.findOneAndUpdate({_id: req.body.employerID},
+      {$inc: {balance : -(job.wage)}},
+      {new: true},
+      (err, user) => {
+        console.log(user);
+        // err
+        if (err || !user) {
+          let ret = {};
+          ret.errorMessage = "Internal error in database"; 
+          return res.status(500).send(ret);
+        }
+        // success
+        return res.status(200).send(job.applicants);  
+
+        })
     });
   }
 

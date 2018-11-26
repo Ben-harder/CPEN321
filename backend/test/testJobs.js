@@ -2694,3 +2694,70 @@ describe("Get Job Applicants", function () {
     });
   });
 });
+
+// /**
+//  * Tests for Get Job Applicants.
+//  */
+// describe("Get Job Applicants", function () {
+//   var url = "/job/pay-employee";
+//   beforeEach((done) => {
+//     Job.deleteMany({}, (err) => {
+//       done();
+//     });
+//   });
+//   beforeEach((done) => {
+//     User.deleteMany({}, (err) => {
+//       done();
+//     });
+//   });
+//   beforeEach((done) => {
+//     Image.deleteMany({}, (err) => {
+//       done();
+//     });
+//   });
+
+//   /**
+//   * 1)
+//   * Test Case: Null userID.
+//   * Input/Output: Pass a NULL request parameter.
+//   * Pass/Fail Criteria: Only succeeds if it returns error code
+//   *                     (500) with the message “Job is a required field”.
+//   */
+//   it("Test Case: Null employeeID", (done) => {
+//     chai.request(server).post(url).body({jobID: "dummy"}, {employerID: "dummy"}).end((err, res) => {
+//       res.should.have.status(500);
+//       res.body.should.have.property('errorMessage').eql('Employee is a required field');
+//       done();
+//     });
+//   });
+
+//   /**
+//   * 2)
+//   * Test Case: Null jobID.
+//   * Input/Output: Pass a NULL request parameter.
+//   * Pass/Fail Criteria: Only succeeds if it returns error code
+//   *                     (500) with the message “Job is a required field”.
+//   */
+//   it("Test Case: Null jobID", (done) => {
+//     chai.request(server).post(url).body({employeeID: "dummy"}, {employerID: "dummy"}).end((err, res) => {
+//       res.should.have.status(500);
+//       res.body.should.have.property('errorMessage').eql('Job is a required field');
+//       done();
+//     });
+//   });
+
+//   /**
+//   * 3)
+//   * Test Case: Null jobID.
+//   * Input/Output: Pass a NULL request parameter.
+//   * Pass/Fail Criteria: Only succeeds if it returns error code
+//   *                     (500) with the message “Job is a required field”.
+//   */
+//   it("Test Case: Null employerID", (done) => {
+//     chai.request(server).post(url).body({jobID: "dummy"}, {employeeID: "dummy"}).end((err, res) => {
+//       res.should.have.status(500);
+//       res.body.should.have.property('errorMessage').eql('Employer is a required field');
+//       done();
+//     });
+//   });
+// });
