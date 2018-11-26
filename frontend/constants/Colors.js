@@ -19,7 +19,7 @@ export default {
   pNorm: "#37474f",
   pLight: "#62727b",
   pDark: "#102027",
-  pBackground: "#dddddd",
+  pBackground: "#E1E2E1",
 
   sNorm: "#00796b",
   sLight: "#F5F5F6",

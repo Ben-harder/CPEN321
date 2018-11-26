@@ -81,8 +81,11 @@ class AppliedJobsScreen extends React.Component
             description: job.description,
             jobID: job._id,
             showAction: true,
-            buttonText: "Cancel Application",
-            source: "AppliedJobs"
+            showPrimaryButton: false,
+            primaryButtonText: "",
+            secondaryButtonText: "Cancel Application",
+            source: "AppliedJobs",
+            updateJobList: this.tryFetchJobList
         });
     }
 

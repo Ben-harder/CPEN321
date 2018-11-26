@@ -82,9 +82,13 @@ class EmployerJobsScreen extends React.Component
             description: job.description,
             jobID: job._id,
             showAction: true,
-            buttonText: "Cancel Job",
+            showPrimaryButton: true,
+            primaryButtonText: "View Applicants",
+            secondaryButtonText: "Cancel Job",
             source: "EmployerJobs",
-            updateJobList: this.tryFetchJobList
+            updateJobList: this.tryFetchJobList,
+            primarySource: "ApplicantList",
+            inProgress: job.is_active
         });
     }
 

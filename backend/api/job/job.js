@@ -87,7 +87,8 @@ module.exports = {
     Job.find({
       $and: [
         {employer : {$ne: req.query.userID}}, 
-        {is_deleted: false}
+        {is_deleted: false},
+        {is_active: false}
       ]
     })
     .populate('employer')
@@ -156,7 +157,11 @@ module.exports = {
    * job.
    */
   getEmployerJobs(req, res) {
-    Job.find({employer : req.query.employer}).populate({ path :'employer', select:'first_name last_name'})
+    Job.find({$and: [
+      {employer : req.query.employer},
+      {is_deleted : false}
+    ]})
+    .populate({ path :'employer', select:'first_name last_name'})
     .exec(function(err, jobs) {
       if (err){
         return res.status(500).send(jobs);
@@ -466,7 +471,8 @@ module.exports = {
       {employee: req.query.userID},
       {is_compeleted: false}
     ]};
-    Job.find(findQuery) 
+    Job.find(findQuery)
+    .populate('employer') 
     .exec((err, jobs) => {
       // err
       if (err) {
@@ -505,7 +511,6 @@ module.exports = {
     .exec((err, job) => {
       // err
       if (err) {
-        console.log(err);
         let ret = {};
         ret.errorMessage = "Internal error in database"; 
         return res.status(500).send(ret);
@@ -520,6 +525,79 @@ module.exports = {
       return res.status(200).send(job.applicants);  
     });
   },
+
+  /**
+   * Pay an employee if employer has sufficient funds.
+   * This doesn't actually pay the employee, the money 
+   * is kept in the system until the job is completed.
+   */
+  payEmployee(req, res) {
+    // null employee
+    if (!req.body.emplyeeID) {
+      let ret = {};
+      ret.errorMessage = "Employee is a required field";
+      return res.status(500).send(ret);
+    }
+    // null employer
+    if (!req.body.emplyerID) {
+      let ret = {};
+      ret.errorMessage = "Employer is a required field";
+      return res.status(500).send(ret);
+    }
+    // null job
+    if (!req.body.jobID) {
+      let ret = {};
+      ret.errorMessage = "Job is a required field";
+      return res.status(500).send(ret);
+    }
+    Job.findById(req.body.jobID)
+    .populate('employer')
+    .populate('applicants')
+    .exec((err, job) => {
+      console.log(job);
+      // err
+      if (err) {
+        let ret = {};
+        ret.errorMessage = "Internal error in database"; 
+        return res.status(500).send(ret);
+      }
+      // no job
+      if (!job) {
+        let ret = {};
+        ret.errorMessage = "Looks like job was deleted!"; 
+        return res.status(400).send(ret);
+      }
+      // not employer
+      if (job.employer.toString() !== req.body.employerID.toString) {
+        let ret = {};
+        ret.errorMessage = "Looks like job was deleted!"; 
+        return res.status(400).send(ret);
+      }
+      // not applicant
+      if (job.applicant.indexOf(req.body.employeeID) < 0) {
+        console.log("FUCK");
+        let ret = {};
+        ret.errorMessage = "Looks like this user is no longer an applicant!"; 
+        return res.status(400).send(ret);
+      }
+      // charge employer
+      User.findOneAndUpdate({_id: req.body.employerID},
+      {$inc: {balance : -(job.wage)}},
+      {new: true},
+      (err, user) => {
+        console.log(user);
+        // err
+        if (err || !user) {
+          let ret = {};
+          ret.errorMessage = "Internal error in database"; 
+          return res.status(500).send(ret);
+        }
+        // success
+        return res.status(200).send(job.applicants);  
+
+        })
+    });
+  }
 
   
 };

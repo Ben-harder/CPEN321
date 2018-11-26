@@ -102,7 +102,6 @@ class EditProfile extends React.Component
     }
   }
 
-
   render() {
     const { user, navigation } = this.props;
 

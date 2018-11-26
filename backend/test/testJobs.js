@@ -37,6 +37,64 @@ describe("Get Employer Jobs.", function () {
     });
   });
 
+  /** 2)
+   * Test Case: Deleted job
+   * Input/Output: Pass a NULL request user  parameter.
+   * Pass/Fail Criteria: Only succeeds if it returns
+   *                     code (200) with no error messages
+   */
+  it('Test Case: Deleted job', (done) => {
+    // create a dummy employer
+    var dEmployer = new User();
+    dEmployer.first_name = "dummy";
+    dEmployer.last_name = "dummy";
+    dEmployer.phone_number = "hasapplied";
+    dEmployer.hash_password = "dummy";
+    dEmployer.verification_token = undefined;
+    dEmployer.working_job_id = undefined;
+    dEmployer.is_working = false;
+    dEmployer.is_verified = false;
+    dEmployer.is_employer = false;
+    dEmployer.is_admin = false;
+    dEmployer.balance = 0;
+    dEmployer.up_votes = 0;
+    dEmployer.down_votes = 0;
+    dEmployer.posted_jobs = 0;
+    dEmployer. taken_jobs = 0;
+    dEmployer.images = [];
+
+    // save the dEmployer
+    dEmployer.save((err) => {
+      return;
+    });
+    
+    var job = new Job();
+    job.job_title = "dummy";
+    job.description = "dummy";
+    job.wage = 0;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = undefined;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = true;
+    job.is_compeleted = false;
+    job.is_active = false;
+
+    // save the job
+    job.save((err) => {
+      return;
+    });
+
+    chai.request(server).get(url).query({employer: dEmployer._id.toString()}).end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.not.have.property('errorMessage');
+      res.body.should.be.a('array');
+      res.body.length.should.eql(0);
+      done();
+    });
+  });
+
   /** 1)
    * Test Case: Success Case
    * Input/Output: Pass a NULL request user  parameter.
@@ -55,6 +113,8 @@ describe("Get Employer Jobs.", function () {
     dEmployer.is_working = false;
     dEmployer.is_verified = false;
     dEmployer.is_employer = false;
+    dEmployer.is_admin = false;
+    dEmployer.balance = 0;
     dEmployer.up_votes = 0;
     dEmployer.down_votes = 0;
     dEmployer.posted_jobs = 0;
@@ -88,6 +148,7 @@ describe("Get Employer Jobs.", function () {
       res.should.have.status(200);
       res.body.should.not.have.property('errorMessage');
       res.body.should.be.a('array');
+      res.body.length.should.eql(1);
       done();
     });
   });
@@ -132,6 +193,8 @@ describe("Apply for a job.", function () {
     dEmployer.is_working = false;
     dEmployer.is_verified = false;
     dEmployer.is_employer = false;
+    dEmployer.is_admin = false;
+    dEmployer.balance = 0;
     dEmployer.up_votes = 0;
     dEmployer.down_votes = 0;
     dEmployer.posted_jobs = 0;
@@ -172,6 +235,8 @@ describe("Apply for a job.", function () {
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;
+    user.is_admin = false;
+    user.balance = 0;
     user.up_votes = 0;
     user.down_votes = 0;
     user.posted_jobs = 0;
@@ -246,6 +311,8 @@ describe("Get Applied-For Jobs", function () {
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;
+    user.is_admin = false;
+    user.balance = 0;
     user.up_votes = 0;
     user.down_votes = 0;
     user.posted_jobs = 0;
@@ -286,6 +353,8 @@ describe("Get Applied-For Jobs", function () {
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;
+    user.is_admin = false;
+    user.balance = 0;
     user.up_votes = 0;
     user.down_votes = 0;
     user.posted_jobs = 0;
@@ -497,6 +566,8 @@ describe("Get all Jobs Ranked", function () {
     dUser.is_working = false;
     dUser.is_verified = false;
     dUser.is_employer = false;
+    dUser.is_admin = false;
+    dUser.balance = 0;
     dUser.up_votes = 0;
     dUser.down_votes = 0;
     dUser.posted_jobs = 0;
@@ -580,6 +651,8 @@ describe("Get all Jobs Ranked", function () {
     dUser.is_working = false;
     dUser.is_verified = false;
     dUser.is_employer = false;
+    dUser.is_admin = false;
+    dUser.balance = 0;
     dUser.up_votes = 0;
     dUser.down_votes = 0;
     dUser.posted_jobs = 0;
@@ -662,6 +735,8 @@ describe("Get all Jobs Ranked", function () {
     dUser.is_working = false;
     dUser.is_verified = false;
     dUser.is_employer = false;
+    dUser.is_admin = false;
+    dUser.balance = 0;
     dUser.up_votes = 0;
     dUser.down_votes = 0;
     dUser.posted_jobs = 0;
@@ -688,6 +763,91 @@ describe("Get all Jobs Ranked", function () {
   });
 
   /** 5)
+   * Test Case: Self and deleted
+   * Input/Output: Send a request to get all jobs in the database.
+   *               Now, this should return and array that includes
+   *               as many jobs as there is in the database, one test
+   *               case could be successfully adding some jobs, and then
+   *               asserting that the number of returned jobs is at least
+   *               equal to the number of added jobs.
+   * Pass/Fail Criteria: Only succeeds if it returns code (200) and no error
+   *                     message. The returned array should have at least as
+   *                     many jobs as successfully added to the database.
+   */
+  it("Test Case: Self and deleted", (done) => {
+
+    // create a job
+    var job = new Job();
+    var dUser = new User();
+    var dEmployer = new User();
+    job.job_title = "Feed My Lizard";
+    job.description = "dummy";
+    job.wage = 0;
+    job.address = "dummy";
+    job.employer = dEmployer._id;
+    job.employee = undefined;
+    job.created_at = new Date();
+    job.deleted_at = undefined;
+    job.is_deleted = false;
+    job.is_compeleted = false;
+    job.is_active = true;
+
+    // save the job
+    job.save((err) => {
+      return;
+    });
+
+    var stats = [];
+    stats.push({job_type: "Feed My Lizard", num_of_occurrences: 1});
+    stats.push({job_type: "Beat My Beef", num_of_occurrences: 2});
+    stats.push({job_type: "Wain My Wain", num_of_occurrences: 3});
+
+    // create job preference
+    var jobPref = new JobPref();
+    jobPref.stats = stats;
+    jobPref.user = dUser._id;
+    // save the job
+    jobPref.save((err) => {
+      return;
+    });
+
+    dUser.first_name = "dummy";
+    dUser.last_name = "dummy";
+    dUser.phone_number = "hasnotapplied";
+    dUser.hash_password = "dummy";
+    dUser.verification_token = undefined;
+    dUser.working_job_id = undefined;
+    dUser.is_working = false;
+    dUser.is_verified = false;
+    dUser.is_employer = false;
+    dUser.is_admin = false;
+    dUser.balance = 0;
+    dUser.up_votes = 0;
+    dUser.down_votes = 0;
+    dUser.posted_jobs = 0;
+    dUser. taken_jobs = 0;
+    dUser.images = [];
+    dUser.job_pref = jobPref._id;
+    dUser.up_votes = 0;
+    dUser.down_votes = 0;
+    dUser.posted_jobs = 0;
+    dUser. taken_jobs = 0;
+
+    // save the user
+    dUser.save((err) => {
+      return;
+    });
+
+    chai.request(server).get(url).query({userID: dUser._id.toString()}).end((err, res) => {
+      res.should.have.status(200);
+      res.body.should.be.a('array');
+      res.body.length.should.be.eql(0);
+      res.body.should.not.have.property('errorMessage');
+      done();
+    });
+  });
+
+  /** 6)
    * Test Case: Simple Success Case
    * Input/Output: Send a request to get all jobs in the database.
    *               Now, this should return and array that includes
@@ -745,6 +905,8 @@ describe("Get all Jobs Ranked", function () {
     dUser.is_working = false;
     dUser.is_verified = false;
     dUser.is_employer = false;
+    dUser.is_admin = false;
+    dUser.balance = 0;
     dUser.up_votes = 0;
     dUser.down_votes = 0;
     dUser.posted_jobs = 0;
@@ -770,7 +932,7 @@ describe("Get all Jobs Ranked", function () {
     });
   });
 
-  /** 3)
+  /** 7)
    * Test Case: Complex Success case
    * Input/Output: Send a request to get all jobs in the database.
    *               Now, this should return and array that includes
@@ -888,6 +1050,8 @@ describe("Get all Jobs Ranked", function () {
     dUser.is_working = false;
     dUser.is_verified = false;
     dUser.is_employer = false;
+    dUser.is_admin = false;
+    dUser.balance = 0;
     dUser.up_votes = 0;
     dUser.down_votes = 0;
     dUser.posted_jobs = 0;
@@ -986,6 +1150,8 @@ describe("User Is Able To Apply", function () {
     dEmployer.is_working = false;
     dEmployer.is_verified = false;
     dEmployer.is_employer = false;
+    dEmployer.is_admin = false;
+    dEmployer.balance = 0;
     dEmployer.up_votes = 0;
     dEmployer.down_votes = 0;
     dEmployer.posted_jobs = 0;
@@ -1003,6 +1169,8 @@ describe("User Is Able To Apply", function () {
     dEmployee.is_working = false;
     dEmployee.is_verified = false;
     dEmployee.is_employer = false;
+    dEmployee.is_admin = false;
+    dEmployee.balance = 0;
     dEmployee.up_votes = 0;
     dEmployee.down_votes = 0;
     dEmployee.posted_jobs = 0;
@@ -1066,6 +1234,8 @@ describe("User Is Able To Apply", function () {
     dEmployer.is_working = false;
     dEmployer.is_verified = false;
     dEmployer.is_employer = false;
+    dEmployer.is_admin = false;
+    dEmployer.balance = 0;
     dEmployer.up_votes = 0;
     dEmployer.down_votes = 0;
     dEmployer.posted_jobs = 0;
@@ -1122,6 +1292,8 @@ describe("User Is Able To Apply", function () {
     dEmployer.is_working = false;
     dEmployer.is_verified = false;
     dEmployer.is_employer = false;
+    dEmployer.is_admin = false;
+    dEmployer.balance = 0;
     dEmployer.up_votes = 0;
     dEmployer.down_votes = 0;
     dEmployer.posted_jobs = 0;
@@ -1162,6 +1334,8 @@ describe("User Is Able To Apply", function () {
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;
+    user.is_admin = false;
+    user.balance = 0;
     user.up_votes = 0;
     user.down_votes = 0;
     user.posted_jobs = 0;
@@ -1399,6 +1573,8 @@ describe("Create Job", function () {
     dEmployer.is_working = false;
     dEmployer.is_verified = false;
     dEmployer.is_employer = false;
+    dEmployer.is_admin = false;
+    dEmployer.balance = 0;
     dEmployer.up_votes = 0;
     dEmployer.down_votes = 0;
     dEmployer.posted_jobs = 0;
@@ -1485,6 +1661,8 @@ describe("Complete a job", function () {
     employee.is_working = false;
     employee.is_verified = false;
     employee.is_employer = false;
+    employee.is_admin = false;
+    employee.balance = 0;
     employee.up_votes = 0;
     employee.down_votes = 0;
     employee.posted_jobs = 0;
@@ -1543,6 +1721,8 @@ describe("Complete a job", function () {
     employee.is_working = false;
     employee.is_verified = false;
     employee.is_employer = false;
+    employee.is_admin = false;
+    employee.balance = 0;
     employee.up_votes = 0;
     employee.down_votes = 0;
     employee.posted_jobs = 0;
@@ -1656,6 +1836,8 @@ describe("Accept an applicant", function () {
     employee.is_working = false;
     employee.is_verified = false;
     employee.is_employer = false;
+    employee.is_admin = false;
+    employee.balance = 0;
     employee.up_votes = 0;
     employee.down_votes = 0;
     employee.posted_jobs = 0;
@@ -1715,6 +1897,8 @@ describe("Accept an applicant", function () {
     employee.is_working = false;
     employee.is_verified = false;
     employee.is_employer = false;
+    employee.is_admin = false;
+    employee.balance = 0;
     employee.up_votes = 0;
     employee.down_votes = 0;
     employee.posted_jobs = 0;
@@ -1776,6 +1960,8 @@ describe("Accept an applicant", function () {
     employee.is_working = false;
     employee.is_verified = false;
     employee.is_employer = false;
+    employee.is_admin = false;
+    employee.balance = 0;
     employee.up_votes = 0;
     employee.down_votes = 0;
     employee.posted_jobs = 0;
@@ -2055,6 +2241,8 @@ describe("Delete Application", function () {
     employee.is_working = false;
     employee.is_verified = false;
     employee.is_employer = false;
+    employee.is_admin = false;
+    employee.balance = 0;
     employee.up_votes = 0;
     employee.down_votes = 0;
     employee.posted_jobs = 0;
@@ -2154,6 +2342,8 @@ describe("Get Employee Active Jobs", function () {
     employee.is_working = false;
     employee.is_verified = false;
     employee.is_employer = false;
+    employee.is_admin = false;
+    employee.balance = 0;
     employee.up_votes = 0;
     employee.down_votes = 0;
     employee.posted_jobs = 0;
@@ -2217,6 +2407,8 @@ describe("Get Employee Active Jobs", function () {
     employee.is_working = false;
     employee.is_verified = false;
     employee.is_employer = false;
+    employee.is_admin = false;
+    employee.balance = 0;
     employee.up_votes = 0;
     employee.down_votes = 0;
     employee.posted_jobs = 0;
@@ -2280,6 +2472,8 @@ describe("Get Employee Active Jobs", function () {
     employee.is_working = false;
     employee.is_verified = false;
     employee.is_employer = false;
+    employee.is_admin = false;
+    employee.balance = 0;
     employee.up_votes = 0;
     employee.down_votes = 0;
     employee.posted_jobs = 0;
@@ -2393,6 +2587,8 @@ describe("Get Job Applicants", function () {
     employee.is_working = false;
     employee.is_verified = false;
     employee.is_employer = false;
+    employee.is_admin = false;
+    employee.balance = 0;
     employee.up_votes = 0;
     employee.down_votes = 0;
     employee.posted_jobs = 0;
@@ -2454,6 +2650,8 @@ describe("Get Job Applicants", function () {
     employee.is_working = false;
     employee.is_verified = false;
     employee.is_employer = false;
+    employee.is_admin = false;
+    employee.balance = 0;
     employee.up_votes = 0;
     employee.down_votes = 0;
     employee.posted_jobs = 0;
@@ -2496,3 +2694,70 @@ describe("Get Job Applicants", function () {
     });
   });
 });
+
+// /**
+//  * Tests for Get Job Applicants.
+//  */
+// describe("Get Job Applicants", function () {
+//   var url = "/job/pay-employee";
+//   beforeEach((done) => {
+//     Job.deleteMany({}, (err) => {
+//       done();
+//     });
+//   });
+//   beforeEach((done) => {
+//     User.deleteMany({}, (err) => {
+//       done();
+//     });
+//   });
+//   beforeEach((done) => {
+//     Image.deleteMany({}, (err) => {
+//       done();
+//     });
+//   });
+
+//   /**
+//   * 1)
+//   * Test Case: Null userID.
+//   * Input/Output: Pass a NULL request parameter.
+//   * Pass/Fail Criteria: Only succeeds if it returns error code
+//   *                     (500) with the message “Job is a required field”.
+//   */
+//   it("Test Case: Null employeeID", (done) => {
+//     chai.request(server).post(url).body({jobID: "dummy"}, {employerID: "dummy"}).end((err, res) => {
+//       res.should.have.status(500);
+//       res.body.should.have.property('errorMessage').eql('Employee is a required field');
+//       done();
+//     });
+//   });
+
+//   /**
+//   * 2)
+//   * Test Case: Null jobID.
+//   * Input/Output: Pass a NULL request parameter.
+//   * Pass/Fail Criteria: Only succeeds if it returns error code
+//   *                     (500) with the message “Job is a required field”.
+//   */
+//   it("Test Case: Null jobID", (done) => {
+//     chai.request(server).post(url).body({employeeID: "dummy"}, {employerID: "dummy"}).end((err, res) => {
+//       res.should.have.status(500);
+//       res.body.should.have.property('errorMessage').eql('Job is a required field');
+//       done();
+//     });
+//   });
+
+//   /**
+//   * 3)
+//   * Test Case: Null jobID.
+//   * Input/Output: Pass a NULL request parameter.
+//   * Pass/Fail Criteria: Only succeeds if it returns error code
+//   *                     (500) with the message “Job is a required field”.
+//   */
+//   it("Test Case: Null employerID", (done) => {
+//     chai.request(server).post(url).body({jobID: "dummy"}, {employeeID: "dummy"}).end((err, res) => {
+//       res.should.have.status(500);
+//       res.body.should.have.property('errorMessage').eql('Employer is a required field');
+//       done();
+//     });
+//   });
+// });

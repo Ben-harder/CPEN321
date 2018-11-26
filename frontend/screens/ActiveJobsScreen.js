@@ -56,9 +56,9 @@ class ActiveJobs extends React.Component
 
     tryFetchJobList() {
         // console.log("trying to fetch jobs...");
-        axios.get(`${api}/job/get-applied-for-jobs`, {
+        axios.get(`${api}/job/get-employee-active-jobs`, {
             params: {
-                employeeID: this.props.user.data.ID,
+                userID: this.props.user.data.ID,
             }
         }).then((response) =>
         {
@@ -68,7 +68,7 @@ class ActiveJobs extends React.Component
         }).catch((err) =>
         {
             console.log(err);
-            console.log(err.repsonse.data.errorMessage);
+            alert(err.repsonse.data.errorMessage);
         });
     }
 
@@ -82,8 +82,11 @@ class ActiveJobs extends React.Component
             description: job.description,
             jobID: job._id,
             showAction: true,
-            buttonText: "Cancel Application",
-            source: "AppliedJobs"
+            showPrimaryButton: false,
+            primaryButtonText: "",
+            secondaryButtonText: "Complete Job",
+            source: "ActiveJobs",
+            updateJobList: this.tryFetchJobList
         });
     }
 

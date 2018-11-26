@@ -12,6 +12,9 @@ import { connect } from "react-redux";
 import api from "../constants/Url";
 import axios from "axios";
 
+// components
+import Loading from "../components/Loading";
+
 // styles
 const s = require('../constants/style');
 
@@ -27,7 +30,8 @@ class ChangePassword extends React.Component
     this.state = {
       oldPassword: "",
       newPassword: "",
-      newPasswordConfirm: ""
+      newPasswordConfirm: "",
+      loading: false
     };
 
     this.changePassword = this.changePassword.bind(this);
@@ -41,6 +45,8 @@ class ChangePassword extends React.Component
     } else if (this.state.newPassword !== this.state.newPasswordConfirm) {
       alert("Your new passwords do not match! Please fill them out again.");
     } else {
+      this.setState({ loading: true });
+      
       // login user to see if old password is correct
       axios.get(`${api}/auth/sign-in`, {
         params: {
@@ -52,17 +58,21 @@ class ChangePassword extends React.Component
           userID: user.data.ID,
           password: this.state.newPassword,
         }).then((res) => {
+          this.setState({ loading: false });
           alert("You have successfully changed your password!");
           this.props.navigation.navigate("ProfileDetails");
         }).catch((err) => {
+          this.setState({ loading: false });
           console.log(err.repsonse.data.errorMessage);
           alert(err.response.data.errorMessage);
         });
       }).catch((err) => {
         if (err.response.data.errorMessage === "Login info is invalid!") {
           alert("Your old password is incorrect!");
+          this.setState({ loading: false });
         } else {
           alert(err.response.data.errorMessage);
+          this.setState({ loading: false });
         }
         
       });
@@ -71,6 +81,8 @@ class ChangePassword extends React.Component
 
   render() {
     const { user, navigation } = this.props;
+
+    if (this.state.loading) return <Loading />;
 
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -83,6 +95,7 @@ class ChangePassword extends React.Component
                 onChangeText={(text) => this.setState({oldPassword: text})}
                 value={this.state.oldPassword}
                 returnKeyType='done'
+                secureTextEntry={true}
               />
             </View>
 
@@ -93,6 +106,7 @@ class ChangePassword extends React.Component
                 onChangeText={(text) => this.setState({newPassword: text})}
                 value={this.state.newPassword}
                 returnKeyType='done'
+                secureTextEntry={true}
               />
             </View>
 
@@ -103,6 +117,7 @@ class ChangePassword extends React.Component
                 onChangeText={(text) => this.setState({newPasswordConfirm: text})}
                 value={this.state.newPasswordConfirm}
                 returnKeyType='done'
+                secureTextEntry={true}
               />
             </View>
 

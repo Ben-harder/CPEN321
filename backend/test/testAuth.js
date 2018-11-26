@@ -153,6 +153,8 @@ describe("Testing: doesUserExist", function() {
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;
+    user.is_admin = false;
+    user.balance = 0;
     user.up_votes = 0;
     user.down_votes = 0;
     user.posted_jobs = 0;
@@ -258,6 +260,8 @@ describe("Testing: userSignIn", function() {
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;
+    user.is_admin = false;
+    user.balance = 0;
     user.up_votes = 0;
     user.down_votes = 0;
     user.posted_jobs = 0;
@@ -296,6 +300,8 @@ describe("Testing: userSignIn", function() {
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;
+    user.is_admin = false;
+    user.balance = 0;
     user.up_votes = 0;
     user.down_votes = 0;
     user.posted_jobs = 0;
@@ -506,6 +512,8 @@ describe("Update User Info", function () {
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;
+    user.is_admin = false;
+    user.balance = 0;
     user.up_votes = 0;
     user.down_votes = 0;
     user.posted_jobs = 0;
@@ -631,6 +639,8 @@ describe("Update User Password", function () {
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;
+    user.is_admin = false;
+    user.balance = 0;
     user.up_votes = 0;
     user.down_votes = 0;
     user.posted_jobs = 0;
@@ -672,6 +682,8 @@ describe("Update User Password", function () {
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;
+    user.is_admin = false;
+    user.balance = 0;
     user.up_votes = 0;
     user.down_votes = 0;
     user.posted_jobs = 0;
@@ -795,6 +807,8 @@ describe("Rate User", function () {
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;
+    user.is_admin = false;
+    user.balance = 0;
     user.up_votes = 0;
     user.down_votes = 0;
     user.posted_jobs = 0;
@@ -840,6 +854,8 @@ describe("Rate User", function () {
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;
+    user.is_admin = false;
+    user.balance = 0;
     user.up_votes = 0;
     user.down_votes = 0;
     user.posted_jobs = 0;
@@ -932,6 +948,8 @@ describe("Get User Profile", function () {
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;
+    user.is_admin = false;
+    user.balance = 0;
     user.up_votes = 0;
     user.down_votes = 0;
     user.posted_jobs = 0;
@@ -986,6 +1004,8 @@ describe("Get User Profile", function () {
     user.is_working = false;
     user.is_verified = false;
     user.is_employer = false;
+    user.is_admin = false;
+    user.balance = 0;
     user.up_votes = 4;
     user.down_votes = 5;
     user.posted_jobs = 6;
