@@ -97,39 +97,39 @@ class SideMenu extends Component {
             </View>
           </View>
         </View>
-        <ScrollView style={{width: '100%'}}>
-          <View style={s.navItem} onPress={() => {this.props.navigation.navigate("CreateJob")}}>
+        <View style={{width: '100%'}}>
+          <TouchableOpacity style={s.navItem} onPress={() => {this.props.navigation.navigate("CreateJob")}}>
             <Text style={s.regText}>
               Create Job
             </Text>
-          </View>
-          <View style={s.navItem} onPress={() => {this.props.navigation.navigate("Main")}}>
+          </TouchableOpacity>
+          <TouchableOpacity style={s.navItem} onPress={() => {this.props.navigation.navigate("Main")}}>
             <Text style={s.regText}>
               Browse
             </Text>
-          </View>          
-          <View style={s.navItem} onPress={() => {this.props.navigation.navigate("EmployerJobs")}}>
+          </TouchableOpacity>          
+          <TouchableOpacity style={s.navItem} onPress={() => {this.props.navigation.navigate("EmployerJobs")}}>
             <Text style={s.regText}>
               My Job Postings
             </Text>
-          </View>
-          <View style={s.navItem} onPress={() => {this.props.navigation.navigate("ActiveJobs")}}>
+          </TouchableOpacity>
+          <TouchableOpacity style={s.navItem} onPress={() => {this.props.navigation.navigate("ActiveJobs")}}>
             <Text style={s.regText}>
               Active Jobs
             </Text>
-          </View>
-          <View style={s.navItem} onPress={() => {this.props.navigation.navigate("AppliedJobs")}}> 
+          </TouchableOpacity>
+          <TouchableOpacity style={s.navItem} onPress={() => {this.props.navigation.navigate("AppliedJobs")}}> 
             <Text style={s.regText}>
               Job Applications
             </Text>
-          </View>
-          <View style={s.navItem} onPress={() => {this.props.navigation.navigate("Profile")}}>
+          </TouchableOpacity>
+          <TouchableOpacity style={s.navItem} onPress={() => {this.props.navigation.navigate("Profile")}}>
             <Text style={s.regText}>
               My Profile
             </Text>
-          </View>
-        </ScrollView>
-        <View style={{width: '90%', paddingVertical: 20}}>
+          </TouchableOpacity>
+        </View>
+        <View style={{width: '90%', paddingTop: 10, paddingBottom: 30}}>
           <TouchableOpacity style={s.textLink} onPress={this.signOut}>
             <Text style={s.textLinkText}> Sign Out </Text>
           </TouchableOpacity>

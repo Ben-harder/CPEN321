@@ -78,6 +78,8 @@ class EditProfile extends React.Component
 
   save() {
     const { user } = this.props;
+    const { state, setParams, navigate } = this.props.navigation;
+    const params = state.params || {};
 
     if (!this.state.firstName || !this.state.lastName || !this.phone.getValue()) {
       alert("Please leave no fields blank!");
@@ -93,7 +95,9 @@ class EditProfile extends React.Component
         alert("Successfully updated your info!");
         this.props.actions.userData(res.data);
         this.props.navigation.navigate("ProfileDetails");
+        params.updateInformation(res.data);
       }).catch((err) => {
+        console.log(err);
         console.log(err.repsonse.data.errorMessage);
         alert(err.response.data.errorMessage);
       });

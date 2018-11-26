@@ -24,7 +24,7 @@ import Font from "../constants/Font";
 // components
 import Loading from "../components/Loading";
 
-const logo = require('../assets/images/emplorium-light.png');
+const logo = require('../assets/images/emplorium-light.gif');
 
 var s = require('../constants/style');
 

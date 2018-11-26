@@ -21,7 +21,7 @@ import phoneNumber from "react-native-phone-input/lib/phoneNumber";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
 
-const logo = require('../assets/images/emplorium-light.png');
+const logo = require('../assets/images/emplorium-light.gif');
 
 // components
 import Loading from "../components/Loading";
