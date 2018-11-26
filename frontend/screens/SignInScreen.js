@@ -9,7 +9,8 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
-  ImageBackground
+  ImageBackground,
+  Image,
 } from "react-native";
 import PhoneInput from "react-native-phone-input";
 import {bindActionCreators} from "redux";
@@ -19,6 +20,8 @@ import axios from "axios";
 import phoneNumber from "react-native-phone-input/lib/phoneNumber";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
+
+const logo = require('../assets/images/emplorium-light.gif');
 
 // components
 import Loading from "../components/Loading";
@@ -72,13 +75,8 @@ class SignInScreen extends React.Component {
 
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={s.container}>
-          <Text
-            style={[
-            s.welcomeText, {
-              paddingTop: 80
-            }
-          ]}>Emplorium</Text>
+        <View style={[s.container]}>
+          <Image source={logo} style={s.logo} resizeMode={'contain'}/>
           <View style={s.authContainer}>
             <View>
               <Text
@@ -121,20 +119,15 @@ class SignInScreen extends React.Component {
               onPress={this.attemptSignIn}
               style={[
               s.textLink, {
-                paddingVertical: 40
+                paddingTop: 40
               }
             ]}>
               <Text style={s.textLinkText}>Sign In</Text>
             </TouchableOpacity>
-            <Text style={[s.regTextBold]}>or</Text>
+
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("SignUp")}
-              style={[
-              s.textLink, {
-                paddingVertical: 40
-              }
-            ]}>
-              <Text style={s.textLinkText}>Click Here to Sign Up</Text>
+              onPress={() => this.props.navigation.navigate("SignUp")}>
+              <Text style={s.textLinkTextAlt}>Or click Here to Sign Up</Text>
             </TouchableOpacity>
           </View>
         </View>

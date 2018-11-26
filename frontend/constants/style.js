@@ -54,18 +54,12 @@ module.exports = StyleSheet.create({
     },
     textLinkTextAlt: {
         fontSize: Font.butSize,
-        color: Colors.buttonText,
+        color: Colors.sDark,
         fontWeight: Font.thick,
         padding: 10,
         borderRadius: 10,
-        backgroundColor: Colors.sNormAlt,
         overflow: "hidden",
         textAlign: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.8,
-        shadowRadius: 2,
-        elevation: 1,
     },
     innerContainer: {
         width: "100%",  
@@ -189,11 +183,18 @@ module.exports = StyleSheet.create({
         backgroundColor: Colors.sDark,
         width: '100%',
         flexDirection: 'row',
-        paddingVertical: 50,
+        paddingTop: 50,
+        paddingBottom: 30,
+        marginBottom: 10
     },
     navItem: {
         justifyContent: 'center',
         paddingVertical: 25,
         width: '100%',
+    },
+    logo: {
+        flex: 3/5, 
+        marginTop: 50, 
+        backgroundColor: 'transparent',
     },
 });

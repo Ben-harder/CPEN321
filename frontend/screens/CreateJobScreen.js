@@ -118,20 +118,6 @@ class CreateJobScreen extends React.Component
                     <View style={s.innerContainer}>
                         <View>
                             <Text style={s.regText}>
-                                Address:
-                            </Text>
-                            <TextInput
-                                testID="#address"
-                                style={s.textInput}
-                                onChangeText={(address) => this.setState({ address })}
-                                returnKeyType='done'
-                                placeholder="Ex: 1234 Address Rd" 
-                                underlineColorAndroid='transparent'
-                                />
-                        </View>
-
-                        <View>
-                            <Text style={s.regText}>
                                 Job description:
                             </Text>
 
@@ -144,6 +130,20 @@ class CreateJobScreen extends React.Component
                                 returnKeyType='done'
                                 blurOnSubmit={true}
                                 placeholder="Enter Description Here" 
+                                underlineColorAndroid='transparent'
+                                />
+                        </View>
+
+                        <View>
+                            <Text style={s.regText}>
+                                Address:
+                            </Text>
+                            <TextInput
+                                testID="#address"
+                                style={s.textInput}
+                                onChangeText={(address) => this.setState({ address })}
+                                returnKeyType='done'
+                                placeholder="Ex: 1234 Address Rd" 
                                 underlineColorAndroid='transparent'
                                 />
                         </View>

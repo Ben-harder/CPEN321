@@ -46,6 +46,7 @@ class Profile extends React.Component
     this.getUserStats = this.getUserStats.bind(this);
     this.acceptApplicant = this.acceptApplicant.bind(this);
     this.declineApplicant = this.declineApplicant.bind(this);
+    this.updateInformation = this.updateInformation.bind(this);
   }
 
   componentDidMount() {
@@ -80,6 +81,14 @@ class Profile extends React.Component
     }).catch((err) => {
       console.log(err);
       alert(err.response.data.errorMessage);
+    });
+  }
+
+  updateInformation(user) {
+    this.setState({
+      firstName: user.first_name,
+      lastName: user.last_name,
+      phoneNumber: user.phone_number
     });
   }
 
@@ -151,7 +160,7 @@ class Profile extends React.Component
 
           <View style={{width: '90%', paddingBottom: 20, justifyContent: 'space-evenly'}}> 
             {this.state.userProfile &&
-            <TouchableOpacity onPress={() => navigation.navigate("EditProfile")} style={s.textLink}>
+            <TouchableOpacity onPress={() => navigation.navigate("EditProfile", { updateInformation: this.updateInformation })} style={s.textLink}>
               <Text style={s.textLinkText}>Edit Info</Text>
             </TouchableOpacity>}
 
