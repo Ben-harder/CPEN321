@@ -134,7 +134,7 @@ class SignUpScreen extends React.Component {
               s.regTextBold, {
                 paddingBottom: 40
               }
-            ]}>Enter your phone number to sign up:</Text>
+            ]}>Enter your phone number to begin creating your account:</Text>
             <PhoneInput
               style={{
               backgroundColor: '#ffffff99',
@@ -150,20 +150,15 @@ class SignUpScreen extends React.Component {
               onPress={this.checkUserExists}
               style={[
               s.textLink, {
-                paddingVertical: 40
+                paddingTop: 40
               }
             ]}>
               <Text style={s.textLinkText}>Sign Up</Text>
             </TouchableOpacity>
-            <Text style={[s.regTextBold]}>or</Text>
+
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("SignIn")}
-              style={[
-              s.textLink, {
-                paddingVertical: 40
-              }
-            ]}>
-              <Text style={s.textLinkText}>Click Here to Sign In</Text>
+              onPress={() => this.props.navigation.navigate("SignIn")}>
+              <Text style={s.textLinkTextAlt}>Or click Here to Sign In</Text>
             </TouchableOpacity>
           </View>}
           {this.state.viewState === 2 && <View style={s.innerContainer}>
