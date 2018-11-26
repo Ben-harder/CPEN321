@@ -600,6 +600,42 @@ module.exports = {
 
         })
     });
+  },
+
+  /**
+   * Check if an employer can afford it.
+   */
+  employerCanAffordJob(req, res) {
+    // null employer
+    if (!req.query.userID) {
+      let ret = {};
+      ret.errorMessage = "User is a required field";
+      return res.status(500).send(ret);
+    }
+    // null job
+    if (!req.query.jobID) {
+      let ret = {};
+      ret.errorMessage = "Job is a required field";
+      return res.status(500).send(ret);
+    }
+    Job.findById(req.query.jobID)
+    .populate('employer')
+    .exec((err, job) => {
+      // err
+      if (err || !job) {
+        let ret = {};
+        ret.errorMessage = "Internal error in database"; 
+        return res.status(500).send(ret);
+      }
+      // can't affort it
+      if(job.employer.balance < job.wage) {
+        let ret = {};
+        ret.errorMessage = "You cannot afford to pay for this job!"; 
+        return res.status(400).send(ret);
+      }
+      // success
+      return res.status(200).send(job);
+    });
   }
 
   

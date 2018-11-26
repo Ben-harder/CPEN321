@@ -25,11 +25,13 @@ module.exports = function (app) {
   app.get("/job/get-employer-jobs", job.getEmployerJobs);
   app.get("/job/get-applied-for-jobs", job.getAppliedForJobs);
   app.post("/job/complete-a-job", job.completeJob);
+  app.get("/job/can-afford-job", job.employerCanAffordJob);
+  app.post("/job/charge-employer", job.chargeEmployer);
   app.post("/job/accept-an-applicant", job.acceptAnApplicant);
   app.get("/job/get-job-types", job.getJobTypes);
   app.post("/job/cancel-job", job.deleteJob);
   app.post("/job/cancel-application", job.deleteJobApplication);
   app.get("/job/get-employee-active-jobs", job.getEmployeeActiveJobs);
   app.get("/job/get-job-applicants", job.getJobApplicants);
-  app.post("/job/charge-employer", job.chargeEmployer);
+  
 };
