@@ -113,7 +113,7 @@ class EmployerJobsScreen extends React.Component
                     data={this.state.jobList.filter(job => (!job.is_active))}
                     renderItem={({ item }) => (
                         <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
-                            <JobItem job={item}/>
+                            <JobItem job={item} isEmployer={true}/>
                         </TouchableOpacity>
                     )}
                     keyExtractor={(item, index) => index.toString()}
@@ -125,10 +125,10 @@ class EmployerJobsScreen extends React.Component
                 return (
                     <FlatList
                     style={s.jobList}
-                    data={this.state.jobList.filter(job => (job.is_active && !job.is_completed))}
+                    data={this.state.jobList.filter(job => (job.is_active && !job.is_compeleted))}
                     renderItem={({ item }) => (
                         <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
-                            <JobItem job={item}/>
+                            <JobItem job={item} isEmployer={true}/>
                         </TouchableOpacity>
                     )}
                     keyExtractor={(item, index) => index.toString()}
@@ -140,10 +140,10 @@ class EmployerJobsScreen extends React.Component
                 return (
                     <FlatList
                     style={s.jobList}
-                    data={this.state.jobList.filter(job => (job.is_completed))}
+                    data={this.state.jobList.filter(job => (job.is_compeleted))}
                     renderItem={({ item }) => (
                         <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
-                            <JobItem job={item}/>
+                            <JobItem job={item} isEmployer={true}/> 
                         </TouchableOpacity>
                     )}
                     keyExtractor={(item, index) => index.toString()}

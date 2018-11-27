@@ -109,7 +109,7 @@ class ActiveJobs extends React.Component
                 data={this.state.jobList}
                 renderItem={({ item }) => (
                     <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
-                        <JobItem job={item}/>
+                        <JobItem job={item} isEmployer={false}/>
                     </TouchableOpacity>
                 )}
                 keyExtractor={(item, index) => index.toString()}

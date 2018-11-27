@@ -14,8 +14,9 @@ const s = require('../constants/style');
 export default class JobItem extends Component {
     render()
     {
-        let { job } = this.props;
-        console.log(job);
+        let { job, isEmployer } = this.props;
+        console.log(job, isEmployer);
+        console.log("wain", isEmployer);
         return (
             <View>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
@@ -27,8 +28,14 @@ export default class JobItem extends Component {
                     <Text style={s.addressText}> {job.address} </Text> 
                 </View>
 
+
                 {!job.is_active &&
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                    {!isEmployer && 
+                    <Text style={{fontSize: Font.smallSize}}>
+                        <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{job.employer.first_name} {job.employer.last_name} </Text>
+                    </Text>}
+
                     <View style={{flexDirection: 'row', flexGrow: 1, justifyContent:'flex-end', alignItems: 'center'}}>
                         <Text style={{fontSize: Font.smallSize, color: Colors.sNorm, fontStyle: 'italic'}}> Applicants: {job.applicants.length}</Text>
                     </View>
@@ -36,9 +43,13 @@ export default class JobItem extends Component {
 
                 {job.is_active && !job.is_compeleted && 
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <Text style={{fontSize: Font.smallSize}}>
+                    {isEmployer && <Text style={{fontSize: Font.smallSize}}>
                         <Text style={{fontWeight: 'bold'}}> Taken by: </Text><Text>{job.employee.first_name} {job.employee.last_name} </Text>
-                    </Text>
+                    </Text>}
+                    {!isEmployer && 
+                    <Text style={{fontSize: Font.smallSize}}>
+                        <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{job.employer.first_name} {job.employer.last_name} </Text>
+                    </Text>}
 
                     <View style={{flexDirection: 'row', flexGrow: 1, justifyContent:'flex-end', alignItems: 'center'}}>
                         <Text style={{fontSize: Font.smallSize, color: Colors.sNorm, fontStyle: 'italic'}}> Active </Text>
