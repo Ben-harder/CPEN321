@@ -179,10 +179,7 @@ class JobBoardScreen extends React.Component
                         </TouchableOpacity>
                     </View>
                     {this.state.loading && <Loading />}
-                    {(this.state.viewList && !this.state.loading) && 
-                    <View style={{width: '100%', height: '100%', alignItems: 'center'}}>
-                        {this.populateJobs()}
-                    </View>}
+                    {(this.state.viewList && !this.state.loading) && this.populateJobs() }
                     {(this.state.showMap && !this.state.loading) &&
                     <View style={{height: '100%', width: '100%'}}>
                         <MapView
