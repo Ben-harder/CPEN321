@@ -78,7 +78,7 @@ class SideMenu extends Component {
     return ( 
       <View style={s.container}>
         <View style={s.navHeader}>
-          <Image source={{ uri: placeholderImage }} style={[s.profilePicture, {width: 75, height: 75}]} />
+          <Image source={{ uri: placeholderImage }} style={[s.profilePicture, {width: 100, height: 100}]} />
           <View style={{justifyContent: 'space-evenly'}}>
             <Text style={[s.regTextBold,{fontStyle: 'italic', color: 'white'}]}>
               <Text> Welcome {this.props.user.data.firstName} </Text>
@@ -96,8 +96,9 @@ class SideMenu extends Component {
               </View>
             </View>
 
-            <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
-              <Text style={[s.regTextBold, {color: 'white'}]}>Balance: ${this.props.user.data.balance}</Text>
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+              <IOSIcon name={'ios-cash'} size={30} color={Colors.sLight}/>
+              <Text style={[s.regTextBold, {color: 'white'}]}> ${this.props.user.data.balance} </Text>
             </View>
           </View>
         </View>
