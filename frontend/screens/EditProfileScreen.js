@@ -18,7 +18,7 @@ import axios from "axios";
 import { ImagePicker, Permissions } from 'expo';
 import Colors from "../constants/Colors";
 import styles from '../constants/KeyboardStyle';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 // actions
 import * as actions from "../actions/";

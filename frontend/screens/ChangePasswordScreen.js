@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import api from "../constants/Url";
 import axios from "axios";
 import styles from '../constants/KeyboardStyle';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 // components
 import Loading from "../components/Loading";

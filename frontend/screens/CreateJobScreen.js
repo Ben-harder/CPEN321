@@ -24,7 +24,7 @@ import Select from 'react-native-picker-select';
 import Colors from '../constants/Colors';
 import Font from '../constants/Font';
 import styles from '../constants/KeyboardStyle';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 

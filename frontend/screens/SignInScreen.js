@@ -22,7 +22,7 @@ import phoneNumber from "react-native-phone-input/lib/phoneNumber";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
 import styles from '../constants/KeyboardStyle';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const logo = require('../assets/images/emplorium-light.gif');
 
