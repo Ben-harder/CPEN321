@@ -22,7 +22,7 @@ import axios from "axios";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
 import styles from '../constants/KeyboardStyle';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 // components
 import Loading from "../components/Loading";

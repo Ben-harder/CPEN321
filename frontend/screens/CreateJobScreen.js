@@ -24,6 +24,7 @@ import Select from 'react-native-picker-select';
 import Colors from '../constants/Colors';
 import Font from '../constants/Font';
 import styles from '../constants/KeyboardStyle';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
@@ -184,10 +185,15 @@ class CreateJobScreen extends React.Component
             );
         } else {
             return (
+                <KeyboardAwareScrollView
+                style={{ backgroundColor: '#E1E2E1' }}
+                resetScrollToCoords={{ x: 0, y: 0 }}
+                contentContainerStyle={styles.container}
+                scrollEnabled={true}>
                 <View style={s.container}>           
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessbile={false}>
                         <View style={s.innerContainer}>
-                            <View>
+                            <View style={{marginBottom: 40}}>
                                 <Text style={s.regText}>
                                     Job description:
                                 </Text>
@@ -204,7 +210,7 @@ class CreateJobScreen extends React.Component
                                     underlineColorAndroid='transparent'
                                     />
                             </View>
-                            <View>
+                            <View style={{marginBottom: 40}}>
                                 <Text style={s.regText}>
                                     Wage in CAD:
                                 </Text>
@@ -219,7 +225,7 @@ class CreateJobScreen extends React.Component
                                     />
                             </View>
 
-                            <View>
+                            <View style={{marginBottom: 40}}>
                                 <Text style={s.regText}>
                                     Job type:
                                 </Text>
@@ -235,15 +241,16 @@ class CreateJobScreen extends React.Component
                             </View>
 
                             <TouchableOpacity testID="#submit" onPress={() => this.attemptCreateJob()} style={s.textLink}>
-                                <Text style={s.textLinkText}>Submit</Text>
+                                <Text style={[s.textLinkText, { marginBottom: 20 }]}>Submit</Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity onPress={() => this.props.navigation.navigate("Main")} style={s.textLink}>
-                                <Text style={s.textLinkTextBack}>Cancel</Text>
+                                <Text style={[s.textLinkTextBack, {marginBottom: 20}]}>Cancel</Text>
                             </TouchableOpacity>
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
+                </KeyboardAwareScrollView>
             );
         }
     }

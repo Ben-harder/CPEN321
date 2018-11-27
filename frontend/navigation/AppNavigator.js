@@ -35,7 +35,7 @@ const AppStack = createStackNavigator({ Main: JobBoardScreen, Job: JobScreen, Ma
         <IOSIcon name="ios-menu" size={30} style={{color: 'white', paddingLeft: 15}}/>
         </TouchableOpacity>
       ),
-      title: 'Job Board',
+      title: 'Browse',
     })
   }
 );

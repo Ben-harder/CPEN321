@@ -95,6 +95,7 @@ class EmployerJobsScreen extends React.Component
             isCompleted: job.is_compeleted,
             isRated: job.is_rated,
             employeeID: job.is_active ? job.employee._id : "",
+            employerID: this.props.user.data.ID
         });
     }
 

@@ -111,6 +111,7 @@ class ApplicantListScreen extends React.Component
 
     goToApplicantProfile(applicant)
     {
+        const { navigation } = this.props;
         const { state, setParams, navigate } = this.props.navigation;
         const params = state.params || {};
 
@@ -122,7 +123,8 @@ class ApplicantListScreen extends React.Component
             phoneNumber: applicant.phone_number,
             jobID: this.state.jobID,
             activateJob: params.activateJob,
-            updateList: this.tryFetchApplicantList
+            updateList: this.tryFetchApplicantList,
+            employerID: navigation.getParam("employerID")
         });
     }
 
