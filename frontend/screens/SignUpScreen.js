@@ -8,6 +8,7 @@ import {
   Text,
   TextInput,
   TouchableWithoutFeedback,
+  KeyboardAvoidingView,
   Keyboard,
   ImageBackground,
   Image,
@@ -20,6 +21,8 @@ import api from "../constants/Url";
 import axios from "axios";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
+import styles from '../constants/KeyboardStyle';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 // components
 import Loading from "../components/Loading";
@@ -126,112 +129,119 @@ class SignUpScreen extends React.Component {
     if (this.state.loading) return <Loading />;
 
     return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={s.container}>
-          <Image source={logo} style={s.logo} resizeMode={'contain'}/>
-          {this.state.viewState === 1 && <View style={[s.authContainer]}>
-            <Text
-              style={[
-              s.regTextBold, {
-                paddingBottom: 40
-              }
-            ]}>Enter your phone number to begin creating your account:</Text>
-            <PhoneInput
-              style={{
-              backgroundColor: '#ffffff99',
-              padding: 20,
-              borderRadius: 10,
-              marginVertical: 5
-            }}
-              ref={ref => {
-              this.phone = ref;
-            }}
-              initialCountry="ca"/>
-            <TouchableOpacity
-              onPress={this.checkUserExists}
-              style={[
-              s.textLink, {
-                paddingTop: 40
-              }
-            ]}>
-              <Text style={s.textLinkText}>Sign Up</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("SignIn")}>
-              <Text style={s.textLinkTextAlt}>Or click Here to Sign In</Text>
-            </TouchableOpacity>
-          </View>}
-          {this.state.viewState === 2 && <View style={s.innerContainer}>
-            <View>
-              <Text style={[s.regTextBold]}>First Name:</Text>
-              <TextInput
-                style={s.textInput}
-                onChangeText={(text) => this.setState({firstName: text})}
-                value={this.state.firstName}
-                returnKeyType='done'/>
-
-              <Text style={[s.regTextBold]}>Last Name:</Text>
-              <TextInput
-                style={s.textInput}
-                onChangeText={(text) => this.setState({lastName: text})}
-                value={this.state.lastName}
-                underlineColorAndroid='transparent'
-                returnKeyType='done'/>
-
-              <TouchableOpacity onPress={this.inputName} style={s.textLink}>
-                <Text style={s.textLinkText}>Continue</Text>
-              </TouchableOpacity>
+      // <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <KeyboardAwareScrollView
+      style={{ backgroundColor: '#E1E2E1' }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={styles.container}
+      scrollEnabled={true}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <View style={s.container}>
+            <Image source={logo} style={s.logo} resizeMode={'contain'}/>
+            {this.state.viewState === 1 && <View style={[s.authContainer]}>
+              <Text
+                style={[
+                s.regTextBold, {
+                  paddingBottom: 40
+                }
+              ]}>Enter your phone number to begin creating your account:</Text>
+              <PhoneInput
+                style={{
+                backgroundColor: '#ffffff99',
+                padding: 20,
+                borderRadius: 10,
+                marginVertical: 5
+              }}
+                ref={ref => {
+                this.phone = ref;
+              }}
+                initialCountry="ca"/>
               <TouchableOpacity
-                onPress={() => this.setState({viewState: 1})}
-                style={s.textLink}>
-                <Text style={s.textLinkTextBack}>Back</Text>
+                onPress={this.checkUserExists}
+                style={[
+                s.textLink, {
+                  paddingTop: 40
+                }
+              ]}>
+                <Text style={s.textLinkText}>Sign Up</Text>
               </TouchableOpacity>
 
-            </View>
-          </View>}
-          {this.state.viewState === 3 && <View style={s.innerContainer}>
-            <View>
-              <Text style={[s.regTextBold]}>Enter a password:</Text>
-              <TextInput
-                style={s.textInput}
-                onChangeText={(text) => this.setState({password: text})}
-                value={this.state.password}
-                secureTextEntry={true}
-                underlineColorAndroid='transparent'
-                returnKeyType='done'/>
-              <TouchableOpacity onPress={this.inputPassword} style={s.textLink}>
-                <Text style={s.textLinkText}>Continue</Text>
-              </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => this.setState({viewState: 2})}
-                style={s.textLink}>
-                <Text style={s.textLinkTextBack}>Back</Text>
+                onPress={() => this.props.navigation.navigate("SignIn")}>
+                <Text style={s.textLinkTextAlt}>Or click Here to Sign In</Text>
               </TouchableOpacity>
-            </View>
-          </View>}
-          {this.state.viewState === 4 && <View style={s.innerContainer}>
-            <View>
-              <Text style={[s.regTextBold]}>Confirm your password:</Text>
-              <TextInput
-                style={s.textInput}
-                onChangeText={(text) => this.setState({passwordConfirm: text})}
-                value={this.state.passwordConfirm}
-                secureTextEntry={true}
-                underlineColorAndroid='transparent'
-                returnKeyType='done'/>
-              <TouchableOpacity onPress={this.attemptSignup} style={s.textLink}>
-                <Text style={s.textLinkText}>Create Account</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => this.setState({viewState: 3})}
-                style={s.textLink}>
-                <Text style={s.textLinkTextBack}>Back</Text>
-              </TouchableOpacity>
-            </View>
-          </View>}
-        </View>
-      </TouchableWithoutFeedback>
+            </View>}
+            {this.state.viewState === 2 && <View style={s.innerContainer}>
+              <View>
+                <Text style={[s.regTextBold, {marginTop: 40}]}>First Name:</Text>
+                <TextInput
+                  style={s.textInput}
+                  onChangeText={(text) => this.setState({firstName: text})}
+                  value={this.state.firstName}
+                  returnKeyType='done'/>
+
+                <Text style={[s.regTextBold]}>Last Name:</Text>
+                <TextInput
+                  style={s.textInput}
+                  onChangeText={(text) => this.setState({lastName: text})}
+                  value={this.state.lastName}
+                  underlineColorAndroid='transparent'
+                  returnKeyType='done'/>
+
+                <TouchableOpacity onPress={this.inputName} style={s.textLink}>
+                  <Text style={s.textLinkText}>Continue</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.setState({viewState: 1})}
+                  style={s.textLink}>
+                  <Text style={[s.textLinkTextBack, {marginBottom: 20}]}>Back</Text>
+                </TouchableOpacity>
+
+              </View>
+            </View>}
+            {this.state.viewState === 3 && <View style={s.innerContainer}>
+              <View>
+                <Text style={[s.regTextBold]}>Enter a password:</Text>
+                <TextInput
+                  style={s.textInput}
+                  onChangeText={(text) => this.setState({password: text})}
+                  value={this.state.password}
+                  secureTextEntry={true}
+                  underlineColorAndroid='transparent'
+                  returnKeyType='done'/>
+                <TouchableOpacity onPress={this.inputPassword} style={s.textLink}>
+                  <Text style={s.textLinkText}>Continue</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.setState({viewState: 2})}
+                  style={s.textLink}>
+                  <Text style={s.textLinkTextBack}>Back</Text>
+                </TouchableOpacity>
+              </View>
+            </View>}
+            {this.state.viewState === 4 && <View style={s.innerContainer}>
+              <View>
+                <Text style={[s.regTextBold]}>Confirm your password:</Text>
+                <TextInput
+                  style={s.textInput}
+                  onChangeText={(text) => this.setState({passwordConfirm: text})}
+                  value={this.state.passwordConfirm}
+                  secureTextEntry={true}
+                  underlineColorAndroid='transparent'
+                  returnKeyType='done'/>
+                <TouchableOpacity onPress={this.attemptSignup} style={s.textLink}>
+                  <Text style={s.textLinkText}>Create Account</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.setState({viewState: 3})}
+                  style={s.textLink}>
+                  <Text style={s.textLinkTextBack}>Back</Text>
+                </TouchableOpacity>
+              </View>
+            </View>}
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
     );
   }
 }

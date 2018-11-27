@@ -8,6 +8,7 @@ import {
   Text,
   TextInput,
   TouchableWithoutFeedback,
+  KeyboardAvoidingView,
   Keyboard,
   ImageBackground,
   Image,
@@ -20,6 +21,8 @@ import axios from "axios";
 import phoneNumber from "react-native-phone-input/lib/phoneNumber";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
+import styles from '../constants/KeyboardStyle';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const logo = require('../assets/images/emplorium-light.gif');
 
@@ -74,64 +77,72 @@ class SignInScreen extends React.Component {
     if (this.state.loading) return <Loading />;
 
     return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={[s.container]}>
-          <Image source={logo} style={s.logo} resizeMode={'contain'}/>
-          <View style={s.authContainer}>
-            <View>
-              <Text
-                style={[
-                s.regTextBold, {
-                  marginTop: 15,
-                  marginBottom: 5
-                }
-              ]}>Enter your phone number to sign in:</Text>
-              <PhoneInput
-                style={{
-                backgroundColor: '#F5F5F6',
-                padding: 20,
-                borderRadius: 10,
-                marginVertical: 5
-              }}
-                ref={ref => {
-                this.phone = ref;
-              }}
-                initialCountry="ca"/>
-            </View>
-            <View>
-              <Text
-                style={[
-                s.regTextBold, {
-                  marginTop: 15,
-                  marginBottom: 5
-                }
-              ]}>Enter your password:</Text>
-              <TextInput
-                style={s.textInput}
-                onChangeText={(text) => this.setState({password: text})}
-                value={this.state.password}
-                secureTextEntry={true}
-                underlineColorAndroid='transparent'
-                returnKeyType='done'/>
-            </View>
+      // <KeyboardAvoidingView keyboardVerticalOffset={100} style={styles.container} behavior="padding">
+      <KeyboardAwareScrollView
+      style={{ backgroundColor: '#E1E2E1' }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={styles.container}
+      scrollEnabled={true}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <View style={[s.container]}>
+            <Image source={logo} style={s.logo} resizeMode={'contain'}/>
+            <View style={s.authContainer}>
+              <View>
+                <Text
+                  style={[
+                  s.regTextBold, {
+                    marginTop: 15,
+                    marginBottom: 5
+                  }
+                ]}>Enter your phone number to sign in:</Text>
+                <PhoneInput
+                  style={{
+                  backgroundColor: '#F5F5F6',
+                  padding: 20,
+                  borderRadius: 10,
+                  marginVertical: 5
+                }}
+                  ref={ref => {
+                  this.phone = ref;
+                }}
+                  initialCountry="ca"/>
+              </View>
+              <View>
+                <Text
+                  style={[
+                  s.regTextBold, {
+                    marginTop: 15,
+                    marginBottom: 5
+                  }
+                ]}>Enter your password:</Text>
+                <TextInput
+                  style={s.textInput}
+                  onChangeText={(text) => this.setState({password: text})}
+                  value={this.state.password}
+                  secureTextEntry={true}
+                  underlineColorAndroid='transparent'
+                  returnKeyType='done'/>
+              </View>
 
-            <TouchableOpacity
-              onPress={this.attemptSignIn}
-              style={[
-              s.textLink, {
-                paddingTop: 40
-              }
-            ]}>
-              <Text style={s.textLinkText}>Sign In</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={this.attemptSignIn}
+                style={[
+                s.textLink, {
+                  paddingTop: 40
+                }
+              ]}>
+                <Text style={s.textLinkText}>Sign In</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("SignUp")}>
-              <Text style={s.textLinkTextAlt}>Or click Here to Sign Up</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate("SignUp")}>
+                <Text style={[s.textLinkTextAlt, {marginBottom:60}
+                ]}>Or click Here to Sign Up</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
     );
   }
 }
