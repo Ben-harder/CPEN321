@@ -95,6 +95,10 @@ class SideMenu extends Component {
                 <Text style={[s.regTextBold, {color: 'white'}]}> {this.state.downVotes} </Text>
               </View>
             </View>
+
+            <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+              <Text style={[s.regTextBold, {color: 'white'}]}>Balance: ${this.props.user.data.balance}</Text>
+            </View>
           </View>
         </View>
         <View style={{width: '100%'}}>
