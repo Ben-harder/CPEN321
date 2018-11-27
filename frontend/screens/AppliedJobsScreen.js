@@ -80,7 +80,6 @@ class AppliedJobsScreen extends React.Component
                         <Text style={[s.regText]}>No applications yet </Text>
                         <IOSIcon name="ios-sad" size={25} style={{color: Colors.sNorm, marginLeft: 5}}/>
                     </View>
-                    <Text style={s.regText}> Start applying you lazy bastard </Text>
                 </View>
             );
         }
