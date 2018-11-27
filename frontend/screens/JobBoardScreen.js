@@ -21,8 +21,6 @@ import Font from "../constants/Font";
 import IOSIcon from "react-native-vector-icons/Ionicons";
 import { connect } from 'react-redux';
 
-import { MonoText } from "../components/StyledText";
-
 // components
 import Loading from "../components/Loading";
 import JobItem from "../components/JobItem";

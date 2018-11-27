@@ -142,37 +142,6 @@ CreateJobScreen {
                   }
                 }
               >
-                Address:
-              </Text>
-              <TextInput
-                allowFontScaling={true}
-                onChangeText={[Function]}
-                placeholder="Ex: 1234 Address Rd"
-                returnKeyType="done"
-                style={
-                  Object {
-                    "backgroundColor": "#F5F5F6",
-                    "borderRadius": 10,
-                    "marginVertical": 5,
-                    "padding": 20,
-                  }
-                }
-                testID="#address"
-                underlineColorAndroid="transparent"
-              />
-            </Component>
-            <Component>
-              <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
-                style={
-                  Object {
-                    "fontSize": 18,
-                    "textAlign": "center",
-                  }
-                }
-              >
                 Job description:
               </Text>
               <TextInput
@@ -195,6 +164,37 @@ CreateJobScreen {
                   }
                 }
                 testID="#description"
+                underlineColorAndroid="transparent"
+              />
+            </Component>
+            <Component>
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                style={
+                  Object {
+                    "fontSize": 18,
+                    "textAlign": "center",
+                  }
+                }
+              >
+                Address:
+              </Text>
+              <TextInput
+                allowFontScaling={true}
+                onChangeText={[Function]}
+                placeholder="Ex: 1234 Address Rd"
+                returnKeyType="done"
+                style={
+                  Object {
+                    "backgroundColor": "#F5F5F6",
+                    "borderRadius": 10,
+                    "marginVertical": 5,
+                    "padding": 20,
+                  }
+                }
+                testID="#address"
                 underlineColorAndroid="transparent"
               />
             </Component>

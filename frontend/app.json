@@ -26,6 +26,12 @@
       "config": {
         "googleMapsApiKey": "AIzaSyATRO59rzBhwgy3XpGmzOvhIH6PCpWrZYM"
       }
-    }
+    },
+    "android": {
+      "package": "com.emplorium.app",
+      "config": {
+         "googleMaps": { "apiKey": "AIzaSyATRO59rzBhwgy3XpGmzOvhIH6PCpWrZYM" }   
+      }
+   }
   }
 }

@@ -1,6 +1,6 @@
 // Dependencies
 import React from "react";
-import { TouchableOpacity, Dimensions, Platform } from "react-native";
+import { TouchableOpacity, Dimensions, Platform, Keyboard } from "react-native";
 import { createSwitchNavigator , createStackNavigator, createDrawerNavigator } from "react-navigation";
 import IOSIcon from "react-native-vector-icons/Ionicons";
 
@@ -21,17 +21,18 @@ import JobDetailsScreen from "../screens/JobDetailsScreen";
 import AppliedJobsScreen from "../screens/AppliedJobsScreen";
 import ActiveJobsScreen from "../screens/ActiveJobsScreen";
 import ApplicantListScreen from "../screens/ApplicantListScreen";
+import MapScreen from "../screens/MapsScreen";
 
 // constants
 import Colors from "../constants/Colors";
 
-const AppStack = createStackNavigator({ Main: JobBoardScreen, Job: JobScreen }, 
+const AppStack = createStackNavigator({ Main: JobBoardScreen, Job: JobScreen, Map: MapScreen }, 
   {
     navigationOptions: ({navigation}) => ({
       headerTintColor: 'white',
       headerStyle: {backgroundColor: Colors.sDark, marginRight: 0, marginLeft: 0, borderBottomWidth: 0, height: 60},
       headerLeft:(<TouchableOpacity onPress={() => navigation.openDrawer()}>
-        <IOSIcon name="ios-menu" size={30} style={{color: 'white', paddingLeft: 15,}}/>
+        <IOSIcon name="ios-menu" size={30} style={{color: 'white', paddingLeft: 15}}/>
         </TouchableOpacity>
       ),
       title: 'Job Board',
@@ -44,7 +45,7 @@ const CreateJobStack = createStackNavigator({CreateJob: CreateJobScreen},
     navigationOptions: ({navigation}) => ({
       headerTintColor: 'white',
       headerStyle: {backgroundColor: Colors.sDark, marginRight: 0, marginLeft: 0, borderBottomWidth: 0, height: 60},
-      headerLeft:(<TouchableOpacity onPress={() => navigation.openDrawer()}>
+      headerLeft:(<TouchableOpacity onPress={() => {Keyboard.dismiss(); navigation.openDrawer();}}>
         <IOSIcon name="ios-menu" size={30} style={{color: 'white', paddingLeft: 15,}}/>
         </TouchableOpacity>
       ),
@@ -53,7 +54,7 @@ const CreateJobStack = createStackNavigator({CreateJob: CreateJobScreen},
   }
 );
 
-const EmployerJobsStack = createStackNavigator({EmployerJobs: EmployerJobsScreen, JobDetails: JobDetailsScreen, ApplicantList: ApplicantListScreen, ApplicantProfile: ProfileScreen},
+const EmployerJobsStack = createStackNavigator({EmployerJobs: EmployerJobsScreen, JobDetails: JobDetailsScreen, ApplicantList: ApplicantListScreen, ApplicantProfile: ProfileScreen, Map: MapScreen},
   {
     navigationOptions: ({navigation}) => ({
       headerTintColor: 'white',
@@ -67,7 +68,7 @@ const EmployerJobsStack = createStackNavigator({EmployerJobs: EmployerJobsScreen
   }
 );
 
-const AppliedJobsStack = createStackNavigator({AppliedJobs: AppliedJobsScreen, JobDetails: JobDetailsScreen},
+const AppliedJobsStack = createStackNavigator({AppliedJobs: AppliedJobsScreen, JobDetails: JobDetailsScreen, Map: MapScreen},
   {
     navigationOptions: ({navigation}) => ({
       headerTintColor: 'white',
@@ -81,7 +82,7 @@ const AppliedJobsStack = createStackNavigator({AppliedJobs: AppliedJobsScreen, J
   }
 );
 
-const ActiveJobsStack = createStackNavigator({ActiveJobs: ActiveJobsScreen, JobDetails: JobDetailsScreen},
+const ActiveJobsStack = createStackNavigator({ActiveJobs: ActiveJobsScreen, JobDetails: JobDetailsScreen, Map: MapScreen},
   {
     navigationOptions: ({navigation}) => ({
       headerTintColor: 'white',

@@ -25,6 +25,8 @@ import Colors from '../constants/Colors';
 import Font from '../constants/Font';
 import styles from '../constants/KeyboardStyle';
 
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+
 // components
 import Loading from "../components/Loading";
 
@@ -41,10 +43,15 @@ class CreateJobScreen extends React.Component
             jobType: "",
             wage: "",
             jobTypes: [],
-            loading: true
+            loading: true,
+            step: true,
+            address: "",
+            longitude: 0,
+            latitude: 0
         };
 
         this.attemptCreateJob = this.attemptCreateJob.bind(this);
+        this.inputAddress = this.inputAddress.bind(this);
     }
 
     componentDidMount() {
@@ -74,10 +81,10 @@ class CreateJobScreen extends React.Component
 
     attemptCreateJob()
     {
-        const { address, description, jobType, wage } = this.state;
+        const { address, description, jobType, wage, longitude, latitude } = this.state;
 
-        if (address.toString() == "Address" || description.toString() == "Description"
-            || address.toString().length <= 0 || description.toString().length <= 0 ||
+        if (description.toString() == "Description"
+            || description.toString().length <= 0 ||
             wage.toString().length <= 0)
         {
             alert("Please ensure you've field out the fields.");
@@ -86,15 +93,13 @@ class CreateJobScreen extends React.Component
         {
             alert("Wage must be a valid format!");
         }
-        else if (!/^\s*\S+(?:\s+\S+){2}/.test(address) || !/^[a-zA-Z 0-9\.\-]*$/.test(address))
-        {
-            alert("Address must be a valid address!");
-        }
         else
         {
             this.setState({ loading: true });
             axios.post(`${api}/job/create-job`, {
                 address: address,
+                longitude: longitude,
+                latitude: latitude,
                 description: description,
                 jobType: jobType,
                 wage: wage,
@@ -111,86 +116,136 @@ class CreateJobScreen extends React.Component
         }
     }
 
+    inputAddress() {
+        if (this.state.address === "") {
+            alert("Please enter an address!");
+        } else {
+            this.setState({
+                step: false
+            });
+        }
+    }
+
     render()
     {
         if (this.state.loading) return (<Loading />);
-        return (
-                <View style={s.container}>           
-                <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessbile={false}>
-                    <View style={s.innerContainer}>
-                        <View>
-                            <Text style={s.regText}>
-                                Job description:
-                            </Text>
+        if (this.state.step) {
+            return (
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessbile={false} style={{height: '100%'}}>
+                    <GooglePlacesAutocomplete
+                        placeholder='Enter address'
+                        minLength={2} // minimum length of text to search
+                        autoFocus={false}
+                        returnKeyType={'search'} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
+                        listViewDisplayed='auto'    // true/false/undefined
+                        fetchDetails={true}
+                        renderDescription={row => row.description} // custom description render
+                        onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
+                            this.setState({
+                                address: details.name,
+                                longitude: details.geometry.location.lng,
+                                latitude: details.geometry.location.lat,
+                            });
+                        }}
+                        
+                        getDefaultValue={() => ''}
+                        listViewDisplayed={false}
+                        query={{
+                            // available options: https://developers.google.com/places/web-service/autocomplete
+                            key: 'AIzaSyBqVTF8qnLz4TNCAR_GJeAj7_X6iEzcY00',
+                            language: 'en', // language of the results
+                            types: 'geocode' // default: 'geocode'
+                        }}
+                        
+                        styles={{
+                            textInputContainer: {
+                                width: '100%',
+                                height: 60
+                            },
+                            textInput: {
+                                height: 40,
+                                marginTop: 10
+                            },
+                            description: {
+                                fontWeight: 'bold'
+                            },
+                        }}
 
-                            <TextInput
-                                testID="#description"
-                                style={s.textInputJobDescription}
-                                multiline = {true}
-                                numberOfLines = {4}
-                                onChangeText={(description) => this.setState({ description })}
-                                returnKeyType='done'
-                                blurOnSubmit={true}
-                                placeholder="Enter Description Here" 
-                                underlineColorAndroid='transparent'
-                                />
-                        </View>
+                        renderRightButton={() => 
+                        <TouchableOpacity onPress={() => this.inputAddress()} style={s.textLink}>
+                            <Text style={[s.textLinkText, {marginRight: 10}]}>Next</Text>
+                        </TouchableOpacity>}
+                        
+                        currentLocation={false} // Will add a 'Current location' button at the top of the predefined places list
 
-                        <View>
-                            <Text style={s.regText}>
-                                Address:
-                            </Text>
-                            <TextInput
-                                testID="#address"
-                                style={s.textInput}
-                                onChangeText={(address) => this.setState({ address })}
-                                returnKeyType='done'
-                                placeholder="Ex: 1234 Address Rd" 
-                                underlineColorAndroid='transparent'
-                                />
-                        </View>
-
-                        <View>
-                            <Text style={s.regText}>
-                                Wage in CAD:
-                            </Text>
-                            <TextInput
-                                testID="#wage"
-                                style={s.textInput}
-                                keyboardType={"numeric"}
-                                onChangeText={(wage) => this.setState({ wage })}
-                                returnKeyType='done'
-                                placeholder="Enter Wage here" 
-                                underlineColorAndroid='transparent'
-                                />
-                        </View>
-
-                        <View>
-                            <Text style={s.regText}>
-                                Job type:
-                            </Text>
-                            <View style={s.picker}>
-                                <Select
-                                    testID="#type"
-                                    onValueChange={value => this.setState({jobType: value})}
-                                    items={this.state.jobTypes}
-                                    placeholder={{label:"Select Job Here", value: ""}}
-                                    style={{inputIOS: { height: 50, paddingLeft: 10, color: '#000000' }}}
-                                />
-                            </View>
-                        </View>
-
-                        <TouchableOpacity testID="#submit" onPress={() => this.attemptCreateJob()} style={s.textLink}>
-                            <Text style={s.textLinkText}>Submit</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate("Main")} style={s.textLink}>
-                            <Text style={s.textLinkTextBack}>Cancel</Text>
-                        </TouchableOpacity>
-                    </View>
+                        debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
+                    />
                 </TouchableWithoutFeedback>
+            );
+        } else {
+            return (
+                <View style={s.container}>           
+                    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessbile={false}>
+                        <View style={s.innerContainer}>
+                            <View>
+                                <Text style={s.regText}>
+                                    Job description:
+                                </Text>
+
+                                <TextInput
+                                    testID="#description"
+                                    style={s.textInputJobDescription}
+                                    multiline = {true}
+                                    numberOfLines = {4}
+                                    onChangeText={(description) => this.setState({ description })}
+                                    returnKeyType='done'
+                                    blurOnSubmit={true}
+                                    placeholder="Enter Description Here" 
+                                    underlineColorAndroid='transparent'
+                                    />
+                            </View>
+                            <View>
+                                <Text style={s.regText}>
+                                    Wage in CAD:
+                                </Text>
+                                <TextInput
+                                    testID="#wage"
+                                    style={s.textInput}
+                                    keyboardType={"numeric"}
+                                    onChangeText={(wage) => this.setState({ wage })}
+                                    returnKeyType='done'
+                                    placeholder="Enter Wage here" 
+                                    underlineColorAndroid='transparent'
+                                    />
+                            </View>
+
+                            <View>
+                                <Text style={s.regText}>
+                                    Job type:
+                                </Text>
+                                <View style={s.picker}>
+                                    <Select
+                                        testID="#type"
+                                        onValueChange={value => this.setState({jobType: value})}
+                                        items={this.state.jobTypes}
+                                        placeholder={{label:"Select Job Here", value: ""}}
+                                        style={{inputIOS: { height: 50, paddingLeft: 10, color: '#000000' }}}
+                                    />
+                                </View>
+                            </View>
+
+                            <TouchableOpacity testID="#submit" onPress={() => this.attemptCreateJob()} style={s.textLink}>
+                                <Text style={s.textLinkText}>Submit</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate("Main")} style={s.textLink}>
+                                <Text style={s.textLinkTextBack}>Cancel</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </TouchableWithoutFeedback>
                 </View>
-        );
+            );
+        }
     }
 }
 

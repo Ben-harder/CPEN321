@@ -13,7 +13,7 @@ import
     FlatList,
 } from "react-native";
 import { StackNavigator } from "react-navigation";
-import { WebBrowser } from "expo";
+import { WebBrowser, MapView } from "expo";
 import { connect } from "react-redux";
 import axios from "axios";
 import api from "../constants/Url";
@@ -172,9 +172,14 @@ class JobDetailsScreen extends React.Component
                             <View>
                                 <Text style={s.jobDescriptionText}>{this.state.description}</Text>
                             </View>                     
-                        </View>                    
+                        </View>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate("Map", {
+                            source: "JobDetails",
+                            address: this.state.address
+                        })} style={s.textLink}>
+                            <Text style={[s.textLinkText, {backgroundColor: Colors.sDark}]}>View on Map</Text>
+                        </TouchableOpacity>
                     </View>
-
                     {(!this.state.inProgress && this.state.showPrimaryButton) &&
                     <TouchableOpacity onPress={() => this.primaryButtonAction()} style={s.textLink}>
                         <Text style={s.textLinkText}>{this.state.primaryButtonText}</Text>

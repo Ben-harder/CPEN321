@@ -64,7 +64,7 @@ class EmployerJobsScreen extends React.Component
             }
         }).then((response) =>
         {
-            // console.log(response.data);
+            console.log(response.data);
             if (this._isMounted)
                 this.setState({ jobList: response.data, loading: false });
         }).catch((err) =>
