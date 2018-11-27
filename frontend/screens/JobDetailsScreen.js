@@ -15,11 +15,15 @@ import
 import { StackNavigator } from "react-navigation";
 import { WebBrowser, MapView } from "expo";
 import { connect } from "react-redux";
+import {bindActionCreators} from "redux";
 import axios from "axios";
 import api from "../constants/Url";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
 import IOSIcon from "react-native-vector-icons/Ionicons";
+
+// actions
+import * as actions from "../actions/";
 
 // components
 import Loading from "../components/Loading";
@@ -85,12 +89,13 @@ class JobDetailsScreen extends React.Component
     }
 
     primaryButtonAction() {
-        const { user } = this.props;
+        const { user, navigation } = this.props;
 
         this.props.navigation.navigate(this.state.primarySource, {
             jobID: this.state.jobID,
             userID: user.data.ID,
-            activateJob: this.activateJob
+            activateJob: this.activateJob,
+            employerID: navigation.getParam("employerID")
         });
     }
 
@@ -133,13 +138,23 @@ class JobDetailsScreen extends React.Component
 
         this.setState({ loading: true });
 
-        axios.post(`${api}/job/complete-a-job`, {
-            jobID: this.state.jobID
+        axios.post(`${api}/job/pay-employee`, {
+            jobID: this.state.jobID,
+            userID: this.props.user.data.ID
         }).then((res) => {
-            this.setState({ loading: false });
-            params.updateJobList();
-            alert("You've successfully completed the job!");
-            this.props.navigation.navigate(this.state.source);
+            this.props.actions.updateUserBalance(res.data.balance);
+            axios.post(`${api}/job/complete-a-job`, {
+                jobID: this.state.jobID
+              }).then((res) => {
+                this.setState({ loading: false });
+                params.updateJobList();
+                alert("You've successfully completed the job!");
+                this.props.navigation.navigate(this.state.source);
+              }).catch((err) => {
+                this.setState({ loading: false });
+                console.log(err);
+                alert(err.response.data.errorMessage);
+              });
         }).catch((err) => {
             this.setState({ loading: false });
             console.log(err);
@@ -245,4 +260,10 @@ function mapStateToProps(state) {
 	return props;
 }
 
-export default connect(mapStateToProps)(JobDetailsScreen);
+function mapDispatchToProps(dispatch) {
+    return {
+      actions: bindActionCreators(actions, dispatch)
+    };
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(JobDetailsScreen);

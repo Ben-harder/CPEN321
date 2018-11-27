@@ -7,6 +7,7 @@ import
     Image
 } from "react-native";
 import { connect } from "react-redux";
+import {bindActionCreators} from "redux";
 import api from "../constants/Url";
 import axios from "axios";
 import IOSIcon from "react-native-vector-icons/Ionicons";
@@ -17,6 +18,9 @@ import Colors from "../constants/Colors";
 
 // styles
 const s = require('../constants/style');
+
+// actions
+import * as actions from "../actions/";
 
 const placeholderImage = "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
 
@@ -100,22 +104,50 @@ class Profile extends React.Component
     this.setState({
       loading: true
     });
-    axios.post(`${api}/job/accept-an-applicant`, {
-      jobID: this.state.jobID,
-      userID: this.state.userID
+    axios.get(`${api}/job/can-afford-job`, {
+      params: {
+        jobID: this.state.jobID,
+        userID: this.state.userID
+      }
     }).then((res) => {
-      this.setState({
-        loading: false
+      axios.post(`${api}/job/charge-employer`, {
+        jobID: this.state.jobID,
+        employeeID: this.state.userID,
+        employerID: navigation.getParam("employerID")
+      }).then((res) => {
+        this.setState({
+          loading: false
+        });
+        this.props.actions.updateUserBalance(res.data.balance);
+        axios.post(`${api}/job/accept-an-applicant`, {
+          jobID: this.state.jobID,
+          userID: this.state.userID
+        }).then((res) => {
+          this.setState({
+            loading: false
+          });
+          params.activateJob();
+          navigation.navigate("JobDetails");
+          alert("Successfully accepted the applicant");
+        }).catch((err) => {
+          alert(err.response.data.errorMessage);
+          this.setState({
+            loading: false
+          });
+        });
+      }).catch((err) => {
+        this.setState({
+          loading: false
+        });
+        alert(err.response.data.errorMessage);
       });
-      params.activateJob();
-      navigation.navigate("JobDetails");
-      alert("Successfully accepted the applicant");
     }).catch((err) => {
       this.setState({
         loading: false
       });
       alert(err.response.data.errorMessage);
     });
+    
   }
 
   declineApplicant() {
@@ -223,4 +255,10 @@ function mapStateToProps(state) {
 	return props;
 }
 
-export default connect(mapStateToProps)(Profile);
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
