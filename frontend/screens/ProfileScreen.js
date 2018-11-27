@@ -183,8 +183,8 @@ class Profile extends React.Component
               <Text style={[s.infoText]}> Posted Jobs </Text>
             </View>
           </View>
-
-          <View style={{width: '90%', paddingBottom: 20, justifyContent: 'space-evenly'}}> 
+          <View style={[s.contentContainer, {flex: 1, justifyContent: 'center', alignItems: 'center', width: '100%', backgroundColor: Colors.sLight}]}>
+          <View style={{width: '90%', paddingBottom: 20, marginBottom: 60, justifyContent: 'space-evenly'}}> 
             {this.state.userProfile &&
             <TouchableOpacity onPress={() => navigation.navigate("EditProfile", { updateInformation: this.updateInformation })} style={s.textLink}>
               <Text style={s.textLinkText}>Edit Info</Text>
@@ -194,6 +194,7 @@ class Profile extends React.Component
             <TouchableOpacity onPress={() => navigation.navigate("ChangePassword")} style={s.textLink}>
               <Text style={s.textLinkText}>Change Password</Text>
             </TouchableOpacity>}
+            </View>
 
             {!this.state.userProfile &&
             <TouchableOpacity onPress={this.acceptApplicant} style={s.textLink}>
