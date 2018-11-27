@@ -9,7 +9,7 @@ module.exports = {
     var job = new Job();
     // if a field is missing return an error
     if (!req.body || !req.body.jobType || !req.body.description || req.body.wage === undefined
-      || !req.body.address || !req.body.employerID) {
+      || !req.body.address || !req.body.employerID || req.body.latitude === undefined || req.body.longitude === undefined) {
       ret.errorMessage = 'All fields have not been filled out';
       return res.status(400).send(ret);
     }

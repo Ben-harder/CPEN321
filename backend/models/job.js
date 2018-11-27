@@ -24,6 +24,12 @@ var Job = new Schema({
         type: String,
         required: true
     },
+    longitude: {
+        type: String
+    },
+    latitude: {
+        type: String
+    },
     employer: {
         type: Schema.ObjectId,
         required: true,

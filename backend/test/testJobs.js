@@ -1612,6 +1612,8 @@ describe("Create Job", function () {
       job.description = "dummy";
       job.wage = 0;
       job.address = "dummy";
+      job.latitude = "dummy";
+      job.longitude = "dummy";
 
     chai.request(server).post(url).send(job).end((err, res) => {
       res.should.have.status(400);
@@ -1635,6 +1637,8 @@ describe("Create Job", function () {
       job.description = "dummy";
       job.wage = -1;
       job.address = "dummy";
+      job.latitude = "dummy";
+      job.longitude = "dummy";
 
     chai.request(server).post(url).send(job).end((err, res) => {
       res.should.have.status(400);
@@ -1680,7 +1684,9 @@ describe("Create Job", function () {
       jobType: "dummy",
       description: "dummy",
       wage: 1,
-      address: "dummy"
+      address: "dummy",
+      latitude: "dummy",
+      longitude: "dummy"
     };
     
     
