@@ -20,6 +20,7 @@ import Colors from "../constants/Colors";
 import Font from "../constants/Font";
 import { connect } from 'react-redux';
 import IOSIcon from "react-native-vector-icons/Ionicons";
+import ApplicantItem from '../components/ApplicantItem';
 
 import { MonoText } from "../components/StyledText";
 
@@ -120,7 +121,8 @@ class ApplicantListScreen extends React.Component
             lastName: applicant.last_name,
             phoneNumber: applicant.phone_number,
             jobID: this.state.jobID,
-            activateJob: params.activateJob
+            activateJob: params.activateJob,
+            updateList: this.tryFetchApplicantList
         });
     }
 
@@ -139,11 +141,11 @@ class ApplicantListScreen extends React.Component
         }
         else return (
             <FlatList
-                style={s.applicantList}
+                style={s.jobList}
                 data={this.state.applicantList}
                 renderItem={({ item }) => (
-                    <TouchableOpacity style={s.jobItem} onPress={() => this.goToApplicantProfile(item)}>
-                        {/* <JobItem job={item}/> */}
+                    <TouchableOpacity onPress={() => this.goToApplicantProfile(item)}>
+                        <ApplicantItem applicant={item}/>
                     </TouchableOpacity>
                 )}
                 keyExtractor={(item, index) => index.toString()}

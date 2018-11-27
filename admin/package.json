@@ -1,0 +1,17 @@
+{
+  "name": "admin",
+  "version": "1.0.0",
+  "description": "Admin Panel for Emplorium",
+  "main": "index.js",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "http": "0.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "BROWser",
+  "license": "ISC"
+}

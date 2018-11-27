@@ -160,10 +160,10 @@ module.exports = {
   getEmployerJobs(req, res) {
     Job.find({$and: [
       {employer : req.query.employer},
-      {is_compeleted : false},
       {is_deleted : false}
     ]})
     .populate({ path :'employer', select:'first_name last_name'})
+    .populate("employee")
     .exec(function(err, jobs) {
       if (err){
         return res.status(500).send(jobs);
@@ -685,6 +685,10 @@ module.exports = {
       })
       
     });
+  },
+
+  demoAdmin(req, res) {
+    return res.status(200).send("You got it!");
   }
 
   

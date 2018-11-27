@@ -81,7 +81,7 @@ class SignUpScreen extends React.Component {
   }
 
   attemptSignup() {
-    if (this.state.passwordConfirm) {
+    if (this.state.passwordConfirm && (this.state.password === this.state.passwordConfirm)) {
       this.setState({ loading: true });
       axios.post(`${api}/auth/create-user`, {
         phoneNumber: this.state.phoneNumber,
@@ -96,11 +96,15 @@ class SignUpScreen extends React.Component {
           this.props.navigation.navigate("App");
         }).catch((err) => {
           this.setState({ loading: false });
-          console.log(err.repsonse.data.errorMessage);
+          console.log(err);
           alert(err.response.data.errorMessage);
         });
     } else {
-      alert("Please fill out the field");
+      if (this.state.password !== this.state.passwordConfirm) {
+        alert("Your passwords do not match!");
+      } else {
+        alert("Please fill out the field");
+      }
     }
   }
 
