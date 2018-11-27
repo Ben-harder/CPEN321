@@ -23,12 +23,11 @@ export default class ApplicantItem extends Component {
             <View style={[s.jobItem, {width: '100%', flexDirection: 'row', justifyContent: 'space-between'}]}>
                 <Image source={{ uri: placeholderImage }} style={[s.profilePicture, {width: 75, height: 75}]} />
                 <View style={{justifyContent: 'center'}}>
-                    <Text style={s.jobTypeText}> {applicant.first_name} {applicant.last_name} </Text>
-                    
+                    <Text style={[s.jobTypeText, {marginBottom: 10}]}> {applicant.first_name.charAt(0).toUpperCase()}. {applicant.last_name} </Text>
                     <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
                         <View style={{flexDirection: 'row'}}>
                             <IOSIcon name={'ios-thumbs-up'} size={30} color={Colors.sDark}/>
-                            <Text style={[s.regTextBold,]}> {applicant.up_votes} </Text>
+                            <Text style={[s.regTextBold, {marginRight: 15}]}> {applicant.up_votes} </Text>
                         </View>
 
                         <View style={{flexDirection: 'row'}}>
@@ -36,6 +35,9 @@ export default class ApplicantItem extends Component {
                             <Text style={[s.regTextBold]}> {applicant.down_votes} </Text>
                         </View>
                     </View>
+                </View>
+                <View style={{justifyContent: 'center'}}>
+                    
                 </View>
             </View>
         );

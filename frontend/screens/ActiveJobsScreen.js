@@ -21,6 +21,7 @@ import Colors from "../constants/Colors";
 import Font from "../constants/Font";
 import IOSIcon from "react-native-vector-icons/Ionicons";
 
+import JobItem from "../components/JobItem";
 // components
 import Loading from "../components/Loading";
 
@@ -108,17 +109,7 @@ class ActiveJobs extends React.Component
                 data={this.state.jobList}
                 renderItem={({ item }) => (
                     <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
-                        <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
-                            <Text style={s.jobTypeText}>{item.job_title}</Text>
-                            <Text style={[{fontSize: Font.titleSize,}]}>${item.wage}</Text>
-                        </View>
-                        <View style={{flexDirection: 'row', paddingVertical: 10,}}>
-                            <IOSIcon name="ios-compass" size={30} style={{color: Colors.sDark}}/>
-                            <Text style={s.addressText}> {item.address} </Text> 
-                        </View>
-                        <Text style={{fontSize: Font.smallSize}}>
-                            <Text style={{fontWeight: 'bold'}}>Posted by: </Text><Text>{item.employer.first_name} {item.employer.last_name}</Text>
-                        </Text>
+                        <JobItem job={item}/>
                     </TouchableOpacity>
                 )}
                 keyExtractor={(item, index) => index.toString()}

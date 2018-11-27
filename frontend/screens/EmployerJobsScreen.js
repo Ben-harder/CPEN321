@@ -36,7 +36,8 @@ class EmployerJobsScreen extends React.Component
         super(props);
         this.state = {
             jobList: [],
-            loading: true
+            loading: true,
+            tab: 'posted',
         }
 
         this.tryFetchJobList = this.tryFetchJobList.bind(this);
@@ -103,26 +104,104 @@ class EmployerJobsScreen extends React.Component
                 </View>
             );
         }
-        else return (
-            <FlatList
-            style={s.jobList}
-            data={this.state.jobList}
-            renderItem={({ item }) => (
-                <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
-                    <JobItem job={item}/>
-                </TouchableOpacity>
-            )}
-            keyExtractor={(item, index) => index.toString()}
-            />
-        );
+        else {
+            if (this.state.tab == 'posted')
+            {
+                return (
+                    <FlatList
+                    style={s.jobList}
+                    data={this.state.jobList.filter(job => (!job.is_active))}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
+                            <JobItem job={item}/>
+                        </TouchableOpacity>
+                    )}
+                    keyExtractor={(item, index) => index.toString()}
+                    />
+                );
+            }
+            else if (this.state.tab == 'active')
+            {
+                return (
+                    <FlatList
+                    style={s.jobList}
+                    data={this.state.jobList.filter(job => (job.is_active && !job.is_completed))}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
+                            <JobItem job={item}/>
+                        </TouchableOpacity>
+                    )}
+                    keyExtractor={(item, index) => index.toString()}
+                    />
+                );
+            }
+            else if (this.state.tab == 'completed')
+            {
+                return (
+                    <FlatList
+                    style={s.jobList}
+                    data={this.state.jobList.filter(job => (job.is_completed))}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity style={s.jobItem} onPress={() => this.goToJobDetails(item)}>
+                            <JobItem job={item}/>
+                        </TouchableOpacity>
+                    )}
+                    keyExtractor={(item, index) => index.toString()}
+                    />
+                );
+            }
+        }
+        
     }
 
     render()
     {
+        let postedStyle, activeStyle, completedStyle;
+        if (this.state.tab === 'active') {
+            activeStyle = s.activeTab;
+            postedStyle = s.tab;
+            completedStyle = s.tab;
+        }
+        else if (this.state.tab === 'posted') {
+            postedStyle = s.activeTab;
+            activeStyle = s.tab;
+            completedStyle = s.tab;
+        }
+        else if (this.state.tab === 'completed')
+        {
+            completedStyle = s.activeTab;
+            activeStyle = s.tab;
+            postedStyle = s.tab;
+        }
+
+
         if (this.state.loading) return (<Loading />);
         return (
             <View style={s.container}>
                 <View style={{width: '100%', height: '100%', alignItems: 'center'}}>
+                    <View style={{width: '100%', flexDirection: 'row', justifyContent: 'space-evenly'}}>
+                        
+                        <TouchableOpacity style={postedStyle} onPress={() => this.setState({
+                            tab: 'posted'
+                        })}>
+                            <Text style={s.regText}> Posted </Text>
+                        </TouchableOpacity>
+
+                        
+                        
+                        <TouchableOpacity style={activeStyle} onPress={() => this.setState({
+                            tab: 'active'
+                        })}>
+                            <Text style={s.regText}> Active </Text>
+                        </TouchableOpacity>
+
+                        
+                        <TouchableOpacity style={completedStyle} onPress={() => this.setState({
+                            tab: 'completed'
+                        })}>
+                            <Text style={s.regText}> Completed </Text>
+                        </TouchableOpacity>
+                    </View>
                     { this.populateJobs() }
                 </View>
             </View>
