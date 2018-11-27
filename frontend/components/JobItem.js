@@ -29,12 +29,8 @@ export default class JobItem extends Component {
 
                 {!job.is_active &&
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <Text style={{fontSize: Font.smallSize}}>
-                        <Text style={{fontWeight: 'bold'}}> Taken by: </Text><Text>{job.employee.first_name} {job.employee.last_name} </Text>
-                    </Text>
-
                     <View style={{flexDirection: 'row', flexGrow: 1, justifyContent:'flex-end', alignItems: 'center'}}>
-                        <Text style={{fontSize: Font.smallSize, color: Colors.sNorm, fontStyle: 'italic'}}> Applicants: {jobs.applicants.length}</Text>
+                        <Text style={{fontSize: Font.smallSize, color: Colors.sNorm, fontStyle: 'italic'}}> Applicants: {job.applicants.length}</Text>
                     </View>
                 </View>}
 
