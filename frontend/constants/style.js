@@ -183,7 +183,8 @@ module.exports = StyleSheet.create({
         backgroundColor: Colors.sDark,
         width: '100%',
         flexDirection: 'row',
-        paddingVertical: 50,
+        paddingTop: 50,
+        paddingBottom: 30,
         marginBottom: 10
     },
     navItem: {
