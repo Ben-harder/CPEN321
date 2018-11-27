@@ -35,7 +35,7 @@ module.exports = {
       {job_type: "Household Chore", num_of_occurrences: 0},
       {job_type: "Yard Work", num_of_occurrences: 0},
       {job_type: "Car Wash", num_of_occurrences: 0},
-      {job_type: "Pet Car", num_of_occurrences: 0},
+      {job_type: "Pet Care", num_of_occurrences: 0},
       {job_type: "Moving", num_of_occurrences: 0},
       {job_type: "Shovel Snow", num_of_occurrences: 0}
     ];

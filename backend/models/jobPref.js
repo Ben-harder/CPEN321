@@ -14,7 +14,7 @@ var JobPref = new Schema({
   },
   /**INVARIANT: A USER HAS TO BE CREATED WITH THEESE**/
   stats: [{
-    job_type: {type: String, enum: ['Household Chore', 'Yard Work', 'Car Wash', 'Moving', 'Pet Car', 'Shovel Snow']},
+    job_type: {type: String, enum: ['Household Chore', 'Yard Work', 'Car Wash', 'Moving', 'Pet Care', 'Shovel Snow']},
     num_of_occurrences: Number
   }]
 });
