@@ -1,309 +1,9 @@
 <html>
 
 <head>
-    <style>
-    body {font-family: Arial, Helvetica, sans-serif;}
-    
-    
-    input {height: 26px; padding: 3px 3px 4px 3px;}
-    
-    .listAndDetails {
-        height: 40%;
-        width: 100%;
-    }
-    
-    .list {
-        height: 70%;
-        background-color: white;
-        padding-left: 7%;
-        padding-top: 3%; 
-    }
-    
-    .details {
-        height: 80%;
-        margin-top: 10px;
-    }
-    
-    .billingBotton, .securityBotton, .pricesBotton, .transportationBotton { 
-        height: 25%;
-        padding-top: 4%;
-        padding-right: 30%;
-        
-    }
-    
-    .listIcon {
-        color: black;   
-        padding-top: 4px;
-    }
-    
-    
-    .list button {
-        width: 100%;
-        text-align: left;    
-        border-style:none;
-        background-color: #ffffff;
-        color: gray;
-    }
-    
-    .list button:hover {
-        cursor: pointer;
-        color: #233534;
-    }
-    
-    .list button:active {
-        cursor: context-menu;
-        color: #233534;
-    }
-    
-    .list button:focus {
-        outline: 0;
-    }
-    
-    /* current directory */
-    .currdirectory {
-        color: black;
-    }
-    
-    .detailesTable {
-        margin-left: 5%;
-        margin-top: 4%;
-        /* height: 220px; */
-        width: 80%;
-        border-radius: 15px;
-        border-width: 3px;
-        border-style: none;
-        border-color: #707070;
-        box-shadow: 0px 0px 0px 2px rgba(0,0,0,0.2);  
-    }
-    
-    .tableHeader {
-        height: 50px;
-        background-color: #008489;
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
-    }
-    
-    .tableBody {
-        /* min-height: 160px; */
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
-        padding-bottom: 20px;
-        padding-top: 10px;
-    }
-    
-    /* ALL ROWS */
-    /* .tableBody .row {
-        margin-left: auto;
-        margin-right: auto;
-    } */
-        
-    .pw, .username, .primContact, .secContact {
-        height: 35px;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 20px;   
-    
-    }
-    
-    .username:hover, .primContact:hover, .secContact:hover, .pw:hover {
-        background-color: rgba(3, 28, 29, 0.123);
-    }
-    
-    
-    .field {
-        padding-left: 30px;
-        margin-right: auto;
-        text-align: left;
-        cursor: context-menu;
-    }
-    
-    
-    .holder {
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;   
-    }
-    
-    .subject {
-        padding: 10 0 0 30;
-        color: white;
-        font-weight: 400;
-        font-size: 120%;
-    }
-    
-    .required {
-        padding: 10 0 0 0;
-        color: white;
-        font-weight: 400;
-        font-size: 120%;
-        
-    }
-    
-    .usernameEditButton, .primContactEditButton, .secContactEditButton, .pwEditButton {
-        color: #008489;
-        font-weight: 100;
-        border-width:1.5px;  
-        border-style:none;
-        background-color: inherit;
-    }
-    
-    .usernameEditButton:hover, .primContactEditButton:hover, .secContactEditButton:hover, .pwEditButton:hover {
-        color: #04b7bd;
-        cursor: pointer;
-    }
-    
-    .usernameEditButton:active, .primContactEditButton:active, .secContactEditButton:active, .pwEditButton:active {
-        transform: translateY(1px);
-    }
-    
-    .usernameEditButton:focus, .primContactEditButton:focus, .secContactEditButton:focus, .pwEditButton:focus {
-        outline: 0;
-    }
-    
-    .currInfo {
-        opacity: 0.4;
-        cursor: context-menu;
-    }
-    
-    .currInfo strong {
-        cursor: pointer;
-    }
-    
-    
-    .editPw.row, .editUsername.row, .editPrimContact.row, .editSecContact.row {
-        background-color: #7070701f;
-        margin-top: 10px;
-        margin-right: 15px;
-        margin-left: 15px;
-        margin-bottom: 15px;
-        padding-bottom: 20px;
-    
-    }
-    
-    
-    
-    .editBoxTitle.row {
-        width: 100%;
-        padding-left: 15px;
-        padding-top: 10px;
-        text-align: left;
-        margin-left: 0px;
-        margin-right: 0px;
-    }
-    
-    .editBoxElement.row {
-        width: 100%;
-        padding-left: 5px;
-        text-align: left;
-        margin-left: 0px;
-        margin-right: 0px;
-        margin-top: 7px;
-    }
-    
-    .editBoxElement .editField {
-        text-align: right;
-        color: #00000086;
-        font-weight: 740;
-        font-size: 85%;
-    }
-    
-    .editBoxElement .editInput {
-        align-items: left;
-        
-    } 
-    
-    .editBoxElement .editField {
-        text-align: right;
-        color: #00000086;
-        font-weight: 740;
-        font-size: 85%;
-    }
-    
-    .editBoxElement .editInput {
-        align-items: left;
-        
-    }
-    
-    .submitAndCancel.row {
-        width: 100%;
-        margin-top: 20px;
-    }
-    
-    .editSubmitButton {
-        text-align : right;
-        width: 20px;
-        padding-right: 2px;
-        
-    }
-    
-    .editSubmitButton button {
-        background-color: #008489;
-        color: white;
-        border: none;
-        cursor: pointer;
-        border-radius: 7px;
-        font-weight: 550;
-        font-size: 95%;
-    }
-    
-    .editSubmitButton button:hover {
-        opacity: 1;
-    }
-    
-    .editSubmitButton button:active {
-        transform: translateY(1px);
-    }
-    
-    .editCancelButton {
-        text-align: left;
-        color: #00000086;
-        padding-left: 2px;
-    }
-    
-    .editCancelButton button {
-        background-color: #ffffff;
-        color: #000000;
-        border: solid;
-        border-width: 1px;
-        border-color: #0000004f;
-        cursor: pointer;
-        border-radius: 7px;
-        font-weight: 400;
-        font-size: 95%;
-    }
-    
-    .emailCheckbox {
-        width: 1.3em;
-        height: 1.3em;
-        background-color: white;
-        border-radius: 50%;
-        vertical-align: middle;
-        border: 1px solid #ddd;
-        -webkit-appearance: none;
-        outline: none;
-        cursor: pointer;
-    }
-    
-    .emailCheckbox:checked {
-        background-color: gray;
-    }
-    
-    .checkboxContainer {
-        padding-left: 15px;
-        padding-top: 10px;
-        text-align: left;
-        margin-left: 0px;
-        margin-right: 0px; 
-        font-size: 90%;
-        
-    }
-    
-    .checkboxContainer input {
-        width: 17px;
-        margin-right: 5px;
-    }
-    </style>
   <link class="class" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" 
   integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous" />
+	<link rel="stylesheet" type="text/css" href="stylesheets/index.css" />
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -316,6 +16,25 @@
 
 <body>
 	<script>
+		// var userName = "osamadawood";
+    // var primaryContact = "osama.k.dawood@gmail.com";
+    // var secondaryContact = "(604) 724-3630";
+    // var pw = "********";
+    // function loadCurrUsername() {
+    //     document.getElementsByClassName('currUsername')[0].innerHTML  = userName;
+    // }
+    
+    // function loadCurrPrimaryCotact() {
+    //     document.getElementsByClassName('currPrimContact')[0].innerHTML  = primaryContact;
+    // }
+    
+    // function loadCurrSecondaryCotact() {
+    //     document.getElementsByClassName('currSecContact')[0].innerHTML  = secondaryContact;
+    // }
+    
+    // function loadCurrPw() {
+    //     document.getElementsByClassName('currPw')[0].innerHTML  = pw;
+    // }
     
     function toInitialView() {
         $('.username').show();
@@ -401,12 +120,22 @@
     }
     
     function start() {
+        // loadCurrUsername();
+        // loadCurrPrimaryCotact();
+        // loadCurrSecondaryCotact();
+        // loadCurrPw();
         toInitialView();
     }
     
     $(document).ready(start);
     $(document).ready(usernameReady); 
+    // $(document).ready(primContactReady);
+    // $(document).ready(secContactReady);
     $(document).ready(pwReady);
+    // $(document).ready(emailReadyInPrim);
+    // $(document).ready(emailReadyInSec);
+    // $(document).ready(phoneReadyInPrim);
+    // $(document).ready(phoneReadyInSec);
     $(document).ready(editSubmit);
     $(document).ready(editCancel);
     
@@ -428,7 +157,7 @@
     function SubmitButtonDelete(event) {
       event.preventDefault();
       toInitialView();
-      var myUrl = 'http://104.211.28.205:8080/admin/delete-user';
+      var myUrl = 'http:localhost:3001/admin/delete-user';
       var myData = {
         phoneNumber: $('#PhoneNumDelete').find('input[name="phoneNumber"]').val()
       };
@@ -451,7 +180,7 @@
       var Numberamount = parseInt($('#PhoneNumFund').find('input[name="amount"]').val(), 10);
       console.log(Stringamount);
       console.log(Numberamount);
-      var myUrl = 'http://104.211.28.205:8080/admin/refund-user';
+      var myUrl = 'http:localhost:3001/admin/refund-user';
       var myData = {
         phoneNumber: $('#PhoneNumFund').find('input[name="phoneNumber"]').val(),
         amount: $('#PhoneNumFund').find('input[name="amount"]').val()
@@ -569,6 +298,78 @@
 							</div>
 						</div>
 					</form>
+					<!-- <div class="row primContact">
+						<div class="col-5 field">Primary Contact:</div>
+						<div class="col-6 currInfo"><strong class="currPrimContact">ahhh</strong></div>
+						<div class="col-1 editButtonContainer">
+							<button class="primContactEditButton">Edit</button>
+						</div>
+					</div>
+					<div class="row editPrimContact">
+						<div class="row editBoxTitle">Primary Contact:</div>
+						<div class="row checkboxContainer">
+							<input id="primContactEmailCheckbox" type="radio" checked="checked" value="emial" name="primContactType" /> Email
+						</div>
+						<div class="row checkboxContainer">
+							<input id="primContactPhoneCheckbox" type="radio" value="phone" name="primContactType" /> Phone
+						</div>
+						<div class="row editBoxElement" id="emailInPrimContact">
+							<div class="col-5 editField">Email</div>
+							<div class="col-7 editInputContainer">
+								<input type="text" placeholder="osama.k.dawood@gmail.com" />
+							</div>
+						</div>
+						<div class="row editBoxElement" id="phoneInPrimContact">
+							<div class="col-5 editField">Phone</div>
+							<div class="col-7 editInputContainer">
+								<input type="text" placeholder="(604) 724-3630" />
+							</div>
+						</div>
+						<div class="row submitAndCancel">
+							<div class="col-10 editSubmitButton">
+								<button>Save Changes</button>
+							</div>
+							<div class="col-2 editCancelButton">
+								<button>Cancel</button>
+							</div>
+						</div>
+					</div> -->
+					<!-- <div class="row secContact">
+						<div class="col-5 field">Secondary Contact:</div>
+						<div class="col-6 currInfo"><strong class="currSecContact">ahhh</strong></div>
+						<div class="col-1 editButtonContainer">
+							<button class="secContactEditButton">Edit</button>
+						</div>
+					</div>
+					<div class="row editSecContact">
+						<div class="row editBoxTitle">Secondary Contact:</div>
+						<div class="row checkboxContainer">
+							<input id="secContactEmailCheckbox" type="radio" checked="checked" value="emial" name="secContactType" /> Email
+						</div>
+						<div class="row checkboxContainer">
+							<input id="secContactPhoneCheckbox" type="radio" value="phone" name="secContactType" /> Phone
+						</div>
+						<div class="row editBoxElement" id="emailInSecContact">
+							<div class="col-5 editField">Email</div>
+							<div class="col-7 editInputContainer">
+								<input type="text" placeholder="osama.k.dawood@gmail.com" />
+							</div>
+						</div>
+						<div class="row editBoxElement" id="phoneInSecContact">
+							<div class="col-5 editField">Phone</div>
+							<div class="col-7 editInputContainer">
+								<input type="text" placeholder="(604) 724-3630" />
+							</div>
+						</div>
+						<div class="row submitAndCancel">
+							<div class="col-10 editSubmitButton">
+								<button>Save Changes</button>
+							</div>
+							<div class="col-2 editCancelButton">
+								<button>Cancel</button>
+							</div>
+						</div>
+          </div> -->
           <div id="PhoneNumFund">
 					<div class="row pw">
 						<div class="col-5 field">Refund a user</div>
@@ -612,4 +413,5 @@
 		</div>
 	</div>
 </body>
+
 </html>
