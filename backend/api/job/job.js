@@ -162,7 +162,7 @@ module.exports = {
       {employer : req.query.employer},
       {is_deleted : false}
     ]})
-    .populate({ path :'employer', select:'first_name last_name'})
+    .populate({ path :'employer', select:'first_name last_name', path :'employee'})
     .exec(function(err, jobs) {
       if (err){
         return res.status(500).send(jobs);
