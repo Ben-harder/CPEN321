@@ -2138,7 +2138,7 @@
 //       res.body.should.include("Yard Work");
 //       res.body.should.include("Household Chore");
 //       res.body.should.include("Moving");
-//       res.body.should.include("Pet Car");
+//       res.body.should.include("Pet Care");
 //       res.body.should.include("Shovel Snow");
 //       done();
 //     });
