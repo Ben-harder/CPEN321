@@ -22,6 +22,7 @@ import phoneNumber from "react-native-phone-input/lib/phoneNumber";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
 import styles from '../constants/KeyboardStyle';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const logo = require('../assets/images/emplorium-light.gif');
 
@@ -76,7 +77,12 @@ class SignInScreen extends React.Component {
     if (this.state.loading) return <Loading />;
 
     return (
-      <KeyboardAvoidingView keyboardVerticalOffset={100} style={styles.container} behavior="padding">
+      // <KeyboardAvoidingView keyboardVerticalOffset={100} style={styles.container} behavior="padding">
+      <KeyboardAwareScrollView
+      style={{ backgroundColor: '#E1E2E1' }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={styles.container}
+      scrollEnabled={true}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
           <View style={[s.container]}>
             <Image source={logo} style={s.logo} resizeMode={'contain'}/>
@@ -85,7 +91,7 @@ class SignInScreen extends React.Component {
                 <Text
                   style={[
                   s.regTextBold, {
-                    marginTop: 170,
+                    marginTop: 15,
                     marginBottom: 5
                   }
                 ]}>Enter your phone number to sign in:</Text>
@@ -136,7 +142,7 @@ class SignInScreen extends React.Component {
             </View>
           </View>
         </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     );
   }
 }

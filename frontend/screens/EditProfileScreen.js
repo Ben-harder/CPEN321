@@ -18,6 +18,7 @@ import axios from "axios";
 import { ImagePicker, Permissions } from 'expo';
 import Colors from "../constants/Colors";
 import styles from '../constants/KeyboardStyle';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 // actions
 import * as actions from "../actions/";
@@ -112,59 +113,63 @@ class EditProfile extends React.Component
     const { user, navigation } = this.props;
 
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={s.container}>
-          <View style={s.contentContainer}>
-            <View style={{alignItems: 'center',}}>
-              <Text style={s.regText}>Click to Change:</Text>
-              <TouchableOpacity onPress={this.pickImage} style={[s.profilePicture, {backgroundColor: Colors.sLight}]}>
-                <Image source={{ uri: this.state.image ? this.state.image : placeholderImage }} style={s.profilePicture} />
+      <KeyboardAwareScrollView
+      style={{ backgroundColor: '#E1E2E1' }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={styles.container}
+      scrollEnabled={true}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <View style={s.container}>
+            <View style={s.contentContainer}>
+              <View style={{alignItems: 'center',}}>
+                <Text style={s.regText}>Click to Change:</Text>
+                <TouchableOpacity onPress={this.pickImage} style={[s.profilePicture, {backgroundColor: Colors.sLight}]}>
+                  <Image source={{ uri: this.state.image ? this.state.image : placeholderImage }} style={s.profilePicture} />
+                </TouchableOpacity>
+              </View>
+              
+              <View>
+                <Text style={s.regText}>Phone #:</Text>
+                <PhoneInput style={{backgroundColor: '#F5F5F6', padding: 20, borderRadius: 10, marginVertical: 5,}}
+                    ref={ref => {
+                      this.phone = ref;
+                    }}
+                    initialCountry="ca"
+                    value={user.data.phoneNumber}
+                  />
+              </View>
+              
+              <View>
+                <Text style={s.regText}>First Name:</Text>
+                <TextInput
+                  style={s.textInput}
+                  onChangeText={(text) => this.setState({firstName: text})}
+                  value={this.state.firstName}
+                  returnKeyType='done'
+                />
+              </View>
+
+              <View>
+                <Text style={s.regText}>Last Name:</Text>
+                <TextInput
+                  style={s.textInput}
+                  onChangeText={(text) => this.setState({lastName: text})}
+                  value={this.state.lastName}
+                  returnKeyType='done'
+                />
+              </View>
+
+              <TouchableOpacity onPress={this.save} style={s.textLink}>
+                <Text style={s.textLinkText}>Save</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => navigation.navigate("ProfileDetails")} style={s.textLink}>
+                <Text style={s.textLinkTextBack}>Cancel</Text>
               </TouchableOpacity>
             </View>
-            
-            <View>
-              <Text style={s.regText}>Phone #:</Text>
-              <PhoneInput style={{backgroundColor: '#F5F5F6', padding: 20, borderRadius: 10, marginVertical: 5,}}
-                  ref={ref => {
-                    this.phone = ref;
-                  }}
-                  initialCountry="ca"
-                  value={user.data.phoneNumber}
-                />
-            </View>
-            
-            <View>
-              <Text style={s.regText}>First Name:</Text>
-              <TextInput
-                style={s.textInput}
-                onChangeText={(text) => this.setState({firstName: text})}
-                value={this.state.firstName}
-                returnKeyType='done'
-              />
-            </View>
-
-            <View>
-              <Text style={s.regText}>Last Name:</Text>
-              <TextInput
-                style={s.textInput}
-                onChangeText={(text) => this.setState({lastName: text})}
-                value={this.state.lastName}
-                returnKeyType='done'
-              />
-            </View>
-
-            <TouchableOpacity onPress={this.save} style={s.textLink}>
-              <Text style={s.textLinkText}>Save</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => navigation.navigate("ProfileDetails")} style={s.textLink}>
-              <Text style={s.textLinkTextBack}>Cancel</Text>
-            </TouchableOpacity>
           </View>
-        </View>
-      </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
     );
   }
 

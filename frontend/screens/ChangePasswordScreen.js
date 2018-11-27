@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import api from "../constants/Url";
 import axios from "axios";
 import styles from '../constants/KeyboardStyle';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 // components
 import Loading from "../components/Loading";
@@ -87,53 +88,58 @@ class ChangePassword extends React.Component
     if (this.state.loading) return <Loading />;
 
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={s.container}>
-          <View style={s.contentContainer}>
-            <View>
-              <Text style={s.regText}>Old Password:</Text>
-              <TextInput
-                style={s.textInput}
-                onChangeText={(text) => this.setState({oldPassword: text})}
-                value={this.state.oldPassword}
-                returnKeyType='done'
-                secureTextEntry={true}
-              />
-            </View>
+      // <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <KeyboardAwareScrollView
+      style={{ backgroundColor: '#E1E2E1' }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      contentContainerStyle={styles.container}
+      scrollEnabled={true}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <View style={s.container}>
+            <View style={s.contentContainer}>
+              <View>
+                <Text style={s.regText}>Old Password:</Text>
+                <TextInput
+                  style={s.textInput}
+                  onChangeText={(text) => this.setState({oldPassword: text})}
+                  value={this.state.oldPassword}
+                  returnKeyType='done'
+                  secureTextEntry={true}
+                />
+              </View>
 
-            <View>
-              <Text style={s.regText}>New Password:</Text>
-              <TextInput
-                style={s.textInput}
-                onChangeText={(text) => this.setState({newPassword: text})}
-                value={this.state.newPassword}
-                returnKeyType='done'
-                secureTextEntry={true}
-              />
-            </View>
+              <View>
+                <Text style={s.regText}>New Password:</Text>
+                <TextInput
+                  style={s.textInput}
+                  onChangeText={(text) => this.setState({newPassword: text})}
+                  value={this.state.newPassword}
+                  returnKeyType='done'
+                  secureTextEntry={true}
+                />
+              </View>
 
-            <View>
-              <Text style={s.regText}>New Password Confirm:</Text>
-              <TextInput
-                style={s.textInput}
-                onChangeText={(text) => this.setState({newPasswordConfirm: text})}
-                value={this.state.newPasswordConfirm}
-                returnKeyType='done'
-                secureTextEntry={true}
-              />
-            </View>
+              <View>
+                <Text style={s.regText}>New Password Confirm:</Text>
+                <TextInput
+                  style={s.textInput}
+                  onChangeText={(text) => this.setState({newPasswordConfirm: text})}
+                  value={this.state.newPasswordConfirm}
+                  returnKeyType='done'
+                  secureTextEntry={true}
+                />
+              </View>
 
-            <TouchableOpacity onPress={this.changePassword} style={s.textLink}>
-              <Text style={s.textLinkText}>Change Password</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("ProfileDetails")} style={s.textLink}>
-              <Text style={s.textLinkTextBack}>Cancel</Text>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={this.changePassword} style={s.textLink}>
+                <Text style={s.textLinkText}>Change Password</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("ProfileDetails")} style={s.textLink}>
+                <Text style={s.textLinkTextBack}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
     );
   }
 
