@@ -15,8 +15,7 @@ export default class JobItem extends Component {
     render()
     {
         let { job, isEmployer } = this.props;
-        console.log(job, isEmployer);
-        console.log("wain", isEmployer);
+        
         return (
             <View>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between',}}>
