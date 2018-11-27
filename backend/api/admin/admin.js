@@ -30,7 +30,7 @@ module.exports = {
     {$inc: {balance: req.body.amount}},
     {new: true},
     (err, user) => {
-      console.log(err);
+      console.log(user);
       // err
       if (err){
         let ret = {};

@@ -267,14 +267,20 @@ class JobDetailsScreen extends React.Component
                             <Text style={[s.textLinkText, {backgroundColor: Colors.sDark}]}>View on Map</Text>
                         </TouchableOpacity>
                         {this.state.isCompleted && !this.state.isRated && 
-                        <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
-                            <TouchableOpacity onPress={() => this.rateJob(1)}>
-                                <IOSIcon name="ios-thumbs-up" size={30} style={{color: Colors.sDark}}/>
-                            </TouchableOpacity>
+                        <View style={{justifyContent: 'space-evenly'}}>
+                            <Text style={s.regTextBold}>
+                                Happy with the job your employee did? Rate them!
+                            </Text>
+                            
+                            <View style={{flexDirection: 'row', justifyContent: 'space-evenly', paddingTop: 20}}>
+                                <TouchableOpacity onPress={() => this.rateJob(1)}>
+                                    <IOSIcon name="ios-thumbs-up" size={50} style={{color: Colors.sNorm}}/>
+                                </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => this.rateJob(-1)}>
-                                <IOSIcon name="ios-thumbs-down" size={30} style={{color: Colors.sDark}}/>
-                            </TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.rateJob(-1)}>
+                                    <IOSIcon name="ios-thumbs-down" size={50} style={{color: Colors.sNorm}}/>
+                                </TouchableOpacity>
+                            </View>
                         </View>}
                     </View>
                     {(!this.state.inProgress && this.state.showPrimaryButton) &&
