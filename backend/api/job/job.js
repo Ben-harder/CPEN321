@@ -160,6 +160,7 @@ module.exports = {
   getEmployerJobs(req, res) {
     Job.find({$and: [
       {employer : req.query.employer},
+      {is_compeleted : false},
       {is_deleted : false}
     ]})
     .populate({ path :'employer', select:'first_name last_name'})
