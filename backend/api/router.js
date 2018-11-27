@@ -14,6 +14,7 @@ module.exports = function (app) {
   app.post("/user/change-info", user.changeUserInfo);
   app.post("/user/update-password", user.changeUserPassword);
   app.post("/user/update-job-preference", user.updateUserJobPreference);
+  app.post("/user/update-pp", user.updatePP);
   app.post("/user/rate-user", user.rateUser);
   app.get("/user/get-user-profile", user.getUserProfile);
 
@@ -35,6 +36,8 @@ module.exports = function (app) {
   app.get("/job/get-employee-active-jobs", job.getEmployeeActiveJobs);
   app.get("/job/get-job-applicants", job.getJobApplicants);
   app.post("/job/pay-employee", job.payEmployee);
+  app.post("/job/employee-cancel-active-job", job.employeeCancelActiveJob);
+  app.post("/job/employer-cancel-active-job", job.employerCancelActiveJob);
 
   // admin
   app.post("/admin/delete-user", admin.deleteUser);
