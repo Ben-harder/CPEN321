@@ -24,6 +24,7 @@ import Select from 'react-native-picker-select';
 import Colors from '../constants/Colors';
 import Font from '../constants/Font';
 import styles from '../constants/KeyboardStyle';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
@@ -184,6 +185,11 @@ class CreateJobScreen extends React.Component
             );
         } else {
             return (
+                <KeyboardAwareScrollView
+                style={{ backgroundColor: '#E1E2E1' }}
+                resetScrollToCoords={{ x: 0, y: 0 }}
+                contentContainerStyle={styles.container}
+                scrollEnabled={true}>
                 <View style={s.container}>           
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessbile={false}>
                         <View style={s.innerContainer}>
@@ -239,11 +245,12 @@ class CreateJobScreen extends React.Component
                             </TouchableOpacity>
 
                             <TouchableOpacity onPress={() => this.props.navigation.navigate("Main")} style={s.textLink}>
-                                <Text style={s.textLinkTextBack}>Cancel</Text>
+                                <Text style={[s.textLinkTextBack, {marginBottom: 160}]}>Cancel</Text>
                             </TouchableOpacity>
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
+                </KeyboardAwareScrollView>
             );
         }
     }
