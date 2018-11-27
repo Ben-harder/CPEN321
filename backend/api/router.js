@@ -2,6 +2,7 @@ const app = "../server";
 const auth = require("./auth/auth");
 const job = require("./job/job");
 const user = require("./user/user");
+const admin = require("./admin/admin");
 
 module.exports = function (app) {
   // auth routes
@@ -34,5 +35,9 @@ module.exports = function (app) {
   app.get("/job/get-employee-active-jobs", job.getEmployeeActiveJobs);
   app.get("/job/get-job-applicants", job.getJobApplicants);
   app.post("/job/pay-employee", job.payEmployee);
+
+  // admin
+  app.post("/admin/delete-user", admin.deleteUser);
+  app.post("/admin/refund-user", admin.refundUser);
   
 };

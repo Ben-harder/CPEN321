@@ -4,6 +4,8 @@
   "description": "Admin Panel for Emplorium",
   "main": "index.js",
   "dependencies": {
+    "axios": "^0.18.0",
+    "cors": "^2.8.5",
     "fs": "0.0.1-security",
     "http": "0.0.0"
   },

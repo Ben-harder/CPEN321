@@ -1,8 +1,417 @@
 <html>
-<header>
-  <title>Wain</title>
-</header>
+
+<head>
+  <link class="class" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" 
+  integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous" />
+	<link rel="stylesheet" href="index.css" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css" />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
 <body>
-Hello world
+	<script>
+		// var userName = "osamadawood";
+    // var primaryContact = "osama.k.dawood@gmail.com";
+    // var secondaryContact = "(604) 724-3630";
+    // var pw = "********";
+    // function loadCurrUsername() {
+    //     document.getElementsByClassName('currUsername')[0].innerHTML  = userName;
+    // }
+    
+    // function loadCurrPrimaryCotact() {
+    //     document.getElementsByClassName('currPrimContact')[0].innerHTML  = primaryContact;
+    // }
+    
+    // function loadCurrSecondaryCotact() {
+    //     document.getElementsByClassName('currSecContact')[0].innerHTML  = secondaryContact;
+    // }
+    
+    // function loadCurrPw() {
+    //     document.getElementsByClassName('currPw')[0].innerHTML  = pw;
+    // }
+    
+    function toInitialView() {
+        $('.username').show();
+        $('.primContact').show();
+        $('.secContact').show();
+        $('.pw').show();
+        $('.editUsername').hide();
+        $('.editPrimContact').hide();
+        $('.editSecContact').hide();
+        $('.editPw').hide();
+    }
+    
+    function toChangeUsername() {
+        $('.username').hide();
+        $('.primContact').show();
+        $('.secContact').show();
+        $('.pw').show();
+        $('.editUsername').show();
+        $('.editPrimContact').hide();
+        $('.editSecContact').hide();
+        $('.editPw').hide();  
+    }
+    
+    function toChangePrimContact() {
+        $('.username').show();
+        $('.primContact').hide();
+        $('.secContact').show();
+        $('.pw').show();
+        $('.editUsername').hide();
+        $('.editPrimContact').show();
+        $('.editSecContact').hide();
+        $('.editPw').hide();  
+        //- Phone is default
+        toPhoneInPrimContact(); 
+    }
+    
+    function toChangeSecContact() {
+        $('.username').show();
+        $('.primContact').show();
+        $('.secContact').hide();
+        $('.pw').show();
+        $('.editUsername').hide();
+        $('.editPrimContact').hide();
+        $('.editSecContact').show();
+        $('.editPw').hide();  
+        //- Email is default
+        toEmailInSecContact();
+    }
+    
+    function toChangePw() {
+        $('.username').show();
+        $('.primContact').show();
+        $('.secContact').show();
+        $('.pw').hide();
+        $('.editUsername').hide();
+        $('.editPrimContact').hide();
+        $('.editSecContact').hide();
+        $('.editPw').show();  
+    }
+    
+    function toPhoneInPrimContact() {
+        $('#emailInPrimContact').hide();
+        $('#phoneInPrimContact').show();
+        $("#primContactPhoneCheckbox").prop('checked', true);
+    }
+    
+    function toPhoneInSecContact() {
+        $('#emailInSecContact').hide();
+        $('#phoneInSecContact').show();
+        $("#secContactPhoneCheckbox").prop('checked', true);
+    }
+    
+    function toEmailInSecContact() {
+        $('#emailInSecContact').show();
+        $('#phoneInSecContact').hide();
+        $("#secContactEmailCheckbox").prop('checked', true);
+    }
+    
+    function toEmailInPrimContact() {
+        $('#emailInPrimContact').show();
+        $('#phoneInPrimContact').hide();
+        $("#primContactEmailCheckbox").prop('checked', true);
+    }
+    
+    function start() {
+        // loadCurrUsername();
+        // loadCurrPrimaryCotact();
+        // loadCurrSecondaryCotact();
+        // loadCurrPw();
+        toInitialView();
+    }
+    
+    $(document).ready(start);
+    $(document).ready(usernameReady); 
+    // $(document).ready(primContactReady);
+    // $(document).ready(secContactReady);
+    $(document).ready(pwReady);
+    // $(document).ready(emailReadyInPrim);
+    // $(document).ready(emailReadyInSec);
+    // $(document).ready(phoneReadyInPrim);
+    // $(document).ready(phoneReadyInSec);
+    $(document).ready(editSubmit);
+    $(document).ready(editCancel);
+    
+    function editSubmit() {
+        $("#editSubmitButtonDelete").click(SubmitButtonDelete);
+        $("#editSubmitButtonFund").click(SubmitButtonFund);
+    }
+    
+    
+    function editCancel() {
+        $(".editCancelButton").click(CancelButton);
+    }
+
+    function CancelButton(event) {
+      event.preventDefault();
+      toInitialView();
+    }
+
+    function SubmitButtonDelete(event) {
+      event.preventDefault();
+      toInitialView();
+      var myUrl = 'http:localhost:3001/admin/delete-user';
+      var myData = {
+        phoneNumber: $('#PhoneNumDelete').find('input[name="phoneNumber"]').val()
+      };
+      $('#PhoneNumDelete').find('input[name="phoneNumber"]').val("");
+      $('#PhoneNumDelete').find('input[name="reason"]').val("");
+      axios.post(myUrl, 
+      myData)
+      .then((res) => {
+        alert("User deleted successfully!");
+      })
+      .catch(function (err) {
+        alert(err.response.data.errorMessage);
+      });
+    }
+
+    function SubmitButtonFund(event) {
+      event.preventDefault();
+      toInitialView();
+      var Stringamount = $('#PhoneNumFund').find('input[name="phoneNumber"]').val();
+      var Numberamount = parseInt($('#PhoneNumFund').find('input[name="amount"]').val(), 10);
+      console.log(Stringamount);
+      console.log(Numberamount);
+      var myUrl = 'http:localhost:3001/admin/refund-user';
+      var myData = {
+        phoneNumber: $('#PhoneNumFund').find('input[name="phoneNumber"]').val(),
+        amount: $('#PhoneNumFund').find('input[name="amount"]').val()
+      };
+      $('#PhoneNumFund').find('input[name="phoneNumber"]').val("");
+      $('#PhoneNumFund').find('input[name="amount"]').val("");
+      $('#PhoneNumFund').find('input[name="reason"]').val("");
+      axios.post(myUrl, 
+      myData)
+      .then((res) => {
+        alert("User Funded Successfully!");
+      })
+      .catch(function (err) {
+        alert(err.response.data.errorMessage);
+      });
+    }
+    
+    
+    function emailReadyInSec() {
+        $("#secContactEmailCheckbox").change(function() {
+            console.log('Sec Email');
+            if(this.checked) {
+                console.log('Sec Email Checked');
+                toEmailInSecContact();
+            }
+        });
+    }
+    
+    function emailReadyInPrim() {
+        $("#primContactEmailCheckbox").change(function() {
+            console.log('Prim Email');
+            if(this.checked) {
+                console.log('Prim Email Checked');
+                toEmailInPrimContact();
+            }
+        });
+    }
+    
+    function phoneReadyInSec() {
+        $("#secContactPhoneCheckbox").change(function() {
+            console.log('Sec Phone');
+            if(this.checked) {
+                console.log('Sec Phone Checked');
+                toPhoneInSecContact();
+            }
+        });
+    }
+    
+    function phoneReadyInPrim() {
+        $("#primContactPhoneCheckbox").change(function() {
+            console.log('Prim Phone');
+            if(this.checked) {
+                console.log('Prim Phone Checked');
+                toPhoneInPrimContact();
+            }
+        });
+    }
+    
+    function usernameReady() {
+        $(".usernameEditButton").click(toChangeUsername);
+    }
+    
+    // function primContactReady() {
+    //     $(".primContactEditButton").click(toChangePrimContact);
+    // }
+    
+    // function secContactReady() {
+    //     $(".secContactEditButton").click(toChangeSecContact);
+    // }
+    
+    function pwReady() {
+        $(".pwEditButton").click(toChangePw);
+    }
+    
+      
+      
+  </script>
+	<div class="row listAndDetails">
+		<div class="col-12 details">
+			<div class="detailesTable">
+				<div class="tableHeader">
+					<div class="row">
+						<div class="col-10 subject">Admin Panel</div>
+						<div class="col-2 required">* Required</div>
+					</div>
+				</div>
+				<div class="tableBody">
+					<div class="row username">
+						<div class="col-5 field">Delete a user:</div>
+						<div class="col-6 currInfo"><strong class="currUsername"></strong></div>
+						<div class="col-1 editButtonContainer">
+							<button class="usernameEditButton">Edit</button>
+						</div>
+					</div>
+					<form class="row editUsername" method="POST" action="/changeUsername" enctype="application/x-www-form-urlencoded" id ="PhoneNumDelete">
+						<div class="row editBoxTitle">Delete a user:</div>
+						<div class="row editBoxElement">
+							<div class="col-5 editField">Phone number</div>
+							<div class="col-7 editInputContainer" >
+								<input class="form-group" type="text" name="phoneNumber" />
+							</div>
+						</div>
+						<div class="row editBoxElement">
+							<div class="col-5 editField">Reason of deletion</div>
+							<div class="col-7 editInputContainer">
+								<input class="form-group" type="text" placeholder="Optional" name="reason" />
+							</div>
+						</div>
+						<div class="row submitAndCancel">
+							<div class="col-10 editSubmitButton" id="editSubmitButtonDelete">
+								<button class="btn-primary">Save Changes</button>
+							</div>
+							<div class="col-2 editCancelButton">
+								<button>Cancel</button>
+							</div>
+						</div>
+					</form>
+					<!-- <div class="row primContact">
+						<div class="col-5 field">Primary Contact:</div>
+						<div class="col-6 currInfo"><strong class="currPrimContact">ahhh</strong></div>
+						<div class="col-1 editButtonContainer">
+							<button class="primContactEditButton">Edit</button>
+						</div>
+					</div>
+					<div class="row editPrimContact">
+						<div class="row editBoxTitle">Primary Contact:</div>
+						<div class="row checkboxContainer">
+							<input id="primContactEmailCheckbox" type="radio" checked="checked" value="emial" name="primContactType" /> Email
+						</div>
+						<div class="row checkboxContainer">
+							<input id="primContactPhoneCheckbox" type="radio" value="phone" name="primContactType" /> Phone
+						</div>
+						<div class="row editBoxElement" id="emailInPrimContact">
+							<div class="col-5 editField">Email</div>
+							<div class="col-7 editInputContainer">
+								<input type="text" placeholder="osama.k.dawood@gmail.com" />
+							</div>
+						</div>
+						<div class="row editBoxElement" id="phoneInPrimContact">
+							<div class="col-5 editField">Phone</div>
+							<div class="col-7 editInputContainer">
+								<input type="text" placeholder="(604) 724-3630" />
+							</div>
+						</div>
+						<div class="row submitAndCancel">
+							<div class="col-10 editSubmitButton">
+								<button>Save Changes</button>
+							</div>
+							<div class="col-2 editCancelButton">
+								<button>Cancel</button>
+							</div>
+						</div>
+					</div> -->
+					<!-- <div class="row secContact">
+						<div class="col-5 field">Secondary Contact:</div>
+						<div class="col-6 currInfo"><strong class="currSecContact">ahhh</strong></div>
+						<div class="col-1 editButtonContainer">
+							<button class="secContactEditButton">Edit</button>
+						</div>
+					</div>
+					<div class="row editSecContact">
+						<div class="row editBoxTitle">Secondary Contact:</div>
+						<div class="row checkboxContainer">
+							<input id="secContactEmailCheckbox" type="radio" checked="checked" value="emial" name="secContactType" /> Email
+						</div>
+						<div class="row checkboxContainer">
+							<input id="secContactPhoneCheckbox" type="radio" value="phone" name="secContactType" /> Phone
+						</div>
+						<div class="row editBoxElement" id="emailInSecContact">
+							<div class="col-5 editField">Email</div>
+							<div class="col-7 editInputContainer">
+								<input type="text" placeholder="osama.k.dawood@gmail.com" />
+							</div>
+						</div>
+						<div class="row editBoxElement" id="phoneInSecContact">
+							<div class="col-5 editField">Phone</div>
+							<div class="col-7 editInputContainer">
+								<input type="text" placeholder="(604) 724-3630" />
+							</div>
+						</div>
+						<div class="row submitAndCancel">
+							<div class="col-10 editSubmitButton">
+								<button>Save Changes</button>
+							</div>
+							<div class="col-2 editCancelButton">
+								<button>Cancel</button>
+							</div>
+						</div>
+          </div> -->
+          <div id="PhoneNumFund">
+					<div class="row pw">
+						<div class="col-5 field">Refund a user</div>
+						<div class="col-6 currInfo"><strong class="currPw"></strong></div>
+						<div class="col-1 editButtonContainer">
+							<button class="pwEditButton">Edit</button>
+						</div>
+					</div>
+					<div class="row editPw">
+						<div class="row editBoxTitle">Refund a user</div>
+						<div class="row editBoxElement">
+							<div class="col-5 editField">Phone number</div>
+							<div class="col-7 editInputContainer">
+								<input type="text" name="phoneNumber"/>
+							</div>
+						</div>
+						<div class="row editBoxElement">
+							<div class="col-5 editField">Amount</div>
+							<div class="col-7 editInputContainer">
+								<input type="number" name="amount"/>
+							</div>
+						</div>
+						<div class="row editBoxElement">
+							<div class="col-5 editField">Reason</div>
+							<div class="col-7 editInputContainer">
+								<input class="form-group" type="text" placeholder="Optional" name="reason"/>
+							</div>
+						</div>
+						<div class="row submitAndCancel">
+							<div class="col-10 editSubmitButton", id="editSubmitButtonFund">
+								<button>Save Changes</button>
+							</div>
+							<div class="col-2 editCancelButton">
+								<button>Cancel</button>
+							</div>
+            </div>
+            </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
+
 </html>

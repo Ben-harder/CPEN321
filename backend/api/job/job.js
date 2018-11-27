@@ -685,10 +685,6 @@ module.exports = {
       })
       
     });
-  },
-
-  demoAdmin(req, res) {
-    return res.status(200).send("You got it!");
   }
 
   
