@@ -197,4 +197,19 @@ module.exports = StyleSheet.create({
         marginTop: 50, 
         backgroundColor: 'transparent',
     },
+    tab: {
+        backgroundColor: 'white',
+        paddingVertical: 30,
+        flex: 1,
+    },
+    activeTab: {
+        backgroundColor: Colors.sLight,
+        paddingVertical: 30,
+        flex: 1,
+        shadowColor: '#000',
+        shadowOffset: { width: 2, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 3,
+    }
 });
