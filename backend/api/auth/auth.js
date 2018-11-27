@@ -32,11 +32,13 @@ module.exports = {
     profilePicture.valid = false;
     jobPref.user = user._id;
     jobPref.stats = [
-      {job_type: "Feed My Lizard", num_of_occurrences: 0},
-      {job_type: "Beat My Beef", num_of_occurrences: 0},
-      {job_type: "Wain My Wain", num_of_occurrences: 0}
+      {job_type: "Household Chore", num_of_occurrences: 0},
+      {job_type: "Yard Work", num_of_occurrences: 0},
+      {job_type: "Car Wash", num_of_occurrences: 0},
+      {job_type: "Pet Car", num_of_occurrences: 0},
+      {job_type: "Moving", num_of_occurrences: 0},
+      {job_type: "Shovel Snow", num_of_occurrences: 0}
     ];
-
     user.first_name = req.body.firstName;
     user.last_name = req.body.lastName;
     user.phone_number = req.body.phoneNumber;
@@ -53,7 +55,7 @@ module.exports = {
     user.posted_jobs = 0;
     user.taken_jobs = 0;
     user.is_admin = false;
-    user.balance = 999999999;
+    user.balance = 1000;
 
     jobPref.save((err) => {
         if (err) {
