@@ -162,7 +162,8 @@ module.exports = {
       {employer : req.query.employer},
       {is_deleted : false}
     ]})
-    .populate({ path :'employer', select:'first_name last_name', path :'employee'})
+    .populate({ path :'employer', select:'first_name last_name'})
+    .populate("employee")
     .exec(function(err, jobs) {
       if (err){
         return res.status(500).send(jobs);
@@ -684,6 +685,10 @@ module.exports = {
       })
       
     });
+  },
+
+  demoAdmin(req, res) {
+    return res.status(200).send("You got it!");
   }
 
   
