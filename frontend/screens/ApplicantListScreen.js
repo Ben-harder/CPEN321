@@ -121,7 +121,8 @@ class ApplicantListScreen extends React.Component
             lastName: applicant.last_name,
             phoneNumber: applicant.phone_number,
             jobID: this.state.jobID,
-            activateJob: params.activateJob
+            activateJob: params.activateJob,
+            updateList: this.tryFetchApplicantList
         });
     }
 

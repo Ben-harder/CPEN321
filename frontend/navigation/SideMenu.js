@@ -80,7 +80,7 @@ class SideMenu extends Component {
         <View style={s.navHeader}>
           <Image source={{ uri: placeholderImage }} style={[s.profilePicture, {width: 75, height: 75}]} />
           <View style={{justifyContent: 'space-evenly'}}>
-            <Text style={[s.regTextBold,{fontStyle: 'italic', color: 'white'}]}>
+            <Text style={[s.regTextBold,{fontStyle: 'italic', color: 'white', marginBottom: 10}]}>
               <Text> Welcome {this.props.user.data.firstName} </Text>
             </Text>
 
