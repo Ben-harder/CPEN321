@@ -31,6 +31,8 @@ module.exports = {
     job.wage = req.body.wage;
     job.address = req.body.address;
     job.employer = req.body.employerID;
+    job.latitude = req.body.latitude;
+    job.longitude = req.body.longitude;
 
     job.employee = undefined;
     job.created_at = new Date();
