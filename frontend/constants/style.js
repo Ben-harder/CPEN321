@@ -189,7 +189,7 @@ module.exports = StyleSheet.create({
     },
     navItem: {
         justifyContent: 'center',
-        paddingVertical: 25,
+        paddingVertical: 20,
         width: '100%',
     },
     logo: {
@@ -211,5 +211,9 @@ module.exports = StyleSheet.create({
         shadowOpacity: 0.8,
         shadowRadius: 2,
         elevation: 3,
-    }
+    },
+    navText: {
+        textAlign: 'center',
+        fontSize: Font.lgSize,
+    },
 });

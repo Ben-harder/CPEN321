@@ -133,8 +133,8 @@ class Profile extends React.Component
       this.setState({
         loading: false
       });
-      params.activateJob();
-      navigation.navigate("JobDetails");
+      params.updateList();
+      navigation.navigate("ApplicantList");
       alert("You have declined the applicant.");
     }).catch((err) => {
       this.setState({
@@ -166,9 +166,10 @@ class Profile extends React.Component
                 <Text style={[s.regText, {textAlign: 'left'}]}> {this.state.downVotes}</Text>
               </View>
             </View>
+            {this.state.userProfile &&
             <View style={{width: '100%', flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 30, marginBottom: 20}}>
                 <Text style={[s.regText]}>Balance: ${user.data.balance}</Text>
-            </View>
+            </View>}
         </View>
         <View style={[s.contentContainer, {flex: 1, justifyContent: 'space-between', alignItems: 'center', width: '100%', backgroundColor: Colors.sLight}]}>
           <View style={{flexDirection: 'row', justifyContent: 'space-evenly', width: '100%'}}>

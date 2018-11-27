@@ -80,7 +80,7 @@ class SideMenu extends Component {
         <View style={s.navHeader}>
           <Image source={{ uri: placeholderImage }} style={[s.profilePicture, {width: 100, height: 100}]} />
           <View style={{justifyContent: 'space-evenly'}}>
-            <Text style={[s.regTextBold,{fontStyle: 'italic', color: 'white'}]}>
+            <Text style={[s.regTextBold,{fontStyle: 'italic', color: 'white', marginBottom: 10}]}>
               <Text> Welcome {this.props.user.data.firstName} </Text>
             </Text>
 
@@ -104,32 +104,32 @@ class SideMenu extends Component {
         </View>
         <View style={{width: '100%'}}>
           <TouchableOpacity style={s.navItem} onPress={() => {this.props.navigation.navigate("CreateJob")}}>
-            <Text style={s.regText}>
+            <Text style={s.navText}>
               Create Job
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={s.navItem} onPress={() => {this.props.navigation.navigate("Main")}}>
-            <Text style={s.regText}>
+            <Text style={s.navText}>
               Browse
             </Text>
           </TouchableOpacity>          
           <TouchableOpacity style={s.navItem} onPress={() => {this.props.navigation.navigate("EmployerJobs")}}>
-            <Text style={s.regText}>
+            <Text style={s.navText}>
               My Job Postings
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={s.navItem} onPress={() => {this.props.navigation.navigate("ActiveJobs")}}>
-            <Text style={s.regText}>
+            <Text style={s.navText}>
               Active Jobs
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={s.navItem} onPress={() => {this.props.navigation.navigate("AppliedJobs")}}> 
-            <Text style={s.regText}>
+            <Text style={s.navText}>
               Job Applications
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={s.navItem} onPress={() => {this.props.navigation.navigate("Profile")}}>
-            <Text style={s.regText}>
+            <Text style={s.navText}>
               My Profile
             </Text>
           </TouchableOpacity>
