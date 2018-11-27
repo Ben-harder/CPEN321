@@ -150,7 +150,6 @@ module.exports = StyleSheet.create({
         marginVertical: 5,
     },
     jobList: {
-        paddingTop: 30,
         width: "90%",
         flex: 1,
     },
