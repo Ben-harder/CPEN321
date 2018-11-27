@@ -58,6 +58,9 @@ var Job = new Schema({
         type: Boolean,
         required: true
     },
+    is_rated: {
+        type: Boolean,
+    },
     // array of applicants 
     applicants: [{
             type: Schema.ObjectId,
