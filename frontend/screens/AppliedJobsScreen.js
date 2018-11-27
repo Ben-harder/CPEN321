@@ -122,7 +122,9 @@ class AppliedJobsScreen extends React.Component
             primaryButtonText: "",
             secondaryButtonText: "Cancel Application",
             source: "AppliedJobs",
-            updateJobList: this.tryFetchJobList
+            updateJobList: this.tryFetchJobList,
+            latitude: job.latitude,
+            longitude: job.longitude
         });
     }
 

@@ -64,7 +64,7 @@ class EmployerJobsScreen extends React.Component
             }
         }).then((response) =>
         {
-            console.log(response.data);
+            // console.log(response.data);
             if (this._isMounted)
                 this.setState({ jobList: response.data, loading: false });
         }).catch((err) =>
@@ -89,7 +89,9 @@ class EmployerJobsScreen extends React.Component
             source: "EmployerJobs",
             updateJobList: this.tryFetchJobList,
             primarySource: "ApplicantList",
-            inProgress: job.is_active
+            inProgress: job.is_active,
+            latitude: job.latitude,
+            longitude: job.longitude
         });
     }
 

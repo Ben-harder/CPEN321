@@ -48,13 +48,16 @@ class MapScreen extends React.Component
   render()
   {
       // if (this.state.loading) return (<Loading />);
+      const longitude = this.props.navigation.getParam("longitude", 0);
+      const latitude = this.props.navigation.getParam("latitude", 0);
+
       return (
           <MapView
               style={{ flex: 1 }}
               provider="google"
               region={{
-                  latitude: 49.2985705,
-                  longitude: -122.8005454,
+                  latitude: parseFloat(latitude),
+                  longitude: parseFloat(longitude),
                   latitudeDelta: 0.0100,
                   longitudeDelta: 0.0060
               }}
@@ -62,11 +65,11 @@ class MapScreen extends React.Component
             <MapView.Marker
       
               coordinate={{
-                latitude: 49.2985705,
-                longitude: -122.8005454,
+                latitude: parseFloat(latitude),
+                longitude: parseFloat(longitude),
               }}
-              title="My Marker"
-              description="Some description"
+              title={this.props.navigation.getParam("address", "")}
+              description={this.props.navigation.getParam("description", "")}
             />
           </MapView>
       );

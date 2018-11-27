@@ -87,7 +87,9 @@ class ActiveJobs extends React.Component
             primaryButtonText: "",
             secondaryButtonText: "Complete Job",
             source: "ActiveJobs",
-            updateJobList: this.tryFetchJobList
+            updateJobList: this.tryFetchJobList,
+            latitude: job.latitude,
+            longitude: job.longitude
         });
     }
 

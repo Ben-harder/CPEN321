@@ -79,7 +79,9 @@ class JobBoardScreen extends React.Component
             wage: job.wage,
             description: job.description,
             jobID: job._id,
-            updateJobList: this.tryFetchJobList
+            updateJobList: this.tryFetchJobList,
+            latitude: job.latitude,
+            longitude: job.longitude
         });
     }
 

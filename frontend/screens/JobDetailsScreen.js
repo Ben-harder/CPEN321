@@ -175,7 +175,10 @@ class JobDetailsScreen extends React.Component
                         </View>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("Map", {
                             source: "JobDetails",
-                            address: this.state.address
+                            address: this.state.address,
+                            description: this.state.description,
+                            latitude: this.props.navigation.getParam("latitude", 0),
+                            longitude: this.props.navigation.getParam("longitude", 0),
                         })} style={s.textLink}>
                             <Text style={[s.textLinkText, {backgroundColor: Colors.sDark}]}>View on Map</Text>
                         </TouchableOpacity>
