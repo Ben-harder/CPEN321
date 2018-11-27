@@ -94,7 +94,7 @@ class EmployerJobsScreen extends React.Component
             longitude: job.longitude,
             isCompleted: job.is_compeleted,
             isRated: job.is_rated,
-            employeeID: job.employee._id,
+            employeeID: job.is_active ? job.employee._id : "",
         });
     }
 
