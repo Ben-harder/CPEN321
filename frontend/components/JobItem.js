@@ -22,7 +22,7 @@ export default class JobItem extends Component {
                     <Text style={s.jobTypeText}>{job.job_title}</Text>
                     <Text style={[{fontSize: Font.titleSize,}]}>${job.wage}</Text>
                 </View>
-                <View style={{flexDirection: 'row', flexGrow: 1, justifyContent:'flex-end', alignItems: 'center', paddingVertical: 10}}>
+                <View style={{flexDirection: 'row', flexGrow: 1, alignItems: 'center', paddingVertical: 10}}>
                     <IOSIcon name="ios-compass" size={30} style={{color: Colors.sDark}}/>
                     <Text style={s.addressText}> {job.address} </Text> 
                 </View>

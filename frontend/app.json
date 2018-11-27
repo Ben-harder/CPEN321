@@ -21,7 +21,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.emplorium.app",
+      "config": {
+        "googleMapsApiKey": "AIzaSyATRO59rzBhwgy3XpGmzOvhIH6PCpWrZYM"
+      }
     }
   }
 }

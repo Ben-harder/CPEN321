@@ -13,7 +13,7 @@ import
     FlatList,
 } from "react-native";
 import { StackNavigator } from "react-navigation";
-import { WebBrowser } from "expo";
+import { WebBrowser, MapView } from "expo";
 import axios from "axios";
 import api from "../constants/Url";
 import Colors from "../constants/Colors";
