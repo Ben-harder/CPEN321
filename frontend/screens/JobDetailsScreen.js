@@ -11,6 +11,7 @@ import
     Button,
     AsyncStorage,
     FlatList,
+    Alert
 } from "react-native";
 import { StackNavigator } from "react-navigation";
 import { WebBrowser, MapView } from "expo";
@@ -63,6 +64,7 @@ class JobDetailsScreen extends React.Component
         this.secondaryButtonAction = this.secondaryButtonAction.bind(this);
         this.activateJob = this.activateJob.bind(this);
         this.completeJob = this.completeJob.bind(this);
+        this.cancelJob = this.cancelJob.bind(this);
     }
 
     componentDidMount() {
@@ -85,6 +87,7 @@ class JobDetailsScreen extends React.Component
             isCompleted: navigation.getParam("isCompleted", false),
             isRated: navigation.getParam("isRated", false),
             employeeID: navigation.getParam("employeeID"),
+            showCancel: navigation.getParam("showCancel", false)
         });
     }
 
@@ -187,6 +190,45 @@ class JobDetailsScreen extends React.Component
         });
     }
 
+    cancelJob() {
+        const { state, setParams, navigate } = this.props.navigation;
+        const params = state.params || {};
+
+        let apiCall;
+        // cancel job
+        if (this.state.source === "ActiveJobs") {
+            apiCall = `${api}/job/employee-cancel-active-job`;
+        } else if (this.state.source === "EmployerJobs") {
+            apiCall = `${api}/job/employer-cancel-active-job`;
+        }
+
+        Alert.alert(
+            'Warning',
+            'Cancelling an active job will cost you 10% of the job wage!',
+            [
+              {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+              {text: 'OK', onPress: () => {
+                this.setState({ loading: true });
+                if (apiCall) {
+                    axios.post(apiCall, {
+                        jobID: this.state.jobID
+                    }).then((res) => {
+                        this.setState({ loading: false });
+                        params.updateJobList();
+                        this.props.actions.updateUserBalance(res.data.balance);
+                        alert("You've successfully cancelled the active job.");
+                        this.props.navigation.navigate(this.state.source);
+                    }).catch((err) => {
+                        this.setState({ loading: false });
+                        console.log(err);
+                        alert(err.response.data.errorMessage);
+                    });
+                }
+              }},
+            ],
+          )
+    }
+
     render()
     {
         if (this.state.loading) return <Loading />;
@@ -242,6 +284,10 @@ class JobDetailsScreen extends React.Component
                     {!this.state.inProgress &&
                     <TouchableOpacity onPress={() => this.secondaryButtonAction()} style={s.textLink}>
                         <Text style={s.textLinkText}>{this.state.secondaryButtonText}</Text>
+                    </TouchableOpacity>}
+                    {(this.state.showCancel) &&
+                    <TouchableOpacity onPress={() => this.cancelJob()} style={s.textLink}>
+                        <Text style={s.textLinkText}>Forfeit Job</Text>
                     </TouchableOpacity>}
                     <TouchableOpacity onPress={() => this.props.navigation.navigate(this.state.source)} style={s.textLink}>
                         <Text style={s.textLinkTextBack}>Back</Text>

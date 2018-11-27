@@ -89,7 +89,8 @@ class ActiveJobs extends React.Component
             source: "ActiveJobs",
             updateJobList: this.tryFetchJobList,
             latitude: job.latitude,
-            longitude: job.longitude
+            longitude: job.longitude,
+            showCancel: true
         });
     }
 
