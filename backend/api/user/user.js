@@ -124,7 +124,8 @@ module.exports = {
       downVote = 1;
     }
     User.findByIdAndUpdate(req.body.userID,
-    {$inc: {"up_votes": upVote, "down_votes": downVote}},
+    {$inc: {"up_votes": upVote, "down_votes": downVote},
+    is_rated: true},
     {new: true,
     upsert: true},
     (err, user) => {
@@ -179,5 +180,44 @@ module.exports = {
       ret.balance = user.balance;
       return res.status(200).send(ret);
    });
+  },
+
+  /**
+  * Get user stats
+  */
+  updatePP(req, res) {
+    let ret = {};
+    // all fields have to be valid
+    if (req.body.pic === undefined) {
+      ret.errorMessage = "Prfile picture is a required field";
+      return res.status(500).send(ret);
+    }
+    // all fields have to be valid
+    if (req.body.ppID === undefined) {
+      ret.errorMessage = "User is a required field";
+      return res.status(500).send(ret);
+    }
+    var ppUrl = uploadImage(req.body.pic);
+    // error
+    if (ppUrl === "Error: base64 string cannot be null" || 
+    ppUrl === "Error: base64 string is not valid" ||
+    ppUrl === 'Error: upload failed') {
+      ret.errorMessage = "Bad image"
+      res.status(500).send(ret);
+    }
+    //save and return
+    Image.findOneAndUpdate({_id: req.body.ppID},
+    {image_src: pic, valid: true},
+    {new: true},
+    (err, pp) => {
+      let ret = {};
+      // err
+      if (err || !pp){
+        ret.errorMessage = "Internal error in database";
+        return res.status(500).send(ret);
+      }
+      //success
+      res.status(200).send(pic);
+    });
   }
 }

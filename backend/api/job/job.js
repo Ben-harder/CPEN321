@@ -40,6 +40,7 @@ module.exports = {
     job.is_deleted = false;
     job.is_compeleted = false;
     job.is_active = false;
+    job.is_rated = false;
 
     // save the job
     job.save(function (err) {
@@ -421,6 +422,96 @@ module.exports = {
         return res.status(400).send(ret);
       }
       return res.status(200).send(job);  
+    });
+  },
+
+  /**
+   * Cancel a job while active by employee.
+   */
+  employeeCancelActiveJob(req, res) {
+    // null job
+    if (!req.body.jobID) {
+      let ret = {};
+      ret.errorMessage = "Job is a required field";
+      return res.status(500).send(ret);
+    }
+    Job.findOneAndRemove({ 
+    _id: req.body.jobID,
+    $and: [
+      {is_compeleted : false},
+      {is_active : true}
+    ]},
+    (err, job) => {
+      // err
+      if (err){
+        let ret = {};
+        ret.errorMessage = "Internal error in database"; 
+        return res.status(500).send(ret);
+      }
+      if(!job) {
+        let ret = {};
+        ret.errorMessage = "Job is no longer active"; 
+        return res.status(400).send(ret);
+      }
+      User.findOneAndUpdate({_id: job.employee},
+      {$inc: {balance: -((1/10)* job.wage)}},
+      {new: true},
+      (err, user) => {
+        // err
+        if (err || !user){
+          let ret = {};
+          ret.errorMessage = "Internal error in database"; 
+          return res.status(500).send(ret);
+        }
+
+        //success
+        return res.status(200).send(user); 
+      });
+    });
+  },
+
+  /**
+   * Cancel a job while active by employer.
+   */
+  employerCancelActiveJob(req, res) {
+    // null job
+    if (!req.body.jobID) {
+      let ret = {};
+      ret.errorMessage = "Job is a required field";
+      return res.status(500).send(ret);
+    }
+    Job.findOneAndRemove({ 
+    _id: req.body.jobID,
+    $and: [
+      {is_compeleted : false},
+      {is_active : true}
+    ]},
+    (err, job) => {
+      // err
+      if (err){
+        let ret = {};
+        ret.errorMessage = "Internal error in database"; 
+        return res.status(500).send(ret);
+      }
+      if(!job) {
+        let ret = {};
+        ret.errorMessage = "Job is no longer active"; 
+        return res.status(400).send(ret);
+      }
+      User.findOneAndUpdate({_id: job.employer},
+      {$inc: {balance: -((1/10)* job.wage)}},
+      {new: true},
+      (err, user) => {
+        // err
+        if (err || !user){
+          let ret = {};
+          ret.errorMessage = "Internal error in database"; 
+          return res.status(500).send(ret);
+        }
+
+        //success
+        return res.status(200).send(user); 
+      });
     });
   },
 

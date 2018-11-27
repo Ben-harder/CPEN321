@@ -15,7 +15,7 @@ var isBase64 = require('is-base64');
  * 
  * @param {string} base64String base64-encoded image
  */
-function uploadImage(base64String) {
+exports.uploadImage =  function (base64String) {
   var result;
 
   if (!base64String) { // null check 
