@@ -6,6 +6,7 @@ import
     View,
     TextInput,
     TouchableWithoutFeedback,
+    KeyboardAvoidingView,
     Keyboard,
     Image,
 } from "react-native";
@@ -16,6 +17,7 @@ import api from "../constants/Url";
 import axios from "axios";
 import { ImagePicker, Permissions } from 'expo';
 import Colors from "../constants/Colors";
+import styles from '../constants/KeyboardStyle';
 
 // actions
 import * as actions from "../actions/";
@@ -110,6 +112,7 @@ class EditProfile extends React.Component
     const { user, navigation } = this.props;
 
     return (
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={s.container}>
           <View style={s.contentContainer}>
@@ -161,6 +164,7 @@ class EditProfile extends React.Component
           </View>
         </View>
       </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     );
   }
 

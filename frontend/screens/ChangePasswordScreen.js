@@ -6,11 +6,13 @@ import
     View,
     TextInput,
     TouchableWithoutFeedback,
+    KeyboardAvoidingView,
     Keyboard,
 } from "react-native";
 import { connect } from "react-redux";
 import api from "../constants/Url";
 import axios from "axios";
+import styles from '../constants/KeyboardStyle';
 
 // components
 import Loading from "../components/Loading";
@@ -85,6 +87,7 @@ class ChangePassword extends React.Component
     if (this.state.loading) return <Loading />;
 
     return (
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={s.container}>
           <View style={s.contentContainer}>
@@ -130,6 +133,7 @@ class ChangePassword extends React.Component
           </View>
         </View>
       </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     );
   }
 

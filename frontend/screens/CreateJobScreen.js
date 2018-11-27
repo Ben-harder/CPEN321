@@ -13,6 +13,7 @@ import
     Modal,
     TouchableHighlight,
     TouchableWithoutFeedback,
+    KeyboardAvoidingView,
     Keyboard,
 } from 'react-native';
 import { WebBrowser } from 'expo';
@@ -22,6 +23,7 @@ import api from "../constants/Url";
 import Select from 'react-native-picker-select';
 import Colors from '../constants/Colors';
 import Font from '../constants/Font';
+import styles from '../constants/KeyboardStyle';
 
 // components
 import Loading from "../components/Loading";
@@ -113,7 +115,7 @@ class CreateJobScreen extends React.Component
     {
         if (this.state.loading) return (<Loading />);
         return (
-            <View style={s.container}>           
+                <View style={s.container}>           
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessbile={false}>
                     <View style={s.innerContainer}>
                         <View>
@@ -187,7 +189,7 @@ class CreateJobScreen extends React.Component
                         </TouchableOpacity>
                     </View>
                 </TouchableWithoutFeedback>
-            </View>
+                </View>
         );
     }
 }

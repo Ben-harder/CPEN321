@@ -8,6 +8,7 @@ import {
   Text,
   TextInput,
   TouchableWithoutFeedback,
+  KeyboardAvoidingView,
   Keyboard,
   ImageBackground,
   Image,
@@ -20,6 +21,7 @@ import api from "../constants/Url";
 import axios from "axios";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
+import styles from '../constants/KeyboardStyle';
 
 // components
 import Loading from "../components/Loading";
@@ -122,6 +124,7 @@ class SignUpScreen extends React.Component {
     if (this.state.loading) return <Loading />;
 
     return (
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={s.container}>
           <Image source={logo} style={s.logo} resizeMode={'contain'}/>
@@ -228,6 +231,7 @@ class SignUpScreen extends React.Component {
           </View>}
         </View>
       </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     );
   }
 }
