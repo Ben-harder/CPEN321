@@ -49,7 +49,10 @@ class JobDetailsScreen extends React.Component
             source: "Main",
             primarySource: "Main",
             inProgress: false,
-            loading: false
+            loading: false,
+            isCompleted: false,
+            isRated: false,
+            employeeID: "",
         }
 
         this.primaryButtonAction = this.primaryButtonAction.bind(this);
@@ -74,7 +77,10 @@ class JobDetailsScreen extends React.Component
             secondaryButtonText: navigation.getParam("secondaryButtonText", "NO SECONDARY BUTTON TEXT"),
             source: navigation.getParam("source", "Main"),
             primarySource: navigation.getParam("primarySource", "Main"),
-            inProgress: navigation.getParam("inProgress", false)
+            inProgress: navigation.getParam("inProgress", false),
+            isCompleted: navigation.getParam("isCompleted", false),
+            isRated: navigation.getParam("isRated", false),
+            employeeID: navigation.getParam("employeeID"),
         });
     }
 
@@ -145,6 +151,27 @@ class JobDetailsScreen extends React.Component
         this.setState({ inProgress: true });
     }
 
+    rateJob(rating)
+    {
+        const { state, setParams, navigate } = this.props.navigation;
+
+        const params = state.params || {};
+
+        axios.post(`${api}/user/rate-user`, {
+            userID: this.state.employeeID,
+            rating: rating == 1 ? true : false,
+
+        }).then((res) => {
+            this.setState({ loading: false, isRated: true });
+            params.updateJobList();
+            alert("You've successfully rated this employee!");
+        }).catch((err) => {
+            this.setState({ loading: false });
+            console.log(err);
+            alert(err.response.data.errorMessage);
+        });
+    }
+
     render()
     {
         if (this.state.loading) return <Loading />;
@@ -182,6 +209,16 @@ class JobDetailsScreen extends React.Component
                         })} style={s.textLink}>
                             <Text style={[s.textLinkText, {backgroundColor: Colors.sDark}]}>View on Map</Text>
                         </TouchableOpacity>
+                        {this.state.isCompleted && !this.state.isRated && 
+                        <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+                            <TouchableOpacity onPress={() => this.rateJob(1)}>
+                                <IOSIcon name="ios-thumbs-up" size={30} style={{color: Colors.sDark}}/>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity onPress={() => this.rateJob(-1)}>
+                                <IOSIcon name="ios-thumbs-down" size={30} style={{color: Colors.sDark}}/>
+                            </TouchableOpacity>
+                        </View>}
                     </View>
                     {(!this.state.inProgress && this.state.showPrimaryButton) &&
                     <TouchableOpacity onPress={() => this.primaryButtonAction()} style={s.textLink}>

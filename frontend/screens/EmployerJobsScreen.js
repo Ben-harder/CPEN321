@@ -91,7 +91,10 @@ class EmployerJobsScreen extends React.Component
             primarySource: "ApplicantList",
             inProgress: job.is_active,
             latitude: job.latitude,
-            longitude: job.longitude
+            longitude: job.longitude,
+            isCompleted: job.is_compeleted,
+            isRated: job.is_rated,
+            employeeID: job.employee._id,
         });
     }
 
