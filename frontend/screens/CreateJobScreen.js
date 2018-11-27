@@ -245,7 +245,7 @@ class CreateJobScreen extends React.Component
                             </TouchableOpacity>
 
                             <TouchableOpacity onPress={() => this.props.navigation.navigate("Main")} style={s.textLink}>
-                                <Text style={[s.textLinkTextBack, {marginBottom: 160}]}>Cancel</Text>
+                                <Text style={[s.textLinkTextBack, {marginBottom: 100}]}>Cancel</Text>
                             </TouchableOpacity>
                         </View>
                     </TouchableWithoutFeedback>
