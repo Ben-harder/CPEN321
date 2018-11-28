@@ -1,4 +1,5 @@
 var User = require("../../models/user");
+var Job = require("../../models/job");
 var JobPref = require("../../models/jobPref");
 
 

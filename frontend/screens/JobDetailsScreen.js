@@ -175,11 +175,14 @@ class JobDetailsScreen extends React.Component
 
         const params = state.params || {};
 
+        console.log(this.state.jobID);
+
         axios.post(`${api}/user/rate-user`, {
             userID: this.state.employeeID,
             rating: rating == 1 ? true : false,
             jobID: this.state.jobID
         }).then((res) => {
+            this.props.actions.userData(res.data);
             this.setState({ loading: false, isRated: true });
             params.updateJobList();
             alert("You've successfully rated this employee!");
