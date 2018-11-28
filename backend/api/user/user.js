@@ -124,8 +124,7 @@ module.exports = {
       downVote = 1;
     }
     User.findByIdAndUpdate(req.body.userID,
-    {$inc: {"up_votes": upVote, "down_votes": downVote},
-    is_rated: true},
+    {$inc: {"up_votes": upVote, "down_votes": downVote}},
     {new: true,
     upsert: true},
     (err, user) => {
@@ -141,7 +140,11 @@ module.exports = {
         ret.errorMessage = "User does not exist"; 
         return res.status(500).send(ret);
       }
-      return res.status(200).send(user);
+      Job.findByIdAndUpdate(req.body.jobID,
+      {is_rated: true},
+      (err, job) => {
+        return res.status(200).send(user);
+      });
     });
   },
   
