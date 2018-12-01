@@ -64,16 +64,21 @@ describe("Create Job Test", () => {
     expect(wrapper.instance()).toMatchSnapshot();
   });
 
+  it("Renders the create job screen past entering address", async () => {
+    const wrapper = shallow(<CreateJob store={store} />).dive();
+    wrapper.setState({ loading: false, step: false });
+    expect(wrapper.instance()).toMatchSnapshot();
+  });
+
   it("Successful job post", async () => {
     // set axios to post to resolve
     mockAxios.onPost(`${api}/job/create-job`).reply(200, {});
 
     const wrapper = shallow(<CreateJob store={store} navigation={navigation} />).dive();
 
-    wrapper.setState({ loading: false });
+    wrapper.setState({ loading: false, address: '123 Wain Street', step: false });
 
     // set text inputs
-    wrapper.find({testID: '#address'}).simulate('ChangeText', '123 Wain Street');
     wrapper.find({testID: '#description'}).simulate('ChangeText', 'A valid description');
     wrapper.find({testID: '#wage'}).simulate('ChangeText', 20);
     wrapper.find({testID: '#type'}).prop('onValueChange')('Feed Lizard');
@@ -106,10 +111,9 @@ describe("Create Job Test", () => {
 
     const wrapper = shallow(<CreateJob store={store} navigation={navigation} />).dive();
 
-    wrapper.setState({ loading: false });
+    wrapper.setState({ loading: false, address: '123 Wain Street', step: false });
 
     // set text inputs
-    wrapper.find({testID: '#address'}).simulate('ChangeText', '123 Wain Street');
     wrapper.find({testID: '#description'}).simulate('ChangeText', 'A valid description');
     wrapper.find({testID: '#wage'}).simulate('ChangeText', 20);
     wrapper.find({testID: '#type'}).prop('onValueChange')('Feed Lizard');
@@ -133,7 +137,7 @@ describe("Create Job Test", () => {
   it("Has empty fields", async () => {
     const wrapper = shallow(<CreateJob store={store} navigation={navigation} />).dive();
 
-    wrapper.setState({ loading: false });
+    wrapper.setState({ loading: false, step: false });
 
     // press button
     wrapper.find({testID: '#submit'}).simulate('press');
@@ -147,11 +151,9 @@ describe("Create Job Test", () => {
   it("Has invalid wage", async () => {
     const wrapper = shallow(<CreateJob store={store} navigation={navigation} />).dive();
 
-    wrapper.setState({ loading: false });
+    wrapper.setState({ loading: false, address: '123 Wain Street', step: false });
 
     // set text inputs
-    wrapper.find({testID: '#address'}).simulate('ChangeText', '123 Wain Street');
-    wrapper.find({testID: '#description'}).simulate('ChangeText', 'A valid description');
     wrapper.find({testID: '#wage'}).simulate('ChangeText', "20...0");
     wrapper.find({testID: '#type'}).prop('onValueChange')('Feed Lizard');
     
@@ -163,28 +165,6 @@ describe("Create Job Test", () => {
     // assert error message state
     setTimeout(() => {
       expect(global.alert).toBeCalledWith("Wage must be a valid format!", expect.any(Function))
-    }, 0);
-  });
-
-  it("Has invalid address", async () => {
-    const wrapper = shallow(<CreateJob store={store} navigation={navigation} />).dive();
-
-    wrapper.setState({ loading: false });
-
-    // set text inputs
-    wrapper.find({testID: '#address'}).simulate('ChangeText', '123 Wain!!!! Street');
-    wrapper.find({testID: '#description'}).simulate('ChangeText', 'A valid description');
-    wrapper.find({testID: '#wage'}).simulate('ChangeText', "20");
-    wrapper.find({testID: '#type'}).prop('onValueChange')('Feed Lizard');
-    
-    // press button
-    wrapper.find({testID: '#submit'}).simulate('press');
-
-    const component = wrapper.instance();
-
-    // assert error message state
-    setTimeout(() => {
-      expect(global.alert).toBeCalledWith("Address must be a valid address!", expect.any(Function))
     }, 0);
   });
 
